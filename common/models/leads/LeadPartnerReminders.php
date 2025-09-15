@@ -85,6 +85,10 @@ class LeadPartnerReminders extends \yii\db\ActiveRecord implements \common\inter
         return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
     }
 
+    public function getPartnerLead(){
+        return $this->hasOne(LeadPartners::className(), ['id' => 'lead_partner_id']);  
+    }
+
     public static function getLeadcategory($lead_id, $partner_id)
     {
         $lead_reminder = self::find()
@@ -107,7 +111,7 @@ class LeadPartnerReminders extends \yii\db\ActiveRecord implements \common\inter
 
     public function afterSave($insert, $changedAttributes)
     {
-        $chat_model = Chat::find()->andWhere(['lead_id' => $this->lead_id])->andWhere(['chat_type' => 2])->one();
+        $chat_model = Chat::find()->andWhere(['lead_id' => $this->lead_id])->andWhere(['chat_type' => 2])->one(); //lead_id can be taken from the getPartnerLead()
 
         if (!$chat_model) {
             return false;
@@ -120,18 +124,7 @@ class LeadPartnerReminders extends \yii\db\ActiveRecord implements \common\inter
         $chat_message->status = 1;
         $chat_message->sender_id = $this->partner->user_id;
         $chat_message->is_reminder = 1;
-        $message = "Reminder is Set";
-        if ($chat_message->save(false)) {
-            $chat = Chat::find()->where(['id' => $chat_model->id])->one();
-            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
-            $chat->last_message_at = time();
-            $chat->sender_id = $this->partner->user_id;
-            $chat->is_lead_chat_open_for_user = 0;
-            $chat->status = 1;
-            $chat->is_seen = 0;
-            $chat->created_at = time();
-            return $chat->save(false);
-        }
+        $chat_message->save(false);
         return false;
     }
 }
