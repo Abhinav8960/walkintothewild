@@ -183,8 +183,8 @@ class DedicatedDeepCallController extends Controller
         if (!$callLog) {
             $callLog = new \common\models\CallLog();
         }
-        $callLog->request_caller_1_no = $data['cNumber'] ?? null; // Equivalent to $callLog->request_caller_1_no
-        $callLog->request_caller_2_no = $data['masterAgentNumber'] ?? null; // Equivalent to $callLog->request_caller_2_no
+        $callLog->request_caller_1_no = $data['masterAgentNumber'] ?? null; // Equivalent to $callLog->request_caller_2_no
+        $callLog->request_caller_2_no = $data['cNumber'] ?? null; // Equivalent to $callLog->request_caller_1_no
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
         $callLog->service_user_id = $data['userId'] ?? null;
         $callLog->is_dedicated = 1;
