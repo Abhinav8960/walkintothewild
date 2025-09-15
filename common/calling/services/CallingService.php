@@ -113,8 +113,8 @@ class CallingService
 
         if ($this->has_direct_call == true) {
             $options = [
-                'user_id' => \Yii::$app->params['deepcall_direct_api_token'],
-                'token' => \Yii::$app->params['deepcall_direct_api_user_id'],
+                'token' => \Yii::$app->params['deepcall_direct_api_token'],
+                'user_id' => \Yii::$app->params['deepcall_direct_api_user_id'],
                 'from' => $this->request_caller_2_no, // This is the number from which the call is made
                 'to' => $this->request_caller_1_no, // This is the number to be called
                 'reqId' => $this->reference_id
