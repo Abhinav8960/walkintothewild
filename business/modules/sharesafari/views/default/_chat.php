@@ -160,7 +160,10 @@
                                  <p>Name: <?= $trans_details->name ?></p>
                              </div>
                              <div class="mb-0">
-                                 <p>Shared Safari: <?= $trans_details->share_safari_lead?->share_safari?->share_safari_title ?? '' ?></p>
+                                 <?php if ($share_safari = $trans_details->share_safari) { ?>
+                                     <p>Shared Safari: <?= $share_safari->share_safari_title ?? '' ?></p>
+                                 <?php
+                                    } ?>
                              </div>
                              <div class="mb-0">
                                  <p>Park: <?= $trans_details->park ? $trans_details->park->title : '' ?></p>
@@ -175,7 +178,7 @@
                                  <p>Number of Safaris: <?= $trans_details->safaris ?></p>
                              </div>
                              <div class="mb-0">
-                                 <p>Seat: <?= $trans_details->share_safari_lead?->seat ?? '' ?> </p>
+                                 <p>Seat: <?= $trans_details->travelers ?? '' ?> </p>
                              </div>
                              <div class="mb-0">
                                  <p>Amount: <?= $trans_details->received_amount ?></p>
