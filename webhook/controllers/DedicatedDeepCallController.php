@@ -103,7 +103,10 @@ class DedicatedDeepCallController extends Controller
     {
 
 
-        $callLog = new \common\models\CallLog();
+        $callLog = \common\models\CallLog::find()->where(['reference_id' => $data['api_para']['reqId']])->one();
+        if (!$callLog) {
+            $callLog = new \common\models\CallLog();
+        }
        
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
         $callLog->service_user_id = $data['api_para']['userId'] ?? null;
