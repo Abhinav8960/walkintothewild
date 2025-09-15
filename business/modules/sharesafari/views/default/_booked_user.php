@@ -62,6 +62,7 @@ $this->title = 'Booked Users';
                             <th>Transaction Date Time</th>
                             <th>No of Seat</th>
                             <th>Amount</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <?php foreach ($booked_users as $booked) { ?>
@@ -77,6 +78,11 @@ $this->title = 'Booked Users';
                                         <span style="font-weight: bold; color: #2E8B57; margin-right:5px">₹</span>
                                         <span style="font-weight: bold; color: #2E8B57;"><?= GeneralModel::number_format_indian($booked->received_amount) ?></span>
                                     </div>
+                                </td>
+                                <td>
+                                    <a href="<?= Url::toRoute(['booked-user-chat', 'share_safari_id' => $share_safari->id, 'share_safari_lead_id' => $booked->share_safari_lead_id]) ?>">
+                                        <img src="<?= $this->params['baseurl'] ?>/images/chat.png" alt="Chat" width="20" height="20">
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

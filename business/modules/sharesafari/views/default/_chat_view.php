@@ -2,6 +2,7 @@
 
 use business\assets\AppAsset;
 use common\models\GeneralModel;
+use yii\bootstrap5\LinkPager;
 use yii\helpers\Url;
 use yii\web\JqueryAsset;
 
@@ -59,20 +60,19 @@ $this->title = 'Fixed Departure';
             <div class="card">
                 <div class="card-body">
                     <ul class="list-unstyled mb-0">
-                        <?php foreach ($chat_model as $chat) {
+                        <?php foreach ($dataProvider->getModels() as $chat) {
                             if ($user = $chat->user) { ?>
-                                <li class="p-2 border-bottom bg-body-tertiary">
+                                <li class="p-1 border-bottom bg-body-tertiary">
                                     <a href="#!" class="d-flex justify-content-between user-chat-trigger" data-chat-id="<?= $chat->id ?>">
                                         <div class="d-flex flex-row">
                                             <img src="<?= $user->profile_display_image ?>" alt="avatar"
-                                                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                            <div class="pt-1">
+                                                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="30">
+                                            <div class="pt-2">
                                                 <p class="fw-bold mb-0"><?= $user->name ?></p>
                                             </div>
-
                                         </div>
                                         <div class="pt-2">
-                                            <span class="float-end">
+                                            <span class="float-end me-2">
                                                 <p><?= date('Y-m-d H:i A', $chat->last_message_at) ?></p>
                                             </span>
                                         </div>
@@ -81,6 +81,15 @@ $this->title = 'Fixed Departure';
                         <?php }
                         } ?>
                     </ul>
+                    <div class="mt-3">
+                        <?= LinkPager::widget([
+                            'pagination' => $dataProvider->pagination,
+                            'options' => ['class' => 'pagination justify-content-center'],
+                            'linkOptions' => ['class' => 'page-link'],
+                            'disabledPageCssClass' => 'disabled',
+                            'activePageCssClass' => 'active',
+                        ]) ?>
+                    </div>
 
                 </div>
             </div>
@@ -94,6 +103,7 @@ $this->title = 'Fixed Departure';
 
     </div>
 </div>
+
 
 <?php
 $chatUrl = Url::to(['/sharesafari/default/user-chat']);

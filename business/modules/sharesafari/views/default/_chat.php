@@ -95,7 +95,7 @@
                     } else { ?>
                      <div class="d-flex justify-content-end">
                          <div class="sentChat">
-                             <p><?= nl2br(Html::encode(GeneralModel::maskContactInfoInString($chat_message->message)))  ?></p>
+                             <p style="color:white !important;"><?= nl2br(Html::encode(GeneralModel::maskContactInfoInString($chat_message->message)))  ?></p>
                              <div class="timeingNotified d-flex justify-content-end pe-2">
                                  <div class="d-flex gap-3">
                                      <div class="currentTime">
@@ -166,10 +166,10 @@
                                  <p>Park: <?= $trans_details->park ? $trans_details->park->title : '' ?></p>
                              </div>
                              <div class="mb-0">
-                                 <p>Start Date: <?= date('Y-m-d',$trans_details->start_date) ?></p>
+                                 <p>Start Date: <?= $trans_details->start_date ?></p>
                              </div>
                              <div class="mb-0">
-                                 <p>End Date: <?= date('Y-m-d',$trans_details->end_date) ?></p>
+                                 <p>End Date: <?= $trans_details->end_date ?></p>
                              </div>
                              <div class="mb-0">
                                  <p>Number of Safaris: <?= $trans_details->safaris ?></p>
