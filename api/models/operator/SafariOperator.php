@@ -26,6 +26,10 @@ class SafariOperator extends \common\models\operator\SafariOperator
         }, 'about_business', 'image_path', 'park_count', 'package_count', 'shared_safari_count', 'follower_list_count', 'category_title', 'is_followed', 'status' => function () {
             return (bool)$this->status;
         },];
+        $fields['has_direct_call'] = function () {
+            return (bool)$this->has_direct_call;
+        };
+        $fields[] = 'direct_call_no';
         $fields[] = 'review_url';
 
         if (in_array(\Yii::$app->controller->layout, [self::OPERATOR_API_LAYOUT_FULL])) {
@@ -140,7 +144,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
         //     return Yii::$app->params['s3_endpoint'] . '/safarioperator/' . $this->id . '/' . $this->logo;
         // }
         if ($this->logo != '') {
-            return Yii::$app->params['s3_endpoint'] .'/'.  $this->logo;
+            return Yii::$app->params['s3_endpoint'] . '/' .  $this->logo;
         }
     }
 

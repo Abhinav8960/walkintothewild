@@ -13,6 +13,7 @@ class CallingService
     public $chat_id;
     public $lead_id;
     public $request_vnm;
+    public $has_direct_call = false;
     public $request_caller_1_no;
     public $request_caller_1_user_id;
     // public $request_caller_2_no = "9650901148";
@@ -35,10 +36,11 @@ class CallingService
 
     public $call_model;
 
-    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no, $request_caller_2_user_id)
+    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no, $request_caller_2_user_id, $has_direct_call = false)
     {
         $this->reference_id = \Yii::$app->security->generateRandomString(5) . '_' . time() . '_' . \Yii::$app->security->generateRandomString(5);
         $this->request_vnm = time() .rand(1, 1000);
+        $this->has_direct_call = $has_direct_call;
         $this->chat_id = $chat_id;
         $this->lead_id = $lead_id;
         $this->request_caller_1_no = $request_caller_1_no;
@@ -77,6 +79,7 @@ class CallingService
     {
         $this->call_model  = new CallLog();
         $this->call_model->reference_id = $this->reference_id;
+        $this->call_model->has_direct_call = $this->has_direct_call;
         $this->call_model->chat_id = $this->chat_id;
         $this->call_model->lead_id = $this->lead_id;
         $this->call_model->request_vnm = $this->request_vnm;
@@ -97,6 +100,7 @@ class CallingService
     {
 
         $url = \Yii::$app->params['airphone_api_host_url'];
+
         $options = [
             'user_id' => \Yii::$app->params['airphone_api_user_id'],
             // 'agent' => $this->request_caller_2_no,
@@ -107,6 +111,7 @@ class CallingService
             'reqId' => $this->reference_id
         ];
         $client = new \yii\httpclient\Client();
+
         $response = $client->createRequest()
             ->setMethod('POST')
             ->setHeaders(['Content-Type' => 'application/x-www-form-urlencoded'])

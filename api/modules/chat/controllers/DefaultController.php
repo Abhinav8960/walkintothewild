@@ -93,14 +93,14 @@ class DefaultController extends RestController
 
     public function actionQuatationChat($chat_hash = null)
     {
-         if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
-            $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
+        if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
+            $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE, Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
         } else {
-            $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
+            $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE, Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
         }
 
-        if(!empty($chat_hash)){
-           $query = $query->andWhere(['chat_hash' => $chat_hash]);
+        if (!empty($chat_hash)) {
+            $query = $query->andWhere(['chat_hash' => $chat_hash]);
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -181,7 +181,7 @@ class DefaultController extends RestController
 
         if (!empty($chat_hash)) {
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
-            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => [2,3]])->one();
+            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => [2, 3]])->one();
             if (empty($chat_model)) {
                 $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
                 return Yii::$app->api->sendResponse([], ['message' => $message], 400);
@@ -238,10 +238,10 @@ class DefaultController extends RestController
             }
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id,$partner_gallery_version);
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id, $partner_gallery_version);
     }
 
-    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id,$partner_gallery_version)
+    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id, $partner_gallery_version)
     {
 
         $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
@@ -496,7 +496,7 @@ class DefaultController extends RestController
 
         if (!empty($chat_hash)) {
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
-            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])->one();
+            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => [Chat::CHAT_TYPE_QUOTE, Chat::CHAT_TYPE_SHARE_SAFARI]])->one();
             if (empty($chat_model)) {
                 return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
             }
@@ -552,6 +552,7 @@ class DefaultController extends RestController
                     return Yii::$app->api->sendResponse([], ['message' => 'User number is not verified.'], 403);
                 }
 
+                $has_direct_call = false;
                 $chat_id = $chat_model->id;
                 $lead_id = $chat_model->lead_id;
                 $call_initiated_user_id = $this->userinfo->id; // Example user ID who initiated the call
@@ -559,6 +560,10 @@ class DefaultController extends RestController
                 $call_initiated_partner_id = $chat_model->operator->id; // can be null
                 $request_caller_1_no = $chat_model->user->mobile_no;
                 $request_caller_1_user_id = $chat_model->user->id;
+                if ($chat_model->operator->has_direct_call == true && !empty($chat_model->operator->direct_call_number)) {
+                    $request_caller_2_no = $chat_model->operator->direct_call_number; // Optional
+                    $has_direct_call = true;
+                }
                 $request_caller_2_no = $chat_model->operator->phone_no; // Optional
                 $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
 
@@ -572,7 +577,8 @@ class DefaultController extends RestController
                     $request_caller_1_no,
                     $request_caller_1_user_id,
                     $request_caller_2_no,
-                    $request_caller_2_user_id
+                    $request_caller_2_user_id,
+                    $has_direct_call
                 );
 
                 // Call the callNow method
@@ -635,7 +641,7 @@ class DefaultController extends RestController
     //         $request_caller_1_user_id = $chat_model->user->id;
     //         $request_caller_2_no = $chat_model->operator->phone_no;
     //         $request_caller_2_user_id = $chat_model->operator->user_id;
-            
+
     //         if ($chat_model->user_id == $this->userinfo->id) {
     //             $request_caller_1_no = $chat_model->operator->phone_no;
     //             $request_caller_1_user_id = $chat_model->operator->user_id;
