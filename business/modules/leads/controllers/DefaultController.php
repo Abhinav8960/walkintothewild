@@ -330,7 +330,6 @@ class DefaultController extends  Controller
         if (!$lead_partner) {
             throw new NotFoundHttpException('Lead partner not found.');
         }
-
         $model = new LeadPartnerReminders();
         $model->lead_id        = $lead->id;
         $model->lead_partner_id = $lead_partner->id;

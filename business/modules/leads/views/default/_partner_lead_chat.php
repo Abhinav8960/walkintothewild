@@ -2,7 +2,8 @@
 
     use common\models\GeneralModel;
     use common\models\leads\Lead;
-    use common\models\partnergallery\PartnerGalleryVersion;
+use common\models\leads\LeadPartnerReminders;
+use common\models\partnergallery\PartnerGalleryVersion;
     use yii\bootstrap5\Html;
     use yii\helpers\Url;
 
@@ -18,6 +19,8 @@
      </div>
      <div class="UserInfobx d-flex align-items-center gap-4">
          <?php if ($model->status == Lead::STATUS_ACTIVE) { ?>
+
+            <?= $model->id && $model->operator?->id ? LeadPartnerReminders::getLeadcategory($model->id, $model->operator->id) : '' ?>
 
              <div class="sharBtn">
                  <?= Html::button('<i class="fa-solid fa-bell"></i> Set Updation', [
@@ -143,6 +146,19 @@
                          <div class="ItineraryQuotationarea">
                              <div class="topTitle pb-3">
                                  <h6 class="text-center"><?= $chat_message->message ?></h6>
+                             </div>
+                             <div class="recievedTime d-flex justify-content-end">
+                                 <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                             </div>
+                         </div>
+                     </div>
+
+                 <?php } elseif (($model->operator) && (Yii::$app->user->identity->id == $model->operator->user_id) && ($chat_message->is_reminder == 1)) { ?>
+
+                     <div class="d-flex justify-content-center m-2">
+                         <div class="ItineraryQuotationarea">
+                             <div class="topTitle pb-0">
+                                 <h6 class="text-center"><?= $chat_message->message ?? 'Saved with empty message!'?></h6>
                              </div>
                              <div class="recievedTime d-flex justify-content-end">
                                  <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>

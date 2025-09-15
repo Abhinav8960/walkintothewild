@@ -105,17 +105,13 @@ class LeadPartnerReminders extends \yii\db\ActiveRecord implements \common\inter
     }
 
 
-  public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes)
     {
-        $chat_model = Chat::find()
-            ->andWhere(['lead_id' => $this->lead_id])
-            ->andWhere(['chat_type' => 2])
-            ->one();
+        $chat_model = Chat::find()->andWhere(['lead_id' => $this->lead_id])->andWhere(['chat_type' => 2])->one();
 
         if (!$chat_model) {
             return false;
         }
-
 
         ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
         $chat_message = new ChatMessage();
@@ -123,9 +119,9 @@ class LeadPartnerReminders extends \yii\db\ActiveRecord implements \common\inter
         $chat_message->message = $this->reminder_note;
         $chat_message->status = 1;
         $chat_message->sender_id = $this->partner->user_id;
+        $chat_message->is_reminder = 1;
         $message = "Reminder is Set";
         if ($chat_message->save(false)) {
-
             $chat = Chat::find()->where(['id' => $chat_model->id])->one();
             $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
