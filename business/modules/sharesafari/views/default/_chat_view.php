@@ -1,5 +1,6 @@
 <?php
 
+use api\models\chat\ChatMessage;
 use business\assets\AppAsset;
 use common\models\GeneralModel;
 use yii\bootstrap5\LinkPager;
@@ -70,6 +71,9 @@ $this->title = 'Fixed Departure';
                                             <div class="pt-2">
                                                 <p class="fw-bold mb-0"><?= $user->name ?></p>
                                             </div>
+                                            <?php if ($booked = ChatMessage::find()->where(['chat_id' => $chat->id])->andWhere(['IS NOT', 'transaction_id', NULL])->limit(1)->one()) { ?>
+                                                <span class="m-2 badge bg-success" style="height: 20px;">Booked</span>
+                                            <?php } ?>
                                         </div>
                                         <div class="pt-2">
                                             <span class="float-end me-2">
@@ -193,4 +197,6 @@ JS
     p {
         color: #333 !important;
     }
+
+    
 </style>
