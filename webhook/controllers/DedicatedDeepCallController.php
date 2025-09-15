@@ -155,7 +155,7 @@ class DedicatedDeepCallController extends Controller
         // $callLog->call_disposition = $data['callDisposition'] ?? null;
         // $callLog->call_back = $data['callBack'] ?? null;
         // $callLog->created_updated = time();
-        $recording_url = isset($data['recordings'][0]['file']) ? 'https://s-ct3.sarv.com/v2/recording/direct/' . \Yii::$app->params['airphone_api_user_id'] . '' . $data['recordings'][0]['file'] : null;
+        $recording_url = isset($data['recordings'][0]['file']) ? 'https://s-ct3.sarv.com/v2/recording/direct/' . \Yii::$app->params['deepcall_api_user_id'] . '' . $data['recordings'][0]['file'] : null;
 
         if (!$callLog->save()) {
             echo "Failed to save call log: " . json_encode($callLog->getErrors());

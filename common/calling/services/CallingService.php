@@ -39,7 +39,7 @@ class CallingService
     public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no, $request_caller_2_user_id, $has_direct_call = false)
     {
         $this->reference_id = \Yii::$app->security->generateRandomString(5) . '_' . time() . '_' . \Yii::$app->security->generateRandomString(5);
-        $this->request_vnm = time() .rand(1, 1000);
+        $this->request_vnm = time() . rand(1, 1000);
         $this->has_direct_call = $has_direct_call;
         $this->chat_id = $chat_id;
         $this->lead_id = $lead_id;
@@ -99,17 +99,27 @@ class CallingService
     private function callImmediately()
     {
 
-        $url = \Yii::$app->params['airphone_api_host_url'];
+        $url = \Yii::$app->params['deepcall_api_host_url'];
 
         $options = [
-            'user_id' => \Yii::$app->params['airphone_api_user_id'],
+            'user_id' => \Yii::$app->params['deepcall_api_user_id'],
             // 'agent' => $this->request_caller_2_no,
             // 'caller' => $this->request_caller_1_no,
             'from' => $this->request_caller_2_no, // This is the number from which the call is made
             'to' => $this->request_caller_1_no, // This is the number to be called
-            'token' => \Yii::$app->params['airphone_api_token'],
+            'token' => \Yii::$app->params['deepcall_api_token'],
             'reqId' => $this->reference_id
         ];
+
+        if ($this->has_direct_call == true) {
+            $options = [
+                'user_id' => \Yii::$app->params['deepcall_direct_api_token'],
+                'token' => \Yii::$app->params['deepcall_direct_api_user_id'],
+                'from' => $this->request_caller_2_no, // This is the number from which the call is made
+                'to' => $this->request_caller_1_no, // This is the number to be called
+                'reqId' => $this->reference_id
+            ];
+        }
         $client = new \yii\httpclient\Client();
 
         $response = $client->createRequest()
@@ -128,7 +138,7 @@ class CallingService
 
         $json_contents = json_encode($response->content);
         $arr_contents = json_decode($response->content, true);
-        \Yii::info('Informational call log: '.$json_contents, 'call-error');
+        \Yii::info('Informational call log: ' . $json_contents, 'call-error');
 
 
         // print_r([$response->content, $options]);
@@ -147,11 +157,11 @@ class CallingService
 
 
 
-   private function preparechat()
+    private function preparechat()
     {
         $chat_model = Chat::find()
             ->andWhere(['id' => $this->call_model->chat_id])
-            ->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])
+            ->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE, Chat::CHAT_TYPE_SHARE_SAFARI]])
             ->one();
 
         if (!$chat_model) {
