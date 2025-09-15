@@ -79,7 +79,7 @@ class CallingService
     {
         $this->call_model  = new CallLog();
         $this->call_model->reference_id = $this->reference_id;
-        $this->call_model->has_direct_call = $this->has_direct_call;
+        $this->call_model->is_dedicated = $this->has_direct_call;
         $this->call_model->chat_id = $this->chat_id;
         $this->call_model->lead_id = $this->lead_id;
         $this->call_model->request_vnm = $this->request_vnm;
