@@ -183,7 +183,8 @@ class DedicatedDeepCallController extends Controller
         if (!$callLog) {
             $callLog = new \common\models\CallLog();
         }
-
+        $callLog->request_caller_1_no = $data['cNumber'] ?? null; // Equivalent to $callLog->request_caller_1_no
+        $callLog->request_caller_2_no = $data['masterAgentNumber'] ?? null; // Equivalent to $callLog->request_caller_2_no
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
         $callLog->service_user_id = $data['userId'] ?? null;
         $callLog->is_dedicated = 1;
@@ -197,7 +198,7 @@ class DedicatedDeepCallController extends Controller
         $callLog->ivr_duration = $data['ivrDuration'] ?? null;
         $callLog->c_number = $data['cNumber'] ?? null;
         $callLog->master_num_ctc = $data['masterNumCTC'] ?? null;
-        $callLog->master_agent = $data['masterAgent'] ?? null;
+        $callLog->master_agent = (string) $data['masterAgent'] ?? null;
         $callLog->master_agent_number = $data['masterAgentNumber'] ?? null;
         $callLog->master_group_id = $data['masterGroupId'] ?? null;
         $callLog->talk_duration = $data['talkDuration'] ?? null;
@@ -217,21 +218,21 @@ class DedicatedDeepCallController extends Controller
         $callLog->total_hold_duration = $data['totalHoldDuration'] ?? null;
 
         // Convert arrays to JSON strings for database storage
-        $callLog->total_credits_used = isset($data['totalCreditsUsed']) ? json_encode($data['totalCreditsUsed']) : null;
-        $callLog->ivr_id_arr = isset($data['ivrIdArr']) ? json_encode($data['ivrIdArr']) : null;
-        $callLog->a_ans_h = isset($data['aAnsH']) ? json_encode($data['aAnsH']) : null;
-        $callLog->a_h = isset($data['aH']) ? json_encode($data['aH']) : null;
-        $callLog->n_h = isset($data['nH']) ? json_encode($data['nH']) : null;
-        $callLog->recordings = isset($data['recordings']) ? json_encode($data['recordings']) : null;
-        $callLog->voice_mail = isset($data['voiceMail']) ? json_encode($data['voiceMail']) : null;
-        $callLog->dtmf = isset($data['DTMF']) ? json_encode($data['DTMF']) : null;
-        $callLog->cli_arr = isset($data['cliArr']) ? json_encode($data['cliArr']) : null;
-        $callLog->a_h_detail = isset($data['aHDetail']) ? json_encode($data['aHDetail']) : null;
-        $callLog->n_h_detail = isset($data['nHDetail']) ? json_encode($data['nHDetail']) : null;
-        $callLog->modules = isset($data['modules']) ? json_encode($data['modules']) : null;
-        $callLog->call_disposition = $data['callDisposition'] ?? null;
-        $callLog->call_back = $data['callBack'] ?? null;
-        $callLog->created_updated = time();
+        // $callLog->total_credits_used = isset($data['totalCreditsUsed']) ? json_encode($data['totalCreditsUsed']) : null;
+        // $callLog->ivr_id_arr = isset($data['ivrIdArr']) ? json_encode($data['ivrIdArr']) : null;
+        // $callLog->a_ans_h = isset($data['aAnsH']) ? json_encode($data['aAnsH']) : null;
+        // $callLog->a_h = isset($data['aH']) ? json_encode($data['aH']) : null;
+        // $callLog->n_h = isset($data['nH']) ? json_encode($data['nH']) : null;
+        // $callLog->recordings = isset($data['recordings']) ? json_encode($data['recordings']) : null;
+        // $callLog->voice_mail = isset($data['voiceMail']) ? json_encode($data['voiceMail']) : null;
+        // $callLog->dtmf = isset($data['DTMF']) ? json_encode($data['DTMF']) : null;
+        // $callLog->cli_arr = isset($data['cliArr']) ? json_encode($data['cliArr']) : null;
+        // $callLog->a_h_detail = isset($data['aHDetail']) ? json_encode($data['aHDetail']) : null;
+        // $callLog->n_h_detail = isset($data['nHDetail']) ? json_encode($data['nHDetail']) : null;
+        // $callLog->modules = isset($data['modules']) ? json_encode($data['modules']) : null;
+        // $callLog->call_disposition = $data['callDisposition'] ?? null;
+        // $callLog->call_back = $data['callBack'] ?? null;
+        // $callLog->created_updated = time();
 
         // The recording URL in the JSON is relative, build the full URL
         $recording_url = isset($data['recordings'][0]['file']) ? 'https://s-ct3.sarv.com/v2/recording/direct/' . $data['userId'] . '' . $data['recordings'][0]['file'] : null;
