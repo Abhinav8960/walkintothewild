@@ -21,7 +21,7 @@
      <div class="UserInfobx d-flex align-items-center gap-4">
          <?php if ($model->status == Lead::STATUS_ACTIVE) { ?>
 
-             <?= $model->id ? LeadPartners::getLeadcategory($model->id,\Yii::$app->user->identity->operator->id) : '' ?>
+             <?= $model->id ? LeadPartners::getLeadcategory($model->id, \Yii::$app->user->identity->operator->id) : '' ?>
 
              <div class="sharBtn">
                  <?= Html::button('<i class="fa-solid fa-bell"></i>', [
@@ -161,7 +161,7 @@
                          </div>
                      </div>
 
-                 <?php } elseif (isset(Yii::$app->user->identity->operator) && ($chat_message->is_reminder == 1)) { ?>
+                 <?php } elseif ($chat_message->is_reminder == 1 && Yii::$app->user->identity && isset(Yii::$app->user->identity->operator) && $chat_message->created_by == Yii::$app->user->id) { ?>
                      <div class="d-flex justify-content-center m-2">
                          <div class="ItineraryQuotationarea">
                              <div class="topTitle pb-0 text-center">
@@ -174,13 +174,11 @@
                                             : 'Reminder datetime not set !' ?>
                                  </span>
                              </div>
-
                              <div class="recievedTime d-flex justify-content-end">
                                  <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                              </div>
                          </div>
                      </div>
-
                  <?php
                     } else { ?>
                      <div class="d-flex justify-content-end">
