@@ -2,6 +2,8 @@
 
     use common\models\GeneralModel;
     use common\models\leads\Lead;
+    use common\models\leads\LeadPartnerReminders;
+    use common\models\leads\LeadPartners;
     use common\models\partnergallery\PartnerGalleryVersion;
     use yii\bootstrap5\Html;
     use yii\helpers\Url;
@@ -18,6 +20,23 @@
      </div>
      <div class="UserInfobx d-flex align-items-center gap-4">
          <?php if ($model->status == Lead::STATUS_ACTIVE) { ?>
+
+             <?= $model->id ? LeadPartners::getLeadcategory($model->id, \Yii::$app->user->identity->operator->id) : '' ?>
+
+             <div class="sharBtn">
+                 <?= Html::button('<i class="fa-solid fa-bell"></i>', [
+                        'value' => Url::to(['set-reminder', 'id' => $model->id]),
+                        'class' => 'reminder-button',
+                    ]) ?>
+             </div>
+
+             <div class="sharBtn">
+                 <?= Html::button('Lead Category', [
+                        'value' => Url::to(['lead-category', 'id' => $model->id]),
+                        'class' => 'lead-category-button',
+                    ]) ?>
+             </div>
+
              <div class="sharBtn">
                  <?= Html::button('Share final quote and payment link', [
                         'value' => Url::to(['quotation', 'id' => $model->id]),
@@ -35,6 +54,7 @@
                         'class' => 'callHere image-button',
                     ]) ?>
              </div>
+
          <?php } ?>
          <!--          
          <div class="callOption">
@@ -48,8 +68,6 @@
             foreach ($chats as $chat_message) {
                 if (Yii::$app->user->identity && $chat_message->created_by == Yii::$app->user->identity->id) {
         ?>
-
-
                  <?php if ($chat_message->is_quotation_message == 1) { ?>
                      <div class="d-flex justify-content-center mt-5">
                          <div class="ItineraryQuotationarea">
@@ -141,6 +159,25 @@
                          </div>
                      </div>
 
+                 <?php } elseif ($chat_message->is_reminder == 1) { ?>
+                     <div class="d-flex justify-content-center m-2">
+                         <div class="ItineraryQuotationarea">
+                             <div class="topTitle pb-0 text-center">
+                                 <h6 class="mb-1">
+                                    <p class="text-danger">Reminder</p>
+                                     <?= $chat_message->reminder_note ?: 'Saved with empty message!' ?>
+                                 </h6>
+                                 <span class="d-block">
+                                     <?= $chat_message->reminder_datetime
+                                            ? Yii::$app->formatter->asDatetime($chat_message->reminder_datetime, 'php:d M Y')
+                                            : 'Reminder datetime not set !' ?>
+                                 </span>
+                             </div>
+                             <div class="recievedTime d-flex justify-content-end">
+                                 <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                             </div>
+                         </div>
+                     </div>
                  <?php
                     } else { ?>
                      <div class="d-flex justify-content-end">
@@ -249,6 +286,40 @@
  </div>
 
 
+ <div class="modal fade" id="reminderAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-xl modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header flageHeader">
+                 <h6 class="modal-title fs-5" id="exampleModalLabel">
+                     Set Reminder
+                 </h6>
+             </div>
+
+             <div class="modal-body modal_form">
+                 <div id='modalContent'></div>
+             </div>
+
+         </div>
+     </div>
+ </div>
+
+ <div class="modal fade" id="leadcategoryAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-lg modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header flageHeader">
+                 <h6 class="modal-title fs-5" id="exampleModalLabel">
+                     Set Lead Category
+                 </h6>
+             </div>
+
+             <div class="modal-body modal_form">
+                 <div id='modalContent'></div>
+             </div>
+
+         </div>
+     </div>
+ </div>
+
 
  <?php
     $script = <<< JS
@@ -266,6 +337,17 @@
 		.load($(this).attr('value'));
 	});
 
+    $('.reminder-button').on('click', function () {
+        $('#reminderAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+    $('.lead-category-button').on('click', function () {
+        $('#leadcategoryAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
 
 JS;
     $this->registerJs($script);

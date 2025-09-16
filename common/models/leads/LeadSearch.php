@@ -17,6 +17,9 @@ class LeadSearch extends Lead
     public $custom_status;
 
 
+    public $lead_category;
+    public $reminder_datetime;
+
 
 
     /**
@@ -29,7 +32,8 @@ class LeadSearch extends Lead
             [['package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'transport', 'meals', 'budget', 'addional_notes', 'transaction_id', 'transaction_datetime', 'quotation_count', 'is_chat_started'], 'safe'],
             [['user_name'], 'string'],
             [['safari_operator_id'], 'integer'],
-            [['lead_month', 'custom_status','is_payment_link_send'], 'safe'],
+            [['lead_month', 'custom_status', 'is_payment_link_send'], 'safe'],
+            [['lead_category','reminder_datetime'], 'safe']
         ];
     }
 
@@ -208,13 +212,22 @@ class LeadSearch extends Lead
             };
         }
 
+        if ($this->lead_category !== null && $this->lead_category !== '') {
+            $query->andFilterWhere(['lead_category' => $this->lead_category]);
+        }
 
+        if (!empty($this->reminder_datetime) && strpos($this->reminder_datetime, ' - ') !== false) {
+            list($start_date, $end_date) = explode(' - ', $this->reminder_datetime);
+            $query->joinWith('assignOperator')
+                  ->andFilterWhere(['between', 'lead_partners.reminder_datetime', $start_date, $end_date]);
+        }
+        
         if (!empty($this->user_name)) {
             $query->joinwith(['user' => function ($query) {
                 $query->andFilterWhere(['like', 'user.name', $this->user_name]);
             }]);
         }
-        
+
         return $dataProvider;
     }
 

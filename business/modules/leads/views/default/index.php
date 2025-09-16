@@ -2,6 +2,8 @@
 
 use api\models\leads\LeadPartners;
 use common\models\GeneralModel;
+use common\models\leads\form\LeadReminderForm;
+use common\models\leads\LeadPartnerReminders;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -132,6 +134,15 @@ $this->title = 'Leads';
                             return LeadPartners::chatStarted($model->id, $safari_operator->id);
                         }
                     ],
+                    [
+                        'label' => 'Lead Category',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) use ($safari_operator) {
+                            return LeadPartners::getLeadcategory($model->id, $safari_operator->id);
+                        }
+                    ],
+                    
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",

@@ -8,8 +8,11 @@ use api\models\partnergallery\PartnerGallerySearch;
 use common\models\chat\form\ChatForm;
 use common\models\chat\form\GalleryChatForm;
 use common\models\leads\form\LeadPartnerQuotationForm;
+use common\models\leads\form\LeadReminderForm;
+use common\models\leads\form\PartnerLeadForm;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuotes;
+use common\models\leads\LeadPartnerReminders;
 use common\models\leads\LeadPartners;
 use common\models\leads\LeadSearch;
 use common\models\partnergallery\PartnerGallery;
@@ -317,5 +320,48 @@ class DefaultController extends  Controller
             \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
             return $this->redirect(['view', 'id' => $id]);
         }
+    }
+
+    public function actionSetReminder($id)
+    {
+        $lead = $this->findModel($id);
+        $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException('Lead partner not found.');
+        }
+
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                LeadPartners::reminderHistory($model);
+                Yii::$app->session->setFlash('success', 'Reminder added successfully.');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+        }
+        return $this->renderAjax('_set_reminder', [
+            'model' => $model,
+            'lead'  => $lead,
+        ]);
+    }
+
+    public function actionLeadCategory($id)
+    {
+        $lead = $this->findModel($id);
+        $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException('Lead partner not found.');
+        }
+
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Lead Category updated successfully.');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+        }
+        return $this->renderAjax('_lead_category', [
+            'model' => $model,
+            'lead'  => $lead,
+        ]);
     }
 }

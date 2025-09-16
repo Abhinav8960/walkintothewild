@@ -2,6 +2,7 @@
 
 use yii\widgets\ActiveForm;
 use common\models\GeneralModel;
+use kartik\daterange\DateRangePicker;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\web\JsExpression;
@@ -32,7 +33,9 @@ use yii\web\JsExpression;
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
-                <div class="filterItem position-relative">
+
+
+                <!-- <div class="filterItem position-relative">
                     <label>Month:</label>
                     <?= $form->field($model, 'lead_month')->dropDownList(
                         GeneralModel::monthoption(),
@@ -43,7 +46,9 @@ use yii\web\JsExpression;
                         ],
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>
-                </div>
+                </div> -->
+
+
                 <div class="filterItem position-relative">
                     <label>Park:</label>
                     <?= $form->field($model, 'park_id')->dropDownList(
@@ -73,6 +78,21 @@ use yii\web\JsExpression;
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
 
+                <div class="filterItem position-relative">
+                    <label>Lead Category:</label>
+                    <?= $form->field($model, 'lead_category')->dropDownList(
+                        [
+                            '0' => 'Not in Use',
+                            '1' => 'Hot Lead',
+                            '-1' => 'Cold Lead',
+                        ],
+                        [
+                            'prompt' => 'Select Lead Category',
+                            'class' => 'search-border'
+                        ],
+                    ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
             </div>
         </div>
 
@@ -82,6 +102,46 @@ use yii\web\JsExpression;
                     <label>User:</label>
                     <?= $form->field($model, 'user_name')->textInput(['placeholder' => 'Enter User Name', 'class' => 'custom_input'])->label(false); ?>
                 </div>
+
+                <div class="filterItem position-relative">
+                    <label>Reminder Datetime:</label>
+                    <?= $form->field($model, 'reminder_datetime', [
+                        'options' => ['class' => 'drp-container mb-2']
+                    ])->widget(DateRangePicker::class, [
+                        'convertFormat' => true,
+                        'options' => [
+                            'placeholder' => 'Enter Date Range',
+                            'class' => 'custom_input',
+                        ],
+                        'pluginOptions' => [
+                            'allowclear' => true,
+                            // 'singleDatePicker' => true,
+                            'showDropdowns' => true,
+                            // 'minDate' =>date('2024-01-01'),
+                            // 'maxDate' => date('Y-m-d'),
+                            'locale' => [
+                                'format' => 'Y-m-d',
+                            ],
+                        ]
+                    ]);
+                    ?>
+                </div>
+
+                <div class="filterItem position-relative">
+
+                    <div class="filter-one d-flex gap-2">
+                        <label>Travel From Date:</label>
+                        <?= $form->field($model, 'from_date')->input('date')->label(false) ?>
+                    </div>
+                </div>
+                <div class="filterItem position-relative">
+
+                    <div class="filter-one d-flex gap-2">
+                        <label>Travel To Date:</label>
+                        <?= $form->field($model, 'to_date')->input('date')->label(false) ?>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -103,7 +163,7 @@ $this->registerJs($searchjs);
         border-radius: 0.25rem;
         height: 38px;
         padding: 6px 12px;
-        width: 200px;
+        width: 300px;
         outline: none;
         background: #00000000;
         color: #44444F;
