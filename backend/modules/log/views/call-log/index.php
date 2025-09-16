@@ -22,30 +22,62 @@ $this->params['title'] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'Operator',
+                        'label' => 'Call Initiater',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str = "";
-                            if(!empty($model->source)){
-                                $str .= $model->source;
+                            if (!empty($model->chatSource)) {
+                                $str .= $model->chatSource;
                                 $str .= "<br>";
                             }
-                            if (!empty($model->partner)) {
 
-                                $str .= '<a href="/operator/safari-operator/view?id=' . $model->partner->id . '" class="text-primary" style="color: green !important;">' . $model->partner->business_name . '</a>';
+                            if ($model->c_type == 'IBD') {
+                                if ($model->first_attended == 'customer') {
+                                return $str .= $model->request_caller_2_no;
+
+                                }else{
+                                    $str .= '<a href="/operator/safari-operator/view?id=' . $model->partner->id . '" class="text-primary" style="color: green !important;">' . $model->partner->business_name . ' (partner)</a>';
+                                    $str .= "<br>";
+                                    return $str .= $model->request_caller_1_no;
+                                }
+
+                            }elseif (!empty($model->partner)) {
+
+                                $str .= '<a href="/operator/safari-operator/view?id=' . $model->partner->id . '" class="text-primary" style="color: green !important;">' . $model->partner->business_name . ' (partner)</a>';
+                                $str .= "<br>";
+                            } elseif(isset($model->callerUser2->id)) {
+                                $str .= '<a href="/user/default/profile?user_id=' . $model->callerUser2->id . '" class="text-primary" style="color: green !important;">' . $model->callerUser2->name . '</a>';
                                 $str .= "<br>";
                             }
+
                             return $str .= $model->request_caller_2_no;
                         }
                     ],
                     [
-                        'label' => 'User',
+                        'label' => 'Call Receiver',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str = '<a href="/user/default/profile?user_id=' . $model->callerUser1->id . '" class="text-primary" style="color: green !important;">' . $model->callerUser1->name . '</a>';
-                            $str .= "<br>";
+                            $str = '';
+                            if ($model->c_type == 'IBD') {
+                                if ($model->first_attended == 'customer') {
+                                    if(isset($model->partner->id)){
+
+                                        $str .= '<a href="/operator/safari-operator/view?id=' . $model->partner->id . '" class="text-primary" style="color: green !important;">' . $model->partner->business_name . ' (partner)</a>';
+                                        $str .= "<br>";
+                                    }
+                                    return $str .= $model->request_caller_1_no;
+                                    
+                                }else{
+                                    return $str .= $model->request_caller_2_no;
+                                }
+
+                            }elseif(isset($model->callerUser1->id)){
+
+                                $str = '<a href="/user/default/profile?user_id=' . $model->callerUser1->id . '" class="text-primary" style="color: green !important;">' . $model->callerUser1->name . '</a>';
+                                $str .= "<br>";
+                            }
                             return $str .= $model->request_caller_1_no;
                         }
                     ],
@@ -67,8 +99,7 @@ $this->params['title'] = $this->title;
                             } elseif ($model->service == \common\models\CallLog::SERVICE_AIR_PHONE && ($model->call_status == 'caller_no_answer' || $model->call_status == 'agent_no_answer')) {
                                 return '<p class="text-warning" style="color: red !important;">Call Not Received</p>';
                             } elseif ($model->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
-                                 return \common\models\CallLog::callStatusList()[$model->call_status] ?? '';
-
+                                return \common\models\CallLog::callStatusList()[$model->call_status] ?? '';
                             }
                             return '';
                         }
@@ -82,7 +113,7 @@ $this->params['title'] = $this->title;
                     //     }
                     // ],
 
-                    
+
                     // [
                     //     'label' => 'Recording Duration',
                     //     'contentOptions' => ['style' => 'width: 10%;'],
@@ -125,7 +156,7 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
-                                return isset($model->talk_duration) ? $model->talk_duration .' Seconds' : '';
+                                return isset($model->talk_duration) ? $model->talk_duration . ' Seconds' : '';
                             }
                             return isset($model->duration) ? $model->duration : '';
                         }
@@ -137,7 +168,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
 
                             if ($model->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
-                                 return \common\models\CallLog::callStatusList()[$model->call_status] ?? '';
+                                return \common\models\CallLog::callStatusList()[$model->call_status] ?? '';
                             }
                             return isset($model->call_status) ? ucwords(str_replace('_', ' ', $model->call_status))  : '';
                         }

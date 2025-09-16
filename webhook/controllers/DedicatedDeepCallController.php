@@ -184,13 +184,13 @@ class DedicatedDeepCallController extends Controller
         if (!$callLog) {
             $callLog = new \common\models\CallLog();
         }
-        $phone_no = $data['did'] % 10;
-       $sf = SafariOperator::find()->where(['direct_call_no'=>$phone_no])->one();
-        
+        $phone_no = substr($data['did'], -10);
+        $sf = SafariOperator::find()->where(['direct_call_no' => $phone_no])->one();
+
 
         $callLog->call_initiated_partner_id = $sf->id ?? null; // Equivalent to $callLog->request_caller_2_no
         $callLog->operator_user_id = $sf->user_id ?? null; // Equivalent to $callLog->request_caller_2_no
-        
+
         $callLog->request_caller_1_no = $data['masterAgentNumber'] ?? null; // Equivalent to $callLog->request_caller_2_no
         $callLog->request_caller_2_no = $data['cNumber'] ?? null; // Equivalent to $callLog->request_caller_1_no
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
