@@ -56,19 +56,7 @@ class DefaultController extends RestController
 
     public function actionIndex()
     {
-        $promotions = Feeds::find()
-            ->where(['collection' => 1, 'status' => 1])
-            ->andWhere(['>=', 'date_time', date('Y-m-d')])
-            ->orderBy(['id' => SORT_DESC])
-            ->limit(3)
-            ->all();
-        $fdIds = [];
-        foreach ($promotions as $promotion) {
-            $fixed_departure = ShareSafari::find()->where(['id' => $promotion->collection_id, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE])->limit(1)->one();
-            if ($fixed_departure) {
-                $fdIds[] = $fixed_departure->id;
-            }
-        }
+        $fdIds = [274];
 
         $searchModel = new FeedsSearch();
         $searchModel->status = Feeds::STATUS_ACTIVE;
