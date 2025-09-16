@@ -8,6 +8,7 @@ use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\feeds\Feeds;
 use api\models\feeds\FeedsSearch;
+use api\models\sharesafari\ShareSafari;
 use yii\db\Expression;
 use yii\filters\AccessControl;
 
@@ -55,6 +56,18 @@ class DefaultController extends RestController
 
     public function actionIndex()
     {
+        $promotions = Feeds::find()
+            ->where(['collection' => 1, 'status' => 1])
+            ->andWhere(['>=', 'date_time', date('Y-m-d')])
+            ->orderBy(['id' => SORT_DESC])
+            ->all();
+        $fdIds = [];
+        foreach ($promotions as $promotion) {
+            $fixed_departure = ShareSafari::find()->where(['id' => $promotion->collection_id, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE])->limit(3)->one();
+            if ($fixed_departure) {
+                $fdIds[] = $fixed_departure->id;
+            }
+        }
 
         $searchModel = new FeedsSearch();
         $searchModel->status = Feeds::STATUS_ACTIVE;
@@ -75,7 +88,6 @@ class DefaultController extends RestController
             // $pageSize = $this->query_params['pageSize'] ?? 5;
             $dataProvider->pagination->pageSize = $pageSize;
             $dataProvider->pagination->validatePage = false;
-
             $data['data']['summary']['total'] = $dataProvider->getTotalCount();
             $data['data']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
             $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
@@ -85,6 +97,21 @@ class DefaultController extends RestController
         $data['data']['summary']['query_params'] = $this->query_params;
         $data['data']['feeds'] = $this->serializeData($dataProvider->getModels());
 
+        // Fixed Departure Extra Object
+        $randomKey = array_rand($fdIds);
+        $promotion_id = $fdIds[$randomKey];
+        $promotionModel = new FeedsSearch();
+        $promotionModel->status = Feeds::STATUS_ACTIVE;
+        $promotionModel->collection_id = $promotion_id;
+        $promotionModel->collection = Feeds::MODEL_SHARESFARI;
+        $promotionProvider = $promotionModel->search(\Yii::$app->request->queryParams);
+        $page = Yii::$app->request->get('page', 1);
+        if (in_array($page, [1, 2, 3])) {
+            $data['data']['feeds'] = array_merge(
+                $data['data']['feeds'],
+                $this->serializeData($promotionProvider->getModels())
+            );
+        }
 
         //Horizontal Feeds
         $types = ['sighting' => Feeds::MODEL_SIGHTING, 'package' => Feeds::MODEL_PACKAGE];
@@ -92,10 +119,8 @@ class DefaultController extends RestController
         $horizontalModel = new FeedsSearch();
         $horizontalModel->status = Feeds::STATUS_ACTIVE;
         $horizontalModel->collection = $types[$randomType];
-
         $horizontalProvider = $horizontalModel->search(Yii::$app->request->getQueryParams());
         $horizontalProvider->query->orderBy(new \yii\db\Expression('RAND()'));
-
         $horizontalProvider->pagination->pageSize = 6;
 
         if (!empty($data['data']['feeds'])) {
@@ -104,11 +129,8 @@ class DefaultController extends RestController
                 $randomType . "_feeds" => $this->serializeData($horizontalProvider->getModels()),
             ];
             $data['data']['summary']['additional_feed'] = 1;
-
             array_push($data['data']['feeds'], $hr);
         }
-
-
 
         return Yii::$app->api->sendResponse($data);
     }
