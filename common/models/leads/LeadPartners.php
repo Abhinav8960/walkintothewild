@@ -117,14 +117,14 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
 
     public function afterSave($insert, $changedAttributes)
     {
-        $chat_model = Chat::find()->andWhere(['lead_id' => $this->lead_id])->andWhere(['chat_type' => 2])->one(); 
-
+        $chat_model = Chat::find()->Where(['lead_id' => $this->lead_id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->id], ['recipient_user_id' => \Yii::$app->user->identity->id]])->andWhere(['chat_type' => 2])->one(); 
+       
         if (!$chat_model) {
             return false;
         }
-        ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_model->id;
+        $chat_message->message = $this->reminder_note; 
         $chat_message->reminder_note = $this->reminder_note;
         $chat_message->reminder_datetime = $this->reminder_datetime;
         $chat_message->status = 1;

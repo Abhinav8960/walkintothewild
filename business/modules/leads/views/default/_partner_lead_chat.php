@@ -68,8 +68,6 @@
             foreach ($chats as $chat_message) {
                 if (Yii::$app->user->identity && $chat_message->created_by == Yii::$app->user->identity->id) {
         ?>
-
-
                  <?php if ($chat_message->is_quotation_message == 1) { ?>
                      <div class="d-flex justify-content-center mt-5">
                          <div class="ItineraryQuotationarea">
