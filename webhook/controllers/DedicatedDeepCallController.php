@@ -179,6 +179,8 @@ class DedicatedDeepCallController extends Controller
 
     private function saveDirectCallLog($data)
     {
+            \Yii::error('Dedicated call log data: ' . json_encode($data), 'deep-call');
+
         // Find an existing call log by callId to avoid duplicates
         $callLog = \common\models\CallLog::find()->where(['call_id' => $data['callId']])->one();
         if (!$callLog) {
@@ -191,7 +193,7 @@ class DedicatedDeepCallController extends Controller
         $callLog->call_initiated_partner_id = $sf->id ?? null; // Equivalent to $callLog->request_caller_2_no
         $callLog->operator_user_id = $sf->user_id ?? null; // Equivalent to $callLog->request_caller_2_no
 
-        $callLog->request_caller_1_no = $data['masterAgentNumber'] ?? null; // Equivalent to $callLog->request_caller_2_no
+        $callLog->request_caller_1_no = $data['masterAgentNumber'] ?? $data['aHDetail']['agentNumber'] ?? null; // Equivalent to $callLog->request_caller_2_no
         $callLog->request_caller_2_no = $data['cNumber'] ?? null; // Equivalent to $callLog->request_caller_1_no
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
         $callLog->service_user_id = $data['userId'] ?? null;
@@ -207,7 +209,7 @@ class DedicatedDeepCallController extends Controller
         $callLog->c_number = $data['cNumber'] ?? null;
         $callLog->master_num_ctc = $data['masterNumCTC'] ?? null;
         $callLog->master_agent = (string) $data['masterAgent'] ?? null;
-        $callLog->master_agent_number = $data['masterAgentNumber'] ?? null;
+        $callLog->master_agent_number = $data['masterAgentNumber'] ?? $data['aHDetail']['agentNumber'] ?? null;
         $callLog->master_group_id = $data['masterGroupId'] ?? null;
         $callLog->talk_duration = $data['talkDuration'] ?? null;
         $callLog->agent_on_call_duration = $data['agentOnCallDuration'] ?? null;
