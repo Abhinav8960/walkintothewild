@@ -161,7 +161,7 @@
                          </div>
                      </div>
 
-                 <?php } elseif ($chat_message->is_reminder == 1 && Yii::$app->user->identity && isset(Yii::$app->user->identity->operator) && $chat_message->created_by == Yii::$app->user->id) { ?>
+                 <?php } elseif ($chat_message->is_reminder == 1) { ?>
                      <div class="d-flex justify-content-center m-2">
                          <div class="ItineraryQuotationarea">
                              <div class="topTitle pb-0 text-center">

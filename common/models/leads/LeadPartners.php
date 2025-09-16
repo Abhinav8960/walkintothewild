@@ -2,6 +2,8 @@
 
 namespace common\models\leads;
 
+use common\models\chat\Chat;
+use common\models\chat\ChatMessage;
 use common\models\operator\SafariOperator;
 use Yii;
 
@@ -111,6 +113,25 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         $reminder->reminder_note = $model->reminder_note;
         $reminder->reminder_datetime = $model->reminder_datetime;
         $reminder->save(false);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $chat_model = Chat::find()->andWhere(['lead_id' => $this->lead_id])->andWhere(['chat_type' => 2])->one(); 
+
+        if (!$chat_model) {
+            return false;
+        }
+        ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
+        $chat_message = new ChatMessage();
+        $chat_message->chat_id = $chat_model->id;
+        $chat_message->reminder_note = $this->reminder_note;
+        $chat_message->reminder_datetime = $this->reminder_datetime;
+        $chat_message->status = 1;
+        $chat_message->sender_id = $this->partner->user_id;
+        $chat_message->is_reminder = 1;
+        $chat_message->save(false);
+        return false;
     }
     
 }
