@@ -33,19 +33,16 @@ use yii\helpers\Html;
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Safaris</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($safaris) ? $safaris : '' ?></td>
+                    <td style="padding: 8px 0; color: #555;"><?= isset($no_of_safari) ? $no_of_safari : '' ?></td>
                 </tr>
-                <tr>
-                    <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Stay Category</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($staycategory) ? $staycategory : '' ?></td>
-                </tr>
+                
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Start Date</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($start_date) ? $start_date : '' ?></td>
+                    <td style="padding: 8px 0; color: #555;"><?= isset($start_date) ? date('d M, Y',strtotime($start_date)) : '' ?></td>
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">End Date</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($end_date) ? $end_date : '' ?></td>
+                    <td style="padding: 8px 0; color: #555;"><?= isset($end_date) ? date('d M, Y',strtotime($end_date)) : '' ?></td>
                 </tr>
 
             </table>
@@ -67,7 +64,7 @@ use yii\helpers\Html;
                 <table style="width: 100%; font-size: 20px; font-weight: 600; margin-bottom: 10px;">
                     <tr>
                         <td style="text-align: left;">Payment Recieved.</td>
-                        <td style="text-align: left;">Reference No: <?= $reference_no ?? '' ?></td>
+                        <td style="text-align: left;">Reference No: <?= $referenceId ?? '' ?></td>
                     </tr>
                 </table>
 

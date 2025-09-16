@@ -3,7 +3,7 @@
 namespace common\events\sharesafari;
 
 
-use common\models\sharesafari\ShareSafari;
+use api\models\sharesafari\ShareSafari;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
@@ -79,20 +79,21 @@ class SafariBookedByUser extends Event
                     'mail_template_id' => $this->emailTemplateId($this->mail_template_code_for_user),
                     'params' => [
                         'fixed_depature_name'=> $this->shared_safari_title,
-                        'night_stay_count' => round((strtotime($$this->shared_safari->end_date) - strtotime($$this->shared_safari->start_date)) / 86400),
-                        'safaris'=> $this->shared_safari->safaris,
+                        'night_stay_count' => round((strtotime($this->shared_safari->end_date) - strtotime($this->shared_safari->start_date)) / 86400),
+                        'username' => $this->name,
                         'name' => $this->name,
                         // 'shared_safari' => $this->shared_safari_name,
+                        'staycategory' => $this->shared_safari->staycategory->title,
                         'shared_safari_title' => $this->shared_safari_title,
                         'no_of_safari' => $this->no_of_safari,
-                        'start_date' => $this->start_date,
-                        'end_date' => $this->end_date,
+                        'start_date' => date('D M, Y',strtotime($this->start_date)),
+                        'end_date' => date('D M, Y',strtotime($this->end_date)),
                         'booked_seat' => $this->booked_seat,
                         'referenceId' => $this->referenceId,
                         'amount' => $this->amount,
                         'park' => $this->park,
                         'operatorsDetails' => [
-                            'name' => $this->shared_safari->safarioperator->name,
+                            'name' => $this->shared_safari->safarioperator->business_name,
                             'email' => $this->shared_safari->safarioperator->email,
                             'phone' => $this->shared_safari->safarioperator->phone_no
                         ]
@@ -108,10 +109,8 @@ class SafariBookedByUser extends Event
                     'mail_template_id' => $this->emailTemplateId($this->mail_template_code_for_opearator),
                     'params' => [
                         'fixed_depature_name'=> $this->shared_safari_title,
-                        'name' => $this->name,
-                        'email' => $this->email,
-                        'phone' => $this->phone,
                         // 'shared_safari' => $this->shared_safari_name,
+                        'staycategory' => $this->shared_safari->stay_category_display,
                         'shared_safari_title' => $this->shared_safari_title,
                         'no_of_safari' => $this->no_of_safari,
                         'start_date' => $this->start_date,
