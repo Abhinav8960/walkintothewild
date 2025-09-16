@@ -14,6 +14,7 @@ class SafariBookedByUser extends Event
 {
     public $email;
     public $name;
+    public $phone;
     public $templates;
     public $channelName;
     public $shared_safari_id;
@@ -38,11 +39,12 @@ class SafariBookedByUser extends Event
     protected $mail_template_code = 'SSBU';  // New Safari Created By User mail to admin
 
 
-    public function __construct($email, $name, $shared_safari_id, $referenceId, $amount, $booked_seat, $start_date, $end_date)
+    public function __construct($email, $name, $phone, $shared_safari_id, $referenceId, $amount, $booked_seat, $start_date, $end_date)
     {
 
         $this->name = $name;
         $this->email = $email;
+        $this->phone = $phone;
         $this->shared_safari_id = $shared_safari_id;
         $this->referenceId = $referenceId;
         $this->amount = $amount;
@@ -72,11 +74,10 @@ class SafariBookedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => $this->shared_safari_title . 'Booked, get ready for adventure!!',
+                    'subject' => $this->shared_safari_title . ' Booked, get ready for adventure!!',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'name' => $this->name,
-                        // 'email' => $this->email,
                         // 'shared_safari' => $this->shared_safari_name,
                         'shared_safari_title' => $this->shared_safari_title,
                         'no_of_safari' => $this->no_of_safari,
@@ -88,15 +89,18 @@ class SafariBookedByUser extends Event
                         'park' => $this->park,
                     ],
                     'to_mail' => $this->email,
-                    'cc' => [],
+                    'cc' => [
+                        \Yii::$app->params['adminEmail']
+                    ],
                     'bcc' => [],
                 ],
                 [
-                    'subject' => $this->shared_safari_title . 'Booked by ' . $this->name . ', get ready for adventure!!',
+                    'subject' => $this->shared_safari_title . ' Booked by ' . $this->name . ', get ready for adventure!!',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'name' => $this->name,
-                        // 'email' => $this->email,
+                        'email' => $this->email,
+                        'phone' => $this->phone,
                         // 'shared_safari' => $this->shared_safari_name,
                         'shared_safari_title' => $this->shared_safari_title,
                         'no_of_safari' => $this->no_of_safari,
