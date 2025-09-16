@@ -115,20 +115,20 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         $reminder->save(false);
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public static function preparechatmessage($model,$id)
     {
-        $chat_model = Chat::find()->Where(['lead_id' => $this->lead_id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->id], ['recipient_user_id' => \Yii::$app->user->identity->id]])->andWhere(['chat_type' => 2])->one(); 
+        $chat_model = Chat::find()->Where(['lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->id], ['recipient_user_id' => \Yii::$app->user->identity->id]])->andWhere(['chat_type' => 2])->one(); 
        
         if (!$chat_model) {
             return false;
         }
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_model->id;
-        $chat_message->message = $this->reminder_note; 
-        $chat_message->reminder_note = $this->reminder_note;
-        $chat_message->reminder_datetime = $this->reminder_datetime;
+        $chat_message->message = $model->reminder_note; 
+        $chat_message->reminder_note = $model->reminder_note;
+        $chat_message->reminder_datetime = $model->reminder_datetime;
         $chat_message->status = 1;
-        $chat_message->sender_id = $this->partner->user_id;
+        $chat_message->sender_id = $model->partner->user_id;
         $chat_message->is_reminder = 1;
         $chat_message->save(false);
         return false;
