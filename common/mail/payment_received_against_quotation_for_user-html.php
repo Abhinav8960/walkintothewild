@@ -77,7 +77,7 @@ use yii\helpers\Html;
         <?php
         if (isset($operatorsDetails)) {
         ?>
-            <div style="background-color: #e6f7e8; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+            <div style="background-color: #a1a1a1; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
                 <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Operator Details</div>
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                     <tr>
