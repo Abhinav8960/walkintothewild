@@ -334,6 +334,7 @@ class DefaultController extends  Controller
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 LeadPartners::reminderHistory($model);
+                LeadPartners::preparechatmessage($model,$id);
                 Yii::$app->session->setFlash('success', 'Reminder added successfully.');
                 return $this->redirect(Yii::$app->request->referrer);
             }
