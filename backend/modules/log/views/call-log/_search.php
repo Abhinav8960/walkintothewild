@@ -31,6 +31,17 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
+    <div class="col-md-2">
+        <?= $form->field($model, 'is_dedicated')->dropDownList(
+            [
+                1=>'Dedicated No Calls',
+                0=>'Non Dedicated No Calls'
+            ],
+            [
+                'prompt' => 'Select Operator',
+            ]
+        ) ?>
+    </div>
 
     <div class="col-md-3">
         <?= $form->field($model, 'date_range', [

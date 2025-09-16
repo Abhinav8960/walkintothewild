@@ -142,6 +142,15 @@ $this->params['title'] = $this->title;
                             return isset($model->call_status) ? ucwords(str_replace('_', ' ', $model->call_status))  : '';
                         }
                     ],
+                    [
+                        'label' => 'Is Dedicated',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+
+                            return $model->is_dedicated == 1 ? 'Dedicated No' : 'Non Dedicated No';
+                        }
+                    ],
                     // [
                     //     'label' => 'Call Request Status',
                     //     'contentOptions' => ['style' => 'width: 10%;'],
