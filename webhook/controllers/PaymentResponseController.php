@@ -116,7 +116,7 @@ class PaymentResponseController extends Controller
             $transaction->triggerTransactionEvent();
             if ($transaction->source == Transaction::SOURCE_LEAD) {
                 $this->prepareChat($transaction->id, $transaction->lead_partner_quotes_id, $message, $transaction->status);
-                $this->sendEmailNotification($transaction->id, $transaction->reference_id, $transaction->user_id, $transaction->partner->user_id, $transaction->status);
+                $this->sendEmailNotification($transaction->id, $transaction->reference_id, $transaction->user_id, $transaction->partner->user_id, $transaction->partner_id, $transaction->status);
             }
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
@@ -364,12 +364,12 @@ class PaymentResponseController extends Controller
     // $this->sendEmailNotification($transaction->lead_partner_quotes_id, $transaction->status);
     //         PaymentRecievedForQuotation
 
-    private function sendEmailNotification($transaction_id, $reference_no, $user_id, $partner_user_id, $status)
+    private function sendEmailNotification($transaction_id, $reference_no, $user_id, $partner_user_id, $partner_id, $status)
     {
         $transaction = Transaction::find()->where(['id' => $transaction_id])->one();
 
         if ($status == 1) {
-            new \common\events\leads\PaymentRecievedForQuotation($transaction, $reference_no, $user_id, $partner_user_id);
+            new \common\events\leads\PaymentRecievedForQuotation($transaction, $reference_no, $user_id, $partner_user_id, $partner_id);
         }
     }
 }
