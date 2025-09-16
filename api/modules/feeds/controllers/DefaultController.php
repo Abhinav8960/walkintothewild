@@ -107,7 +107,7 @@ class DefaultController extends RestController
         $promotionModel->collection = Feeds::MODEL_SHARESFARI;
         $promotionProvider = $promotionModel->search(\Yii::$app->request->queryParams);
         $page = Yii::$app->request->get('page', 1);
-        if (in_array($page, [1, 2, 3])) {
+        if (in_array($page, [1])) {
             $data['data']['feeds'] = array_merge(
                 $data['data']['feeds'],
                 $this->serializeData($promotionProvider->getModels())
