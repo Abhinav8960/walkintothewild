@@ -49,7 +49,7 @@ class ParkReviewApprovalEvent extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => 'New Review for approval ' . $this->park_title . ' !',
+                    'subject' => 'New Review for approval for ' . $this->park_title . ' !',
                     'mail_template_id'  => $this->emailTemplateId(),
                     'params' => [
                         'park_title' => $this->park_title,
