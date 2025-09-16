@@ -72,6 +72,11 @@ class PaymentRecievedForQuotation extends Event
                         'addional_notes' => $this->transaction->addional_notes,
                         'reference_no' => $this->reference_no,
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->transaction->received_amount),
+                        'operatorsDetails' => [
+                            'name' => $this->partner_user->name,
+                            'email' => $this->partner_user->email,
+                            'phone' => $this->partner_user->phone_no
+                        ]
                         // 'payment_url' => urlencode($this->payment_url_email),
                         // 'qr_code' => isset($this->transaction->due_quatation->qr_code_file) ? urlencode(\Yii::$app->params['s3_endpoint'] . '/' . $this->transaction->due_quatation->qr_code_file) : null,
                     ],
@@ -100,6 +105,11 @@ class PaymentRecievedForQuotation extends Event
                         'addional_notes' => $this->transaction->quotation->addional_notes,
                         'reference_no' => $this->reference_no,
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->transaction->received_amount),
+                        'travelersDetails' => [
+                            'name' => $this->user->name,
+                            'email' => $this->user->email,
+                            'phone' => $this->user->mobile_no
+                        ]
                     ],
                     'to_mail' => $this->partner_user->email,
                     'cc' => [],

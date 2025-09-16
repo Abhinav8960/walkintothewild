@@ -18,14 +18,14 @@ use yii\helpers\Html;
         <hr>
         <p style="font-size: 18px; color: #333; margin-bottom: 20px; font-style: italic;">Payment received! You can initiate the arrangements. Please find the traveler’s contact information below.</p>
 
-        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $parkname ?> <?= isset($night_stay_count) ? ' + ' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? ' + ' . $safaris . ' Jungle Safaris' : '' ?></p>
+        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $fixed_depature_name ?> <?= isset($night_stay_count) ? ' + ' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? ' + ' . $safaris . ' Jungle Safaris' : '' ?></p>
 
         <div style="background-color: #e6f7e8; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-            <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Quotation</div>
+            <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Fixed Departure</div>
             <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                 <tr>
-                    <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Park</td>
-                    <td style="padding: 8px 0; color: #555;"><?= $parkname ?></td>
+                    <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Name</td>
+                    <td style="padding: 8px 0; color: #555;"><?= $fixed_depature_name ?></td>
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Travelers</td>
