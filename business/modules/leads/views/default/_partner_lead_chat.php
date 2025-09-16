@@ -2,8 +2,9 @@
 
     use common\models\GeneralModel;
     use common\models\leads\Lead;
-use common\models\leads\LeadPartnerReminders;
-use common\models\partnergallery\PartnerGalleryVersion;
+    use common\models\leads\LeadPartnerReminders;
+    use common\models\leads\LeadPartners;
+    use common\models\partnergallery\PartnerGalleryVersion;
     use yii\bootstrap5\Html;
     use yii\helpers\Url;
 
@@ -20,12 +21,19 @@ use common\models\partnergallery\PartnerGalleryVersion;
      <div class="UserInfobx d-flex align-items-center gap-4">
          <?php if ($model->status == Lead::STATUS_ACTIVE) { ?>
 
-            <?= $model->id && $model->operator?->id ? LeadPartnerReminders::getLeadcategory($model->id, $model->operator->id) : '' ?>
+             <?= $model->id ? LeadPartners::getLeadcategory($model->id,\Yii::$app->user->identity->operator->id) : '' ?>
 
              <div class="sharBtn">
-                 <?= Html::button('<i class="fa-solid fa-bell"></i> Set Updation', [
+                 <?= Html::button('<i class="fa-solid fa-bell"></i>', [
                         'value' => Url::to(['set-reminder', 'id' => $model->id]),
                         'class' => 'reminder-button',
+                    ]) ?>
+             </div>
+
+             <div class="sharBtn">
+                 <?= Html::button('Lead Category', [
+                        'value' => Url::to(['lead-category', 'id' => $model->id]),
+                        'class' => 'lead-category-button',
                     ]) ?>
              </div>
 
@@ -153,13 +161,20 @@ use common\models\partnergallery\PartnerGalleryVersion;
                          </div>
                      </div>
 
-                 <?php } elseif (($model->operator) && (Yii::$app->user->identity->id == $model->operator->user_id) && ($chat_message->is_reminder == 1)) { ?>
-
+                 <?php } elseif (isset(Yii::$app->user->identity->operator) && ($chat_message->is_reminder == 1)) { ?>
                      <div class="d-flex justify-content-center m-2">
                          <div class="ItineraryQuotationarea">
-                             <div class="topTitle pb-0">
-                                 <h6 class="text-center"><?= $chat_message->message ?? 'Saved with empty message!'?></h6>
+                             <div class="topTitle pb-0 text-center">
+                                 <h6 class="mb-1">
+                                     <?= $chat_message->reminder_note ?: 'Saved with empty message!' ?>
+                                 </h6>
+                                 <span class="d-block">
+                                     <?= $chat_message->reminder_datetime
+                                            ? Yii::$app->formatter->asDatetime($chat_message->reminder_datetime, 'php:d M Y')
+                                            : 'Reminder datetime not set !' ?>
+                                 </span>
                              </div>
+
                              <div class="recievedTime d-flex justify-content-end">
                                  <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                              </div>
@@ -291,6 +306,23 @@ use common\models\partnergallery\PartnerGalleryVersion;
      </div>
  </div>
 
+ <div class="modal fade" id="leadcategoryAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-lg modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header flageHeader">
+                 <h6 class="modal-title fs-5" id="exampleModalLabel">
+                     Set Lead Category
+                 </h6>
+             </div>
+
+             <div class="modal-body modal_form">
+                 <div id='modalContent'></div>
+             </div>
+
+         </div>
+     </div>
+ </div>
+
 
  <?php
     $script = <<< JS
@@ -314,6 +346,11 @@ use common\models\partnergallery\PartnerGalleryVersion;
 		.load($(this).attr('value'));
 	});
 
+    $('.lead-category-button').on('click', function () {
+        $('#leadcategoryAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
 
 JS;
     $this->registerJs($script);

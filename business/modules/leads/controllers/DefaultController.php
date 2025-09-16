@@ -325,23 +325,41 @@ class DefaultController extends  Controller
     public function actionSetReminder($id)
     {
         $lead = $this->findModel($id);
-        $lead_partner = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
+        $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
 
-        if (!$lead_partner) {
+        if (!$model) {
             throw new NotFoundHttpException('Lead partner not found.');
         }
-        $model = new LeadPartnerReminders();
-        $model->lead_id        = $lead->id;
-        $model->lead_partner_id = $lead_partner->id;
-        $model->partner_id     = $lead_partner->partner_id;
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             if ($model->save()) {
+                LeadPartners::reminderHistory($model);
                 Yii::$app->session->setFlash('success', 'Reminder added successfully.');
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
         return $this->renderAjax('_set_reminder', [
+            'model' => $model,
+            'lead'  => $lead,
+        ]);
+    }
+
+    public function actionLeadCategory($id)
+    {
+        $lead = $this->findModel($id);
+        $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException('Lead partner not found.');
+        }
+
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Lead Category updated successfully.');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+        }
+        return $this->renderAjax('_lead_category', [
             'model' => $model,
             'lead'  => $lead,
         ]);

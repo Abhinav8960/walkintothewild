@@ -139,7 +139,7 @@ $this->title = 'Leads';
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) use ($safari_operator) {
-                            return LeadPartnerReminders::getLeadcategory($model->id, $safari_operator->id);
+                            return LeadPartners::getLeadcategory($model->id, $safari_operator->id);
                         }
                     ],
                     

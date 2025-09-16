@@ -104,19 +104,43 @@ use yii\web\JsExpression;
                 </div>
 
                 <div class="filterItem position-relative">
-                    <label>Travel Date:</label>
+                    <label>Reminder Datetime:</label>
+                    <?= $form->field($model, 'reminder_datetime', [
+                        'options' => ['class' => 'drp-container mb-2']
+                    ])->widget(DateRangePicker::class, [
+                        'convertFormat' => true,
+                        'options' => [
+                            'placeholder' => 'Enter Date Range',
+                            'class' => 'custom_input',
+                        ],
+                        'pluginOptions' => [
+                            'allowclear' => true,
+                            // 'singleDatePicker' => true,
+                            'showDropdowns' => true,
+                            // 'minDate' =>date('2024-01-01'),
+                            // 'maxDate' => date('Y-m-d'),
+                            'locale' => [
+                                'format' => 'Y-m-d',
+                            ],
+                        ]
+                    ]);
+                    ?>
+                </div>
+
+                <div class="filterItem position-relative">
 
                     <div class="filter-one d-flex gap-2">
-                        <!-- <span>From:</span> -->
+                        <label>Travel From Date:</label>
                         <?= $form->field($model, 'from_date')->input('date')->label(false) ?>
                     </div>
+                </div>
+                <div class="filterItem position-relative">
 
                     <div class="filter-one d-flex gap-2">
-                        <!-- <span>To:</span> -->
+                        <label>Travel To Date:</label>
                         <?= $form->field($model, 'to_date')->input('date')->label(false) ?>
                     </div>
                 </div>
-
 
             </div>
         </div>

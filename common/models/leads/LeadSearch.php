@@ -18,6 +18,7 @@ class LeadSearch extends Lead
 
 
     public $lead_category;
+    public $reminder_datetime;
 
 
 
@@ -32,7 +33,7 @@ class LeadSearch extends Lead
             [['user_name'], 'string'],
             [['safari_operator_id'], 'integer'],
             [['lead_month', 'custom_status', 'is_payment_link_send'], 'safe'],
-            [['lead_category'], 'safe']
+            [['lead_category','reminder_datetime'], 'safe']
         ];
     }
 
@@ -211,22 +212,16 @@ class LeadSearch extends Lead
             };
         }
 
-        $query->leftJoin(
-            'lead_partner_reminders lr',
-            'lr.lead_id = lead.id AND lr.id = (SELECT MAX(id) FROM lead_partner_reminders WHERE lead_id = lead.id)'
-        );
-
         if ($this->lead_category !== null && $this->lead_category !== '') {
-            $query->andFilterWhere(['lr.lead_category' => $this->lead_category]);
+            $query->andFilterWhere(['lead_category' => $this->lead_category]);
         }
 
-        // if ($this->date_filter) {
-        //     $date_query = "from_date <= '" . $this->date_filter . "' AND to_date >= '" . $this->date_filter . "'";
-        //     if ($date_query <> '') {
-        //         $query->andWhere($date_query);
-        //     }
-        // }
-
+        if (!empty($this->reminder_datetime) && strpos($this->reminder_datetime, ' - ') !== false) {
+            list($start_date, $end_date) = explode(' - ', $this->reminder_datetime);
+            $query->joinWith('assignOperator')
+                  ->andFilterWhere(['between', 'lead_partners.reminder_datetime', $start_date, $end_date]);
+        }
+        
         if (!empty($this->user_name)) {
             $query->joinwith(['user' => function ($query) {
                 $query->andFilterWhere(['like', 'user.name', $this->user_name]);
