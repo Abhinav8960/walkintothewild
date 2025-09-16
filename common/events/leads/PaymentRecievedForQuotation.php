@@ -76,7 +76,7 @@ class PaymentRecievedForQuotation extends Event
                         'reference_no' => $this->reference_no,
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->transaction->received_amount),
                         'operatorsDetails' => [
-                            'name' => $this->partner->name,
+                            'name' => $this->partner->business_name,
                             'email' => $this->partner->email,
                             'phone' => $this->partner->phone_no
                         ]

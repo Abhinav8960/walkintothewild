@@ -78,7 +78,7 @@ use yii\helpers\Html;
         if (isset($operatorsDetails)) {
         ?>
             <div style="background-color: #e6f7e8; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Travelers Details</div>
+                <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Operator Details</div>
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                     <tr>
                         <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Name</td>
