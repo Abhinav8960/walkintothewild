@@ -24,6 +24,7 @@ use api\models\park\ParkStayCategorySearch;
 use api\models\park\SafariParkAccomodation;
 use api\models\park\SafariParkAccomodationSearch;
 use api\models\park\SafariParkFollower;
+use common\events\park\ParkReviewApprovalEvent;
 use common\models\leads\form\ParkLeadForm;
 use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\OperatorQuoteForm;
@@ -210,6 +211,7 @@ class DefaultController extends RestController
             if ($model->validate()) {
                 $model->initializeForm();
                 if ($model->rating_model->save(false)) {
+                     new ParkReviewApprovalEvent($safari_park->title, $model->rating_model->review);
                     Yii::$app->session->setFlash('success', 'Thanks for Review! Your review sent for approval');
                     $message = Yii::$app->api->messageManager->getMessage('park.review.review_submitted');
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);

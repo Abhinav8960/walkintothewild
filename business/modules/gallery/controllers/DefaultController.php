@@ -226,6 +226,9 @@ class DefaultController extends Controller
                 $version->send_for_approval_time =  $partner_gallery_model->send_for_approval_time;
                 $version->save(false);
             }
+
+            new \common\events\operator\GallerySendForApprovalEvent($safari_operator->id, $partner_gallery_model->title);
+
             \Yii::$app->session->setFlash('success', 'Gallery Send For Approval!!!');
             return $this->redirect(['index']);
         }
