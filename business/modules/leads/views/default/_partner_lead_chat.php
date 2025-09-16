@@ -164,6 +164,7 @@
                          <div class="ItineraryQuotationarea">
                              <div class="topTitle pb-0 text-center">
                                  <h6 class="mb-1">
+                                    <p class="text-danger">Reminder</p>
                                      <?= $chat_message->reminder_note ?: 'Saved with empty message!' ?>
                                  </h6>
                                  <span class="d-block">
