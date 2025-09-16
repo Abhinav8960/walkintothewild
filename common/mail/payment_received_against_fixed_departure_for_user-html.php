@@ -29,13 +29,14 @@ use yii\helpers\Html;
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Travelers</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($travelers) ? $travelers : '' ?></td>
+                    <td style="padding: 8px 0; color: #555;"><?= isset($booked_seat) ? $booked_seat : '' ?></td>
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Safaris</td>
                     <td style="padding: 8px 0; color: #555;"><?= isset($no_of_safari) ? $no_of_safari : '' ?></td>
                 </tr>
-                
+
+               
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Start Date</td>
                     <td style="padding: 8px 0; color: #555;"><?= isset($start_date) ? date('d M, Y',strtotime($start_date)) : '' ?></td>

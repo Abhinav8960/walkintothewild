@@ -35,6 +35,8 @@ use yii\helpers\Html;
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Safaris</td>
                     <td style="padding: 8px 0; color: #555;"><?= isset($no_of_safari) ? $no_of_safari : '' ?></td>
                 </tr>
+
+                
                 
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Start Date</td>

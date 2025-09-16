@@ -83,7 +83,7 @@ class SafariBookedByUser extends Event
                         'username' => $this->name,
                         'name' => $this->name,
                         // 'shared_safari' => $this->shared_safari_name,
-                        'staycategory' => $this->shared_safari->staycategory->title,
+                        'staycategory' => $this->shared_safari->stay_category_display,
                         'shared_safari_title' => $this->shared_safari_title,
                         'no_of_safari' => $this->no_of_safari,
                         'start_date' => date('D M, Y',strtotime($this->start_date)),
