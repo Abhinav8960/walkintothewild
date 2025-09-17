@@ -2199,4 +2199,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $safari_park->google_review_count = $count;
         $safari_park->save(false);
     }
+
+    public static function leadcategoryoption()
+    {
+        return [
+            '0' => 'Not in use',
+            '1' => 'Hot Lead',
+            '-1'=>'Cold Lead'
+        ];
+    }
 }

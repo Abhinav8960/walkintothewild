@@ -136,4 +136,37 @@ class ChatSearch extends \Yii\base\Model
         $query->andFilterWhere(['like', 'user.name', $this->name]);
         return $dataProvider;
     }
+
+
+    public function partnersearch($params, $user_id)
+    {
+        $query = Chat::find()->andWhere([
+            'chat.recipient_user_id' => $user_id
+        ]);
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC,
+                ],
+            ]
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'chat.chat_type' => $this->chat_type,
+        ]);
+
+
+        return $dataProvider;
+    }
 }

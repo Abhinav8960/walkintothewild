@@ -2,11 +2,19 @@
 
 namespace business\modules\sharesafari\controllers;
 
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
+use api\models\partnergallery\PartnerGallery;
 use api\models\sharesafari\ShareSafari as ApiShareSafari;
 use business\controllers\BusinessController;
+use common\models\bookings\Booking;
+use common\models\chat\form\ChatForm;
+use common\models\chat\form\GalleryChatForm;
+use common\models\leads\sharesafari\ShareSafariLead;
 use common\models\master\faq\MasterFaq;
 use common\models\operator\SafariOperatorFaq;
 use common\models\partnergallery\PartnerGallerySearch;
+use common\models\partnergallery\PartnerGalleryVersion;
 use common\models\sharesafari\form\CreateDepartureVersionForm;
 use common\models\sharesafari\form\DayItineraryForm;
 use common\models\sharesafari\form\ShareSafariFaqForm;
@@ -22,6 +30,7 @@ use common\models\sharesafari\ShareSafariSearch;
 use common\models\sharesafari\ShareSafariVersion;
 use common\models\sharesafari\ShareSafariVersionSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -470,7 +479,7 @@ class DefaultController extends Controller
             $m->status = ShareSafariVersion::SEND_FOR_APPROVAL_STATUS;
             $m->save(false);
             $this->updateFixedDepartureStatus($m->share_safari_id, $m->version, $m->status);
-             if ($m->status == ShareSafariVersion::SEND_FOR_APPROVAL_STATUS) {
+            if ($m->status == ShareSafariVersion::SEND_FOR_APPROVAL_STATUS) {
                 new \common\events\operator\FixedDepartureSendForApprovalEvent($m->safari_operator_id, $m->share_safari_title);
             }
             Yii::$app->session->setFlash('success', 'FixedDeparture sent for approval successfully');
@@ -930,5 +939,323 @@ class DefaultController extends Controller
         ];
 
         return json_encode($json);
+    }
+
+    public function actionChatView($id, $chat_id = null)
+    {
+        $share_safari = ShareSafari::findOne($id);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Chat::find()
+                ->where([
+                    'share_safari_id' => $share_safari->id,
+                    'chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI,
+                    'status' => Chat::STATUS_ACTIVE,
+                ])
+                ->orderBy(['id' => SORT_DESC]),
+            'pagination' => [
+                'pageSize' => 9,
+            ],
+        ]);
+
+        $first_chat = Chat::find()->where(['share_safari_id' => $share_safari->id, 'chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->andWhere(['status' => Chat::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(1)->one();
+
+        return $this->render('_chat_view', [
+            'share_safari' => $share_safari,
+            'chat_id' => isset($chat_id) ? $chat_id : (isset($first_chat) ? $first_chat->id : null),
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionUserChat($chat_id)
+    {
+        $chat_model = Chat::find()->where(['id' => $chat_id])->andWhere(['chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->limit(1)->one();
+        if ($chat_model->chat_type == Chat::CHAT_TYPE_SHARE_SAFARI && $chat_model->recipient_user_id == Yii::$app->user->identity->id) {
+            Chat::MarkChatSeen($chat_model->id);
+        }
+
+        $chat_message_model = new ChatForm();
+        if ($this->request->isPost) {
+            if ($chat_message_model->load($this->request->post())) {
+                if ($chat_message_model->validate()) {
+                    $chat_message_model->initializeForm();
+                    $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $chat_message_model->chat_form_model->message, $gallery = NULL, $data = NULL, Yii::$app->user->identity, $partner_gallery_version_id = NULL, $partner_gallery_version = NULL);
+                    $chat_message_model->message = '';
+
+                    return $this->redirect(['chat-view', 'id' => $chat_model->share_safari_id, 'chat_id' => $chat_model->id]);
+                }
+            }
+        }
+
+        return $this->renderAjax('_user_chat', [
+            'chat_model' => $chat_model,
+            'chat_message_model' => $chat_message_model,
+        ]);
+    }
+
+    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id, $partner_gallery_version)
+    {
+
+        $chat = Chat::find()->andWhere(['id' => $chat_id])->limit(1)->one();
+
+        $chat_message = new ChatMessage();
+        $chat_message->chat_id = $chat_id;
+        $chat_message->message = $message;
+        $chat_message->partner_gallery_version_id = $partner_gallery_version_id;
+        $chat_message->partner_gallery_version = isset($partner_gallery_version->version) ? $partner_gallery_version->version : null;
+        $chat_message->gallery = $gallery;
+        $chat_message->data = $data;
+        $chat_message->status = 1;
+        $chat_message->created_by = Yii::$app->user->identity->id;
+
+        if ($chat_message->save(false)) {
+            $chat = Chat::find()->where(['id' => $chat_id])->one();
+            $chat->last_message = \common\models\GeneralModel::strMaxWord($message);
+            $chat->last_message_at = time();
+            $chat->sender_id = Yii::$app->user->identity->id;
+            $chat->call_id = null;
+            $chat->is_call_request = false;
+            $chat->status = 1;
+            $chat->is_seen = 0;
+            $chat->created_at = time();
+            $chat->save(false);
+            return  \Yii::$app->session->setFlash('success', 'Message Sent Successfully');
+        } else {
+            return  \Yii::$app->session->setFlash('success', 'Message not Sent Successfully');
+        }
+    }
+
+    public function actionMakeCallOnChat($id, $chat_hash)
+    {
+
+        $chat_model = Chat::find()->where(['id' => $id])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->limit(1)->one();
+
+
+        if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
+            \Yii::$app->session->setFlash('danger', 'You cannot perform this action, as phone is not available or verified for any of the chat members');
+            return $this->redirect(['view', 'id' => $id]);
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+
+            if (!$chat_model->user->is_mobile_no_verified) {
+                \Yii::$app->session->setFlash('danger', 'User number is not verified.');
+                return $this->redirect(['view', 'id' => $id]);
+            }
+
+
+            $chat_id = $chat_model->id;
+            $lead_id = $chat_model->lead_id;
+            $call_initiated_user_id = Yii::$app->user->identity->id;
+            $operator_user_id =  Yii::$app->user->identity->id;
+            $call_initiated_partner_id = $chat_model->operator->id;
+            $request_caller_1_no = $chat_model->user->mobile_no;
+            $request_caller_1_user_id = $chat_model->user->id;
+            $request_caller_2_no = $chat_model->operator->phone_no;
+            $request_caller_2_user_id = $chat_model->operator->user_id;
+
+            $callingService = new \common\calling\services\CallingService(
+                $chat_id,
+                $lead_id,
+                $operator_user_id,
+                $call_initiated_user_id,
+                $call_initiated_partner_id,
+                $request_caller_1_no,
+                $request_caller_1_user_id,
+                $request_caller_2_no,
+                $request_caller_2_user_id
+            );
+
+            $result = $callingService->callNow();
+            $transaction->commit();
+            \Yii::$app->session->setFlash('success', 'Call initiated successfully.');
+            return $this->redirect(['chat-view', 'id' => $chat_model->share_safari_id, 'chat_id' => $chat_model->id]);
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
+            return $this->redirect(['chat-view', 'id' => $chat_model->share_safari_id, 'chat_id' => $chat_model->id]);
+        }
+    }
+
+
+    public function actionSendGallery($id)
+    {
+
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->listing_status = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $chat = Chat::find()->where(['id' => $id])->andWhere(['chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->limit(1)->one();
+        if ($chat->chat_type == Chat::CHAT_TYPE_SHARE_SAFARI && $chat->user_id == Yii::$app->user->identity->id) {
+            Chat::MarkChatSeen($chat->id);
+        }
+
+        $gallery_selection_model = new GalleryChatForm();
+        if ($this->request->isPost) {
+            if ($gallery_selection_model->load($this->request->post())) {
+                if ($gallery_selection_model->validate()) {
+                    if (!empty($gallery_selection_model->gallery_slug)) {
+                        $message = "Gallery";
+                        $partnerGallery = PartnerGallery::find()->where(['slug' => $gallery_selection_model->gallery_slug])->one();
+                        if ($partnerGallery) {
+                            $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partnerGallery->id])->andWhere(['version' => $partnerGallery->version])->limit(1)->one();
+                            $gallery = $partnerGallery->live_images;
+                        }
+                        $this->storeMessage($chat->id, Yii::$app->user->identity->id, $message, $gallery, $data = NULL, Yii::$app->user->identity, $partner_gallery_version->id, $partner_gallery_version);
+                        return $this->redirect(['chat-view', 'id' => $chat->share_safari_id, 'chat_id' => $chat->id]);
+                    }
+                }
+            }
+        }
+
+        return $this->renderAjax('_gallery_selection', [
+            'chat' => $chat,
+            'gallery_selection_model' => $gallery_selection_model,
+            'dataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionBookedUser($id)
+    {
+        $share_safari = ShareSafari::findOne($id);
+        $booked_users = Booking::find()->where(['share_safari_id' => $id])->andWhere(['status' => 1])->all();
+
+        return $this->render('_booked_user', [
+            'booked_users' => $booked_users,
+            'share_safari' => $share_safari
+        ]);
+    }
+
+
+    public function actionBookedUserChat($share_safari_id, $share_safari_lead_id)
+    {
+        $share_safari = ShareSafari::findOne($share_safari_id);
+        $share_safari_lead = ShareSafariLead::find()->where(['id' => $share_safari_lead_id])->andWhere(['status' => 1])->limit(1)->one();
+
+        if (!$share_safari_lead) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $chat_model = Chat::find()->where(['user_id' => $share_safari_lead->user_id, 'recipient_user_id' => Yii::$app->user->identity->id])->andWhere(['chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->limit(1)->one();
+
+        if ($chat_model->chat_type == Chat::CHAT_TYPE_SHARE_SAFARI && $chat_model->recipient_user_id == Yii::$app->user->identity->id) {
+            Chat::MarkChatSeen($chat_model->id);
+        }
+
+        $chat_message_model = new ChatForm();
+        if ($this->request->isPost) {
+            if ($chat_message_model->load($this->request->post())) {
+                if ($chat_message_model->validate()) {
+                    $chat_message_model->initializeForm();
+                    $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $chat_message_model->chat_form_model->message, $gallery = NULL, $data = NULL, Yii::$app->user->identity, $partner_gallery_version_id = NULL, $partner_gallery_version = NULL);
+                    $chat_message_model->message = '';
+
+                    return $this->redirect(['booked-user-chat', 'share_safari_id' => $share_safari_id, 'share_safari_lead_id' => $share_safari_lead_id]);
+                }
+            }
+        }
+
+        return $this->render('_booked_user_chat', [
+            'chat' => $chat_model,
+            'chat_message_model' => $chat_message_model,
+            'share_safari_lead' => $share_safari_lead,
+            'share_safari' => $share_safari
+        ]);
+    }
+
+    public function actionBookedMakeCallOnChat($id, $chat_hash, $share_safari_id, $share_safari_lead_id)
+    {
+
+        $chat_model = Chat::find()->where(['id' => $id])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->limit(1)->one();
+
+
+        if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
+            \Yii::$app->session->setFlash('danger', 'You cannot perform this action, as phone is not available or verified for any of the chat members');
+            return $this->redirect(['view', 'id' => $id]);
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+
+            if (!$chat_model->user->is_mobile_no_verified) {
+                \Yii::$app->session->setFlash('danger', 'User number is not verified.');
+                return $this->redirect(['view', 'id' => $id]);
+            }
+
+
+            $chat_id = $chat_model->id;
+            $lead_id = $chat_model->lead_id;
+            $call_initiated_user_id = Yii::$app->user->identity->id;
+            $operator_user_id =  Yii::$app->user->identity->id;
+            $call_initiated_partner_id = $chat_model->operator->id;
+            $request_caller_1_no = $chat_model->user->mobile_no;
+            $request_caller_1_user_id = $chat_model->user->id;
+            $request_caller_2_no = $chat_model->operator->phone_no;
+            $request_caller_2_user_id = $chat_model->operator->user_id;
+
+            $callingService = new \common\calling\services\CallingService(
+                $chat_id,
+                $lead_id,
+                $operator_user_id,
+                $call_initiated_user_id,
+                $call_initiated_partner_id,
+                $request_caller_1_no,
+                $request_caller_1_user_id,
+                $request_caller_2_no,
+                $request_caller_2_user_id
+            );
+
+            $result = $callingService->callNow();
+            $transaction->commit();
+            \Yii::$app->session->setFlash('success', 'Call initiated successfully.');
+            return $this->redirect(['booked-user-chat', 'share_safari_id' => $share_safari_id, 'share_safari_lead_id' => $share_safari_lead_id]);
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
+            return $this->redirect(['booked-user-chat', 'share_safari_id' => $share_safari_id, 'share_safari_lead_id' => $share_safari_lead_id]);
+        }
+    }
+
+
+    public function actionBookedSendGallery($id, $share_safari_id, $share_safari_lead_id)
+    {
+
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->listing_status = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $chat = Chat::find()->where(['id' => $id])->andWhere(['chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->limit(1)->one();
+        if ($chat->chat_type == Chat::CHAT_TYPE_SHARE_SAFARI && $chat->user_id == Yii::$app->user->identity->id) {
+            Chat::MarkChatSeen($chat->id);
+        }
+
+        $gallery_selection_model = new GalleryChatForm();
+        if ($this->request->isPost) {
+            if ($gallery_selection_model->load($this->request->post())) {
+                if ($gallery_selection_model->validate()) {
+                    if (!empty($gallery_selection_model->gallery_slug)) {
+                        $message = "Gallery";
+                        $partnerGallery = PartnerGallery::find()->where(['slug' => $gallery_selection_model->gallery_slug])->one();
+                        if ($partnerGallery) {
+                            $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partnerGallery->id])->andWhere(['version' => $partnerGallery->version])->limit(1)->one();
+                            $gallery = $partnerGallery->live_images;
+                        }
+                        $this->storeMessage($chat->id, Yii::$app->user->identity->id, $message, $gallery, $data = NULL, Yii::$app->user->identity, $partner_gallery_version->id, $partner_gallery_version);
+                        return $this->redirect(['booked-user-chat', 'share_safari_id' => $share_safari_id, 'share_safari_lead_id' => $share_safari_lead_id]);
+                    }
+                }
+            }
+        }
+
+        return $this->renderAjax('_gallery_selection', [
+            'chat' => $chat,
+            'gallery_selection_model' => $gallery_selection_model,
+            'dataProvider' => $dataProvider
+        ]);
     }
 }

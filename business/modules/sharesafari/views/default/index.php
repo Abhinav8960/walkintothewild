@@ -113,8 +113,30 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'header' => "Actions",
                         'headerOptions' => ['style' => 'width: 15%; text-align: center;'],
                         'contentOptions' => ['style' => 'width: 15%; text-align: right;'],
-                        'template' => '{seat}&nbsp{update}&nbsp{view}&nbsp{inactive}',
+                        'template' => '{chat}&nbsp{booked}&nbsp{seat}&nbsp{update}&nbsp{view}&nbsp{inactive}',
                         'buttons' => [
+                            'chat' => function ($url, $model) {
+                                if ($model->status == 1) {
+                                    return Html::a(
+                                        '<img src="' . $this->params['baseurl'] . '/images/chat.png" alt="" width="20" height="20">',
+                                        Url::toRoute(['chat-view', 'id' => $model->id]),
+                                        [
+                                            'title' => 'Chat',
+                                        ]
+                                    );
+                                }
+                            },
+                            'booked' => function ($url, $model) {
+                                if ($model->status == 1) {
+                                    return Html::a(
+                                        '<img src="' . $this->params['baseurl'] . '/images/booked.png" alt="" width="20" height="20">',
+                                        Url::toRoute(['booked-user', 'id' => $model->id]),
+                                        [
+                                            'title' => 'Booked User',
+                                        ]
+                                    );
+                                }
+                            },
                             'seat' => function ($url, $model) {
                                 if ($model->status == 1 && $model->cut_off_date >= date('Y-m-d')) {
                                     return Html::button(
