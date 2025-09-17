@@ -53,7 +53,7 @@ class NewReviewByUserToAdmin extends Event
                     'params' => [
                         'operator_url'=>$this->operator_url,
                     ],
-                    'to_mail' => \Yii::$app->params['adminEmail'],
+                    'to_mail' => \Yii::$app->params['supportEmail'],
                     'cc' => [],
                     'bcc' => [],
                 ]
