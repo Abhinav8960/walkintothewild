@@ -78,7 +78,7 @@ use yii\web\JsExpression;
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
 
-                <div class="filterItem position-relative">
+                <!-- <div class="filterItem position-relative">
                     <label>Lead Category:</label>
                     <?= $form->field($model, 'lead_category')->dropDownList(
                         [
@@ -92,7 +92,7 @@ use yii\web\JsExpression;
                         ],
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -103,7 +103,7 @@ use yii\web\JsExpression;
                     <?= $form->field($model, 'user_name')->textInput(['placeholder' => 'Enter User Name', 'class' => 'custom_input'])->label(false); ?>
                 </div>
 
-                <div class="filterItem position-relative">
+                <!-- <div class="filterItem position-relative">
                     <label>Reminder Datetime:</label>
                     <?= $form->field($model, 'reminder_datetime', [
                         'options' => ['class' => 'drp-container mb-2']
@@ -140,7 +140,7 @@ use yii\web\JsExpression;
                         <label>Travel To Date:</label>
                         <?= $form->field($model, 'to_date')->input('date')->label(false) ?>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>

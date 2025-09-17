@@ -134,14 +134,14 @@ $this->title = 'Leads';
                             return LeadPartners::chatStarted($model->id, $safari_operator->id);
                         }
                     ],
-                    [
-                        'label' => 'Lead Category',
-                        'headerOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) use ($safari_operator) {
-                            return LeadPartners::getLeadcategory($model->id, $safari_operator->id);
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Lead Category',
+                    //     'headerOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) use ($safari_operator) {
+                    //         return LeadPartners::getLeadcategory($model->id, $safari_operator->id);
+                    //     }
+                    // ],
                     
                     [
                         'class' => 'yii\grid\ActionColumn',

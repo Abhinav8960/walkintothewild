@@ -21,21 +21,21 @@
      <div class="UserInfobx d-flex align-items-center gap-4">
          <?php if ($model->status == Lead::STATUS_ACTIVE) { ?>
 
-             <?= $model->id ? LeadPartners::getLeadcategory($model->id, \Yii::$app->user->identity->operator->id) : '' ?>
+             <!-- <?= $model->id ? LeadPartners::getLeadcategory($model->id, \Yii::$app->user->identity->operator->id) : '' ?> -->
 
-             <div class="sharBtn">
+             <!-- <div class="sharBtn">
                  <?= Html::button('<i class="fa-solid fa-bell"></i>', [
                         'value' => Url::to(['set-reminder', 'id' => $model->id]),
                         'class' => 'reminder-button',
                     ]) ?>
-             </div>
+             </div> -->
 
-             <div class="sharBtn">
+             <!-- <div class="sharBtn">
                  <?= Html::button('Lead Category', [
                         'value' => Url::to(['lead-category', 'id' => $model->id]),
                         'class' => 'lead-category-button',
                     ]) ?>
-             </div>
+             </div> -->
 
              <div class="sharBtn">
                  <?= Html::button('Share final quote and payment link', [
