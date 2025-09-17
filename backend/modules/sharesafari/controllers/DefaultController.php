@@ -2,8 +2,10 @@
 
 namespace backend\modules\sharesafari\controllers;
 
-
+use api\models\chat\Chat;
 use common\interfaces\StatusInterface;
+use common\models\bookings\Booking;
+use common\models\leads\sharesafari\ShareSafariLead;
 use common\models\MailLog;
 use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
@@ -551,6 +553,98 @@ class DefaultController extends Controller
         return $this->render('_cancellation_list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionChatView($id, $chat_id = null)
+    {
+        $share_safari = ShareSafari::findOne($id);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Chat::find()
+                ->where([
+                    'share_safari_id' => $share_safari->id,
+                    'chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI,
+                    'status' => Chat::STATUS_ACTIVE,
+                ])
+                ->orderBy(['id' => SORT_DESC]),
+            'pagination' => [
+                'pageSize' => 9,
+            ],
+        ]);
+
+        $shareSafariDataProvider = new ActiveDataProvider([
+            'query' => ShareSafari::find()
+                ->where(['id' => $id]),
+            'pagination' => false,
+        ]);
+
+        $first_chat = Chat::find()->where(['share_safari_id' => $share_safari->id, 'chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->andWhere(['status' => Chat::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(1)->one();
+
+        return $this->render('_chat_view', [
+            'share_safari' => $share_safari,
+            'chat_id' => isset($chat_id) ? $chat_id : (isset($first_chat) ? $first_chat->id : null),
+            'dataProvider' => $dataProvider,
+            'shareSafariDataProvider' => $shareSafariDataProvider
+        ]);
+    }
+
+    public function actionUserChat($chat_id)
+    {
+        $chat = Chat::find()->where(['id' => $chat_id])->andWhere(['chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->limit(1)->one();
+
+        return $this->renderAjax('_user_chat', [
+            'chat' => $chat,
+        ]);
+    }
+
+    public function actionBookedUser($id)
+    {
+        $share_safari = ShareSafari::findOne($id);
+
+        $shareSafariDataProvider = new ActiveDataProvider([
+            'query' => ShareSafari::find()
+                ->where(['id' => $id]),
+            'pagination' => false,
+        ]);
+
+
+        $bookedDataProvider = new ActiveDataProvider([
+            'query' => Booking::find()->where(['share_safari_id' => $id])->andWhere(['status' => 1]),
+            'pagination' => false,
+        ]);
+
+        return $this->render('_booked_user', [
+            'share_safari' => $share_safari,
+            'shareSafariDataProvider' => $shareSafariDataProvider,
+            'bookedDataProvider' => $bookedDataProvider,
+        ]);
+    }
+
+    public function actionBookedUserChat($share_safari_id, $share_safari_lead_id)
+    {
+        $share_safari = ShareSafari::findOne($share_safari_id);
+
+        $shareSafariDataProvider = new ActiveDataProvider([
+            'query' => ShareSafari::find()
+                ->where(['id' => $share_safari_id]),
+            'pagination' => false,
+        ]);
+
+        $share_safari_lead = ShareSafariLead::find()->where(['id' => $share_safari_lead_id])->andWhere(['status' => 1])->limit(1)->one();
+
+        if (!$share_safari_lead) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $chat_model = Chat::find()->where(['user_id' => $share_safari_lead->user_id, 'recipient_user_id' => $share_safari->user_id])->andWhere(['chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->limit(1)->one();
+
+        return $this->render('_booked_user_chat', [
+            'chat' => $chat_model,
+            'share_safari_lead' => $share_safari_lead,
+            'share_safari' => $share_safari,
+            'shareSafariDataProvider' => $shareSafariDataProvider,
+
         ]);
     }
 }

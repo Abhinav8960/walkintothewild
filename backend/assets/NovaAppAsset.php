@@ -15,6 +15,7 @@ class NovaAppAsset extends AssetBundle
         'css/style-dark.css',
         'css/style-transparent.css',
         'css/style.css',
+        'css/chat.css',
         'plugins/bootstrap/css/bootstrap.min.css',
         'plugins/perfect-scrollbar/p-scrollbar.css',
         'plugins/sidebar/sidebar.css',
@@ -28,7 +29,7 @@ class NovaAppAsset extends AssetBundle
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css',
     ];
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
     public $js = [
         'js/script.js',

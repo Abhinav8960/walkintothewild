@@ -146,7 +146,7 @@ $this->params['buttons'][] = Html::a('Fixed Departure Reject List', [Url::toRout
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{view}&nbsp{delete}&nbsp{suspend}',
+                        'template' => '{view}&nbsp{chat}&nbsp{booked}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a(
@@ -159,6 +159,28 @@ $this->params['buttons'][] = Html::a('Fixed Departure Reject List', [Url::toRout
                                         'title' => 'View',
                                     ]
                                 );
+                            },
+                            'chat' => function ($url, $model) {
+                                if ($model->status == 1) {
+                                    return Html::a(
+                                        '<img src="' . $this->params['baseurl'] . '/img/chat.png" alt="" width="20" height="20">',
+                                        Url::toRoute(['chat-view', 'id' => $model->id]),
+                                        [
+                                            'title' => 'Chat',
+                                        ]
+                                    );
+                                }
+                            },
+                            'booked' => function ($url, $model) {
+                                if ($model->status == 1) {
+                                    return Html::a(
+                                        '<img src="' . $this->params['baseurl'] . '/img/booked.png" alt="" width="20" height="20">',
+                                        Url::toRoute(['booked-user', 'id' => $model->id]),
+                                        [
+                                            'title' => 'Booked User',
+                                        ]
+                                    );
+                                }
                             },
                         ]
                     ],
