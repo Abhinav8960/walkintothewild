@@ -98,7 +98,7 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'partner_selling_price')->textInput(['placeholder' => 'Enter selling price', 'id' => 'partner_selling_price']) ?>
+        <?= $form->field($model, 'partner_selling_price')->textInput(['placeholder' => 'Enter selling price', 'id' => 'partner_selling_price'])->label('Selling Price') ?>
     </div>
 
     <div class="col-md-6 col-lg-6">
