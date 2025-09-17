@@ -15,10 +15,15 @@ use common\models\sharesafari\ShareSafari;
 use common\models\LoginForm;
 use common\models\MailLog;
 use common\models\operator\SafariOperatorRating;
+use common\models\package\PackageComment;
 use common\models\package\PackageVersion;
 use common\models\package\PackageVersionSearch;
 use common\models\park\SafariParkRating;
+use common\models\partnergallery\PartnerGallery;
+use common\models\postscomment\UserPostComment;
+use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariVersion;
+use common\models\sighting\SightingComment;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -95,8 +100,22 @@ class SiteController extends Controller
         $fixed_departure_model = ShareSafariVersion::find()->where(['status' => ShareSafariVersion::SEND_FOR_APPROVAL_STATUS])->count();
         $operator_review_model = SafariOperatorRating::find()->where(['status' => SafariOperatorRating::STATUS_CREATE])->count();
         $park_review_model = SafariParkRating::find()->where(['status' => SafariParkRating::STATUS_SUSPEND])->count();
-
-        return $this->render('index', ['package_model' => $package_model, 'fixed_departure_model' => $fixed_departure_model, 'operator_review_model' => $operator_review_model, 'park_review_model' => $park_review_model]);
+        $gallery_model = PartnerGallery::find()->where(['IN', 'listing_status', [10, 1]])->andWhere(['edit_status' => 2])->count();
+        $post_model = UserPostComment::find()->where(['flaged' => 1, 'deleted_by' => 0])->count();
+        $sighting_model = SightingComment::find()->where(['flaged' => 1, 'deleted_by' => 0])->count();
+        $share_safari_flag_model = ShareSafariComment::find()->where(['flaged' => 1, 'deleted_by' => 0])->count();
+        $package_flag_model = PackageComment::find()->where(['flaged' => 1])->andWhere(['deleted_by' => 0])->count();
+        return $this->render('index', [
+            'package_model' => $package_model,
+            'fixed_departure_model' => $fixed_departure_model,
+            'operator_review_model' => $operator_review_model,
+            'park_review_model' => $park_review_model,
+            'gallery_model' => $gallery_model,
+            'post_model' => $post_model,
+            'sighting_model' => $sighting_model,
+            'share_safari_flag_mmodel' => $share_safari_flag_model,
+            'package_flag_model' => $package_flag_model,
+        ]);
     }
 
     /**
