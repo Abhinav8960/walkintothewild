@@ -124,7 +124,6 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         }
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_model->id;
-        $chat_message->message = $model->reminder_note; 
         $chat_message->reminder_note = $model->reminder_note;
         $chat_message->reminder_datetime = $model->reminder_datetime;
         $chat_message->status = 1;

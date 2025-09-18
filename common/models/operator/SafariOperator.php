@@ -97,7 +97,7 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
     public function rules()
     {
         return [
-            [['safari_operator_request_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['safari_operator_request_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no','direct_call_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['business_name', 'phone_no', 'operator_name', 'operator_phone_no', 'operator_email'], 'required'],
             [['google_rating', 'starting_price'], 'number'],
             [['about_business'], 'string'],
@@ -126,7 +126,8 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
                     'kyc_pan_upload',
                     'aadhar_number',
                     'aadhar_front_upload',
-                    'aadhar_back_upload'
+                    'aadhar_back_upload',
+                    'direct_call_no'
                 ],
                 'safe'
             ],

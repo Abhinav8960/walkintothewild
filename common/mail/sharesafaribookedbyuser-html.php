@@ -26,6 +26,28 @@ use yii\helpers\Html;
                     <td style="padding: 8px 0; font-weight: bold; width: 20%; color: #555;">Name : </td>
                     <td style="padding: 8px 0; color: #555;"><?= $name && isset($name) ? $name : '' ?> </td>
                 </tr>
+
+                <?php
+                if (isset($email)) {
+                ?>
+                    <tr>
+                        <td style="padding: 8px 0; font-weight: bold; width: 20%; color: #555;">Email : </td>
+                        <td style="padding: 8px 0; color: #555;"><?= $email && isset($email) ? $email : '' ?> </td>
+                    </tr>
+                <?php
+                }
+                ?>
+
+                <?php
+                if (isset($phone)) {
+                ?>
+                    <tr>
+                        <td style="padding: 8px 0; font-weight: bold; width: 20%; color: #555;">phone : </td>
+                        <td style="padding: 8px 0; color: #555;"><?= $phone && isset($phone) ? $phone : '' ?> </td>
+                    </tr>
+                <?php
+                }
+                ?>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 20%; color: #555;">Shared Safari : </td>
                     <td style="padding: 8px 0; color: #555;"><?= $shared_safari_title && isset($shared_safari_title) ? $shared_safari_title : '' ?></td>

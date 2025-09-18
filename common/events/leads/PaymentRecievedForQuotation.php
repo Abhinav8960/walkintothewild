@@ -15,6 +15,8 @@ class PaymentRecievedForQuotation extends Event
     public $transaction;
     protected $user;
     protected $partner_user;
+    protected $partner_id;
+    protected $partner;
     protected $master_notification_template;
     protected $engine;
 
@@ -28,10 +30,11 @@ class PaymentRecievedForQuotation extends Event
     protected $mail_template_code_for_user = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PAYMENT_RECEIVED_AGAINST_QUOTATION_FOR_USER; // New User Registration
     protected $mail_template_code_for_operator = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PAYMENT_RECEIVED_AGAINST_QUOTATION_FOR_OPERATOR; // New User Registration
 
-    public function __construct($transaction, $reference_no, $user_id, $partner_user_id)
+    public function __construct($transaction, $reference_no, $user_id, $partner_user_id, $partner_id)
     {
         $this->user = User::find()->where(['id' => $user_id])->one();
         $this->partner_user = User::find()->where(['id' => $partner_user_id])->one();
+        $this->partner = SafariOperator::find()->where(['id' => $partner_id])->one();
         $this->transaction = $transaction;
         $this->reference_no = $reference_no;
 
@@ -72,6 +75,11 @@ class PaymentRecievedForQuotation extends Event
                         'addional_notes' => $this->transaction->addional_notes,
                         'reference_no' => $this->reference_no,
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->transaction->received_amount),
+                        'operatorsDetails' => [
+                            'name' => $this->partner->business_name,
+                            'email' => $this->partner->email,
+                            'phone' => $this->partner->phone_no
+                        ]
                         // 'payment_url' => urlencode($this->payment_url_email),
                         // 'qr_code' => isset($this->transaction->due_quatation->qr_code_file) ? urlencode(\Yii::$app->params['s3_endpoint'] . '/' . $this->transaction->due_quatation->qr_code_file) : null,
                     ],
@@ -100,6 +108,11 @@ class PaymentRecievedForQuotation extends Event
                         'addional_notes' => $this->transaction->quotation->addional_notes,
                         'reference_no' => $this->reference_no,
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->transaction->received_amount),
+                        'travelersDetails' => [
+                            'name' => $this->user->name,
+                            'email' => $this->user->email,
+                            'phone' => $this->user->mobile_no
+                        ]
                     ],
                     'to_mail' => $this->partner_user->email,
                     'cc' => [],

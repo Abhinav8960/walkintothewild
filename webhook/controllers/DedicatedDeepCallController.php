@@ -5,6 +5,7 @@ namespace webhook\controllers;
 use api\models\chat\Chat;
 use api\models\chat\ChatMessage;
 use api\models\leads\LeadPartnerQuotes;
+use common\models\operator\SafariOperator;
 use common\models\transaction\Transaction;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -57,8 +58,8 @@ class DedicatedDeepCallController extends Controller
     public function actionIndex()
     {
         $pushReport = Yii::$app->request->post('push_report');
-        
-        if(empty($pushReport)) {
+
+        if (empty($pushReport)) {
             // echo "No push_report data received";
             // die();
             throw new \yii\web\BadRequestHttpException('No push_report data received');
@@ -69,6 +70,7 @@ class DedicatedDeepCallController extends Controller
 
         // First decode the JSON string
         $data = json_decode($jsonString, true);
+
 
 
 
@@ -87,6 +89,10 @@ class DedicatedDeepCallController extends Controller
                 // Save the call log data
                 $this->saveCallLog($data);
                 \Yii::info("Dedicated User ID: $userId, Request ID: $reqId", 'deep-call');
+            } elseif (isset($data['cType']) && $data['cType'] == 'IBD' && isset($data['userId']) && isset($data['callId'])) {
+                // Save the call log data
+                $this->saveDirectCallLog($data);
+                \Yii::info("Dedicated direct User ID: " . $data['userId'] . ", Call ID: " . $data['callId'], 'deep-call');
             } else {
                 \Yii::error('Dedicated Invalid data received', 'deep-call');
             }
@@ -96,15 +102,16 @@ class DedicatedDeepCallController extends Controller
         return "GODBLESSYOU";
     }
 
-    
-
     // public function actionSaveCallLog()
     private function saveCallLog($data)
     {
 
 
-        $callLog = new \common\models\CallLog();
-       
+        $callLog = \common\models\CallLog::find()->where(['reference_id' => $data['api_para']['reqId']])->one();
+        if (!$callLog) {
+            $callLog = new \common\models\CallLog();
+        }
+
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
         $callLog->service_user_id = $data['api_para']['userId'] ?? null;
         $callLog->is_dedicated = 1;
@@ -155,7 +162,8 @@ class DedicatedDeepCallController extends Controller
         // $callLog->call_disposition = $data['callDisposition'] ?? null;
         // $callLog->call_back = $data['callBack'] ?? null;
         // $callLog->created_updated = time();
-        $recording_url = isset($data['recordings'][0]['file']) ? 'https://s-ct3.sarv.com/v2/recording/direct/' . \Yii::$app->params['airphone_api_user_id'] . '' . $data['recordings'][0]['file'] : null;
+        $recording_url = isset($data['recordings'][0]['file']) ? 'https://s-ct3.sarv.com/v2/recording/direct/' . \Yii::$app->params['deepcall_direct_api_user_id'] . '' . $data['recordings'][0]['file'] : null;
+
 
         if (!$callLog->save()) {
             echo "Failed to save call log: " . json_encode($callLog->getErrors());
@@ -168,6 +176,90 @@ class DedicatedDeepCallController extends Controller
         echo "Dedicated Call log saved successfully with ID: " . $callLog->id;
         return true; // Return true if saved successfully
     }
+
+    private function saveDirectCallLog($data)
+    {
+            \Yii::error('Dedicated call log data: ' . json_encode($data), 'deep-call');
+
+        // Find an existing call log by callId to avoid duplicates
+        $callLog = \common\models\CallLog::find()->where(['call_id' => $data['callId']])->one();
+        if (!$callLog) {
+            $callLog = new \common\models\CallLog();
+        }
+        $phone_no = substr($data['did'], -10);
+        $sf = SafariOperator::find()->where(['direct_call_no' => $phone_no])->one();
+
+
+        $callLog->call_initiated_partner_id = $sf->id ?? null; // Equivalent to $callLog->request_caller_2_no
+        $callLog->operator_user_id = $sf->user_id ?? null; // Equivalent to $callLog->request_caller_2_no
+
+        $callLog->request_caller_1_no = $data['masterAgentNumber'] ?? $data['aHDetail']['agentNumber'] ?? null; // Equivalent to $callLog->request_caller_2_no
+        $callLog->request_caller_2_no = $data['cNumber'] ?? null; // Equivalent to $callLog->request_caller_1_no
+        $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
+        $callLog->service_user_id = $data['userId'] ?? null;
+        $callLog->is_dedicated = 1;
+        $callLog->reference_id = $data['callId'] ?? null; // Use callId as the reference ID
+        $callLog->did = $data['did'] ?? null;
+        $callLog->c_type = $data['cType'] ?? null;
+        $callLog->camp_id = $data['campId'] ?? null;
+        $callLog->exc_adm = $data['excAdm'] ?? null;
+        $callLog->ivr_s_time = $data['ivrSTime'] ?? null;
+        $callLog->ivr_e_time = $data['ivrETime'] ?? null;
+        $callLog->ivr_duration = $data['ivrDuration'] ?? null;
+        $callLog->c_number = $data['cNumber'] ?? null;
+        $callLog->master_num_ctc = $data['masterNumCTC'] ?? null;
+        $callLog->master_agent = (string) $data['masterAgent'] ?? null;
+        $callLog->master_agent_number = $data['masterAgentNumber'] ?? $data['aHDetail']['agentNumber'] ?? null;
+        $callLog->master_group_id = $data['masterGroupId'] ?? null;
+        $callLog->talk_duration = $data['talkDuration'] ?? null;
+        $callLog->agent_on_call_duration = $data['agentOnCallDuration'] ?? null;
+        $callLog->call_id = $data['callId'] ?? null;
+        $callLog->first_attended = $data['firstAttended'] ?? null;
+        $callLog->first_answer_time = $data['firstAnswerTime'] ?? null;
+        $callLog->last_hangup_time = $data['lastHangupTime'] ?? null;
+        $callLog->last_first_duration = $data['lastFirstDuration'] ?? null;
+        $callLog->cust_answer_s_time = $data['custAnswerSTime'] ?? null;
+        $callLog->cust_answer_e_time = $data['custAnswerETime'] ?? null;
+        $callLog->cust_answer_duration = $data['custAnswerDuration'] ?? null;
+        $callLog->call_status = $data['callStatus'] ?? null;
+        $callLog->ivr_execute_flow = $data['ivrExecuteFlow'] ?? null;
+        $callLog->hangup_by_source_detected = $data['HangupBySourceDetected'] ?? null;
+        $callLog->forward = $data['forward'] ?? null;
+        $callLog->total_hold_duration = $data['totalHoldDuration'] ?? null;
+
+        // Convert arrays to JSON strings for database storage
+        // $callLog->total_credits_used = isset($data['totalCreditsUsed']) ? json_encode($data['totalCreditsUsed']) : null;
+        // $callLog->ivr_id_arr = isset($data['ivrIdArr']) ? json_encode($data['ivrIdArr']) : null;
+        // $callLog->a_ans_h = isset($data['aAnsH']) ? json_encode($data['aAnsH']) : null;
+        // $callLog->a_h = isset($data['aH']) ? json_encode($data['aH']) : null;
+        // $callLog->n_h = isset($data['nH']) ? json_encode($data['nH']) : null;
+        // $callLog->recordings = isset($data['recordings']) ? json_encode($data['recordings']) : null;
+        // $callLog->voice_mail = isset($data['voiceMail']) ? json_encode($data['voiceMail']) : null;
+        // $callLog->dtmf = isset($data['DTMF']) ? json_encode($data['DTMF']) : null;
+        // $callLog->cli_arr = isset($data['cliArr']) ? json_encode($data['cliArr']) : null;
+        // $callLog->a_h_detail = isset($data['aHDetail']) ? json_encode($data['aHDetail']) : null;
+        // $callLog->n_h_detail = isset($data['nHDetail']) ? json_encode($data['nHDetail']) : null;
+        // $callLog->modules = isset($data['modules']) ? json_encode($data['modules']) : null;
+        // $callLog->call_disposition = $data['callDisposition'] ?? null;
+        // $callLog->call_back = $data['callBack'] ?? null;
+        // $callLog->created_updated = time();
+
+        // The recording URL in the JSON is relative, build the full URL
+        $recording_url = isset($data['recordings'][0]['file']) ? 'https://s-ct3.sarv.com/v2/recording/direct/' . $data['userId'] . '' . $data['recordings'][0]['file'] : null;
+
+        if (!$callLog->save()) {
+            \Yii::error('Dedicated Failed to save call log: ' . json_encode($callLog->getErrors()), 'deep-call');
+            return false;
+        }
+
+        $this->saveCallLogNumbersDetails($data, $callLog->id);
+        $this->callRecordingUploadToS3($callLog->id, $recording_url);
+
+        echo "Dedicated Call log saved successfully with ID: " . $callLog->id;
+        return true;
+    }
+
+
 
     private function saveCallLogNumbersDetails($data, $callLogId)
     {
