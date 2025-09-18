@@ -221,6 +221,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         new \common\events\sharesafari\SafariBookedByUser(
             $email =  $this->email,
             $name =  $this->name,
+            $phone =  $this->phone,
             $shared_safari_id =  $this->share_safari_id,
             $referenceId = $this->reference_id,
             $amount = $this->received_amount,

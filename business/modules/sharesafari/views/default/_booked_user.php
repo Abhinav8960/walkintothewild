@@ -81,7 +81,7 @@ $this->title = 'Booked Users';
                                 </td>
                                 <td>
                                     <a href="<?= Url::toRoute(['booked-user-chat', 'share_safari_id' => $share_safari->id, 'share_safari_lead_id' => $booked->share_safari_lead_id]) ?>">
-                                        <img src="<?= $this->params['baseurl'] ?>/images/chat.png" alt="Chat" width="20" height="20">
+                                        <img src="<?= $this->params['baseurl'] ?>/images/Chat.svg" alt="Chat" width="20" height="20">
                                     </a>
                                 </td>
                             </tr>

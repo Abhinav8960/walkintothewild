@@ -80,7 +80,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
 
                             'update' => function ($url, $model) {
                                 {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="25" height="25">
                                 ', ['/faqs/default/update', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',

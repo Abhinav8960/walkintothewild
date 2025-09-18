@@ -87,6 +87,13 @@ class Chat extends \common\models\chat\Chat
             $fields['is_closed'] = function () {
                 return (bool) $this->is_closed;
             };
+            $fields['calling_no'] = function () {
+                if (isset($this->operator->direct_call_no) && $this->operator->is_phone_no_verified == true && !empty($this->operator->direct_call_no)) {
+                    return $this->operator->direct_call_no; // Optional
+
+                }
+                return null;
+            };
 
             // if ($this->call_id > 0) {
 
@@ -243,7 +250,7 @@ class Chat extends \common\models\chat\Chat
     public function callpossible()
     {
         if ($this->chat_type == SELF::CHAT_TYPE_QUOTE || $this->chat_type == SELF::CHAT_TYPE_SHARE_SAFARI) {
-            if (!empty($this->user->mobile_no) && $this->user->is_mobile_no_verified == true && $this->operator->is_phone_no_verified == true && !empty($this->operator->phone_no)) {
+            if (!empty($this->user->mobile_no) && $this->user->is_mobile_no_verified == true && (($this->operator->is_phone_no_verified == true && !empty($this->operator->phone_no)) || ($this->operator->has_direct_call == true && !empty($this->operator->direct_call_no)))) {
                 return true;
             }
         }

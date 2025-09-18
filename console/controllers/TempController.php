@@ -375,13 +375,13 @@ class TempController extends Controller
 
     public function actionMakeCallOnChat()
     {
-        $url = \Yii::$app->params['airphone_api_host_url'] . '/api/c2c';
+        $url = \Yii::$app->params['deepcall_api_host_url'] . '/api/c2c';
         $options = [
             'vnm' => \Yii::$app->params['airphone_api_vnm'],
             'agent' => "9650901148",
             // 'caller' => "8890534746",
             'caller' => "9958858979", // Apurva Sir
-            'token' => \Yii::$app->params['airphone_api_token'],
+            'token' => \Yii::$app->params['deepcall_api_token'],
             'reqId' => "dfgh"
         ];
         $client = new \yii\httpclient\Client();

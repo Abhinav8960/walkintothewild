@@ -3,7 +3,7 @@
 namespace common\events\sharesafari;
 
 
-use common\models\sharesafari\ShareSafari;
+use api\models\sharesafari\ShareSafari;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
@@ -14,6 +14,7 @@ class SafariBookedByUser extends Event
 {
     public $email;
     public $name;
+    public $phone;
     public $templates;
     public $channelName;
     public $shared_safari_id;
@@ -35,14 +36,16 @@ class SafariBookedByUser extends Event
         // 'firebase',
     ];
 
-    protected $mail_template_code = 'SSBU';  // New Safari Created By User mail to admin
+    protected $mail_template_code_for_opearator = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FIXED_DEPARTURE_BOOKED_FOR_OPERATOR;  // New Safari Created By User mail to admin
+    protected $mail_template_code_for_user = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FIXED_DEPARTURE_BOOKED_FOR_USER;  // New Safari Created By User mail to admin
 
 
-    public function __construct($email, $name, $shared_safari_id, $referenceId, $amount, $booked_seat, $start_date, $end_date)
+    public function __construct($email, $name, $phone, $shared_safari_id, $referenceId, $amount, $booked_seat, $start_date, $end_date)
     {
 
         $this->name = $name;
         $this->email = $email;
+        $this->phone = $phone;
         $this->shared_safari_id = $shared_safari_id;
         $this->referenceId = $referenceId;
         $this->amount = $amount;
@@ -72,32 +75,42 @@ class SafariBookedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => $this->shared_safari_title . 'Booked, get ready for adventure!!',
-                    'mail_template_id' => $this->emailTemplateId(),
+                    'subject' => $this->shared_safari_title . ' Booked, get ready for adventure!!',
+                    'mail_template_id' => $this->emailTemplateId($this->mail_template_code_for_user),
                     'params' => [
+                        'fixed_depature_name'=> $this->shared_safari_title,
+                        'night_stay_count' => round((strtotime($this->shared_safari->end_date) - strtotime($this->shared_safari->start_date)) / 86400),
+                        'username' => $this->name,
                         'name' => $this->name,
-                        // 'email' => $this->email,
                         // 'shared_safari' => $this->shared_safari_name,
+                        'staycategory' => $this->shared_safari->stay_category_display,
                         'shared_safari_title' => $this->shared_safari_title,
                         'no_of_safari' => $this->no_of_safari,
-                        'start_date' => $this->start_date,
-                        'end_date' => $this->end_date,
+                        'start_date' => date('D M, Y',strtotime($this->start_date)),
+                        'end_date' => date('D M, Y',strtotime($this->end_date)),
                         'booked_seat' => $this->booked_seat,
                         'referenceId' => $this->referenceId,
                         'amount' => $this->amount,
                         'park' => $this->park,
+                        'operatorsDetails' => [
+                            'name' => $this->shared_safari->safarioperator->business_name,
+                            'email' => $this->shared_safari->safarioperator->email,
+                            'phone' => $this->shared_safari->safarioperator->phone_no
+                        ]
                     ],
                     'to_mail' => $this->email,
-                    'cc' => [],
+                    'cc' => [
+                        \Yii::$app->params['adminEmail']
+                    ],
                     'bcc' => [],
                 ],
                 [
-                    'subject' => $this->shared_safari_title . 'Booked by ' . $this->name . ', get ready for adventure!!',
-                    'mail_template_id' => $this->emailTemplateId(),
+                    'subject' => $this->shared_safari_title . ' Booked by ' . $this->name . ', get ready for adventure!!',
+                    'mail_template_id' => $this->emailTemplateId($this->mail_template_code_for_opearator),
                     'params' => [
-                        'name' => $this->name,
-                        // 'email' => $this->email,
+                        'fixed_depature_name'=> $this->shared_safari_title,
                         // 'shared_safari' => $this->shared_safari_name,
+                        'staycategory' => $this->shared_safari->stay_category_display,
                         'shared_safari_title' => $this->shared_safari_title,
                         'no_of_safari' => $this->no_of_safari,
                         'start_date' => $this->start_date,
@@ -107,6 +120,11 @@ class SafariBookedByUser extends Event
                         'amount' => $this->amount,
                         'park' => $this->park,
                         'call_to' => 'user',
+                        'travelersDetails' => [
+                            'name' => $this->name,
+                            'email' => $this->email,
+                            'phone' => $this->phone
+                        ]
 
                     ],
                     'to_mail' => $this->shared_safari->safarioperator->email,
@@ -122,9 +140,9 @@ class SafariBookedByUser extends Event
         return $arr;
     }
 
-    protected function emailTemplateId()
+    protected function emailTemplateId($mail_template_code)
     {
-        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code, 'status' => 1])->limit(1)->one();
+        $template = MasterMailTemplate::find()->where(['code' => $mail_template_code, 'status' => 1])->limit(1)->one();
         if ($template) {
             return $template->id;
         }

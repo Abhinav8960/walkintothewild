@@ -95,12 +95,12 @@ class CallingService_backup
      */
     private function callImmediately()
     {
-        $url = \Yii::$app->params['airphone_api_host_url'] . '/api/c2c';
+        $url = \Yii::$app->params['deepcall_api_host_url'] . '/api/c2c';
         $options = [
             'vnm' => \Yii::$app->params['airphone_api_vnm'],
             'agent' => $this->request_caller_2_no,
             'caller' => $this->request_caller_1_no,
-            'token' => \Yii::$app->params['airphone_api_token'],
+            'token' => \Yii::$app->params['deepcall_api_token'],
             'reqId' => $this->reference_id
         ];
         $client = new \yii\httpclient\Client();

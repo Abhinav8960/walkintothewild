@@ -151,8 +151,8 @@ $this->title = 'Leads';
                         'buttons' => [
 
                             'view' => function ($url, $model) {
-                                return  Html::a('<i class="mdi mdi-eye"></i>', ['/leads/default/view', 'id' => $model->id], [
-                                    'class' => 'action-icon',
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="25" height="25">', ['/leads/default/view', 'id' => $model->id], [
+                                    
                                     'title' => 'View',
                                 ]);
                             },
