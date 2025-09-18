@@ -20,7 +20,7 @@ class CallLogSearch extends CallLog
     {
         return [
             [['id', 'chat_id', 'lead_id', 'request_caller_1_user_id', 'request_caller_2_user_id', 'operator_user_id', 'call_initiated_user_id', 'status', 'created_at', 'updated_at','is_detail_fetched','call_initiated_partner_id'], 'integer'],
-            [['reference_id', 'unique_id', 'request_vnm', 'request_caller_1_no', 'request_caller_2_no', 'caller_id', 'received_id', 'ivr_number', 'recording_url', 'rec_duration', 'call_type', 'call_status', 'datetime', 'duration', 'file_path', 'call_request_status', 'call_request_message','is_detail_fetched','dial_status','call_initiated_partner_id'], 'safe'],
+            [['reference_id', 'unique_id', 'request_vnm', 'request_caller_1_no', 'request_caller_2_no', 'caller_id', 'received_id', 'ivr_number', 'recording_url', 'rec_duration', 'call_type', 'call_status', 'datetime', 'duration', 'file_path', 'call_request_status', 'call_request_message','is_detail_fetched','dial_status','call_initiated_partner_id','is_dedicated'], 'safe'],
             [['date_range'], 'safe'],
         ];
     }
@@ -66,6 +66,7 @@ class CallLogSearch extends CallLog
             'id' => $this->id,
             'chat_id' => $this->chat_id,
             'lead_id' => $this->lead_id,
+            'is_dedicated' => $this->is_dedicated,
             'request_caller_1_user_id' => $this->request_caller_1_user_id,
             'request_caller_2_user_id' => $this->request_caller_2_user_id,
             'operator_user_id' => $this->operator_user_id,

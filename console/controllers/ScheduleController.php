@@ -96,7 +96,7 @@ class ScheduleController extends Controller
 
     public function actionCallLog()
     {
-        $url = \Yii::$app->params['airphone_api_host_url'] . '/api/pull-data';
+        $url = \Yii::$app->params['deepcall_api_host_url'] . '/api/pull-data';
 
         $model = \common\models\CallLog::find()
             ->where(['status' => \common\models\CallLog::STATUS_SUCCESS])
@@ -108,7 +108,7 @@ class ScheduleController extends Controller
             $options = [
                 'vnm' => \Yii::$app->params['airphone_api_vnm'],
                 'unique_id' => $log->unique_id,
-                'token' => \Yii::$app->params['airphone_api_token'],
+                'token' => \Yii::$app->params['deepcall_api_token'],
             ];
             $client = new \yii\httpclient\Client();
             $response = $client->createRequest()
