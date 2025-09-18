@@ -8,6 +8,15 @@ use yii\bootstrap5\Breadcrumbs;
     </div>
 
     <div class="d">
+        <!-- <?= Breadcrumbs::widget([
+            'itemTemplate' => "<li class='breadcrumb-item'>{link} </li>",
+            'homeLink' => [
+                'label' => '<i class="fa fa-home"></i> Home' . Yii::t('yii', ' '),
+                'url' => isset($this->params['breadcrumbs_home_url']) ? $this->params['breadcrumbs_home_url'] : Yii::$app->homeUrl,
+                'encode' => false
+            ],
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?> -->
     </div>
 
     <div class="pb-0">
@@ -23,6 +32,7 @@ use yii\bootstrap5\Breadcrumbs;
 
 <style>
     .btn_create .btn-orange.btn-sm {
+
         padding: 9px 25px !important;
         font-size: 19px !important;
     }

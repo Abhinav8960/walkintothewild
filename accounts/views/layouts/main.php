@@ -25,24 +25,48 @@ NotifyAsset::register($this);
     <?php $this->head() ?>
 </head>
 
-<body class="ltr main-body app sidebar-mini">
+
+<body>
     <?php $this->beginBody() ?>
-    <div class="page">
+
+    <div class="container-scroller">
+
         <div>
-            <?= \accounts\widgets\Header::widget() ?>
+            <!-- main-sidebar -->
             <?= \accounts\widgets\Sidebar::widget() ?>
+           
+            <!-- main-sidebar -->
         </div>
-        <div class="main-content app-content">
-            <div class="main-container container-fluid">
-                <?= \accounts\widgets\PageHeader::widget([
-                    'title' => isset($this->params['title']) ? $this->params['title'] : '',
-                    'buttons' => isset($this->params['buttons']) ? $this->params['buttons'] : []
-                ]) ?>
-                <?= $content ?>
+        <!-- START #content -->
+        <header class="container-fluid main-header">
+
+            <!-- main-content -->
+            <div class="main-pannel mt-4">
+
+                <!-- /main-header -->
+                <?= \accounts\widgets\Header::widget() ?>
+                <!-- /main-header -->
+
+                <!-- container -->
+                <div class="container-fluid">
+                    <?= \accounts\widgets\PageHeader::widget([
+                        'title' => isset($this->params['title']) ? $this->params['title'] : '',
+                        'buttons' => isset($this->params['buttons']) ? $this->params['buttons'] : []
+                    ]) ?>
+
+
+                    <?= $content ?>
+                </div>
             </div>
-        </div>
-        <?= \common\widgets\NotifyAlert::widget() ?>
+
+
+            <!-- END #content -->
+            <?= \common\widgets\NotifyAlert::widget() ?>
+
+            <!-- END Setting -->
+        </header>
     </div>
+    <!-- END #app -->
     <?php $this->endBody() ?>
 </body>
 

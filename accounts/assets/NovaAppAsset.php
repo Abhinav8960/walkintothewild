@@ -11,11 +11,19 @@ class NovaAppAsset extends AssetBundle
     public $css = [
         'css/icons.css',
         'css/skin-modes.css',
+        // 'css/style-dark.css',
+        // 'css/style-transparent.css',
         'css/style.css',
+        
+        // 'css/frontend_style.css',
+        // 'plugins/bootstrap/css/bootstrap.min.css',
+        // 'plugins/perfect-scrollbar/p-scrollbar.css',
+        // 'plugins/sidebar/sidebar.css',
+        // 'plugins/select2/css/select2.min.css',
         
     ];
     public $publishOptions = [
-        'forceCopy' => true,
+        'forceCopy' => false,
     ];
     public $js = [
         'js/script.js',

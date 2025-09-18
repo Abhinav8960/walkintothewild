@@ -5,7 +5,10 @@
          <img src="<?= $this->params['baseurl'] ?>/images/logo-mini.svg" alt="logo">
        </a>
      </div>
+
+
      <ul class="nav-right d-flex align-items-center justify-content-center gap-4">
+     
        <li class="nav-item " id="dropdown-pro">
          <div class="d-flex align-items-center">
            <div class="dorpdown-profile me-2">
@@ -14,6 +17,7 @@
            <div class="d-lg-block d-none">
              <div class="dropdoen-detail-profile d-flex ">
                <p class="pt-1"><?= isset($user) ? $user->name : '' ?>&nbsp;</p>
+               
              </div>
            </div>
          </div>

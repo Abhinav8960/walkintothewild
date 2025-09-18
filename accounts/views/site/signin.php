@@ -3,6 +3,7 @@
 use frontend\assets\AppAsset;
 use frontend\assets\FrontAppAsset;
 use yii\authclient\widgets\AuthChoice;
+use yii\helpers\Url;
 
 FrontAppAsset::register($this);
 AppAsset::register($this);

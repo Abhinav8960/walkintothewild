@@ -10,9 +10,10 @@ return [
     'id' => 'app-accounts',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'accounts\controllers',
-    'bootstrap' => ['log', '\accounts\components\AppBootstrap'],
+    'bootstrap' => ['log'],
     'timeZone' => 'Asia/Calcutta',
     'modules' => [
+
     ],
     'components' => [
         'reCaptcha3' => [
@@ -24,17 +25,18 @@ return [
             'csrfParam' => '_csrf-accounts',
         ],
         'user' => [
-            'class' => 'common\components\WebUser',
+            'class' => 'common\components\WebUser', // For Tracking the Sessions
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-accounts', 'httpOnly' => true],
         ],
         'session' => [
+            // this is the name of the session cookie used for login on the accounts
             'class' => 'yii\web\DbSession',
             'name' => 'advanced-accounts',
             'timeout' => 3600 * 24 * 30,
             'cookieParams' => [
-                'lifetime' => 3600 * 24 * 30,
+                'lifetime' => 3600 * 24 * 30, // Cookie lifetime, e.g., 30 days
             ],
         ],
         'log' => [
@@ -66,9 +68,16 @@ return [
         'definitions' => [
             \yii\widgets\LinkPager::class => \yii\bootstrap5\LinkPager::class,
             'yii\bootstrap5\LinkPager' => [
-                'firstPageLabel' => 'First',
-                'lastPageLabel' => 'Last',
-                'options' => ['class' => 'pagination pagination-primary mg-sm-b-0']
+                'options' => ['class' => 'pagination mb-0 d-flex gap-4 align-items-center'],
+                'listOptions' => ['class' => ['pagination mb-0 d-flex gap-4 align-items-center']],
+                'linkOptions' => ['class' => ''],
+                'linkContainerOptions' => ['class' => ['page-item page-text']],
+                'disabledPageCssClass' => 'disabled',
+                'activePageCssClass' => 'active',
+                'prevPageLabel' => '<span class="page-link button_nextprve button_prve">Prev</span>',
+                'nextPageLabel' => '<span class="page-link button_nextprve active">Next</span>',
+                'firstPageLabel' => false,
+                'lastPageLabel' => false,
             ],
         ],
     ],

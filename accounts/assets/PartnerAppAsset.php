@@ -20,12 +20,16 @@ class PartnerAppAsset extends AssetBundle
         'forceCopy' => true,
     ];
     public $js = [
+        // 'node_modules/bootstrap/dist/js/bootstrap.js',
+        // 'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
+        // 'https://code.jquery.com/jquery-3.6.1.js',
         'js/main.js',
         'js/custom.js',
         'https://cdn.jsdelivr.net/npm/sweetalert2@11',
     ];
 
     public $depends = [
+        // 'yii\web\YiiAsset',
         'yii\bootstrap5\BootstrapAsset',
         'yii\bootstrap5\BootstrapPluginAsset',
     ];
