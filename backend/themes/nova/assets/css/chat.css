@@ -1,0 +1,155 @@
+.inbox_msg {
+    border: 1px solid #c4c4c4;
+    clear: both;
+    overflow: hidden;
+}
+
+
+.mesgs {
+    float: left;
+    padding: 30px 15px 0 25px;
+    width: 100%;
+}
+
+
+
+.messaging {
+    padding: 0 0 50px 0;
+}
+
+.msg_history {
+    height: 516px;
+    overflow-y: auto;
+}
+
+
+.receivedChat p {
+
+    font-size: 14px;
+    color: #131313;
+}
+
+.receivedChat {
+
+    max-width: 380px;
+    background: #eaeaea;
+    padding: 15px 12px;
+    border-radius: 0px 15px 15px 15px;
+}
+
+.recievedTime span {
+    color: #000000;
+    font-size: 12px;
+}
+
+.ItineraryQuotationarea {
+
+    min-width: 480px;
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.topTitle h3 {
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+.discriptionsCenter p {
+
+    font-size: 12px;
+    color: #421421;
+}
+
+
+.gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: end;
+}
+
+.gallery-container .single-image {
+    display: block;
+    width: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+
+.gallery-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.sentChat {
+
+    max-width: 340px;
+    background-color: #09432D;
+    padding: 7px 7px 20px 10px;
+    border-radius: 15px 0px 15px 15px;
+}
+
+.sentChat {
+
+    margin-top: 50px;
+}
+
+.sentChat p {
+    color: #fff;
+    font-size: 12px;
+
+}
+
+
+.sentChat.himselfVoiceCall {
+
+    max-width: 300px !important;
+    background-color: #144D37 !important;
+}
+
+.currentTime span {
+
+    color: #fff;
+    font-size: 12px;
+
+}
+
+.voiceText h3 {
+
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.callIcons {
+
+    width: 35px;
+    height: 35px;
+    background-color: #242626;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.callIcons a i {
+
+    color: #fff !important;
+    font-size: 15px;
+}
+
+.voiceText a i {
+    color: #fff !important;
+    font-size: 15px;
+}
+
+.user-chat-trigger
+{
+    text-decoration: none;
+}
