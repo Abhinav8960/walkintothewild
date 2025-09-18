@@ -21,7 +21,7 @@ $this->params['title'] = $this->title;
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Chat List</h5>
             </div>
-            <div class="card-body p-2" style="height: 700px; overflow-y: auto;">
+            <div class="card-body p-2" style="height: 680px; overflow-y: auto;">
                 <?php foreach ($dataProvider->models as $chat){ ?>
                     <?php
                     $url = Url::to(['/chat/default/view','chat_id'=>$chat->id, 'user_id' => $chat->user_id, 'recipient_id' => $chat->recipient_user_id]);
@@ -87,7 +87,7 @@ $this->params['title'] = $this->title;
         <div class="card shadow-sm">
             <!-- <div class="card-header">
             </div> -->
-            <div class="card-body p-0" style="height: 790px; overflow-y: auto;">
+            <div class="card-body p-0" style="height: 720px; overflow-y: auto;">
                 <?php  Pjax::begin(['id' => 'user-detail-content']); ?>
                 <div id="user-detail-content">
                     <div class="text-center p-5 text-muted">Please select a chat to preview</div>
