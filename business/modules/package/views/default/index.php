@@ -166,14 +166,14 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
 
                             'update' => function ($url, $model) {
                                 if ($model->edit_status == 1) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="25" height="25">
                                 ', ['/package/default/update', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
 
                                     ]);
                                 } else if ($model->edit_status == 0) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="25" height="25">
                                 ', ['/package/default/copy-with-edit', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
@@ -186,13 +186,13 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                             },
                             'view' => function ($url, $model) {
                                 if (isset($model->live_package)) {
-                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->live_package->id], [
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="25" height="25">', ['/package/default/view', 'id' => $model->live_package->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]);
                                 }
                                 if (isset($model->editable_package)) {
-                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->editable_package->id], [
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="25" height="25">', ['/package/default/view', 'id' => $model->editable_package->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]);

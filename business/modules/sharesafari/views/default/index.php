@@ -118,7 +118,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                             'chat' => function ($url, $model) {
                                 if ($model->status == 1) {
                                     return Html::a(
-                                        '<img src="' . $this->params['baseurl'] . '/images/chat.png" alt="" width="20" height="20">',
+                                        '<img src="' . $this->params['baseurl'] . '/images/Chat.svg" alt="" width="20" height="20">',
                                         Url::toRoute(['chat-view', 'id' => $model->id]),
                                         [
                                             'title' => 'Chat',
@@ -129,7 +129,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                             'booked' => function ($url, $model) {
                                 if ($model->status == 1) {
                                     return Html::a(
-                                        '<img src="' . $this->params['baseurl'] . '/images/booked.png" alt="" width="20" height="20">',
+                                        '<img src="' . $this->params['baseurl'] . '/images/Booked_User.svg" alt="" width="20" height="20">',
                                         Url::toRoute(['booked-user', 'id' => $model->id]),
                                         [
                                             'title' => 'Booked User',
@@ -140,7 +140,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                             'seat' => function ($url, $model) {
                                 if ($model->status == 1 && $model->cut_off_date >= date('Y-m-d')) {
                                     return Html::button(
-                                        '<img src="' . $this->params['baseurl']  . '/images/person-seat.svg" alt="" width="20" height="20">',
+                                        '<img src="' . $this->params['baseurl']  . '/images/Seat_Update.svg" alt="" width="20" height="20">',
                                         [
                                             'value' => Url::toRoute(['update-seat', 'id' => $model->id]),
                                             'class' => 'btn p-0 change-menuicon seatAction',
@@ -152,14 +152,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
 
                             'update' => function ($url, $model) {
                                 if ($model->edit_status != 0) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
 
                                     ]);
                                 } else if ($model->edit_status == 0) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="25" height="25">
                                 ', ['copy-with-edit', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
@@ -173,13 +173,13 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
 
                             'view' => function ($url, $model) {
                                 if (isset($model->live_fd)) {
-                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['view', 'id' => $model->live_fd->id], [
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="25" height="25">', ['view', 'id' => $model->live_fd->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]);
                                 }
                                 if (isset($model->editable_fd)) {
-                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['view', 'id' => $model->editable_fd->id], [
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="25" height="25">', ['view', 'id' => $model->editable_fd->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]);
