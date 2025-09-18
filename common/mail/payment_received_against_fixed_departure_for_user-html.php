@@ -18,34 +18,32 @@ use yii\helpers\Html;
         <hr>
         <p style="font-size: 18px; color: #333; margin-bottom: 20px; font-style: italic;">Hi <?= Html::encode($username) ?>,  get ready for your next wild adventure! Find below the contact details of your safari operator to coordinate the trip.</p>
 
-        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $parkname ?> <?= isset($night_stay_count) ? ' + ' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? ' + ' . $safaris . ' Jungle Safaris' : '' ?></p>
+        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $fixed_depature_name ?> <?= isset($night_stay_count) ? ' + ' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? ' + ' . $safaris . ' Jungle Safaris' : '' ?></p>
 
         <div style="background-color: #e6f7e8; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-            <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Quotation</div>
+            <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Fixed Departure</div>
             <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                 <tr>
-                    <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Park</td>
-                    <td style="padding: 8px 0; color: #555;"><?= $parkname ?></td>
+                    <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Name</td>
+                    <td style="padding: 8px 0; color: #555;"><?= $fixed_depature_name ?></td>
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Travelers</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($travelers) ? $travelers : '' ?></td>
+                    <td style="padding: 8px 0; color: #555;"><?= isset($booked_seat) ? $booked_seat : '' ?></td>
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Safaris</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($safaris) ? $safaris : '' ?></td>
+                    <td style="padding: 8px 0; color: #555;"><?= isset($no_of_safari) ? $no_of_safari : '' ?></td>
                 </tr>
-                <tr>
-                    <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Stay Category</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($staycategory) ? $staycategory : '' ?></td>
-                </tr>
+
+               
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Start Date</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($start_date) ? $start_date : '' ?></td>
+                    <td style="padding: 8px 0; color: #555;"><?= isset($start_date) ? date('d M, Y',strtotime($start_date)) : '' ?></td>
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">End Date</td>
-                    <td style="padding: 8px 0; color: #555;"><?= isset($end_date) ? $end_date : '' ?></td>
+                    <td style="padding: 8px 0; color: #555;"><?= isset($end_date) ? date('d M, Y',strtotime($end_date)) : '' ?></td>
                 </tr>
 
             </table>
@@ -67,7 +65,7 @@ use yii\helpers\Html;
                 <table style="width: 100%; font-size: 20px; font-weight: 600; margin-bottom: 10px;">
                     <tr>
                         <td style="text-align: left;">Payment Recieved.</td>
-                        <td style="text-align: left;">Reference No: <?= $reference_no ?? '' ?></td>
+                        <td style="text-align: left;">Reference No: <?= $referenceId ?? '' ?></td>
                     </tr>
                 </table>
 
