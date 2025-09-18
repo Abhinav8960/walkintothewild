@@ -24,18 +24,17 @@ return [
             'csrfParam' => '_csrf-accounts',
         ],
         'user' => [
-            'class' => 'common\components\WebUser', // For Tracking the Sessions
+            'class' => 'common\components\WebUser',
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-accounts', 'httpOnly' => true],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the accounts
             'class' => 'yii\web\DbSession',
             'name' => 'advanced-accounts',
             'timeout' => 3600 * 24 * 30,
             'cookieParams' => [
-                'lifetime' => 3600 * 24 * 30, // Cookie lifetime, e.g., 30 days
+                'lifetime' => 3600 * 24 * 30,
             ],
         ],
         'log' => [

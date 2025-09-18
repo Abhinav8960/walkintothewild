@@ -2,6 +2,7 @@
 
 namespace accounts\controllers;
 
+use accounts\components\AuthHandler;
 use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
@@ -21,16 +22,16 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'auth'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'auth'],
                         'allow' => true,
-                        // 'roles' => ['@'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -52,6 +53,10 @@ class SiteController extends Controller
             'error' => [
                 'class' => \yii\web\ErrorAction::class,
             ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
         ];
     }
 
@@ -62,10 +67,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if(\Yii::$app->request->isGet){
-            return $this->redirect(['/accounts/index']);
-        }
-        // return $this->render('index');
+        return $this->render('index');
     }
 
     /**
@@ -88,7 +90,7 @@ class SiteController extends Controller
 
         $model->password = '';
 
-        return $this->render('login', [
+        return $this->render('signin', [
             'model' => $model,
         ]);
     }
@@ -100,8 +102,23 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+
+        $session = Yii::$app->session;
+        if ($session->get('user_session_id')) {
+            Yii::$app->db->createCommand()
+                ->delete('user_session', ['id' => $session->get('user_session_id')])
+                ->execute();
+            $session->remove('user_session_id');
+        }
         Yii::$app->user->logout();
 
         return $this->goHome();
     }
+
+
+    public function onAuthSuccess($client)
+    {
+        (new AuthHandler($client))->handle();
+    }
+
 }

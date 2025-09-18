@@ -4,11 +4,11 @@
 /** @var string $content */
 
 use accounts\assets\AppAsset;
-use accounts\assets\NovaAppAsset;
+use accounts\assets\PartnerAppAsset;
 use common\assets\NotifyAsset;
 
-NovaAppAsset::register($this);
 AppAsset::register($this);
+PartnerAppAsset::register($this);
 NotifyAsset::register($this);
 
 ?>
@@ -27,42 +27,22 @@ NotifyAsset::register($this);
 
 <body class="ltr main-body app sidebar-mini">
     <?php $this->beginBody() ?>
-
     <div class="page">
-
         <div>
-            <!-- /main-header -->
-            <?= \business\widgets\Header::widget() ?>
-            <!-- /main-header -->
-
-            <!-- main-sidebar -->
-            <?= \business\widgets\Sidebar::widget() ?>
-            <!-- main-sidebar -->
+            <?= \accounts\widgets\Header::widget() ?>
+            <?= \accounts\widgets\Sidebar::widget() ?>
         </div>
-        <!-- START #content -->
-
-        <!-- main-content -->
         <div class="main-content app-content">
-
-            <!-- container -->
             <div class="main-container container-fluid">
-                <?= \business\widgets\PageHeader::widget([
+                <?= \accounts\widgets\PageHeader::widget([
                     'title' => isset($this->params['title']) ? $this->params['title'] : '',
                     'buttons' => isset($this->params['buttons']) ? $this->params['buttons'] : []
                 ]) ?>
-
-
                 <?= $content ?>
             </div>
         </div>
-
-
-        <!-- END #content -->
         <?= \common\widgets\NotifyAlert::widget() ?>
-
-        <!-- END Setting -->
     </div>
-    <!-- END #app -->
     <?php $this->endBody() ?>
 </body>
 
