@@ -188,4 +188,9 @@ class Chat extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     {
         return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
     }
+
+    public function getLead()
+    {
+        return $this->hasOne(Lead::class, ['id' => 'lead_id']);
+    }
 }

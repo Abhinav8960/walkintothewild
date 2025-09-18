@@ -15,6 +15,11 @@ class ChatDisplaySearch extends Chat
 {
    
     public $name;
+    public $source;
+    public $operator_id;
+    public $quotation_count;
+    public $is_chat_started;
+    public $status;
     /**
      * {@inheritdoc}
      */
@@ -23,6 +28,7 @@ class ChatDisplaySearch extends Chat
         return [
             [['name','lead_id','user_id','recipient_user_id','last_message','park_id','package_id','quote_id','call_id','chat_type' ],'safe'],
             ['status', 'integer'],
+            [['source','operator_id','quotation_count','is_chat_started'],'safe']
         ];
     }
 
@@ -88,6 +94,28 @@ class ChatDisplaySearch extends Chat
                 ['like', 'safari_operator.business_name', $this->name],
             ]);
         }
+
+        $query->joinWith(['lead' => function ($query) {
+            if (!empty($this->source)) {
+                $query->andFilterWhere(['like', 'lead.source', $this->source]);
+            }
+        
+            if (!empty($this->operator_id)) {
+                $query->andFilterWhere(['like', 'lead.operator_id', $this->operator_id]);
+            }
+        
+            if (!empty($this->quotation_count)) {
+                $query->andFilterWhere(['like', 'lead.quotation_count', $this->quotation_count]);
+            }
+        
+            if (!empty($this->is_chat_started)) {
+                $query->andFilterWhere(['like', 'lead.is_chat_started', $this->is_chat_started]);
+            }
+
+            if (!empty($this->status)) {
+                $query->andFilterWhere(['lead.status' => $this->status]);
+            }
+        }]);
 
         return $dataProvider;
     }

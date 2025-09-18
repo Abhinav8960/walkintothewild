@@ -12,12 +12,14 @@ $this->title = 'Chat';
 $this->params['title'] = $this->title;
 ?>
 
+<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
+
 <div class="row">
     <div class="col-md-5">
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Chat List</h5>
-                <?php echo $this->render('_search', ['model' => $searchModel]); ?>
             </div>
             <div class="card-body p-2" style="height: 700px; overflow-y: auto;">
                 <?php foreach ($dataProvider->models as $chat){ ?>
