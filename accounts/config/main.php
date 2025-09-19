@@ -13,7 +13,9 @@ return [
     'bootstrap' => ['log'],
     'timeZone' => 'Asia/Calcutta',
     'modules' => [
-
+        'transactioninfo' => [
+            'class' => 'accounts\modules\transactioninfo\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [
@@ -59,8 +61,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
 
     ],

@@ -2,7 +2,7 @@
    <div class="navbar-menu-wrapper d-flex ">
      <div class="sidebar-brand-wrapper  px-3 py-3 d-lg-none d-block">
        <a href="/" class="header-logo">
-         <img src="<?= $this->params['baseurl'] ?>/images/logo-mini.svg" alt="logo">
+         <img src="<?= $this->params['baseurl'] ?>/images/accounts.png" alt="logo">
        </a>
      </div>
 

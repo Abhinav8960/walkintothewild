@@ -1,7 +1,7 @@
 <?php
 $active_url = "/" . Yii::$app->requestedRoute;
 
-$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$webasset = $this->assetManager->getBundle('\accounts\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 <nav class="side_bar sidebar-offcanvas d-flex justify-content-start">
@@ -10,7 +10,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="profile-ditails d-flex justify-content-around align-items-center">
                 <div class="pro-img me-3">
                     <a href="/">
-                        <img src="<?= $this->params['baseurl'] ?>/images/partner.jpg" alt="">
+                        <img src="<?= $this->params['baseurl'] ?>/images/accounts.png" alt="">
                         <span class="success-online"></span>
                     </a>
                 </div>
@@ -28,7 +28,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Dashboard</span>
             </a>
         </li>
-       
+
+        <li class="navItems mb-2">
+            <a href="/transactioninfo/default/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/transactioninfo/default/index"]) ? "active" : "" ?>">
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/transactioninfo/default/index",
+                                                                                                )) ? 'transaction.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu">Transaction</span>
+            </a>
+        </li>
+
+
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Icon_material-twotone-logout.svg" alt="" width="25" height="25"></span>

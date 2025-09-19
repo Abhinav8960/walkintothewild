@@ -4,6 +4,7 @@ namespace accounts\controllers;
 
 use accounts\components\AuthHandler;
 use common\models\LoginForm;
+use common\models\transaction\Transaction;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -67,7 +68,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $initated_transaction = Transaction::find()->where(['status' => Transaction::STATUS_INITIATED])->count();
+        $failed_transaction = Transaction::find()->where(['status' => Transaction::STATUS_FAILED])->count();
+        $success_transaction = Transaction::find()->where(['status' => Transaction::STATUS_SUCCESS])->count();
+        
+        return $this->render('index', [
+            'initated_transaction' => $initated_transaction,
+            'failed_transaction' => $failed_transaction,
+            'success_transaction' => $success_transaction,
+        ]);
     }
 
     /**
@@ -120,5 +129,4 @@ class SiteController extends Controller
     {
         (new AuthHandler($client))->handle();
     }
-
 }
