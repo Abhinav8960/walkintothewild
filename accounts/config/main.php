@@ -16,6 +16,10 @@ return [
         'transactioninfo' => [
             'class' => 'accounts\modules\transactioninfo\Module',
         ],
+
+        'booking' => [
+            'class' => 'accounts\modules\booking\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [

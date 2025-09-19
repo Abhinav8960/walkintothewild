@@ -33,11 +33,19 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <a href="/transactioninfo/default/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/transactioninfo/default/index"]) ? "active" : "" ?>">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/transactioninfo/default/index",
-                                                                                                )) ? 'transaction.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
+                                                                                                )) ? 'transaction_active.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu">Transaction</span>
             </a>
         </li>
 
+        <li class="navItems mb-2">
+            <a href="/booking/fixed-departure/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/booking/fixed-departure/index"]) ? "active" : "" ?>">
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/booking/fixed-departure/index",
+                                                                                                )) ? 'transaction.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu">Booking</span>
+            </a>
+        </li>
 
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">

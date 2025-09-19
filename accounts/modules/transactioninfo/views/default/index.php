@@ -102,7 +102,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Operator',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->partner->business_name ?? '';
@@ -124,14 +124,14 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Quotation',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str = "Park: " . $model->safaris;
                             $str .= "<br>";
                             $str = "Safaris: " . $model->safaris;
                             $str .= "<br>";
-                            $str .= "Sravelers: " . $model->travelers;
+                            $str .= "Travelers: " . $model->travelers;
                             $str .= "<br>";
                             $str .= "Stay Category: " . $model->staycatgory_lable;
                             $str .= "<br>";
@@ -149,25 +149,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             return $model->received_amount;
                         }
-                    ],
-                    [
-                        'label' => 'Device info',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $str = "Device: " . $model->device;
-                            $str .= "<br>";
-
-                            $str .= "Platform: " . $model->platform;
-                            $str .= "<br>";
-
-                            $str .= "Platform Version: " . $model->platform_version;
-                            $str .= "<br>";
-
-                            $str .= "Application Version: " . $model->application_version;
-                            return $str;
-                        }
-                    ],
+                    ],                 
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 20%;'],
