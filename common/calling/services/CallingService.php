@@ -116,7 +116,19 @@ class CallingService
                 'token' => \Yii::$app->params['deepcall_direct_api_token'],
                 'user_id' => \Yii::$app->params['deepcall_direct_api_user_id'],
                 'from' => $this->request_caller_2_no, // This is the number from which the call is made
+                'fromType' => 'Number',
+                'fromStrategy' => 'TO_ALL',
+                'fromRingTime' => 30,
+                'fromRetryCount' => 0,
+                'fromWebLogin' => 'no',
+                'fromCLI'   => sprintf('%011d', $this->request_caller_2_no),
                 'to' => $this->request_caller_1_no, // This is the number to be called
+                'toType' => 'Number',
+                'toStrategy' => 'TO_ALL',
+                'toRingTime' => 30,
+                'toRetryCount' => 0,
+                'toWebLogin' => 'no',
+                'toCLI'   => sprintf('%011d', $this->request_caller_1_no),
                 'reqId' => $this->reference_id
             ];
         }
