@@ -123,7 +123,7 @@ class CallingService
                 'fromRingTime' => 30,
                 'fromRetryCount' => 0,
                 'fromWebLogin' => 'no',
-                'fromCLI'   => sprintf('%011d', $this->request_caller_2_no),
+                'fromCLI'   => sprintf('%011d', $this->fromCLI),
                 'to' => $this->request_caller_1_no, // This is the number to be called
                 'toType' => 'Number',
                 'toStrategy' => 'TO_ALL',
