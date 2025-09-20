@@ -552,6 +552,7 @@ class DefaultController extends RestController
                     return Yii::$app->api->sendResponse([], ['message' => 'User number is not verified.'], 403);
                 }
 
+                $fromCLI = null;
                 $has_direct_call = false;
                 $chat_id = $chat_model->id;
                 $lead_id = $chat_model->lead_id;
@@ -563,7 +564,7 @@ class DefaultController extends RestController
                 $request_caller_2_no = $chat_model->operator->phone_no; // Optional
                 $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
                 if ($chat_model->operator->has_direct_call == true && !empty($chat_model->operator->direct_call_no)) {
-                    $request_caller_2_no = $chat_model->operator->direct_call_no; // Optional
+                    $fromCLI = $chat_model->operator->direct_call_no; // Optional
                     $has_direct_call = true;
                 }
 
@@ -578,7 +579,8 @@ class DefaultController extends RestController
                     $request_caller_1_user_id,
                     $request_caller_2_no,
                     $request_caller_2_user_id,
-                    $has_direct_call
+                    $has_direct_call,
+                    $fromCLI,
                 );
 
                 // Call the callNow method

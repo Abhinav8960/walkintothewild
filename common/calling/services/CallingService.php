@@ -14,6 +14,7 @@ class CallingService
     public $lead_id;
     public $request_vnm;
     public $has_direct_call = false;
+    public $fromCLI;
     public $request_caller_1_no;
     public $request_caller_1_user_id;
     // public $request_caller_2_no = "9650901148";
@@ -36,11 +37,12 @@ class CallingService
 
     public $call_model;
 
-    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no, $request_caller_2_user_id, $has_direct_call = false)
+    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no, $request_caller_2_user_id, $has_direct_call = false, $fromCLI =null)
     {
         $this->reference_id = \Yii::$app->security->generateRandomString(5) . '_' . time() . '_' . \Yii::$app->security->generateRandomString(5);
         $this->request_vnm = time() . rand(1, 1000);
         $this->has_direct_call = $has_direct_call;
+        $this->fromCLI = $fromCLI;
         $this->chat_id = $chat_id;
         $this->lead_id = $lead_id;
         $this->request_caller_1_no = $request_caller_1_no;
