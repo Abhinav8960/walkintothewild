@@ -113,7 +113,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'header' => "Actions",
                         'headerOptions' => ['style' => 'width: 15%; text-align: center;'],
                         'contentOptions' => ['style' => 'width: 15%; text-align: right;'],
-                        'template' => '{chat}&nbsp{booked}&nbsp{seat}&nbsp{update}&nbsp{view}&nbsp{inactive}',
+                        'template' => '{chat}&nbsp;&nbsp;{booked}&nbsp;&nbsp;{seat}&nbsp;&nbsp;{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{inactive}',
                         'buttons' => [
                             'chat' => function ($url, $model) {
                                 if ($model->status == 1) {
@@ -144,7 +144,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                                         [
                                             'value' => Url::toRoute(['update-seat', 'id' => $model->id]),
                                             'class' => 'btn p-0 change-menuicon seatAction',
-                                            'title' => 'View',
+                                            'title' => 'Seat Update',
                                         ]
                                     );
                                 }
@@ -152,17 +152,17 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
 
                             'update' => function ($url, $model) {
                                 if ($model->edit_status != 0) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="25" height="25">
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="20" height="20">
                                 ', ['update', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
-                                        'title' => 'View',
+                                        'title' => 'Edit',
 
                                     ]);
                                 } else if ($model->edit_status == 0) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="25" height="25">
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="20" height="20">
                                 ', ['copy-with-edit', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
-                                        'title' => 'View',
+                                        'title' => 'Edit',
 
                                     ]);
                                 }
@@ -173,13 +173,13 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
 
                             'view' => function ($url, $model) {
                                 if (isset($model->live_fd)) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="25" height="25">', ['view', 'id' => $model->live_fd->id], [
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="20" height="20">', ['view', 'id' => $model->live_fd->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]);
                                 }
                                 if (isset($model->editable_fd)) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="25" height="25">', ['view', 'id' => $model->editable_fd->id], [
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="20" height="20">', ['view', 'id' => $model->editable_fd->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]);
