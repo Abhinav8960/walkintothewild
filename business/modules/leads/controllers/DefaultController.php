@@ -287,6 +287,8 @@ class DefaultController extends  Controller
             }
 
 
+            $fromCLI = null;
+            $has_direct_call = false;
             $chat_id = $chat_model->id;
             $lead_id = $chat_model->lead_id;
             $call_initiated_user_id = Yii::$app->user->identity->id; // Example user ID who initiated the call
@@ -296,20 +298,25 @@ class DefaultController extends  Controller
             $request_caller_1_user_id = $chat_model->user->id;
             $request_caller_2_no = $chat_model->operator->phone_no; // Optional
             $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
-
+            if ($chat_model->operator->has_direct_call == true && !empty($chat_model->operator->direct_call_no)) {
+                $fromCLI = $chat_model->operator->direct_call_no; // Optional
+                $has_direct_call = true;
+            }
 
             // Instantiate the CallingService
             $callingService = new \common\calling\services\CallingService(
-                $chat_id,
-                $lead_id,
-                $operator_user_id,
-                $call_initiated_user_id,
-                $call_initiated_partner_id,
-                $request_caller_1_no,
-                $request_caller_1_user_id,
-                $request_caller_2_no,
-                $request_caller_2_user_id
-            );
+                    $chat_id,
+                    $lead_id,
+                    $operator_user_id,
+                    $call_initiated_user_id,
+                    $call_initiated_partner_id,
+                    $request_caller_1_no,
+                    $request_caller_1_user_id,
+                    $request_caller_2_no,
+                    $request_caller_2_user_id,
+                    $has_direct_call,
+                    $fromCLI,
+                );
             // Call the callNow method
             $result = $callingService->callNow();
             $transaction->commit();
