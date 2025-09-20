@@ -130,7 +130,7 @@ class CallingService
                 'toRingTime' => 30,
                 'toRetryCount' => 0,
                 'toWebLogin' => 'no',
-                'toCLI'   => sprintf('%011d', $this->request_caller_1_no),
+                'toCLI'   => sprintf('%011d', $this->fromCLI),
                 'reqId' => $this->reference_id
             ];
         }
