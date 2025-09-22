@@ -100,10 +100,9 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function getShared_safari_count()
     {
         return ShareSafari::find()->where([
-            'status' => ShareSafari::STATUS_ACTIVE,
             'host_user_id' => $this->id,
             'type' => ShareSafari::TYPE_FIXED_DEPARTURE
-        ])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
+        ])->andWhere(['IN', 'status', [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
     }
 
     public function getSharedsafari()
