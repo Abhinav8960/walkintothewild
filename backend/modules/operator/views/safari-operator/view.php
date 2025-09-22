@@ -71,12 +71,15 @@ foreach ($park as $key => $role) {
                                         <span>Alternate Email Address: </span><?= $model->operator_email ?? 'N/A'?>
                                     </p>
                                     <p>
+                                        <span>Type : </span><?= $model->legal_entity_type ? GeneralModel::operatortype($model->legal_entity_type) : 'N/A';?>
+                                    </p> 
+                                    <p>
                                         <span>Registered Name: </span><?= $model->register_comapany_name ?? 'N/A'?>
                                     </p>
                                    
                                     <p>
                                         <span>Registered Number: </span><?= $model->registration_number ?? 'N/A'?>
-                                    </p>                                      
+                                    </p>                                       
                                     <p>
                                         <span>Registered File: </span>
                                         <?php if (!empty($model->registration_copy_upload) && strtolower(pathinfo($model->registration_copy_upload, PATHINFO_EXTENSION)) === 'pdf'){?>

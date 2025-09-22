@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
@@ -27,7 +28,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="col-md-6">
             <div class="info-line">
                 <strong>Legal Entity Type:</strong>
-                <span><?= Html::encode($model->legal_entity_type) ?></span>
+                <span><?= $model->legal_entity_type ? GeneralModel::operatortype($model->legal_entity_type) : '' ; ?></span>
             </div>
         </div>
 
