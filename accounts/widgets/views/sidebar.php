@@ -43,7 +43,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/booking/fixed-departure/index",
                                                                                                 )) ? 'transaction.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
-                <span class="hide-slide-menu">Booking</span>
+                <span class="hide-slide-menu" style="text-wrap-mode: nowrap">Fixed Departure Booking</span>
             </a>
         </li>
 
