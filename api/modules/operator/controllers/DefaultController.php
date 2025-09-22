@@ -106,13 +106,13 @@ class DefaultController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::OPERATOR_API_LAYOUT_FULL;
         $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         if ($operator->status != SafariOperator::STATUS_ACTIVE) {
-            $message = Yii::$app->api->messageManager->getMessage('common.inactive',['{var}'=> 'Operator']);
-            return Yii::$app->api->sendResponse($data = [], ['message' => $message],404);
+            $message = Yii::$app->api->messageManager->getMessage('common.inactive', ['{var}' => 'Operator']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message], 404);
         }
         return Yii::$app->api->sendResponse($data = ['data' => $operator->toArray()]);
     }
@@ -127,7 +127,7 @@ class DefaultController extends RestController
 
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo && $this->userinfoId == $operator->user_id) {
@@ -155,12 +155,12 @@ class DefaultController extends RestController
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         if ($this->userinfo) {
             if ($this->userinfoId == $operator->user_id) {
-                $message = Yii::$app->api->messageManager->getMessage('common.follow_restricted',['{var}'=>'yourself']);
+                $message = Yii::$app->api->messageManager->getMessage('common.follow_restricted', ['{var}' => 'yourself']);
                 return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
             }
 
@@ -184,7 +184,7 @@ class DefaultController extends RestController
                 $message = Yii::$app->api->messageManager->getMessage('common.follow_success');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             } else {
-                $message = Yii::$app->api->messageManager->getMessage('common.follow_restricted',['{var}'=>'this operator currently']);
+                $message = Yii::$app->api->messageManager->getMessage('common.follow_restricted', ['{var}' => 'this operator currently']);
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
@@ -194,7 +194,7 @@ class DefaultController extends RestController
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         if ($this->userinfo) {
@@ -227,7 +227,7 @@ class DefaultController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FOR_FILTER_PARK;
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (empty($operator)) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -244,9 +244,15 @@ class DefaultController extends RestController
 
     public function actionReview($slug)
     {
+        $login_operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
+        if ($login_operator) {
+            $message = Yii::$app->api->messageManager->getMessage('common.operator_cannot_review');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+        }
+
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (empty($operator)) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $same_operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
@@ -318,7 +324,7 @@ class DefaultController extends RestController
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
             ->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
         $user_park_id = SafariOperatorRating::find()
@@ -347,7 +353,7 @@ class DefaultController extends RestController
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
             ->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
         $searchModel = new ShareSafariSearch();
@@ -364,7 +370,7 @@ class DefaultController extends RestController
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
             ->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
         $safariOperatorPark =  SafariOperatorPark::find()->where(['status' => SafariOperatorPark::STATUS_ACTIVE, 'safari_operator_id' => $operator->id])->all();
@@ -386,7 +392,7 @@ class DefaultController extends RestController
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
             ->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
 
@@ -404,7 +410,7 @@ class DefaultController extends RestController
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
             ->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
         $rating_model = SafariOperatorRating::find()->where(['user_id' => $this->userinfoId, 'safari_operator_id' => $operator->id, 'id' => $id])->one();
@@ -429,13 +435,13 @@ class DefaultController extends RestController
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
             ->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
 
         $rating = SafariOperatorRating::find()->where(['id' => $id])->limit(1)->one();
         if (!$rating) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Review']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Review']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -473,7 +479,7 @@ class DefaultController extends RestController
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
             ->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
         $safariOperatorPark =  SafariOperatorPark::find()->where(['status' => SafariOperatorPark::STATUS_ACTIVE, 'safari_operator_id' => $operator->id])->all();
@@ -494,7 +500,7 @@ class DefaultController extends RestController
     {
         $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$operator) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Operator']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Operator']);
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
 

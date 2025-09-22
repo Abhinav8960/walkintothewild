@@ -96,6 +96,7 @@ return [
         'message_required'=>'Message is required!',
         'message_send'=>'Message Sent!',
         'message_not_sent'=>'Message not sent!',
+        'operator_cannot_review' => 'Operator Cannot Review!',
 
     ],
 
