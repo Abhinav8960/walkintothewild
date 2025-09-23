@@ -64,24 +64,24 @@ $this->params['title'] = $this->title;
                             }
                         }
                     ],
-                    [
-                        'label' => 'Budget Segment',
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $budget = [];
-                            if ($model->is_offer_premium_budget == 1) {
-                                $budget[] = "Premium";
-                            }
-                            if ($model->is_offer_standard_budget == 1) {
-                                $budget[] = "Standard";
-                            }
-                            if ($model->is_offer_economical_budget == 1) {
-                                $budget[] = "Economical";
-                            }
-                            return implode(', ', $budget);
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Budget Segment',
+                    //     'contentOptions' => ['style' => 'width: 15%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         $budget = [];
+                    //         if ($model->is_offer_premium_budget == 1) {
+                    //             $budget[] = "Premium";
+                    //         }
+                    //         if ($model->is_offer_standard_budget == 1) {
+                    //             $budget[] = "Standard";
+                    //         }
+                    //         if ($model->is_offer_economical_budget == 1) {
+                    //             $budget[] = "Economical";
+                    //         }
+                    //         return implode(', ', $budget);
+                    //     }
+                    // ],
                     // [
                     //     'label' => 'Approved Status',
                     //     'contentOptions' => ['style' => 'width: 5%;'],
@@ -180,7 +180,7 @@ $this->params['title'] = $this->title;
                             'blocked' => function ($url, $model) {
                                 if ($model->status == NewStatusInterface::STATUS_ACTIVE) {
                                     return Html::a('<i class="fa fa-toggle-off"></i>', ['blocked-operator', 'id' => $model->id], [
-                                        'class' => 'btn btn-xs btn-success',
+                                        'class' => 'btn btn-xs btn-danger',
                                         'data-method' => 'post',
                                         'data-confirm' => 'Are you sure you want to Blocked this Operator?',
                                         'title' => 'Blocked',

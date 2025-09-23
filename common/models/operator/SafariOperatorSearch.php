@@ -2,6 +2,7 @@
 
 namespace common\models\operator;
 
+use common\interfaces\NewStatusInterface;
 use DateTime;
 use InvalidArgumentException;
 use yii\base\Model;
@@ -62,7 +63,7 @@ class SafariOperatorSearch extends SafariOperator
      */
     public function search($params)
     {
-        $query = SafariOperator::find()->where(['safari_operator.status' => [SafariOperator::STATUS_ACTIVE, SafariOperator::STATUS_SUSPEND]]);
+        $query = SafariOperator::find()->where(['safari_operator.status' => [SafariOperator::STATUS_ACTIVE, SafariOperator::STATUS_SUSPEND, NewStatusInterface::STATUS_BLOCKED]]);
 
         // add conditions that should always apply here
 
@@ -118,7 +119,7 @@ class SafariOperatorSearch extends SafariOperator
                         // Apply filter for economical budget
                         $query->andFilterWhere(['safari_operator.is_offer_economical_budget' => 1]);
                         break;
-                        // Add more cases if needed
+                    // Add more cases if needed
                     default:
                         // Handle other cases if necessary
                         break;
@@ -141,22 +142,22 @@ class SafariOperatorSearch extends SafariOperator
                         // Apply filter for economical budget
                         $query->andFilterWhere(['!=', 'website', '']);
                         break;
-                        // Add more cases if needed
+                    // Add more cases if needed
                     case 4:
                         // Apply filter for economical budget
                         $query->andFilterWhere(['has_cancellation_policy' => 1]);
                         break;
-                        // Add more cases if needed
+                    // Add more cases if needed
                     case 5:
                         // Apply filter for economical budget
                         $query->andFilterWhere(['category_id' => 2]);
                         break;
-                        // Add more cases if needed
+                    // Add more cases if needed
                     case 6:
                         // Apply filter for economical budget
                         $query->andFilterWhere(['category_id' => 3]);
                         break;
-                        // Add more cases if needed
+                    // Add more cases if needed
                     default:
                         // Handle other cases if necessary
                         break;
