@@ -1,5 +1,6 @@
 <?php
 
+use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
 use yii\helpers\Html;
@@ -50,7 +51,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->phone_no) ? $model->phone_no .' / '.SafariOperator::callstatusoption($model->is_phone_no_verified) : '';
+                            return isset($model->phone_no) ? $model->phone_no . ' / ' . SafariOperator::callstatusoption($model->is_phone_no_verified) : '';
                         }
                     ],
                     [
@@ -97,7 +98,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp{temporary}&nbsp{checkin}&nbsp{leads}&nbsp{check}',
+                        'template' => '{view}&nbsp{temporary}&nbsp{checkin}&nbsp{leads}&nbsp{check}&nbsp{blocked}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
@@ -118,7 +119,7 @@ $this->params['title'] = $this->title;
                             //         ]
                             //     );
                             // },
-                            
+
                             // 'temporary' => function ($url, $model) {
                             //     if ($model->is_temporary_delete != 1) {
                             //         return Html::a(
@@ -158,7 +159,7 @@ $this->params['title'] = $this->title;
 
                             'check' => function ($url, $model) {
                                 if ($model->is_phone_no_verified == 1) {
-                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['phone-verified', 'id' => $model->id], [
+                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['phone-verified', 'id' => $model->id], [
                                         'class' => 'btn btn-xs btn-success',
                                         'data-method' => 'post',
                                         'data-confirm' => 'Are you sure you want to change "Phone Verified" status to "No"?',
@@ -166,11 +167,31 @@ $this->params['title'] = $this->title;
                                         'data-bs-toggle' => "tooltip"
                                     ]);
                                 } else {
-                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['phone-verified', 'id' => $model->id], [
+                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['phone-verified', 'id' => $model->id], [
                                         'class' => 'btn btn-xs btn-warning',
                                         'data-method' => 'post',
                                         'data-confirm' => 'Are you sure you want to change "Phone Verified" status to "Yes"?',
                                         'title' => 'Phone Status',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                }
+                            },
+
+                            'blocked' => function ($url, $model) {
+                                if ($model->status == NewStatusInterface::STATUS_ACTIVE) {
+                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['blocked-operator', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-success',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure you want to Blocked this Operator?',
+                                        'title' => 'Blocked',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                } else if ($model->status == NewStatusInterface::STATUS_BLOCKED) {
+                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['unblocked-operator', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-info',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure you want to UnBlocked this Operator?',
+                                        'title' => 'Unblocked',
                                         'data-bs-toggle' => "tooltip"
                                     ]);
                                 }

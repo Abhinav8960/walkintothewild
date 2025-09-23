@@ -22,10 +22,13 @@ use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRatingReportSearch;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\SafariOperatorSearch;
+use common\models\package\Package;
 use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
 use common\models\SafariOperatorRequestSearch;
+use common\models\sharesafari\ShareSafari;
+use common\models\sighting\Sighting;
 use common\models\User;
 use common\models\UserFollow;
 use yii\data\ActiveDataProvider;
@@ -44,8 +47,9 @@ class SafariOperatorController extends Controller
     {
         $searchModel = new SafariOperatorSearch();
         // $searchModel->report_days = 'today';
-        $searchModel->status = 1;
+        // $searchModel->status = [SafariOperator::STATUS_ACTIVE, NewStatusInterface::STATUS_BLOCKED];
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->where(['IN', 'status', [SafariOperator::STATUS_ACTIVE, NewStatusInterface::STATUS_BLOCKED]]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -186,7 +190,7 @@ class SafariOperatorController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = SafariOperator::findOne(['id' => $id, 'status' => [SafariOperator::STATUS_ACTIVE, SafariOperator::STATUS_SUSPEND]])) !== null) {
+        if (($model = SafariOperator::findOne(['id' => $id, 'status' => [SafariOperator::STATUS_ACTIVE, SafariOperator::STATUS_SUSPEND, NewStatusInterface::STATUS_BLOCKED]])) !== null) {
             return $model;
         }
 
@@ -539,5 +543,68 @@ class SafariOperatorController extends Controller
         }
 
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionBlockedOperator($id)
+    {
+        $safari_operator = $this->findModel($id);
+        if ($safari_operator) {
+            $user_model = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
+            $user_model->status = NewStatusInterface::STATUS_BLOCKED;
+            $safari_operator->status =  NewStatusInterface::STATUS_BLOCKED;
+            if ($safari_operator->save(false)) {
+                if ($user_model->save(false)) {
+                    $packages = Package::find()->where(['safari_operator_id' => $safari_operator->id])->andWhere(['status' => 1])->all();
+                    foreach ($packages as $pack) {
+                        $pack->status = NewStatusInterface::STATUS_BLOCKED;
+                        $pack->save();
+                    }
+                    $fixed_departures = ShareSafari::find()->where(['type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'safari_operator_id' => $safari_operator->id])->andWhere(['status' => 1])->all();
+                    foreach ($fixed_departures as $fd) {
+                        $fd->status = NewStatusInterface::STATUS_BLOCKED;
+                        $fd->save();
+                    }
+                    $sightings = Sighting::find()->where(['safari_operator_id' => $safari_operator->id])->andWhere(['status' => 1])->all();
+                    foreach ($sightings as $st) {
+                        $st->status = NewStatusInterface::STATUS_BLOCKED;
+                        $st->save();
+                    }
+                    \Yii::$app->session->setFlash('success', 'Blocked Successfully!!!');
+                    return $this->redirect(['index']);
+                }
+            }
+        }
+    }
+
+    public function actionUnblockedOperator($id)
+    {
+
+        $safari_operator = $this->findModel($id);
+        if ($safari_operator) {
+            $user_model = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
+            $user_model->status = User::STATUS_ACTIVE;
+            $safari_operator->status =  NewStatusInterface::STATUS_ACTIVE;
+            if ($safari_operator->save(false)) {
+                if ($user_model->save(false)) {
+                    $packages = Package::find()->where(['safari_operator_id' => $safari_operator->id])->andWhere(['status' => NewStatusInterface::STATUS_BLOCKED])->all();
+                    foreach ($packages as $pack) {
+                        $pack->status = 1;
+                        $pack->save();
+                    }
+                    $fixed_departures = ShareSafari::find()->where(['type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'safari_operator_id' => $safari_operator->id])->andWhere(['status' => NewStatusInterface::STATUS_BLOCKED])->all();
+                    foreach ($fixed_departures as $fd) {
+                        $fd->status = 1;
+                        $fd->save();
+                    }
+                    $sightings = Sighting::find()->where(['safari_operator_id' => $safari_operator->id])->andWhere(['status' => NewStatusInterface::STATUS_BLOCKED])->all();
+                    foreach ($sightings as $st) {
+                        $st->status = 1;
+                        $st->save();
+                    }
+                    \Yii::$app->session->setFlash('success', 'UnBlocked Successfully!!!');
+                    return $this->redirect(['index']);
+                }
+            }
+        }
     }
 }
