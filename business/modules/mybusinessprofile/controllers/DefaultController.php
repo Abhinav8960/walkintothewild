@@ -1,6 +1,6 @@
 <?php
 
-namespace business\modules\settings\controllers;
+namespace business\modules\mybusinessprofile\controllers;
 
 use common\models\operator\SafariOperator;
 use Yii;
@@ -8,7 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * DefaultController for the `settings` module
+ * DefaultController for the `mybusinessprofile` module
  */
 class DefaultController extends Controller
 {

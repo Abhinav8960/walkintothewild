@@ -1,6 +1,6 @@
 <?php
 
-namespace business\modules\settings;
+namespace business\modules\mybusinessprofile;
 
 use common\models\operator\SafariOperator;
 use Yii;
@@ -14,7 +14,7 @@ class Module extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'business\modules\settings\controllers';
+    public $controllerNamespace = 'business\modules\mybusinessprofile\controllers';
 
     /**
      * {@inheritdoc}
