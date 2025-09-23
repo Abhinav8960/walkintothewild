@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -39,6 +40,9 @@ $this->params['title'] = $this->title;
                     <div class="justify-content-start rounded-3 p-2 mb-2 bg-body-tertiary">
                         <div>
                             <p><span style="color: red;">Legal Entity Whatsapp No :</span> <?= $safari_operator_model->legal_entity_whatsapp ?></p>
+                        </div>
+                        <div>
+                            <p><span style="color: red;">Legal Entity Type :</span> <?= $safari_operator_model->legal_entity_type ? GeneralModel::operatortype($safari_operator_model->legal_entity_type) : ' '; ?></p>
                         </div>
                         <div>
                             <p><span style="color: red;">Address :</span> <?= $safari_operator_model->address ?></p>

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use common\models\partnerregistration\PartnerRegistration;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -41,6 +42,11 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <img src="<?= $model->logo_path ?>" alt="Logo" style="width:100px; height:auto;">
                                         <?php }else{ 
                                         echo '<span class="text-muted">No file uploaded</span>';
+                                        }?>
+                                        </p>
+                                        <p><strong>Type : </strong>
+                                        <?php if($model->legal_entity_type){ 
+                                        echo $model->legal_entity_type ? GeneralModel::operatortype($model->legal_entity_type) : '' ;
                                         }?>
                                         </p>
                                         <p><strong>Email : </strong><?= $model->legal_entity_whatsapp ?></p>
