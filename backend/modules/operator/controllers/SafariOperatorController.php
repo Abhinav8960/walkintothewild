@@ -562,7 +562,7 @@ class SafariOperatorController extends Controller
                     $fixed_departures = ShareSafari::find()->where(['type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'safari_operator_id' => $safari_operator->id])->andWhere(['status' => 1])->all();
                     foreach ($fixed_departures as $fd) {
                         $fd->status = NewStatusInterface::STATUS_BLOCKED;
-                        $fd->save();
+                        $fd->save(false);
                     }
                     $sightings = Sighting::find()->where(['safari_operator_id' => $safari_operator->id])->andWhere(['status' => 1])->all();
                     foreach ($sightings as $st) {
@@ -594,7 +594,7 @@ class SafariOperatorController extends Controller
                     $fixed_departures = ShareSafari::find()->where(['type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'safari_operator_id' => $safari_operator->id])->andWhere(['status' => NewStatusInterface::STATUS_BLOCKED])->all();
                     foreach ($fixed_departures as $fd) {
                         $fd->status = 1;
-                        $fd->save();
+                        $fd->save(false);
                     }
                     $sightings = Sighting::find()->where(['safari_operator_id' => $safari_operator->id])->andWhere(['status' => NewStatusInterface::STATUS_BLOCKED])->all();
                     foreach ($sightings as $st) {
