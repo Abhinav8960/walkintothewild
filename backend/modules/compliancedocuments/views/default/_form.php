@@ -16,10 +16,9 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'type')->dropDownList(GeneralModel::compliancedocumenttype(), ['prompt' => 'Select Document Type'])->label('Compliance Document Type<span class="necessary">*</span>') ?>
     </div>
     
-    <div class="col-md-12">
-        <?= $form->field($model, 'content')->textarea(['rows' => '2', 'placeholder' => 'Add Content Here'])->label('Content<span class="necessary">*</span>') ?>
+    <div class="row">
+        <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['rows' => '6', 'placeholder' => 'Add Content Here'])->label('Content <span class="necessary">*</span>') ?>
     </div>
-    
     <hr>
     <div class="col-md-12">
         <div class="form-group">
