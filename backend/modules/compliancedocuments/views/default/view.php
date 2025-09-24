@@ -20,7 +20,7 @@ if ($model->status != ComplianceDocuments::STATUS_PUBLISHED) {
 
 ?>
 
-<div class="container mt-5">
+<div class="container-fluid mt-5">
     <div class="card shadow-sm p-3">
         <div class="card-body">
 
@@ -32,7 +32,7 @@ if ($model->status != ComplianceDocuments::STATUS_PUBLISHED) {
                     <p><strong>Effective Date:</strong> <?= Html::encode($model->effective_date) ?></p>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
-                    <p><strong>Version Created At:</strong> <?= Html::encode($model->created_at) ?></p>
+                    <p><strong>Created At:</strong>  <?= Yii::$app->formatter->asDate($model->created_at) ?></p>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Created By :</strong> <?= Html::encode($model->user->name) ?></p>
