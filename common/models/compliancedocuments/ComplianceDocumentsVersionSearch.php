@@ -6,7 +6,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ComplianceDocumentsVersionSearch represents the model behind the search form of `common\models\compliancedocuments`.
+ * ComplianceDocumentsVersionSearch represents the model behind the search form of `ComplianceDocumentsVersion`.
  */
 class ComplianceDocumentsVersionSearch extends ComplianceDocumentsVersion
 {
@@ -16,10 +16,19 @@ class ComplianceDocumentsVersionSearch extends ComplianceDocumentsVersion
     public function rules()
     {
         return [
-            [['description', 'compliance_documents_id'], 'safe'],
-            [['version'], 'string', 'max' => 255],
-            [['is_live', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['id','compliance_documents_id', 'version', 'type', 'version_created_by','status'], 'integer'],
+            [['content'], 'safe'],
+            [['effective_date', 'version_datetime'], 'safe'],
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function scenarios()
+    {
+        // bypass parent scenarios()
+        return Model::scenarios();
     }
 
     /**
@@ -31,20 +40,16 @@ class ComplianceDocumentsVersionSearch extends ComplianceDocumentsVersion
      */
     public function search($params)
     {
-        $query = ComplianceDocuments::find();
-
-        // add conditions that should always apply here
+        $query = ComplianceDocumentsVersion::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['version_datetime' => SORT_DESC]], 
         ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
@@ -52,13 +57,15 @@ class ComplianceDocumentsVersionSearch extends ComplianceDocumentsVersion
         $query->andFilterWhere([
             'id' => $this->id,
             'compliance_documents_id' => $this->compliance_documents_id,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'is_live' => $this->is_live,
+            'version' => $this->version,
+            'type' => $this->type,
+            'effective_date' => $this->effective_date,
+            'status' => $this->status,
+            'version_datetime' => $this->version_datetime,
+            'version_created_by' => $this->version_created_by,
         ]);
-        $query->andFilterWhere(['like', 'version', $this->version]);
+
+        $query->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

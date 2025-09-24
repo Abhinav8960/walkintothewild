@@ -2,6 +2,8 @@
 
 namespace common\models\compliancedocuments;
 
+use common\models\GeneralModel;
+use common\models\User;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -27,9 +29,9 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
 {
     use CommanRelationship;
 
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
-    const STATUS_DELETE = -1;
+    const STATUS_CREATE = 10;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_UNPUBLISHED = 0;
 
     /**
      * {@inheritdoc}
@@ -53,15 +55,14 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     public function rules()
     {
         return [
-            [['title', 'policy_for', 'effective_from', 'effective_to', 'description', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 0],
-            [['version'], 'string', 'max' => 10],
-            [['effective_from', 'version'], 'safe'],
-            [['meta_title', 'meta_description', 'meta_keywords', 'version'], 'string'],
-            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['content', 'effective_date'], 'default', 'value' => null],
+            [['type'], 'default', 'value' => 0],
+            [['type', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['content','version'], 'string'],
+            [['effective_date'], 'safe'],
+            [['created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
         ];
     }
-
     /**
      * {@inheritdoc}
      */
@@ -69,14 +70,11 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'policy_for' => 'Policy For',
-            'effective_from' => 'Effective From',
-            'effective_to' => 'Effective To',
-            'meta_title' => 'Meta Title',
-            'meta_description' => 'Meta Description',
-            'meta_keywords' => 'Meta Keywords',
-            'status' => 'Status',
+            'compliance_documents_version_id' => 'Compliance Documents Version ID',
+            'type' => 'Type',
+            'version'=>'Version',
+            'content' => 'Content',
+            'effective_date' => 'Effective Date',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
@@ -84,18 +82,35 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
         ];
     }
 
-    public function getVersions()
+    // public function getVersions()
+    // {
+    //     return $this->hasMany(ComplianceDocumentsVersion::class, ['compliance_documents_id' => 'id']);
+    // }
+
+    // public function getLatestVersion()
+    // {
+    //     return $this->getVersions()->orderBy(['id' => SORT_DESC])->one();
+    // }
+
+    // public function getVersiondata()
+    // {
+    //     return $this->hasOne(ComplianceDocumentsVersion::class, ['compliance_documents_id' => 'id']);
+    // }
+       
+    public function getUser()
     {
-        return $this->hasMany(ComplianceDocumentsVersion::class, ['compliance_documents_id' => 'id']);
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
-    public function getLatestVersion()
+      public function getStatuslabel()
     {
-        return $this->getVersions()->orderBy(['id' => SORT_DESC])->one();
+        if ($this->status == 1){
+            return "Published";
+        } 
+        else{
+            return "Unpublished";
+            }
+        return $this->status;
     }
 
-    public function getVersiondata()
-    {
-        return $this->hasOne(ComplianceDocumentsVersion::class, ['compliance_documents_id' => 'id']);
-    }
 }

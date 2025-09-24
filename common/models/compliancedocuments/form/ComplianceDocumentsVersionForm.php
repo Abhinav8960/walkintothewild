@@ -14,35 +14,31 @@ use common\models\compliancedocuments\ComplianceDocumentsVersion;
  * 
  * Update and Create Deployment Phase
  */
-class ComplianceDocumentsForm extends model
+class ComplianceDocumentsVersionForm extends model
 {
     public $type;
     public $version;
     public $compliance_documents_id;
     public $content;
     public $effective_date;
-    public $version_datetime;
-    public $version_created_by;
     public $cdocument_model;
+
     public $status;
 
-    public function __construct(ComplianceDocuments $cdocument_model = null)
+    public function __construct(?ComplianceDocumentsVersion $cdocument_model = null)
     {
         $this->cdocument_model = Yii::createObject([
-            'class' => ComplianceDocuments::className()
+            'class' => ComplianceDocumentsVersion::class
         ]);
-
+        $this->version = 'v1';
         if ($cdocument_model  != null) {
             $this->cdocument_model = $cdocument_model;
             $this->compliance_documents_id =  $this->cdocument_model->compliance_documents_id;
             $this->type =  $this->cdocument_model->type;
-            $this->version =  $this->cdocument_model->version;
             $this->content =  $this->cdocument_model->content;
-            $this->effective_date = $this->cdocument_model->effective_date;
             $this->status = $this->cdocument_model->status;
-            $this->version_datetime = $this->cdocument_model->version_datetime;
-            $this->version_created_by = $this->cdocument_model->version_created_by;
-            $this->cdocument_model = $this->cdocument_model->cdocument_model;
+            $this->effective_date = $this->effective_date;
+            
         }
     }
 
@@ -53,12 +49,10 @@ class ComplianceDocumentsForm extends model
     public function rules()
     {
         return [
-            [['type', 'effective_date', 'content'], 'required'],
-            [['version'], 'default', 'value' => 0],
-            [['type', 'version', 'version_created_by','compliance_documents_id','status'], 'integer'],
-            [['content'], 'string'],
-            [['effective_date'], 'date', 'format' => 'php:Y-m-d'],
-            [['version_datetime'], 'safe'],
+            [['type', 'content'], 'required'],
+            [['status'], 'default', 'value' => 0],
+            [['type','compliance_documents_id','status'], 'integer'],
+            [['content','version'], 'string'],
         ];
     }
     
@@ -75,25 +69,40 @@ class ComplianceDocumentsForm extends model
             'version'=>'Version',
             'content' => 'Content',
             'status' =>'Status',
-            'effective_date' => 'Effective Date',
-            'version_datetime'=>'Version DateTime',
-            'version_created_by'=>'Version Created By',
         ];
     }
+
     /**
      * Initial Form Values
      *
      * @return void
      */
+    private function getDocument()
+    {
+       $cdoc = new ComplianceDocuments();
+       $cdoc->type = $this->type;
+       $cdoc->version = $this->version;
+       $cdoc->content = $this->content;
+       $cdoc->effective_date = null;
+       $cdoc->status = ComplianceDocuments::STATUS_CREATE;
+       $cdoc->save(false);
+       return $cdoc->id;
+    }
+
     public function initializeForm()
     {
+
+        if ($this->compliance_documents_id == null) {
+            $docId = $this->getDocument();
+            if ($docId) {
+                $this->compliance_documents_id = $docId;
+            }
+        }
         $this->cdocument_model->compliance_documents_id = $this->compliance_documents_id;
         $this->cdocument_model->type = $this->type;
         $this->cdocument_model->version = $this->version;
         $this->cdocument_model->content = $this->content;
-        $this->cdocument_model->effective_date = GeneralModel::DateFormatForDb($this->effective_date);
-        $this->cdocument_model->status = $this->status;
-        $this->cdocument_model->version_datetime = $this->version_datetime;
-        $this->cdocument_model->version_created_by = $this->version_created_by;
+        $this->cdocument_model->status  = $this->status;
+        $this->cdocument_model->effective_date = $this->effective_date;
     }
 }

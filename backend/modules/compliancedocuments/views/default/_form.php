@@ -13,54 +13,19 @@ use yii\bootstrap5\ActiveForm;
 <div class="row">
 
     <div class="col-md-4">
-        <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title'])->label('Title <span class="necessary">*</span>') ?>
+        <?= $form->field($model, 'type')->dropDownList(GeneralModel::compliancedocumenttype(), ['prompt' => 'Select Document Type'])->label('Compliance Document Type<span class="necessary">*</span>') ?>
     </div>
-
-    <div class="col-md-4">
-        <?= $form->field($model, 'policy_for')->dropDownList(['User' => 'User', 'Business' => 'Business'], ['prompt' => 'Select Option', 'id' => 'type-selector'])->label('Policy For <span class="necessary">*</span>') ?>
+    
+    <div class="col-md-12">
+        <?= $form->field($model, 'content')->textarea(['rows' => '2', 'placeholder' => 'Add Content Here'])->label('Content<span class="necessary">*</span>') ?>
     </div>
-
-    <div class="col-md-4">
-        <?= $form->field($model, 'effective_from')->textInput(['type' => 'date'])->label('Effective From <span class="necessary">*</span>') ?>
-    </div>
-
-    <div class="col-md-4">
-        <?= $form->field($model, 'effective_to')->textInput(['type' => 'date'])->label('Effective To <span class="necessary">*</span>') ?>
-    </div>
-
-    <div class="row">
-        <?= $form->field($model_version, 'description', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description <span class="necessary">*</span>') ?>
-    </div>
-
-    <div class="row">
-        <?= $form->field($model, 'meta_title', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['rows' => '2', 'placeholder' => 'Meta Title'])->label('Meta Title <span class="necessary">*</span>') ?>
-    </div>
-    <div class="row">
-        <?= $form->field($model, 'meta_description', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['rows' => '6', 'placeholder' => 'Meta Description'])->label('Meta Description <span class="necessary">*</span>') ?>
-    </div>
-    <div class="row">
-        <?= $form->field($model, 'meta_keywords', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['rows' => '2', 'placeholder' => 'Meta Keywords'])->label('Meta Keywords <span class="necessary">*</span>') ?>
-    </div>
-
-    <?php if ($model->cdocument_model->id) { ?>
-        <div class="col-md-4">
-            <?= $form->field($model, 'status')->dropDownList(GeneralModel:: newstatusoption(),['prompt' => 'Select Status']) ?>
-        </div>
-    <?php } ?>
-
-    <?php if ($model->cdocument_model->id) { ?>
-        <div class="col-md-4">
-            <?= $form->field($model_version, 'is_live')->dropDownList(GeneralModel:: livestatusoption(),['prompt' => 'Select Status']) ?>
-        </div>
-    <?php } ?>
-
+    
     <hr>
     <div class="col-md-12">
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
         </div>
     </div>
-
 
 </div>
 <?php ActiveForm::end(); ?>

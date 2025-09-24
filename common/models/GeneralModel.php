@@ -2208,4 +2208,14 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '-1'=>'Cold Lead'
         ];
     }
+
+    public static function compliancedocumenttype(){
+        return [
+            '1' => 'Privacy Policy',
+            '2' => 'Terms and Conditions',
+            '3' => 'Refund Policy',
+            '4' => 'Other'
+        ];
+    }
+    
 }

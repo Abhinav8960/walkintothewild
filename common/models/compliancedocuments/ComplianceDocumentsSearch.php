@@ -6,7 +6,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ComplianceDocumentsSearch represents the model behind the search form of `common\models\compliancedocuments`.
+ * ComplianceDocumentsVersionSearch represents the model behind the search form of `ComplianceDocumentsVersion`.
  */
 class ComplianceDocumentsSearch extends ComplianceDocuments
 {
@@ -16,10 +16,19 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
     public function rules()
     {
         return [
-            [['effective_from', 'description', 'title','policy_for'], 'safe'],
-            // [['version'], 'string', 'max' => 255],
-            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['id', 'type', 'created_by'], 'integer'],
+            [['content'], 'safe'],
+            [['effective_date', 'created_at'], 'safe'],
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function scenarios()
+    {
+        // bypass parent scenarios()
+        return Model::scenarios();
     }
 
     /**
@@ -31,40 +40,28 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
      */
     public function search($params)
     {
-        // $query = ComplianceDocuments::find()->where(['status'=>[0,1]]);
-        $query = ComplianceDocuments::find()
-        ->joinWith('versions') 
-        ->where(['compliance_documents.status' => [0, 1]]) 
-        ->andWhere(['compliance_documents_version.is_live' => 1]); 
+        $query = ComplianceDocuments::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]], 
         ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            // 'uuid' => $this->uuid,
-            'title' => $this->title,
-            'policy_for' => $this->policy_for,
-            'effective_from' => $this->effective_from,
-            // 'description' => $this->description,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'type' => $this->type,
+            'effective_date' => $this->effective_date,
+            'created_at' => $this->created_by,
+            'created_at' => $this->created_by,
         ]);
-        // $query->andFilterWhere(['like', 'version', $this->version]);
+
+        $query->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

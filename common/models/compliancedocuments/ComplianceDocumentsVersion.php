@@ -8,18 +8,21 @@ use Yii;
  * This is the model class for table "compliance_documents_version".
  *
  * @property int $id
- * @property int $compliance_documents_id
- * @property string $version
- * @property string $description
- * @property int $is_live
+ * @property int|null $type 1 => Privacy Policy
+ 2 => Terms and Conditions,
+ 3 => Refund Policy,
+ 4 => Other
+ * @property int|null $version
+ * @property string|null $content
+ * @property string|null $effective_date
  * @property int $created_at
- * @property int $updated_at
  * @property int $created_by
- * @property int $updated_by
  */
-class ComplianceDocumentsVersion extends \yii\db\ActiveRecord 
+class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
 {
 
+    const STATUS_PUBLISHED = 1;
+    const STATUS_UNPUBLISHED = 0;
 
     /**
      * {@inheritdoc}
@@ -28,7 +31,7 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
     {
         return 'compliance_documents_version';
     }
-    
+
     public function behaviors()
     {
         return [
@@ -36,20 +39,18 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
             \yii\behaviors\BlameableBehavior::className(),
         ];
     }
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['version'], 'default', 'value' => 'v1'],
-            [['is_live'], 'default', 'value' => 0],
-            [['compliance_documents_id', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
-            [['compliance_documents_id', 'is_live', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['description'], 'string'],
-            [['version'], 'string', 'max' => 255],
-            [['compliance_documents_id', 'version'], 'unique', 'targetAttribute' => ['compliance_documents_id', 'version']],
+            [['content', 'effective_date','compliance_documents_id'], 'default', 'value' => null],
+            [['status'], 'default', 'value' => 0],
+            [['created_at', 'created_by'], 'required'],
+            [['type', 'created_at', 'created_by','updated_at','updated_by'], 'integer'],
+            [['content','version'], 'string'],
+            [['effective_date'], 'safe'],
         ];
     }
 
@@ -60,15 +61,27 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'compliance_documents_id' => 'Compliance Documents ID',
+            'compliance_documents_id'=>'Compliance Documents Id',
+            'type' => 'Type',
             'version' => 'Version',
-            'description' => 'Description',
-            'is_live' => 'Is Live',
+            'content' => 'Content',
+            'effective_date' => 'Effective Date',
+            'status' => 'Status',
             'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
             'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
+            'updated_at' => 'Updated At',
+            'Updated_by' => 'Updated By'
         ];
     }
 
+    public static function compliancedocumenttype($type)
+    {
+        $compliance_document = [
+            1 => 'Privacy Policy',
+            2 => 'Terms and Conditions',
+            3 => 'Refund Policy',
+            4 => 'Other',
+        ];
+        return $compliance_document[$type] ?? '';
+    }
 }
