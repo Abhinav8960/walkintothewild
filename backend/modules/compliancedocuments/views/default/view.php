@@ -47,6 +47,15 @@ if ($model->status != ComplianceDocuments::STATUS_PUBLISHED) {
                 </div>
             </div>
 
+
+            <!-- <div class="col-md-12">
+                <div class="border p-3 overflow-auto bg-light fs-6 rounded-3">
+                    <p>
+                        <span class="fw-bold text-dark">Content:</span> <?= $model->content?>
+                    </p>
+                </div>
+            </div> -->
+
             <div class="mt-3">
                 <?= Html::a('Back', ['index'], ['class' => 'btn btn-orange text-white']) ?>
             </div>
