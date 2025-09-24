@@ -77,7 +77,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             },
 
                             'update' => function ($url, $model) {
-                                if ($model->status == ComplianceDocuments::STATUS_CREATE) {
+                                if ($model->status == ComplianceDocuments::STATUS_CREATE || $model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
                                     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',

@@ -81,7 +81,7 @@ class DefaultController extends Controller
                 if ($form_model->validate()) {
                     $form_model->initializeForm();
                     if ($form_model->cdocument_model->save()) {
-                        if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
+                        if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED || $model->status == ComplianceDocuments::STATUS_CREATE) {
                             $model->type = $form_model->type;
                             $model->content = $form_model->content;
                             $model->save(false);
