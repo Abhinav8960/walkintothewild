@@ -2217,5 +2217,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '4' => 'Other'
         ];
     }
+
+    public static function complianceDocumentStatusOption()
+    {
+        return [
+            10 => 'Unpublished',
+            1 => 'Published',
+        ];
+    }
     
 }

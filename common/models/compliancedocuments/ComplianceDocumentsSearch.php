@@ -16,7 +16,7 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
     public function rules()
     {
         return [
-            [['id', 'type', 'created_by'], 'integer'],
+            [['id', 'type', 'created_by','status'], 'integer'],
             [['content'], 'safe'],
             [['effective_date', 'created_at'], 'safe'],
         ];
@@ -57,6 +57,7 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
             'id' => $this->id,
             'type' => $this->type,
             'effective_date' => $this->effective_date,
+            'status' =>$this->status,
             'created_at' => $this->created_by,
             'created_at' => $this->created_by,
         ]);
