@@ -46,7 +46,11 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'enableSorting' => true,
                         // 'contentOptions' => ['style' => 'width:10%; text-align: center;'],
                         'value' => function ($model) {
+                            if(isset($model->effective_date)){
                             return \Yii::$app->formatter->asDatetime($model->effective_date, "php:d-m-Y");
+                            }else{
+                                return "";
+                            }
                         }
                     ],
                     [
