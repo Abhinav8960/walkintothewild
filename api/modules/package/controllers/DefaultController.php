@@ -112,12 +112,17 @@ class DefaultController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['IS NOT', 'live_version', null])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message], 404);
+        }
+
+        if ($package->status == Package::STATUS_BLOCKED) {
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message], 404);
         }
 
         if ($package->status != Package::STATUS_ACTIVE) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_in_use',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_in_use', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = ['data' => $package->toArray()], ['message' => $message]);
         }
 
@@ -132,7 +137,7 @@ class DefaultController extends RestController
 
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $model = new PackageCommentForm();
@@ -168,7 +173,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo && isset($package->partner) && $package->safari_operator_id != $package->partner->id) {
@@ -210,7 +215,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -232,7 +237,7 @@ class DefaultController extends RestController
             $wishlist->item_type = 'package';
             $wishlist->status = 1;
             if ($wishlist->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.wishlist_added',['{var}'=> 'Package']);
+                $message = Yii::$app->api->messageManager->getMessage('common.wishlist_added', ['{var}' => 'Package']);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
@@ -243,7 +248,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -259,10 +264,10 @@ class DefaultController extends RestController
             if ($wishlist) {
                 $wishlist->status = 0;
                 if ($wishlist->save(false)) {
-                    $message = Yii::$app->api->messageManager->getMessage('common.wishlist_removed',['{var}'=> 'Package']);
+                    $message = Yii::$app->api->messageManager->getMessage('common.wishlist_removed', ['{var}' => 'Package']);
                     return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
-                $message = Yii::$app->api->messageManager->getMessage('common.wishlist_remove_failed',['{var}'=> 'Package']);
+                $message = Yii::$app->api->messageManager->getMessage('common.wishlist_remove_failed', ['{var}' => 'Package']);
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
@@ -278,11 +283,11 @@ class DefaultController extends RestController
 
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo && isset($package->partner) && $this->userinfoId == $package->partner->user_id) {
-            $message = Yii::$app->api->messageManager->getMessage('common.quote_restricted',['{var}'=>'package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.quote_restricted', ['{var}' => 'package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $packagemodel = new PackageLeadForm();
@@ -304,7 +309,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -358,7 +363,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -372,7 +377,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -381,7 +386,7 @@ class DefaultController extends RestController
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'package_id' => $package->id])
             ->all();
         if (!$packageSafariPark) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Park']);
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
 
@@ -400,7 +405,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -414,7 +419,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
