@@ -26,16 +26,16 @@ if ($model->status != ComplianceDocuments::STATUS_PUBLISHED) {
 
             <div class="row mb-3">
                 <div class="col-md-3 col-sm-6 mb-2">
-                    <p><strong>Type:</strong> <?= Html::encode(ComplianceDocumentsVersion::compliancedocumenttype($model->type)) ?></p>
+                    <p><strong>Type : </strong> <?= Html::encode(ComplianceDocumentsVersion::compliancedocumenttype($model->type)) ?></p>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
-                    <p><strong>Effective Date:</strong> <?= Html::encode($model->effective_date) ?></p>
+                    <p><strong>Effective Date : </strong><?= Yii::$app->formatter->asDate($model->effective_date) ?></p>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
-                    <p><strong>Created At:</strong>  <?= Yii::$app->formatter->asDate($model->created_at) ?></p>
+                    <p><strong>Created At : </strong>  <?= Yii::$app->formatter->asDate($model->created_at) ?></p>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
-                    <p><strong>Created By :</strong> <?= Html::encode($model->user->name) ?></p>
+                    <p><strong>Created By : </strong> <?= Html::encode($model->user->name) ?></p>
                 </div>
             </div>
 
