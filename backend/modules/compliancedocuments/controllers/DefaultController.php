@@ -115,9 +115,6 @@ class DefaultController extends Controller
        
 
         $form_model = new ComplianceDocumentsVersionForm($lastVersion);
-        $newVersionNumber = $lastVersion ? intval(substr($lastVersion->version, 1)) + 1 : 1;
-        $newVersion = 'v' . $newVersionNumber;
-        $form_model->version = $newVersion ;
         if (Yii::$app->request->isPost && $form_model->load($this->request->post())) {
             if ($form_model->validate()) {
                 $form_model->initializeForm();
