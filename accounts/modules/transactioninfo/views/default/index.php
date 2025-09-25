@@ -104,10 +104,14 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Operator',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->partner->business_name ?? '';
+                            $name =$model->partner->business_name ?? '';
+                            return Html::a(Html::encode($name),
+                                ['/operator/default/view', 'id' => $model->partner->id],
+                                ['style' => 'color:black !important;']
+                            );
                         }
                     ],
                     [

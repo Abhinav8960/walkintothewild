@@ -20,6 +20,10 @@ return [
         'booking' => [
             'class' => 'accounts\modules\booking\Module',
         ],
+
+        'operator' => [
+            'class' => 'accounts\modules\operator\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [

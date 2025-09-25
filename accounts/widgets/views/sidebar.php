@@ -47,6 +47,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
+        <li class="navItems mb-2">
+            <a href="/operator/default/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/operator/default/index"]) ? "active" : "" ?>">
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/operator/default/index",
+                                                                                                )) ? 'transaction_active.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu" style="text-wrap-mode: nowrap">Operator</span>
+            </a>
+        </li>
+
+
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Icon_material-twotone-logout.svg" alt="" width="25" height="25"></span>
