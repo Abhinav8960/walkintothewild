@@ -2209,19 +2209,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         ];
     }
 
-    public static function compliancedocumenttype(){
-        return [
-            '1' => 'Privacy Policy',
-            '2' => 'Terms and Conditions',
-            '3' => 'Refund Policy',
-            '4' => 'Other'
-        ];
-    }
-
     public static function complianceDocumentStatusOption()
     {
         return [
-            10 => 'Unpublished',
+            0 => 'Unpublished',
             1 => 'Published',
         ];
     }

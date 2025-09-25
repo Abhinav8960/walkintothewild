@@ -13,7 +13,7 @@ use yii\bootstrap5\ActiveForm;
 <div class="row">
 
     <div class="col-md-4">
-        <?= $form->field($model, 'type')->dropDownList(GeneralModel::compliancedocumenttype(), ['prompt' => 'Select Document Type'])->label('Compliance Document Type<span class="necessary">*</span>') ?>
+        <?= $form->field($model, 'title')->textInput(['placeholder' => 'Add Title'])->label('Compliance Document Title<span class="necessary">*</span>') ?>
     </div>
     
     <div class="row">

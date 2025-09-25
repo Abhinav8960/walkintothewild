@@ -56,9 +56,9 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     {
         return [
             [['content', 'effective_date'], 'default', 'value' => null],
-            [['type'], 'default', 'value' => 0],
-            [['type', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['content', 'version'], 'string'],
+            [['title'], 'default', 'value' => 0],
+            [['version_id','created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['content', 'version','title'], 'string'],
             [['effective_date'], 'safe'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
         ];
@@ -70,8 +70,9 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     {
         return [
             'id' => 'ID',
+            'version_id'=>'Version Id',
             'compliance_documents_version_id' => 'Compliance Documents Version ID',
-            'type' => 'Type',
+            'title' => 'Title',
             'version' => 'Version',
             'content' => 'Content',
             'effective_date' => 'Effective Date',
@@ -81,22 +82,7 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
             'updated_by' => 'Updated By',
         ];
     }
-
-    // public function getVersions()
-    // {
-    //     return $this->hasMany(ComplianceDocumentsVersion::class, ['compliance_documents_id' => 'id']);
-    // }
-
-    // public function getLatestVersion()
-    // {
-    //     return $this->getVersions()->orderBy(['id' => SORT_DESC])->one();
-    // }
-
-    // public function getVersiondata()
-    // {
-    //     return $this->hasOne(ComplianceDocumentsVersion::class, ['compliance_documents_id' => 'id']);
-    // }
-
+    
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);

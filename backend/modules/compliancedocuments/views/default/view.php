@@ -26,7 +26,7 @@ if ($model->status != ComplianceDocuments::STATUS_PUBLISHED) {
 
             <div class="row mb-3">
                 <div class="col-md-3 col-sm-6 mb-2">
-                    <p><strong>Type : </strong> <?= Html::encode(ComplianceDocumentsVersion::compliancedocumenttype($model->type)) ?></p>
+                    <p><strong>Type : </strong> <?= Html::encode($model->title)?></p>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Effective Date : </strong><?= Yii::$app->formatter->asDate($model->effective_date) ?></p>

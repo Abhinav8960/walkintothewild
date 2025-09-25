@@ -16,8 +16,8 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
     public function rules()
     {
         return [
-            [['id', 'type', 'created_by','status'], 'integer'],
-            [['content'], 'safe'],
+            [['id','version_id','created_by','status'], 'integer'],
+            [['content','title'], 'safe'],
             [['effective_date', 'created_at'], 'safe'],
         ];
     }
@@ -55,7 +55,8 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'type' => $this->type,
+            'version_id'=>$this->version_id,
+            'title' => $this->title,
             'effective_date' => $this->effective_date,
             'status' =>$this->status,
             'created_at' => $this->created_by,
@@ -63,6 +64,8 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
         ]);
 
         $query->andFilterWhere(['like', 'content', $this->content]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
+
 
         return $dataProvider;
     }

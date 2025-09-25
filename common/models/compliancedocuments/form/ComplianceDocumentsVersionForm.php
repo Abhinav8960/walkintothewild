@@ -16,7 +16,7 @@ use common\models\compliancedocuments\ComplianceDocumentsVersion;
  */
 class ComplianceDocumentsVersionForm extends model
 {
-    public $type;
+    public $title;
     public $version;
     public $compliance_documents_id;
     public $content;
@@ -34,7 +34,7 @@ class ComplianceDocumentsVersionForm extends model
         if ($cdocument_model  != null) {
             $this->cdocument_model = $cdocument_model;
             $this->compliance_documents_id =  $this->cdocument_model->compliance_documents_id;
-            $this->type =  $this->cdocument_model->type;
+            $this->title =  $this->cdocument_model->title;
             $this->content =  $this->cdocument_model->content;
             $this->status = $this->cdocument_model->status;
             $this->effective_date = $this->effective_date;
@@ -49,10 +49,10 @@ class ComplianceDocumentsVersionForm extends model
     public function rules()
     {
         return [
-            [['type', 'content'], 'required'],
+            [['title', 'content'], 'required'],
             [['status'], 'default', 'value' => 0],
-            [['type','compliance_documents_id','status'], 'integer'],
-            [['content','version'], 'string'],
+            [['compliance_documents_id','status'], 'integer'],
+            [['content','version','title'], 'string'],
         ];
     }
     
@@ -65,7 +65,7 @@ class ComplianceDocumentsVersionForm extends model
         return [
             'id'=>'Id',
             'compliance_documents_id' => 'Compliance Documents Id',
-            'type'=>'Type',
+            'title'=>'Title',
             'version'=>'Version',
             'content' => 'Content',
             'status' =>'Status',
@@ -77,29 +77,11 @@ class ComplianceDocumentsVersionForm extends model
      *
      * @return void
      */
-    private function getDocument()
-    {
-       $cdoc = new ComplianceDocuments();
-       $cdoc->type = $this->type;
-       $cdoc->version = $this->version;
-       $cdoc->content = $this->content;
-       $cdoc->effective_date = null;
-       $cdoc->status = ComplianceDocuments::STATUS_CREATE;
-       $cdoc->save(false);
-       return $cdoc->id;
-    }
 
     public function initializeForm()
     {
-
-        if ($this->compliance_documents_id == null) {
-            $docId = $this->getDocument();
-            if ($docId) {
-                $this->compliance_documents_id = $docId;
-            }
-        }
         $this->cdocument_model->compliance_documents_id = $this->compliance_documents_id;
-        $this->cdocument_model->type = $this->type;
+        $this->cdocument_model->title = $this->title;
         $this->cdocument_model->version = $this->version;
         $this->cdocument_model->content = $this->content;
         $this->cdocument_model->status  = $this->status;

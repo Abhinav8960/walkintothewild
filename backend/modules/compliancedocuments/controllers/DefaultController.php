@@ -22,7 +22,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ComplianceDocumentsSearch();
+        $searchModel = new ComplianceDocumentsVersionSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -68,23 +68,12 @@ class DefaultController extends Controller
         if (!$model) {
             throw new NotFoundHttpException('Document not found');
         }
-
-        $lastVersion = ComplianceDocumentsVersion::find()
-            ->where(['compliance_documents_id' => $model->id])
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
-
-        $form_model = new ComplianceDocumentsVersionForm($lastVersion);
+        $form_model = new ComplianceDocumentsVersionForm($model);
         if ($this->request->isPost) {
             if ($form_model->load($this->request->post())) {
                 if ($form_model->validate()) {
                     $form_model->initializeForm();
                     if ($form_model->cdocument_model->save()) {
-                        if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED || $model->status == ComplianceDocuments::STATUS_CREATE) {
-                            $model->type = $form_model->type;
-                            $model->content = $form_model->content;
-                            $model->save(false);
-                        }
                         Yii::$app->session->setFlash('success', 'Document created successfully.');
                         return $this->redirect(['index']);
                     }
@@ -99,25 +88,25 @@ class DefaultController extends Controller
         ]);
     }
 
+
     public function actionEdit($id)
     {
         $model = $this->findModel($id);
         if (!$model) {
             throw new NotFoundHttpException('Document not found');
         }
-      
+
         $lastVersion = ComplianceDocumentsVersion::find()
-            ->where(['compliance_documents_id' => $model->id])
-            ->andWhere(['status'=>1])
-            ->orderBy(['id' => SORT_DESC])
+            ->where(['id' => $model->id])
+            ->andWhere(['status' => 1])
             ->one();
-       
 
         $form_model = new ComplianceDocumentsVersionForm($lastVersion);
         if (Yii::$app->request->isPost && $form_model->load($this->request->post())) {
             if ($form_model->validate()) {
                 $form_model->initializeForm();
                 if ($form_model->cdocument_model->save(false)) {
+                    $this->copynewversion($id);
                     Yii::$app->session->setFlash('success', 'Document created successfully.');
                     return $this->redirect(['index']);
                 }
@@ -139,28 +128,9 @@ class DefaultController extends Controller
             'model' => $model,
         ]);
     }
-
-    // public function actionDelete($id)
-    // {
-    //     $model = $this->findModel($id);
-    //     // $model->version = $model->id . '_' . $model->version;
-    //     $model->status = ComplianceDocuments::STATUS_DELETE;
-    //     $model->save(false);
-    //     \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-    //     return $this->redirect(\Yii::$app->request->referrer);
-    // }
-
     protected function findModel($id)
     {
-        if (($model = ComplianceDocuments::findOne($id)) !== null) {
-            return $model;
-        }
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    protected function findModelVersion($compliance_documents_id)
-    {
-        if ($model = ComplianceDocumentsVersion::findOne(['compliance_documents_id' => $compliance_documents_id])) {
+        if (($model = ComplianceDocumentsVersion::findOne($id)) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
@@ -169,7 +139,6 @@ class DefaultController extends Controller
     public function actionPublish($id)
     {
         $model = $this->findModel($id);
-
         if (!$model) {
             Yii::$app->session->setFlash('error', 'Document not found.');
             return $this->redirect(Yii::$app->request->referrer);
@@ -177,7 +146,14 @@ class DefaultController extends Controller
         $model->status = ComplianceDocuments::STATUS_PUBLISHED;
         $model->effective_date = date('Y-m-d H:i:s');
         if ($model->save(false)) {
-            $this->copynewversion($id);
+            $model_main = new ComplianceDocuments();
+            $model_main->version_id = $model->id;
+            $model_main->version = $model->version;
+            $model_main->title = $model->title;
+            $model_main->content = $model->content;
+            $model_main->effective_date = $model->effective_date;
+            $model_main->status = ComplianceDocuments::STATUS_PUBLISHED;
+            $model_main->save(false);
             Yii::$app->session->setFlash('success', 'Published Successfully!');
         } else {
             Yii::$app->session->setFlash('error', 'Failed to publish document.');
@@ -193,15 +169,16 @@ class DefaultController extends Controller
             Yii::$app->session->setFlash('error', 'Document not found.');
             return $this->redirect(Yii::$app->request->referrer);
         }
-
         $model->status = ComplianceDocuments::STATUS_UNPUBLISHED;
-        $model->effective_date = null;
         if ($model->save(false)) {
+            $model_document = ComplianceDocuments::find()->where(['version_id'=>$id])->one();
+            $model_document->status = ComplianceDocuments::STATUS_UNPUBLISHED;
+            $model_document->save(false);
             Yii::$app->session->setFlash('success', 'Unpublished Successfully!');
         } else {
             Yii::$app->session->setFlash('error', 'Failed to unpublish document.');
         }
-
+        
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -211,33 +188,15 @@ class DefaultController extends Controller
         if (!$model) {
             throw new NotFoundHttpException('Document not found');
         }
+
         $version_model = new ComplianceDocumentsVersion();
-        $version_model->compliance_documents_id = $model->id;
+        // $version_model->compliance_documents_id = $model->id;
         $version_model->version = 'v' . (intval(substr($model->version, 1)) + 1);
-        $version_model->type = $model->type;
+        $version_model->title = $model->title;
         $version_model->content = $model->content;
-        $version_model->effective_date = $model->effective_date;
-        $version_model->status = 1;
+        $version_model->effective_date = null;
+        $version_model->status = ComplianceDocuments::STATUS_UNPUBLISHED;
         $version_model->save(false);
         return true;
-    }
-
-    public function actionVersionIndex($id)
-    {
-        $searchModel = new ComplianceDocumentsVersionSearch();
-        $searchModel->compliance_documents_id = $id;
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        return $this->render('version_index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
-        ]);
-    }
-
-    public function actionVersionView($id)
-    {
-        $model = ComplianceDocumentsVersion::findOne($id);
-        return $this->render('version_view', [
-            'model' => $model,
-        ]);
     }
 }

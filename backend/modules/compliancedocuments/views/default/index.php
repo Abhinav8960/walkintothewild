@@ -31,16 +31,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'Type',
+                        'label' => 'Title',
+                        'contentOptions' => ['style' => 'width: 40%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->type
-                                ? ComplianceDocumentsVersion::compliancedocumenttype($model->type)
-                                : ' ';
+                            return $model->title;
                         },
                     ],
                     [
                         'attribute' => 'Effective Date',
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'html',
                         'enableSorting' => true,
                         'value' => function ($model) {
@@ -53,10 +53,18 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
+                        }
+                    ],
+                    [
+                        'label' => 'Version',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->version;
                         }
                     ],
                     [
@@ -91,16 +99,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     ]);
                                 }
                             },
-
-                            'versionview' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/version.png" alt="" width="25" height="20">
-                                ', ['version-index', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Versions',
-
-                                ]);
-                            },
-
                         ]
                     ],
                 ],

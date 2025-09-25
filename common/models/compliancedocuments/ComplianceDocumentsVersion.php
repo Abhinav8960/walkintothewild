@@ -9,10 +9,7 @@ use Yii;
  * This is the model class for table "compliance_documents_version".
  *
  * @property int $id
- * @property int|null $type 1 => Privacy Policy
- 2 => Terms and Conditions,
- 3 => Refund Policy,
- 4 => Other
+ * @property string|null $title
  * @property int|null $version
  * @property string|null $content
  * @property string|null $effective_date
@@ -49,8 +46,8 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
             [['content', 'effective_date', 'compliance_documents_id'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
             [['created_at', 'created_by'], 'required'],
-            [['type', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['content', 'version'], 'string'],
+            [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['content', 'version','title'], 'string'],
             [['effective_date'], 'safe'],
         ];
     }
@@ -63,7 +60,7 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'compliance_documents_id' => 'Compliance Documents Id',
-            'type' => 'Type',
+            'title' => 'Title',
             'version' => 'Version',
             'content' => 'Content',
             'effective_date' => 'Effective Date',
@@ -78,17 +75,6 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
-    }
-
-    public static function compliancedocumenttype($type)
-    {
-        $compliance_document = [
-            1 => 'Privacy Policy',
-            2 => 'Terms and Conditions',
-            3 => 'Refund Policy',
-            4 => 'Other',
-        ];
-        return $compliance_document[$type] ?? '';
     }
 
     public function getStatuslabel()
