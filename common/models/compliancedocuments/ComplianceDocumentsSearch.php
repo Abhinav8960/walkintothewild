@@ -6,7 +6,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ComplianceDocumentsVersionSearch represents the model behind the search form of `ComplianceDocumentsVersion`.
+ * ComplianceDocumentsSearch represents the model behind the search form of `ComplianceDocuments`.
  */
 class ComplianceDocumentsSearch extends ComplianceDocuments
 {
