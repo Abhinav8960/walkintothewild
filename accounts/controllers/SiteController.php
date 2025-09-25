@@ -68,14 +68,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $initated_transaction = Transaction::find()->where(['status' => Transaction::STATUS_INITIATED])->count();
-        $failed_transaction = Transaction::find()->where(['status' => Transaction::STATUS_FAILED])->count();
-        $success_transaction = Transaction::find()->where(['status' => Transaction::STATUS_SUCCESS])->count();
-        
+        $today_success_transaction = Transaction::find()->where(['status' => Transaction::STATUS_SUCCESS])->andWhere(['between', 'created_at', strtotime('today'), strtotime('tomorrow') - 1])->count();
+        $last_three_day_success_transaction = Transaction::find()->where(['status' => Transaction::STATUS_SUCCESS])->andWhere(['between', 'created_at', strtotime('-3 days'), time()])->count();
+        $last_seven_day_success_transaction = Transaction::find()->where(['status' => Transaction::STATUS_SUCCESS])->andWhere(['between', 'created_at', strtotime('-7 days'), time()])->count();
+
         return $this->render('index', [
-            'initated_transaction' => $initated_transaction,
-            'failed_transaction' => $failed_transaction,
-            'success_transaction' => $success_transaction,
+            'today_success_transaction' => $today_success_transaction,
+            'last_three_day_success_transaction' => $last_three_day_success_transaction,
+            'last_seven_day_success_transaction' => $last_seven_day_success_transaction,
         ]);
     }
 

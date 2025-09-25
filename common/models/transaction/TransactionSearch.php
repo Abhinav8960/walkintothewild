@@ -12,6 +12,7 @@ use common\models\transaction\Transaction;
 class TransactionSearch extends Transaction
 {
     public $request_type;
+    public $custom_days;
     /**
      * {@inheritdoc}
      */
@@ -22,6 +23,7 @@ class TransactionSearch extends Transaction
             [['reference_id', 'order_id', 'currency', 'addional_notes', 'name', 'email', 'phone', 'start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version', 'utm_source'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['request_type'], 'safe'],
+            [['custom_days'],'safe'],
         ];
     }
 
@@ -140,6 +142,19 @@ class TransactionSearch extends Transaction
             }
         }
 
+        if ($this->custom_days != null) {
+            switch ($this->custom_days) {
+                case 1:
+                    $query->andWhere(['between', 'created_at', strtotime('today'), strtotime('tomorrow') - 1]);
+                    break;
+                case 2:
+                    $query->andWhere(['between', 'created_at', strtotime('-3 days'), time()]);
+                    break;
+                case 3:
+                    $query->andWhere(['between', 'created_at', strtotime('-30 days'), time()]);
+                    break;
+            }
+        }
         return $dataProvider;
     }
 }

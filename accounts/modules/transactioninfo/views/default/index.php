@@ -1,7 +1,9 @@
 <?php
 
+use common\models\GeneralModel;
 use common\models\transaction\Transaction;
 use yii\grid\GridView;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\accounts\assets\PartnerAppAsset');
@@ -17,17 +19,17 @@ $this->params['title'] = $this->title;
             <div class="col-xxl-12">
                 <div class="row">
                     <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
-                        <a style="text-decoration:none;" href="<?= Url::to(['/transactioninfo/default/index', 'status' => Transaction::STATUS_SUCCESS]) ?>">
+                        <a style="text-decoration:none;" href="<?= Url::to(['/transactioninfo/default/index', 'custom_days' => 1]) ?>">
                             <div class="mainCard py-3 px-3">
                                 <div class="cardChild">
                                     <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
                                         <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg" alt="Lead">
                                     </div>
                                     <div class="text-card mb-2">
-                                        <p>Success Transaction</p>
+                                        <p>Today</p>
                                     </div>
                                     <div class="numbwrCount">
-                                        <h3><?= isset($success_transaction) ? $success_transaction : 0 ?></h3>
+                                        <h3><?= isset($today_success_transaction) ? $today_success_transaction : 0 ?></h3>
                                     </div>
                                 </div>
                             </div>
@@ -35,17 +37,17 @@ $this->params['title'] = $this->title;
                     </div>
 
                     <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
-                        <a style="text-decoration:none;" href="<?= Url::to(['/transactioninfo/default/index', 'status' => Transaction::STATUS_INITIATED]) ?>">
+                        <a style="text-decoration:none;" href="<?= Url::to(['/transactioninfo/default/index', 'custom_days' => 2]) ?>">
                             <div class="mainCard py-3 px-3">
                                 <div class="cardChild">
                                     <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
                                         <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg" alt="Lead">
                                     </div>
                                     <div class="text-card mb-2">
-                                        <p>Initated Transaction</p>
+                                        <p>Last 3 Days</p>
                                     </div>
                                     <div class="numbwrCount">
-                                        <h3><?= isset($initated_transaction) ? $initated_transaction : 0 ?></h3>
+                                        <h3><?= isset($last_three_day_success_transaction) ? $last_three_day_success_transaction : 0 ?></h3>
                                     </div>
                                 </div>
                             </div>
@@ -54,17 +56,17 @@ $this->params['title'] = $this->title;
                     </div>
 
                     <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
-                        <a style="text-decoration:none;" href="<?= Url::to(['/transactioninfo/default/index', 'status' => Transaction::STATUS_FAILED]) ?>">
+                        <a style="text-decoration:none;" href="<?= Url::to(['/transactioninfo/default/index', 'custom_days' => 3]) ?>">
                             <div class="mainCard py-3 px-3">
                                 <div class="cardChild">
                                     <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
                                         <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg" alt="Lead">
                                     </div>
                                     <div class="text-card mb-2">
-                                        <p>Failed Transaction</p>
+                                        <p>Last 7 Days</p>
                                     </div>
                                     <div class="numbwrCount">
-                                        <h3><?= isset($failed_transaction) ? $failed_transaction : 0 ?></h3>
+                                        <h3><?= isset($last_seven_day_success_transaction) ? $last_seven_day_success_transaction : 0 ?></h3>
                                     </div>
                                 </div>
                             </div>
@@ -93,11 +95,11 @@ $this->params['title'] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'Reference/Order No',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'label' => 'Date',
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->reference_id . ' / ' . $model->order_id;
+                            return $model->transaction_datetime;
                         }
                     ],
                     [
@@ -144,19 +146,59 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Amount',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->received_amount;
+                            return GeneralModel::number_format_indian($model->received_amount);
                         }
-                    ],                 
+                    ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statusLabel;
                         }
+                    ],
+
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'headerOptions' => ['style' => 'width: 20%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 20%; text-align: center;'],
+                        'template' => '{payU}&nbsp{edit}',
+                        'buttons' => [
+                            'payU' => function ($url, $model) {
+                                if ($model->payment_received_at_payu == 0) {
+                                    return Html::a(
+                                        'PayU',
+                                        [
+                                            Url::toRoute(['update-payu-status', 'id' => $model->id]),
+                                        ],
+                                        [
+                                            'data' => [
+                                                'confirm' => 'Is Payment Recieved At PayU?',
+                                                'method' => 'post',
+                                            ],
+                                            'class' => 'btn btn-info  m-2',
+                                            'title' => 'Approve'
+                                        ]
+                                    );
+                                }
+                            },
+                            'edit' => function ($url, $model) {
+                                if ($model->payment_received_at_payu == 1) {
+                                    return Html::button(
+                                        '<img src="' . $this->params['baseurl'] . '/images/Edit.svg" alt="" width="20" height="20">',
+                                        [
+                                            'value' => Url::toRoute(['update-transaction-detail', 'id' => $model->id]),
+                                            'title' => 'Update Transaction Detail',
+                                            'class' => 'btn btn-link showModalButton',
+                                        ]
+                                    );
+                                }
+                            },
+                        ]
                     ],
 
                 ],
@@ -164,3 +206,32 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Action
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+    $('.showModalButton').on('click', function () {
+        $('#modalAction').modal('show')
+        .find('#modalContent')
+        .load($(this).attr('value'));
+    });
+JS;
+$this->registerJs($script);
+?>
