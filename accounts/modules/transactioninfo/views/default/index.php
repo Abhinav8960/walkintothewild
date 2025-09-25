@@ -149,11 +149,39 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
+                        'label' => 'Pay Rec PayU',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->payment_received_at_payu == 1) {
+                                return '<span style="color: green; font-weight: bold;">Yes</span>';
+                            }
+                            return '<span style="color: red; font-weight: bold;">No</span>';
+                        }
+                    ],
+                    [
                         'label' => 'Amount',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return GeneralModel::number_format_indian($model->received_amount);
+                            return '<span style="font-weight: bold; color: #2E8B57; margin-right:5px">₹</span>'
+                                . GeneralModel::number_format_indian($model->received_amount);
+                        }
+                    ],
+                    [
+                        'label' => 'Rec In Bank',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return '<span style="font-weight: bold; color: #2E8B57; margin-right:5px">₹</span>' . GeneralModel::number_format_indian($model->amount_received_at_bank);
+                        }
+                    ],
+                    [
+                        'label' => 'Pay U Charges',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return '<span style="font-weight: bold; color: #2E8B57; margin-right:5px">₹</span>' . GeneralModel::number_format_indian($model->payu_charges);
                         }
                     ],
                     [
