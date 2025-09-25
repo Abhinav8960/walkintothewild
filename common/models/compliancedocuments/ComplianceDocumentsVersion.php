@@ -2,6 +2,7 @@
 
 namespace common\models\compliancedocuments;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -45,11 +46,11 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'effective_date','compliance_documents_id'], 'default', 'value' => null],
+            [['content', 'effective_date', 'compliance_documents_id'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
             [['created_at', 'created_by'], 'required'],
-            [['type', 'created_at', 'created_by','updated_at','updated_by'], 'integer'],
-            [['content','version'], 'string'],
+            [['type', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['content', 'version'], 'string'],
             [['effective_date'], 'safe'],
         ];
     }
@@ -61,7 +62,7 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'compliance_documents_id'=>'Compliance Documents Id',
+            'compliance_documents_id' => 'Compliance Documents Id',
             'type' => 'Type',
             'version' => 'Version',
             'content' => 'Content',
@@ -74,6 +75,11 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
     public static function compliancedocumenttype($type)
     {
         $compliance_document = [
@@ -83,5 +89,15 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
             4 => 'Other',
         ];
         return $compliance_document[$type] ?? '';
+    }
+
+    public function getStatuslabel()
+    {
+        if ($this->status == 1) {
+            return "Published";
+        } else {
+            return "Unpublished";
+        }
+        return $this->status;
     }
 }

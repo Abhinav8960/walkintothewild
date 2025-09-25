@@ -6,6 +6,7 @@ use common\models\compliancedocuments\form\ComplianceDocumentsVersionForm;
 use common\models\compliancedocuments\ComplianceDocuments;
 use common\models\compliancedocuments\ComplianceDocumentsSearch;
 use common\models\compliancedocuments\ComplianceDocumentsVersion;
+use common\models\compliancedocuments\ComplianceDocumentsVersionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use Yii;
@@ -219,5 +220,24 @@ class DefaultController extends Controller
         $version_model->status = 1;
         $version_model->save(false);
         return true;
+    }
+
+    public function actionVersionIndex($id)
+    {
+        $searchModel = new ComplianceDocumentsVersionSearch();
+        $searchModel->compliance_documents_id = $id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        return $this->render('version_index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionVersionView($id)
+    {
+        $model = ComplianceDocumentsVersion::findOne($id);
+        return $this->render('version_view', [
+            'model' => $model,
+        ]);
     }
 }

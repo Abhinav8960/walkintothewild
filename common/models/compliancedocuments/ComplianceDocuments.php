@@ -58,7 +58,7 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
             [['content', 'effective_date'], 'default', 'value' => null],
             [['type'], 'default', 'value' => 0],
             [['type', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['content','version'], 'string'],
+            [['content', 'version'], 'string'],
             [['effective_date'], 'safe'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
         ];
@@ -72,7 +72,7 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
             'id' => 'ID',
             'compliance_documents_version_id' => 'Compliance Documents Version ID',
             'type' => 'Type',
-            'version'=>'Version',
+            'version' => 'Version',
             'content' => 'Content',
             'effective_date' => 'Effective Date',
             'created_at' => 'Created At',
@@ -96,21 +96,19 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     // {
     //     return $this->hasOne(ComplianceDocumentsVersion::class, ['compliance_documents_id' => 'id']);
     // }
-       
+
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
-      public function getStatuslabel()
+    public function getStatuslabel()
     {
-        if ($this->status == 1){
+        if ($this->status == 1) {
             return "Published";
-        } 
-        else{
+        } else {
             return "Unpublished";
-            }
+        }
         return $this->status;
     }
-
 }
