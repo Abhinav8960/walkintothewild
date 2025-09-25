@@ -21,6 +21,7 @@ class ComplianceDocumentsVersionForm extends model
     public $content;
     public $effective_date;
     public $cdocument_model;
+    public $type;
 
     public $status;
 
@@ -32,11 +33,11 @@ class ComplianceDocumentsVersionForm extends model
         $this->version = 'v1';
         if ($cdocument_model  != null) {
             $this->cdocument_model = $cdocument_model;
-            $this->title =  $this->cdocument_model->title;
+            $this->type =  $this->cdocument_model->type;
             $this->content =  $this->cdocument_model->content;
             $this->status = $this->cdocument_model->status;
-            $this->effective_date = $this->cdocument_model->effective_date;
-            
+            $this->version = $this->cdocument_model->version;
+            $this->effective_date = $this->cdocument_model->effective_date;          
         }
     }
 
@@ -47,10 +48,10 @@ class ComplianceDocumentsVersionForm extends model
     public function rules()
     {
         return [
-            [['title', 'content'], 'required'],
+            [['type', 'content'], 'required'],
             [['status'], 'default', 'value' => 0],
-            [['status'], 'integer'],
-            [['content','version','title'], 'string'],
+            [['status','type'], 'integer'],
+            [['content','version'], 'string'],
         ];
     }
     
@@ -62,7 +63,7 @@ class ComplianceDocumentsVersionForm extends model
     {
         return [
             'id'=>'Id',
-            'title'=>'Title',
+            'type'=>'Type',
             'version'=>'Version',
             'content' => 'Content',
             'status' =>'Status',
@@ -78,7 +79,7 @@ class ComplianceDocumentsVersionForm extends model
 
     public function initializeForm()
     {
-        $this->cdocument_model->title = $this->title;
+        $this->cdocument_model->type = $this->type;
         $this->cdocument_model->version = $this->version;
         $this->cdocument_model->content = $this->content;
         $this->cdocument_model->status  = $this->status;

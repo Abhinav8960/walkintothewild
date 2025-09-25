@@ -2216,5 +2216,25 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             1 => 'Published',
         ];
     }
+
+    public static function compliancedropdown($type = null)
+    {
+        $types = \common\models\compliancedocuments\ComplianceDocumentsVersion::find()
+            ->select(['type'])
+            ->distinct()
+            ->column(); 
+            
+        $arr = [
+            '1' => 'Terms and Condition',
+            '2' => 'Privacy Policy',
+        ];
+
+        foreach ($types as $t) {
+            unset($arr[$t]);
+        }
+    
+        return $arr;
+    }
+
     
 }

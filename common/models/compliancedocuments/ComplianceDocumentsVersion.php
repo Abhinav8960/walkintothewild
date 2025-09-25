@@ -47,7 +47,7 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
             [['status'], 'default', 'value' => 0],
             [['created_at', 'created_by'], 'required'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['content', 'version','title'], 'string'],
+            [['content', 'version'], 'string'],
             [['effective_date'], 'safe'],
         ];
     }
@@ -59,7 +59,7 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
+            'type' => 'Type',
             'version' => 'Version',
             'content' => 'Content',
             'effective_date' => 'Effective Date',
@@ -84,5 +84,17 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
             return "Unpublished";
         }
         return $this->status;
+    }
+
+    public function getLabeltype(){
+        if($this->type == 1){
+            return "Terms and Conditions";
+        }
+        elseif($this->type == 2){
+            return "Privacy Policy";
+        }
+        else{
+            return "";
+        }
     }
 }

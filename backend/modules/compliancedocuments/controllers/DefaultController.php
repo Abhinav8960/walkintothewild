@@ -88,7 +88,6 @@ class DefaultController extends Controller
         ]);
     }
 
-
     public function actionEdit($id)
     {
         $model = $this->findModel($id);
@@ -119,8 +118,6 @@ class DefaultController extends Controller
         ]);
     }
 
-
-
     public function actionView($id, $version = null)
     {
         $model = $this->findModel($id);
@@ -128,6 +125,7 @@ class DefaultController extends Controller
             'model' => $model,
         ]);
     }
+
     protected function findModel($id)
     {
         if (($model = ComplianceDocumentsVersion::findOne($id)) !== null) {
@@ -143,13 +141,17 @@ class DefaultController extends Controller
             Yii::$app->session->setFlash('error', 'Document not found.');
             return $this->redirect(Yii::$app->request->referrer);
         }
+
+        $main_model = ComplianceDocuments::find()->where(['type' => $model->type])->limit(1)->one();
         $model->status = ComplianceDocuments::STATUS_PUBLISHED;
         $model->effective_date = date('Y-m-d H:i:s');
         if ($model->save(false)) {
-            $model_main = new ComplianceDocuments();
+        
+            $model_main = $main_model ?? new ComplianceDocuments();
+
             $model_main->version_id = $model->id;
             $model_main->version = $model->version;
-            $model_main->title = $model->title;
+            $model_main->type = $model->type;
             $model_main->content = $model->content;
             $model_main->effective_date = $model->effective_date;
             $model_main->status = ComplianceDocuments::STATUS_PUBLISHED;
@@ -162,26 +164,6 @@ class DefaultController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionUnpublish($id)
-    {
-        $model = $this->findModel($id);
-        if (!$model) {
-            Yii::$app->session->setFlash('error', 'Document not found.');
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        $model->status = ComplianceDocuments::STATUS_UNPUBLISHED;
-        if ($model->save(false)) {
-            $model_document = ComplianceDocuments::find()->where(['version_id'=>$id])->one();
-            $model_document->status = ComplianceDocuments::STATUS_UNPUBLISHED;
-            $model_document->save(false);
-            Yii::$app->session->setFlash('success', 'Unpublished Successfully!');
-        } else {
-            Yii::$app->session->setFlash('error', 'Failed to unpublish document.');
-        }
-        
-        return $this->redirect(Yii::$app->request->referrer);
-    }
-
     private function copynewversion($id)
     {
         $model = $this->findModel($id);
@@ -191,7 +173,7 @@ class DefaultController extends Controller
 
         $version_model = new ComplianceDocumentsVersion();
         $version_model->version = 'v' . (intval(substr($model->version, 1)) + 1);
-        $version_model->title = $model->title;
+        $version_model->type = $model->type;
         $version_model->content = $model->content;
         $version_model->effective_date = $model->effective_date;
         $version_model->status = ComplianceDocuments::STATUS_UNPUBLISHED;

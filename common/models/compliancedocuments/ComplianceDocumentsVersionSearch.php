@@ -17,7 +17,7 @@ class ComplianceDocumentsVersionSearch extends ComplianceDocumentsVersion
     {
         return [
             [['id', 'created_by', 'status'], 'integer'],
-            [['content','title'], 'safe'],
+            [['content','type'], 'safe'],
             [['effective_date', 'created_at'], 'safe'],
         ];
     }
@@ -55,7 +55,7 @@ class ComplianceDocumentsVersionSearch extends ComplianceDocumentsVersion
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'title' => $this->title,
+            'type' => $this->type,
             'effective_date' => $this->effective_date,
             'status' => $this->status,
             'created_at' => $this->created_by,
@@ -63,7 +63,6 @@ class ComplianceDocumentsVersionSearch extends ComplianceDocumentsVersion
         ]);
 
         $query->andFilterWhere(['like', 'content', $this->content]);
-        $query->andFilterWhere(['like', 'title', $this->title]);
 
 
         return $dataProvider;

@@ -56,9 +56,9 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     {
         return [
             [['content', 'effective_date'], 'default', 'value' => null],
-            [['title'], 'default', 'value' => 0],
-            [['version_id','created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['content', 'version','title'], 'string'],
+            [['type'], 'default', 'value' => 0],
+            [['version_id','created_at', 'created_by', 'updated_at', 'updated_by','type'], 'integer'],
+            [['content', 'version'], 'string'],
             [['effective_date'], 'safe'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
         ];
@@ -72,7 +72,7 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
             'id' => 'ID',
             'version_id'=>'Version Id',
             'compliance_documents_version_id' => 'Compliance Documents Version ID',
-            'title' => 'Title',
+            'type' => 'Type',
             'version' => 'Version',
             'content' => 'Content',
             'effective_date' => 'Effective Date',

@@ -35,7 +35,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 40%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->title;
+                            return $model->labeltype;
                         },
                     ],
                     [
