@@ -43,7 +43,7 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'effective_date', 'compliance_documents_id'], 'default', 'value' => null],
+            [['content', 'effective_date'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
             [['created_at', 'created_by'], 'required'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
@@ -59,7 +59,6 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'compliance_documents_id' => 'Compliance Documents Id',
             'title' => 'Title',
             'version' => 'Version',
             'content' => 'Content',

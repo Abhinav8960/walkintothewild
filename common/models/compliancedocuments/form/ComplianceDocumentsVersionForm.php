@@ -18,7 +18,6 @@ class ComplianceDocumentsVersionForm extends model
 {
     public $title;
     public $version;
-    public $compliance_documents_id;
     public $content;
     public $effective_date;
     public $cdocument_model;
@@ -33,7 +32,6 @@ class ComplianceDocumentsVersionForm extends model
         $this->version = 'v1';
         if ($cdocument_model  != null) {
             $this->cdocument_model = $cdocument_model;
-            $this->compliance_documents_id =  $this->cdocument_model->compliance_documents_id;
             $this->title =  $this->cdocument_model->title;
             $this->content =  $this->cdocument_model->content;
             $this->status = $this->cdocument_model->status;
@@ -51,7 +49,7 @@ class ComplianceDocumentsVersionForm extends model
         return [
             [['title', 'content'], 'required'],
             [['status'], 'default', 'value' => 0],
-            [['compliance_documents_id','status'], 'integer'],
+            [['status'], 'integer'],
             [['content','version','title'], 'string'],
         ];
     }
@@ -64,7 +62,6 @@ class ComplianceDocumentsVersionForm extends model
     {
         return [
             'id'=>'Id',
-            'compliance_documents_id' => 'Compliance Documents Id',
             'title'=>'Title',
             'version'=>'Version',
             'content' => 'Content',
@@ -80,7 +77,6 @@ class ComplianceDocumentsVersionForm extends model
 
     public function initializeForm()
     {
-        $this->cdocument_model->compliance_documents_id = $this->compliance_documents_id;
         $this->cdocument_model->title = $this->title;
         $this->cdocument_model->version = $this->version;
         $this->cdocument_model->content = $this->content;

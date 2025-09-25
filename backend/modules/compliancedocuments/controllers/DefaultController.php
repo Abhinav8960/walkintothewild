@@ -190,7 +190,6 @@ class DefaultController extends Controller
         }
 
         $version_model = new ComplianceDocumentsVersion();
-        // $version_model->compliance_documents_id = $model->id;
         $version_model->version = 'v' . (intval(substr($model->version, 1)) + 1);
         $version_model->title = $model->title;
         $version_model->content = $model->content;

@@ -16,7 +16,7 @@ class ComplianceDocumentsVersionSearch extends ComplianceDocumentsVersion
     public function rules()
     {
         return [
-            [['id', 'compliance_documents_id', 'created_by', 'status'], 'integer'],
+            [['id', 'created_by', 'status'], 'integer'],
             [['content','title'], 'safe'],
             [['effective_date', 'created_at'], 'safe'],
         ];
@@ -55,7 +55,6 @@ class ComplianceDocumentsVersionSearch extends ComplianceDocumentsVersion
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'compliance_documents_id' => $this->compliance_documents_id,
             'title' => $this->title,
             'effective_date' => $this->effective_date,
             'status' => $this->status,
