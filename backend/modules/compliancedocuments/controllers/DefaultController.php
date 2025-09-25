@@ -193,7 +193,7 @@ class DefaultController extends Controller
         $version_model->version = 'v' . (intval(substr($model->version, 1)) + 1);
         $version_model->title = $model->title;
         $version_model->content = $model->content;
-        $version_model->effective_date = null;
+        $version_model->effective_date = $model->effective_date;
         $version_model->status = ComplianceDocuments::STATUS_UNPUBLISHED;
         $version_model->save(false);
         return true;

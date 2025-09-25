@@ -35,7 +35,7 @@ class ComplianceDocumentsVersionForm extends model
             $this->title =  $this->cdocument_model->title;
             $this->content =  $this->cdocument_model->content;
             $this->status = $this->cdocument_model->status;
-            $this->effective_date = $this->effective_date;
+            $this->effective_date = $this->cdocument_model->effective_date;
             
         }
     }
@@ -66,6 +66,7 @@ class ComplianceDocumentsVersionForm extends model
             'version'=>'Version',
             'content' => 'Content',
             'status' =>'Status',
+            'effectiv_date'=>'Effective Date'
         ];
     }
 
