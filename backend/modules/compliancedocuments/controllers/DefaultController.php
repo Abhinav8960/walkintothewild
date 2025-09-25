@@ -176,16 +176,7 @@ class DefaultController extends Controller
         $model->status = ComplianceDocuments::STATUS_PUBLISHED;
         $model->effective_date = date('Y-m-d H:i:s');
         if ($model->save(false)) {
-
-            $version_model = new ComplianceDocumentsVersion();
-            $version_model->compliance_documents_id = $model->id;
-            $version_model->version = $model->version;
-            $version_model->type = $model->type;
-            $version_model->content = $model->content;
-            $version_model->effective_date = $model->effective_date;
-            $version_model->status = 1;
-            $version_model->save(false);
-
+            $this->copynewversion($id);
             Yii::$app->session->setFlash('success', 'Published Successfully!');
         } else {
             Yii::$app->session->setFlash('error', 'Failed to publish document.');
@@ -211,5 +202,22 @@ class DefaultController extends Controller
         }
 
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    private function copynewversion($id)
+    {
+        $model = $this->findModel($id);
+        if (!$model) {
+            throw new NotFoundHttpException('Document not found');
+        }
+        $version_model = new ComplianceDocumentsVersion();
+        $version_model->compliance_documents_id = $model->id;
+        $version_model->version = 'v' . (intval(substr($model->version, 1)) + 1);
+        $version_model->type = $model->type;
+        $version_model->content = $model->content;
+        $version_model->effective_date = $model->effective_date;
+        $version_model->status = 1;
+        $version_model->save(false);
+        return true;
     }
 }
