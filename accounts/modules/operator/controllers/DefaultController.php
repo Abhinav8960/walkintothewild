@@ -38,7 +38,7 @@ class DefaultController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = SafariOperator::findOne(['id' => $id, 'status' => [SafariOperator::STATUS_ACTIVE, SafariOperator::STATUS_SUSPEND]])) !== null) {
+        if (($model = SafariOperator::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
