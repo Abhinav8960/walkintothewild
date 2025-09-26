@@ -16,7 +16,11 @@ $this->title = 'Compliance Documents';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+
+$dropdown = GeneralModel::compliancedropdown();
+if (!empty($dropdown)) {
+    $this->params['buttons'][] = Html::a('+ Create',['create'],['class' => 'btn btn-orange', 'title' => 'Create']);
+} 
 
 ?>
 <div class="card">
