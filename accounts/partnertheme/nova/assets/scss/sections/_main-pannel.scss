@@ -1,0 +1,67 @@
+.main-pannel{
+
+    .growth{
+        padding: 20px 15px;
+        background-color: #191c24;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -ms-border-radius: 4px;
+        -o-border-radius: 4px;
+        color: #fff;
+        .icon-main{
+
+
+            width: 40px;
+            height: 37px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: rgba(0, 210, 91, 0.11);
+    border-radius: 7px;
+    color: #00d25b;
+        }
+}
+}
+
+.search-box-table{
+
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    padding: 15px 20px;
+    
+    .form-select{
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        -o-border-radius: 0;
+        &:focus       
+     {
+
+            box-shadow: none;
+            border-color: #191c24;
+        }
+    }
+
+    .form-control{
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        -o-border-radius: 0;
+        &:focus       
+     {
+
+            box-shadow: none;
+            border-color: #191c24;
+        }
+    }
+
+}
+
+.main-table-layout{
+
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    padding: 15px 20px; 
+}

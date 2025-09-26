@@ -14,11 +14,13 @@ class NovaAppAsset extends AssetBundle
         // 'css/style-dark.css',
         // 'css/style-transparent.css',
         'css/style.css',
+        
         // 'css/frontend_style.css',
         // 'plugins/bootstrap/css/bootstrap.min.css',
         // 'plugins/perfect-scrollbar/p-scrollbar.css',
         // 'plugins/sidebar/sidebar.css',
         // 'plugins/select2/css/select2.min.css',
+        
     ];
     public $publishOptions = [
         'forceCopy' => false,
@@ -60,7 +62,6 @@ class NovaAppAsset extends AssetBundle
         'https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js',
         'https://code.highcharts.com/highcharts.js',
         
-
     ];
 
     public $depends = [

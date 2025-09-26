@@ -10,9 +10,20 @@ return [
     'id' => 'app-accounts',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'accounts\controllers',
-    'bootstrap' => ['log', '\accounts\components\AppBootstrap'],
+    'bootstrap' => ['log'],
     'timeZone' => 'Asia/Calcutta',
     'modules' => [
+        'transactioninfo' => [
+            'class' => 'accounts\modules\transactioninfo\Module',
+        ],
+
+        'booking' => [
+            'class' => 'accounts\modules\booking\Module',
+        ],
+
+        'operator' => [
+            'class' => 'accounts\modules\operator\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [
@@ -58,8 +69,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
 
     ],
@@ -67,9 +77,16 @@ return [
         'definitions' => [
             \yii\widgets\LinkPager::class => \yii\bootstrap5\LinkPager::class,
             'yii\bootstrap5\LinkPager' => [
-                'firstPageLabel' => 'First',
-                'lastPageLabel' => 'Last',
-                'options' => ['class' => 'pagination pagination-primary mg-sm-b-0']
+                'options' => ['class' => 'pagination mb-0 d-flex gap-4 align-items-center'],
+                'listOptions' => ['class' => ['pagination mb-0 d-flex gap-4 align-items-center']],
+                'linkOptions' => ['class' => ''],
+                'linkContainerOptions' => ['class' => ['page-item page-text']],
+                'disabledPageCssClass' => 'disabled',
+                'activePageCssClass' => 'active',
+                'prevPageLabel' => '<span class="page-link button_nextprve button_prve">Prev</span>',
+                'nextPageLabel' => '<span class="page-link button_nextprve active">Next</span>',
+                'firstPageLabel' => false,
+                'lastPageLabel' => false,
             ],
         ],
     ],
