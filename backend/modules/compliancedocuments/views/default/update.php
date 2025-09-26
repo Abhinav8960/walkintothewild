@@ -12,13 +12,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/compliance
 $this->params['breadcrumbs'][] = 'Update';
 $this->params['title'] = $this->title;
 ?>
-
 <div class="card">
     <div class="card-body">
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
 <div class="row">
-    
+<h5><?=$model->cdocument_model->labeltype?></h5>
+
     <div class="row">
         <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['rows' => '6', 'placeholder' => 'Add Content Here'])->label('Content <span class="necessary">*</span>') ?>
     </div>
