@@ -12,7 +12,11 @@ $this->title = 'Transaction Info';
 $this->params['title'] = $this->title;
 ?>
 
-
+<div class="row mb-2">
+    <div class="col-12">
+        <?= $this->render('_search', ['model' => $searchModel]) ?>
+    </div>
+</div>
 <div class="row">
     <div class="col-xxl-10 mb-3">
         <div class="row">
@@ -107,8 +111,9 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $name =$model->partner->business_name ?? '';
-                            return Html::a(Html::encode($name),
+                            $name = $model->partner->business_name ?? '';
+                            return Html::a(
+                                Html::encode($name),
                                 ['/operator/default/view', 'id' => $model->partner->id],
                                 ['style' => 'color:black !important;']
                             );

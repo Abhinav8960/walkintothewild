@@ -1,7 +1,7 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\widgets\ActiveForm;
-
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -15,18 +15,48 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 
-<div class="row">
-    <div class="col-md-3">
-        <?= $form->field($model, 'request_type')->dropDownList(['1' => 'Web', '2' => 'Mobile'], ['prompt' => 'Search by Request Type'])->label(false) ?>
+<div class="row pb-4">
+    <div class="col-12">
+        <div class="d-flex align-items-center filter-areaParent w-100">
+            <div class="">
+                <div class="d-flex flex-wrap align-items-center gap-4">
+
+                    <div class="">
+                        <div class="filter-one d-flex gap-2">
+                            <span>Start Date Range:</span>
+                            <input type="date" placeholder="dd/mm/yyyy" id="visible_start_date" value="<?= $model->start_date_filter ?>">
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="filter-one d-flex gap-2">
+                            <span>End Date Range:</span>
+                            <input type="date" placeholder="dd/mm/yyyy" id="visible_end_date" value="<?= $model->end_date_filter ?>">
+                        </div>
+                    </div>
+
+                    
+
+                </div>
+
+                <?= $form->field($model, 'start_date_filter')->hiddenInput(['id' => 'start_date_input', 'class' => 'form-control search-border'])->label(false); ?>
+                <?= $form->field($model, 'end_date_filter')->hiddenInput(['id' => 'end_date_input', 'class' => 'form-control search-border'])->label(false); ?>
+            </div>
+        </div>
     </div>
 </div>
 
 <?php ActiveForm::end(); ?>
+
+
 <?php
 $js = <<<JS
-    $('form') . on('change', function() {
-        $(this) . closest('form') . submit();
-    });  
+$('#visible_start_date, #visible_end_date').on('change', function() {
+    $('#start_date_input').val($('#visible_start_date').val());
+    $('#end_date_input').val($('#visible_end_date').val());
+    $('#Searchform').submit();
+});
+
 JS;
 $this->registerJs($js);
 ?>

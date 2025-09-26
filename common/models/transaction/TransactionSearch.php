@@ -13,6 +13,8 @@ class TransactionSearch extends Transaction
 {
     public $request_type;
     public $custom_days;
+    public $start_date_filter;
+    public $end_date_filter;
     /**
      * {@inheritdoc}
      */
@@ -23,7 +25,8 @@ class TransactionSearch extends Transaction
             [['reference_id', 'order_id', 'currency', 'addional_notes', 'name', 'email', 'phone', 'start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version', 'utm_source'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['request_type'], 'safe'],
-            [['custom_days'],'safe'],
+            [['custom_days'], 'safe'],
+            [['start_date_filter', 'end_date_filter'], 'safe'],
         ];
     }
 
@@ -155,6 +158,13 @@ class TransactionSearch extends Transaction
                     break;
             }
         }
+
+        if (!empty($this->start_date_filter) && !empty($this->end_date_filter)) {
+            $start = $this->start_date_filter . ' 00:00:00';
+            $end = $this->end_date_filter . ' 23:59:59';
+            $query->andWhere(['between', 'transaction_datetime', $start, $end]);
+        }
+
         return $dataProvider;
     }
 }
