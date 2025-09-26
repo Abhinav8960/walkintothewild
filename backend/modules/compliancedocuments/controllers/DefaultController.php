@@ -142,13 +142,20 @@ class DefaultController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
 
+        $published_version = ComplianceDocumentsVersion::find()->where(['type'=>$model->type])->andWhere(['status'=>1])->limit(1)->one();
+        if($published_version)
+        {
+            $published_version->status = -1;
+            $published_version->save(false);
+        }
+
         $main_model = ComplianceDocuments::find()->where(['type' => $model->type])->limit(1)->one();
         $model->status = ComplianceDocuments::STATUS_PUBLISHED;
         $model->effective_date = date('Y-m-d H:i:s');
         if ($model->save(false)) {
-        
-            $model_main = $main_model ?? new ComplianceDocuments();
+            $this->copynewversion($model->id);
 
+            $model_main = $main_model ?? new ComplianceDocuments();
             $model_main->version_id = $model->id;
             $model_main->version = $model->version;
             $model_main->type = $model->type;

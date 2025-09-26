@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = "Compliance Documents";
 $this->params['title'] = $this->title;
 
 
-if ($model->status != ComplianceDocuments::STATUS_PUBLISHED) {
+if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
     $this->params['buttons'][] = Html::a('Publish', ['publish', 'id' => $model->id], ['class' => 'btn mt-2 btn-orange', 'title' => 'Publish']);
 } 
 

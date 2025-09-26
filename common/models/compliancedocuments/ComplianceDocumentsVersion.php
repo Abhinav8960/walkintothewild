@@ -80,10 +80,11 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
     {
         if ($this->status == 1) {
             return "Published";
-        } else {
+        } else if($this->status == 0){
             return "Unpublished";
+        }else if($this->status == -1){
+            return "Terminated";
         }
-        return $this->status;
     }
 
     public function getLabeltype(){
