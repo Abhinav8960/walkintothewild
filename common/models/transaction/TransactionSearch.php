@@ -15,13 +15,14 @@ class TransactionSearch extends Transaction
     public $custom_days;
     public $start_date_filter;
     public $end_date_filter;
+    public $payment_filter;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'lead_id', 'user_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
+            [['id', 'lead_id', 'user_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status', 'payment_filter', 'payment_received_at_payu', 'payment_received_at_bank'], 'integer'],
             [['reference_id', 'order_id', 'currency', 'addional_notes', 'name', 'email', 'phone', 'start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version', 'utm_source'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['request_type'], 'safe'],
@@ -165,6 +166,15 @@ class TransactionSearch extends Transaction
             $query->andWhere(['between', 'transaction_datetime', $start, $end]);
         }
 
+        if (isset($this->payment_filter)) {
+            if ($this->payment_filter == 1) {
+                $query->andWhere(['payment_received_at_payu' => 1]);
+            }
+
+            if ($this->payment_filter == 2) {
+                $query->andWhere(['payment_received_at_bank' => 1]);
+            }
+        }
         return $dataProvider;
     }
 }

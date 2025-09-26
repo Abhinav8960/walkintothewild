@@ -35,7 +35,11 @@ use yii\widgets\ActiveForm;
                         </div>
                     </div>
 
-                    
+                     <div class="filterItem position-relative">
+                        <label>Payment Status:</label>
+                        <?= $form->field($model, 'payment_filter')->dropDownList(['1'=>'Payment Received At Pay U','2'=>'Payment Recieved At Bank'], ['prompt' => 'Select', 'class' => 'search-border status-filter'])->label(false) ?>
+                        <i class="fa-solid fa-caret-down"></i>
+                    </div>
 
                 </div>
 
@@ -57,6 +61,9 @@ $('#visible_start_date, #visible_end_date').on('change', function() {
     $('#Searchform').submit();
 });
 
+$('#transactionsearch-payment_filter').on('change', function() {
+    $('#Searchform').submit();
+});
 JS;
 $this->registerJs($js);
 ?>
