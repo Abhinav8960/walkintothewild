@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-3">
-        <?= $form->field($model, 'type')->textInput(['placeholder'=>'Enter Title'])->label(false) ?>
+        <?= $form->field($model, 'type')->dropDownList(GeneralModel::complianceDocumentsTitleoption(),['prompt'=>'Select Title'])->label(false) ?>
     </div>
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
