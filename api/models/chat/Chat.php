@@ -31,6 +31,9 @@ class Chat extends \common\models\chat\Chat
             'id',
             'chat_hash',
             'last_message',
+            'last_message'  => function () {
+                return \common\models\GeneralModel::maskContactInfoInString($this->last_message);
+            },
             'last_message_datetime'  => function () {
                 return strtotime($this->last_message_datetime);
             },
