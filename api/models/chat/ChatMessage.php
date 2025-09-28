@@ -242,7 +242,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 //     $sender = $this->chat->operator->business_name;
                 // }
                 // return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $sender, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
-                if ($this->chat->chat_type == Chat::CHAT_TYPE_SHARE_SAFARI) {
+                if ($this->chat->chat_type == Chat::CHAT_TYPE_SHARE_SAFARI || $this->chat->chat_type == Chat::CHAT_TYPE_QUOTE) {
 
                     new \common\events\chat\NewChatMessageSend([$this->reciverId], $sender, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord(\common\models\GeneralModel::maskContactInfoInString($this->message)), $this->chat->chat_hash, $this->chat);
                 }else{
