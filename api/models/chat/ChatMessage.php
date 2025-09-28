@@ -245,8 +245,10 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 if ($this->chat->chat_type == Chat::CHAT_TYPE_SHARE_SAFARI) {
 
                     new \common\events\chat\NewChatMessageSend([$this->reciverId], $sender, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord(\common\models\GeneralModel::maskContactInfoInString($this->message)), $this->chat->chat_hash, $this->chat);
+                }else{
+
+                    new \common\events\chat\NewChatMessageSend([$this->reciverId], $sender, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
                 }
-                  new \common\events\chat\NewChatMessageSend([$this->reciverId], $sender, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
             }
         }
         return true;
