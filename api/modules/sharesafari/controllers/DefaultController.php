@@ -136,6 +136,11 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
+        if ($share_safari->status == ShareSafari::STATUS_BLOCKED) {
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
+        }
+
         if (!in_array($share_safari->status, [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT])) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_in_use', ['{var}' => 'Share Safari']);
             return Yii::$app->api->sendResponse($data = ['data' => $share_safari->toArray()], ['message' => $message]);

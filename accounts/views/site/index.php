@@ -1,53 +1,79 @@
 <?php
 
-/** @var yii\web\View $this */
+use common\models\transaction\Transaction;
+use yii\helpers\Url;
 
-$this->title = 'My Yii Application';
+$webasset = $this->assetManager->getBundle('\accounts\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+$this->title = 'Dashboard';
 ?>
-<div class="site-index">
 
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
+<div class="row">
+  <div class="col-xxl-10 mb-3">
+    <div class="row">
+      <div>
+        <p style="font-weight: 500;">Successfull Transaction</p>
+      </div>
+      <div class="col-xxl-12">
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+          <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
+            <a style="text-decoration:none;" href="<?= Url::to(['/transactioninfo/default/index', 'custom_days' => 1]) ?>">
+              <div class="mainCard py-3 px-3">
+                <div class="cardChild">
+                  <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
+                    <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg" alt="Lead">
+                  </div>
+                  <div class="text-card mb-2">
+                    <p>Today</p>
+                  </div>
+                  <div class="numbwrCount">
+                    <h3><?= isset($today_success_transaction) ? $today_success_transaction : 0 ?></h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+          <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
+            <a style="text-decoration:none;" href="<?= Url::to(['/transactioninfo/default/index', 'custom_days' => 2]) ?>">
+              <div class="mainCard py-3 px-3">
+                <div class="cardChild">
+                  <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
+                    <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg" alt="Lead">
+                  </div>
+                  <div class="text-card mb-2">
+                    <p>Last 3 Days</p>
+                  </div>
+                  <div class="numbwrCount">
+                    <h3><?= isset($last_three_day_success_transaction) ? $last_three_day_success_transaction : 0 ?></h3>
+                  </div>
+                </div>
+              </div>
+            </a>
 
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+          </div>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+          <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
+            <a style="text-decoration:none;" href="<?= Url::to(['/transactioninfo/default/index', 'custom_days' => 3]) ?>">
+              <div class="mainCard py-3 px-3">
+                <div class="cardChild">
+                  <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
+                    <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg" alt="Lead">
+                  </div>
+                  <div class="text-card mb-2">
+                    <p>Last 7 Days</p>
+                  </div>
+                  <div class="numbwrCount">
+                    <h3><?= isset($last_seven_day_success_transaction) ? $last_seven_day_success_transaction : 0 ?></h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
 
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
         </div>
+      </div>
 
     </div>
+  </div>
 </div>

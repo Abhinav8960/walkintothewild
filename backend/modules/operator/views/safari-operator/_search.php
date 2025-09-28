@@ -57,14 +57,17 @@ use common\models\registration\SafariOperatorRequestPark;
             ]
         ) ?>
     </div> -->
-    <!-- <div class="col-md-2">
+    <div class="col-md-2">
         <?= $form->field($model, 'status')->dropDownList(
-            GeneralModel::newstatusoption(),
+            [
+                '1' => 'Active',
+                '20' => 'Blocked'
+            ],
             [
                 'prompt' => 'Select Status',
             ]
         ) ?>
-    </div> -->
+    </div>
 
     <!-- <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>

@@ -85,7 +85,7 @@ $this->params['title'] = $this->title;
 
                             }elseif(isset($model->callerUser1->id)){
 
-                                $str = '<a href="/user/default/profile?user_id=' . $model->callerUser1->id . '" class="text-primary" style="color: green !important;">' . $model->callerUser1->name . '</a>';
+                                $str = '<a href="/log/call-log/user-profile?user_id=' . $model->callerUser1->id .  '&chat_id=' . ($model->chat_id ?? '') .'&partner_id=' . ($model->partner->id ?? '') . '" class="text-primary" style="color: green !important;">' . $model->callerUser1->name . '</a>';
                                 $str .= "<br>";
                             }
                             return $str .= $model->request_caller_1_no;
