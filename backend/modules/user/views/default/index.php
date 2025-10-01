@@ -58,7 +58,6 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin == 1) {
                                 ['/user/default/profile', 'user_id' => $model->id],
                                 ['style' => 'color:black !important;']
                             );
-
                         },
                     ],
                     [
@@ -167,6 +166,29 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin == 1) {
                     //     'contentOptions' => ['style' => 'width:5%;'],
                     //     'visible' => $isvisible,
                     // ],
+                    [
+                        'header' => 'Verified User',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'width:5%;'],
+                        'contentOptions' => ['style' => 'width:5%;'],
+                        'value' => function ($model) {
+                            $isVerified = $model->is_blue_badge_verified;
+
+                            return Html::a(
+                                Html::tag('i', '', ['class' => $isVerified ? 'fa fa-toggle-on' : 'fa fa-toggle-off']),
+                                ['verified-badge', 'id' => $model->id],
+                                [
+                                    'class' => 'btn btn-xs ' . ($isVerified ? 'btn-primary' : 'btn-danger'),
+                                    'data-method' => 'post',
+                                    'data-confirm' => $isVerified
+                                        ? 'Are you sure you want to remove the verified badge?'
+                                        : 'Are you sure you want to mark this user as verified?',
+                                    'title' => $isVerified ? 'Remove Verified Badge' : 'Give Verified Badge',
+                                    'data-bs-toggle' => 'tooltip',
+                                ]
+                            );
+                        },
+                    ],
                 ],
             ]); ?>
         </div>

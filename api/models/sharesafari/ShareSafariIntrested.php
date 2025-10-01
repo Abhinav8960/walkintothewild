@@ -16,6 +16,9 @@ class ShareSafariIntrested extends \common\models\sharesafari\ShareSafariIntrest
                     if ($key == 'is_safari_operator') {
                         return (bool) $this->user->is_safari_operator;
                     }
+                    if ($key == 'is_blue_badge_verified') {
+                        return (bool) $this->user->is_blue_badge_verified;
+                    }
                     return $this->user->{$key};
                 };
             }

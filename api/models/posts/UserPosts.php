@@ -62,6 +62,7 @@ class UserPosts extends \common\models\UserPosts
             'is_followed' => $this->user ? $this->user->is_followed : '',
             'is_safari_operator' => $this->user->operator ? true : false,
             'operator_slug' => $this->user->operator ? $this->user->operator->slug : '',
+            'is_blue_badge_verified' => $this->user->is_blue_badge_verified ? true : false,
         ];
     }
 

@@ -228,4 +228,22 @@ class DefaultController extends Controller
 
         return ['results' => $results];
     }
+
+    public function actionVerifiedBadge(int $id)
+    {
+        $user = $this->findModel($id);
+
+        if ($user) {
+            $user->is_blue_badge_verified = !$user->is_blue_badge_verified;
+            if ($user->save(false)) {
+                Yii::$app->session->setFlash('success', 'Badge updated successfully.');
+            } else {
+                Yii::$app->session->setFlash('error', 'Failed to update badge.');
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'User not found.');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 }

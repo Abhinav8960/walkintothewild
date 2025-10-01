@@ -132,11 +132,17 @@ class User extends \common\models\User
             $fields['is_mobile_verification_mandatory'] = function () {
                 return (bool) $this->IsMobileVerificationMandatory();
             };
+            $fields['is_blue_badge_verified'] = function () {
+                return (bool) $this->is_blue_badge_verified;
+            };
             return $fields;
         }
         $fields =  array_diff($fields, $hold_fields);
         $fields['is_safari_operator'] = function () {
             return (bool) $this->is_safari_operator;
+        };
+        $fields['is_blue_badge_verified'] = function () {
+            return (bool) $this->is_blue_badge_verified;
         };
         return $fields;
     }
