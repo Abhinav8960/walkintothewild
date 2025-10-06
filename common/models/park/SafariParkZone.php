@@ -86,4 +86,9 @@ class SafariParkZone extends \yii\db\ActiveRecord implements \common\interfaces\
             'updated_by' => 'Updated By',
         ];
     }
+
+    public function getSafariPark()
+    {
+        return $this->hasOne(SafariPark::class, ['id' => 'safari_park_id']);
+    }
 }
