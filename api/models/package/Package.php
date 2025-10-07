@@ -95,6 +95,7 @@ class Package extends \common\models\package\Package
             'total_price' => function () {
                 return (int) ceil($this->total_price);
             },
+            'template_code',
         ]);
 
         $fields[] = 'image_thumbnails';
