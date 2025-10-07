@@ -98,6 +98,7 @@ class Package extends \common\models\package\Package
             'custom_term_and_condition' => function () {
                 return $this->custom_term_and_condition;
             },
+            'template_code',
         ]);
 
         $fields[] = 'image_thumbnails';

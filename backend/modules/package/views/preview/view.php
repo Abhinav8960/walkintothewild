@@ -29,6 +29,16 @@ if ($package->is_best_deal != 1) {
 }
 
 $this->params['buttons'][] =  Html::button(
+    'Template',
+    [
+        'value' => Url::toRoute(['set-template', 'id' => $package->id]),
+        'class' => 'btn mt-2 btn-success btn_template',
+        'style' => 'margin-right:5px',
+        'title' => 'Delete'
+    ]
+);
+
+$this->params['buttons'][] =  Html::button(
     'Delete',
     [
         'value' => Url::toRoute(['delete', 'id' => $package->id]),
@@ -200,6 +210,20 @@ if ($package->popular_package != 1) {
     </div>
 </div>
 
+<div class="modal fade _standard-text" id="template-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Template</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='templatemodalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<< JS
 
@@ -220,6 +244,16 @@ function discount() {
 	});
 }
 discount();
+
+
+function templatefunction() {
+	$('.btn_template').on('click', function () {
+        $('#template-modal').modal('show')
+		.find('#templatemodalContent')
+		.load($(this).attr('value'));
+	});
+}
+templatefunction();
 
 JS;
 $this->registerJs($script);
