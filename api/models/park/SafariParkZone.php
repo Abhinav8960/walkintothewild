@@ -35,11 +35,14 @@ class SafariParkZone extends \common\models\park\SafariParkZone
             'entry_gate_name',
             'entry_gate_latitude',
             'entry_gate_longitude',
+            // 'is_open_in_monsoon' => function () {
+            //     return (bool)$this->is_open_in_monsoon;
+            // },
             'is_open_in_monsoon' => function () {
-                return (bool)$this->is_open_in_monsoon;
+                return (bool)$this->active_label;
             },
             'open_after_date',
-            'active_label'
+            // 'active_label'
         ];
 
         // return array_diff($fields, $hold_fields);
