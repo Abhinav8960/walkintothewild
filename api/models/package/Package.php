@@ -95,6 +95,9 @@ class Package extends \common\models\package\Package
             'total_price' => function () {
                 return (int) ceil($this->total_price);
             },
+            'custom_term_and_condition' => function () {
+                return $this->custom_term_and_condition;
+            },
         ]);
 
         $fields[] = 'image_thumbnails';
@@ -566,5 +569,10 @@ class Package extends \common\models\package\Package
             return $stay_category->title;
         }
         return null;
+    }
+
+    public function getCustom_term_and_condition()
+    {
+        return '<div><p>Please review the payment and cancellation policies:</p><a href="https://www.walkintothewild.in/refund-and-cancellation-policy">https://www.walkintothewild.in/refund-and-cancellation-policy</a></div>';
     }
 }
