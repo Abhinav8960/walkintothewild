@@ -99,7 +99,6 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             'witw_average_rating',
             'witw_review_count',
             'is_safari_operator',
-            'template_code',
             'status',
         ]);
         return $fields;
