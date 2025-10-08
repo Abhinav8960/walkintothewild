@@ -38,6 +38,7 @@ class SafariParkSearch extends SafariPark
             [['month_id', 'master_animal_id', 'master_rare_animal_id', 'master_vehicle_id', 'accomodation_id', 'session_id', 'bonus_experience_id'], 'safe'],
             [['show_in_filter','is_published_on_web','is_published_on_api'], 'boolean'],
             [['is_published_on_web','is_published_on_api'], 'safe'],
+            [['template_code'],'integer'],
         ];
     }
 
@@ -174,6 +175,7 @@ class SafariParkSearch extends SafariPark
             'is_published_on_web' => $this->is_published_on_web,
             'is_published_on_api' => $this->is_published_on_api,
             'safari_park.status' => $this->status,
+            'safari_park.template_code' => $this->template_code,
         ]);
 
 
