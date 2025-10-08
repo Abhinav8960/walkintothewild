@@ -160,6 +160,8 @@ return [
 
                 'refundpolicy' => 'site/refundpolicy',
                 'cancellation' => 'site/cancellation',
+                'refundpolicyantara' => 'site/refundpolicyantara',
+
 
                 'update-token' => 'site/update-token',
                 'meta/<action>' => 'meta/default/<action>',

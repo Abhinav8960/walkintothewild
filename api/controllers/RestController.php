@@ -115,12 +115,11 @@ class RestController extends Controller
 
                     // 3. The decrypted data should be an array (from the original JSON)
                     //    Handle potential JSON decoding errors if decrypt doesn't do it.
-                    if(!is_array($decryptedData)){
+                    if (!is_array($decryptedData)) {
 
                         $params = json_decode($decryptedData, true);
-                    }else{
+                    } else {
                         $params = $decryptedData;
-
                     }
 
                     if (json_last_error() !== JSON_ERROR_NONE) {
@@ -497,5 +496,17 @@ class RestController extends Controller
     public function decrypt($data)
     {
         return GeneralModel::decrypt($data);
+    }
+
+    protected function dataProviderSenderConditionWithoutPagination($searchModel, $rootIndexName = 0, $condition = null, $singleRecord = false)
+    {
+        $searchModel->load(\Yii::$app->request->queryParams);
+        $searchModel->setAttributes(\Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        if (!empty($condition)) {
+            $dataProvider->query->andWhere($condition);
+        }
+        $dataProvider->pagination = false;
+        return $this->reponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord);
     }
 }

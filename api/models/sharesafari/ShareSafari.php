@@ -99,6 +99,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             'witw_average_rating',
             'witw_review_count',
             'is_safari_operator',
+            'is_blue_badge_verified',
             'status',
         ]);
         return $fields;
@@ -541,5 +542,14 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             ];
         }
         return [];
+    }
+
+    public function getIs_blue_badge_verified()
+    {
+        if ($this->type == ShareSafari::TYPE_SAFARI) {
+            return $this->hostUser ? (bool)$this->hostUser->is_blue_badge_verified : false;
+        } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return false;
+        }
     }
 }

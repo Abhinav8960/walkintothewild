@@ -49,7 +49,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'test-call','sign-in-mobile', 'sign-in-email', 'signin-otp-verification', 'regenerate-otp', 'signup', 'signup-otp-verification'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'test-call', 'sign-in-mobile', 'sign-in-email', 'signin-otp-verification', 'regenerate-otp', 'signup', 'signup-otp-verification','refundpolicyantara'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -61,7 +61,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test','test-call','sign-in-mobile', 'sign-in-email', 'signin-otp-verification', 'regenerate-otp', 'signup', 'signup-otp-verification'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'test-call', 'sign-in-mobile', 'sign-in-email', 'signin-otp-verification', 'regenerate-otp', 'signup', 'signup-otp-verification'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -89,8 +89,8 @@ class SiteController extends RestController
                     'test' => ['GET'],
                     'refundpolicy' => ['GET'],
                     'cancellation' => ['GET'],
-                    'test-call'=>['POST'],
-                    'clear-cache'=>['POST'],
+                    'test-call' => ['POST'],
+                    'clear-cache' => ['POST'],
 
 
                     'sign-in-mobile' => ['POST'],
@@ -100,6 +100,7 @@ class SiteController extends RestController
 
                     'signup' => ['POST'],
                     'signup-otp-verification' => ["POST"],
+                    'refundpolicyantara' => ['GET'],
                 ],
             ],
         ];
@@ -472,7 +473,7 @@ class SiteController extends RestController
             return \Yii::$app->api->sendResponse($data = ['content' => $term_of_use->content], ['message' => $message]);
         }
         $message = Yii::$app->api->messageManager->getMessage('common.not_found');
-        return Yii::$app->api->sendResponse($data = [], ['message' =>$message]);
+        return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 
     public function actionPrivacypolicy()
@@ -550,7 +551,7 @@ class SiteController extends RestController
                     $safari_operator->save(false);
                 }
                 $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_success');
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' =>$message]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
         $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_failed');
@@ -573,7 +574,7 @@ class SiteController extends RestController
                 $headers->add('X-Rate-Limit-Reset', time() + 3600);  // Reset after 1 hour
             }
             $message = Yii::$app->api->messageManager->getMessage('common.already_verified_mobile');
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' =>$message]);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $cache = Yii::$app->cache;
@@ -613,7 +614,7 @@ class SiteController extends RestController
             \Yii::$app->api->messageManager->clearCache();
             // return Yii::$app->api->sendFailedStringResponse(['Rate limit exceeded. Please try again later.'], 429);
             $message = Yii::$app->api->messageManager->getMessage('common.rate_limit_exceeded');
-            return Yii::$app->api->sendResponse($data = [], ['message' =>$message], 429);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message], 429);
         } else {
             $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
             $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
@@ -636,7 +637,7 @@ class SiteController extends RestController
             $model->proceedforverification($this->auth_token, $user_model);
 
             $message = Yii::$app->api->messageManager->getMessage('common.otp_sent');
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' =>$message]);
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
         if ($model->hasErrors()) {
@@ -678,7 +679,7 @@ class SiteController extends RestController
         $model->attributes = $this->request;
         if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
             $message =  Yii::$app->api->messageManager->getMessage('common.already_verified_mobile');
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' =>$message]);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         if ($model->validate()) {
             if ($model->validateOtp($this->auth_token)) {
@@ -686,7 +687,7 @@ class SiteController extends RestController
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
             $message =  Yii::$app->api->messageManager->getMessage('common.not_verified_mobile');
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' =>$message ]);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         if ($model->hasErrors()) {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -721,7 +722,7 @@ class SiteController extends RestController
                 }
                 OperatorSafariOperator::updateAll(['status' => OperatorSafariOperator::STATUS_SUSPEND], ['user_id' => $user_model->id]);
                 $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_success');
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' =>$message]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
         $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_failed');
@@ -794,7 +795,7 @@ class SiteController extends RestController
     //     }
     // }
 
-     public function actionClearCache()
+    public function actionClearCache()
     {
         \Yii::$app->api->messageManager->clearCache();
         $message =  Yii::$app->api->messageManager->getMessage('common.cache_cleared');
@@ -1160,7 +1161,7 @@ class SiteController extends RestController
         $temp_user->save(false);
 
         if ($temp_user->is_email_verified && $temp_user->is_mobile_verified) {
-            $user = User::createFromTemporary($temp_user); 
+            $user = User::createFromTemporary($temp_user);
             if (!$user) {
                 return ['success' => false, 'message' => 'Failed to create user account'];
             }
@@ -1186,5 +1187,16 @@ class SiteController extends RestController
             'success' => true,
             'message' => 'OTP verified, waiting for other verification to complete'
         ];
+    }
+
+    public function actionRefundpolicyantara()
+    {
+        $refund_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_REFUND_POLICY_ANTARA]);
+        if ($refund_policy) {
+            $message = Yii::$app->api->messageManager->getMessage('common.success');
+            return \Yii::$app->api->sendResponse($data = ['content' => $refund_policy->content], ['message' => $message]);
+        }
+        $message = Yii::$app->api->messageManager->getMessage('common.not_found');
+        return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 }
