@@ -37,7 +37,7 @@ use yii\bootstrap5\ActiveForm;
 
 
     <div class="row">
-        <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['rows' => '6', 'placeholder' => 'Add Content Here'])->label('Content <span class="necessary">*</span>') ?>
+        <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['id' => 'compliancedocumentsform-content','rows' => '6', 'placeholder' => 'Add Content Here'])->label('Content <span class="necessary">*</span>') ?>
     </div>
     <hr>
     <div class="col-md-12">
@@ -50,12 +50,13 @@ use yii\bootstrap5\ActiveForm;
 <?php ActiveForm::end(); ?>
 <style>
     .ck-editor__editable {
-        min-height: 450px;
+        min-height: 400px;
     }
 </style>
 <?php
 $script = <<< JS
-editor('compliancedocumentsform-description');
+
+editor('compliancedocumentsform-content');
 
 $('#bannerImageInput').on('change', function (e) {
     const file = e.target.files[0];

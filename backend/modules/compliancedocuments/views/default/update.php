@@ -41,7 +41,7 @@ $this->params['title'] = $this->title;
 
 
             <div class="row">
-                <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['rows' => '6', 'placeholder' => 'Add Content Here'])->label('Content <span class="necessary">*</span>') ?>
+                <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['id' => 'compliancedocumentsform-content','rows' => '6', 'placeholder' => 'Add Content Here'])->label('Content <span class="necessary">*</span>') ?>
             </div>
             <hr>
             <div class="col-md-12">
@@ -57,7 +57,7 @@ $this->params['title'] = $this->title;
 
 <style>
     .ck-editor__editable {
-        min-height: 450px;
+        min-height: 400px;
     }
 </style>
 

@@ -56,15 +56,15 @@ if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
             </div>
 
             <div class="row mb-3">
-                <div class="col-12">
-                    <div class="border p-3 bg-light rounded-3">
+                <div class="col-md-12">
+                    <div class="text-box border p-3 bg-light rounded-3">
                         <p><strong>Content:</strong><br> <?= nl2br(Html::encode($model->content)) ?></p>
                     </div>
                 </div>
             </div>
+        </div>
 
-
-            <!-- <div class="col-md-12">
+        <!-- <div class="col-md-12">
                 <div class="border p-3 overflow-auto bg-light fs-6 rounded-3">
                     <p>
                         <span class="fw-bold text-dark">Content:</span> <?= $model->content ?>
@@ -72,12 +72,12 @@ if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
                 </div>
             </div> -->
 
-            <div class="mt-3">
-                <?= Html::a('Back', ['index'], ['class' => 'btn btn-orange text-white']) ?>
-            </div>
-
+        <div class="mt-3">
+            <?= Html::a('Back', ['index'], ['class' => 'btn btn-orange text-white']) ?>
         </div>
+
     </div>
+</div>
 </div>
 
 
