@@ -61,7 +61,7 @@ class ComplianceDocumentsVersionForm extends model
                 // 'maxHeight' => 350,
             ],
             [['banner_image'], 'required', 'on' => self::SCENARIO_CREATE],
-            [['content'], 'validateMaxWords', 'params' => ['max' => 10000]],
+            [['content'], 'validateMaxWords', 'params' => ['max' => 100000]],
             [['banner_image'],'safe'],
             [['type','content'], 'required'],
             [['status'], 'default', 'value' => 0],
@@ -98,7 +98,7 @@ class ComplianceDocumentsVersionForm extends model
          $maxWords = $params['max'];
          $wordCount = str_word_count($this->$attribute);
          if ($wordCount > $maxWords) {
-             $this->addError($attribute, "The Long Description must not exceed $maxWords words.");
+             $this->addError($attribute, "The Content must not exceed $maxWords words.");
          }
      }
     

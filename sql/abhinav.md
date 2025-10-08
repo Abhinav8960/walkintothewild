@@ -23,5 +23,6 @@ ALTER TABLE `chat_message` ADD `reminder_note` TEXT NULL DEFAULT NULL AFTER `is_
 
 
 ALTER TABLE `compliance_documents` ADD `banner_image` VARCHAR(255) NULL DEFAULT NULL AFTER `effective_date`;
-
 ALTER TABLE `compliance_documents_version` ADD `banner_image` VARCHAR(255) NULL DEFAULT NULL AFTER `effective_date`;
+ALTER TABLE `compliance_documents_version` CHANGE `content` `content` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
+ALTER TABLE `compliance_documents` CHANGE `content` `content` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
