@@ -1,12 +1,12 @@
 <?php
 
-namespace common\models\compliancedocuments;
+namespace api\models\compliancedocuments;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ComplianceDocumentsSearch represents the model behind the search form of `ComplianceDocuments`.
+ * ComplianceDocumentsSearch represents the model behind the search form of `common\models\compliancedocuments`.
  */
 class ComplianceDocumentsSearch extends ComplianceDocuments
 {
@@ -16,9 +16,10 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
     public function rules()
     {
         return [
-            [['id','version_id','created_by','status'], 'integer'],
+            [['id','version_id','status'], 'integer'],
             [['content','type'], 'safe'],
-            [['effective_date', 'created_at','banner_image'], 'safe'],
+            [['effective_date','banner_image'], 'safe'],
+            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];
     }
 
@@ -27,7 +28,7 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
      */
     public function scenarios()
     {
-        // bypass parent scenarios()
+        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -42,30 +43,35 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
     {
         $query = ComplianceDocuments::find();
 
+        // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]], 
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
+        // grid filtering conditions
         $query->andFilterWhere([
+            'id' => $this->id,
             'id' => $this->id,
             'version_id'=>$this->version_id,
             'type' => $this->type,
             'effective_date' => $this->effective_date,
-            'status' =>$this->status,
-            'created_at' => $this->created_by,
-            'created_at' => $this->created_by,
             'banner_image'=>$this->banner_image,
+            'created_at' => $this->created_at,
+            'created_by' => $this->created_by,
+            'updated_at' => $this->updated_at,
+            'updated_by' => $this->updated_by,
+            'status' => $this->status,
         ]);
-
-        $query->andFilterWhere(['like', 'content', $this->content]);
-
 
         return $dataProvider;
     }

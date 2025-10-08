@@ -95,6 +95,9 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
         elseif($this->type == 2){
             return "Privacy Policy";
         }
+        elseif($this->type == 3){
+            return "Refund Policy";
+        }
         else{
             return "";
         }

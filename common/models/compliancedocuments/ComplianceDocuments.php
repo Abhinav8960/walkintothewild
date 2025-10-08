@@ -72,7 +72,6 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
         return [
             'id' => 'ID',
             'version_id'=>'Version Id',
-            'compliance_documents_version_id' => 'Compliance Documents Version ID',
             'type' => 'Type',
             'version' => 'Version',
             'content' => 'Content',

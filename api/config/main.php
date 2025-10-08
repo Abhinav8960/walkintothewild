@@ -66,6 +66,9 @@ return [
         'transaction' => [
             'class' => 'api\modules\transaction\Module',
         ],
+        'compliancedocuments' => [
+            'class' => 'api\modules\compliancedocuments\Module',
+        ]
 
     ],
     'components' => [
@@ -261,6 +264,9 @@ return [
                 'transaction/payu/verify' => 'transaction/payment-response/payu-verify',
                 'transaction-info/<reference>' => 'transaction/default/transaction-info',
                 'quotation-info/<hash>' => 'transaction/default/quotation-info',
+
+                'compliancedocuments' => 'compliancedocuments/default/index',
+                'compliancedocuments/<action>' => 'compliancedocuments/default/<action>',
 
             ],
 
