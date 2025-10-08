@@ -140,8 +140,8 @@ class DefaultController extends RestController
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
         $condition = ['template_code' => 1];
-        return $this->dataProviderSenderWithCondition($searchModel, "parks", $condition);
-        // return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "parks");
+        // return $this->dataProviderSenderWithCondition($searchModel, "parks", $condition);
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "parks");
     }
 
     public function actionReviewlist($slug, $sort_by = null)
