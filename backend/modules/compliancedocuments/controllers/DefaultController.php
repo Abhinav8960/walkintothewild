@@ -10,6 +10,7 @@ use common\models\compliancedocuments\ComplianceDocumentsVersionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * DefaultController.
@@ -39,9 +40,11 @@ class DefaultController extends Controller
     {
         $model = new ComplianceDocumentsVersionForm();
         if (Yii::$app->request->isPost && $model->load($this->request->post())) {
+            $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
             if ($model->validate()) {
                 $model->initializeForm();
                 if ($model->cdocument_model->save(false)) {
+                    $model->uploadFile();
                     Yii::$app->session->setFlash('success', 'Document created successfully.');
                     return $this->redirect(['index']);
                 }
@@ -71,9 +74,11 @@ class DefaultController extends Controller
         $form_model = new ComplianceDocumentsVersionForm($model);
         if ($this->request->isPost) {
             if ($form_model->load($this->request->post())) {
+                $form_model->banner_image = UploadedFile::getInstance($form_model, 'banner_image');
                 if ($form_model->validate()) {
                     $form_model->initializeForm();
                     if ($form_model->cdocument_model->save()) {
+                        $form_model->uploadFile();
                         Yii::$app->session->setFlash('success', 'Document created successfully.');
                         return $this->redirect(['index']);
                     }
@@ -160,6 +165,7 @@ class DefaultController extends Controller
             $model_main->version = $model->version;
             $model_main->type = $model->type;
             $model_main->content = $model->content;
+            $model_main->banner_image = $model->banner_image;
             $model_main->effective_date = $model->effective_date;
             $model_main->status = ComplianceDocuments::STATUS_PUBLISHED;
             $model_main->save(false);
@@ -183,6 +189,7 @@ class DefaultController extends Controller
         $version_model->type = $model->type;
         $version_model->content = $model->content;
         $version_model->effective_date = $model->effective_date;
+        $version_model->banner_image = $model->banner_image;
         $version_model->status = ComplianceDocuments::STATUS_UNPUBLISHED;
         $version_model->save(false);
         return true;

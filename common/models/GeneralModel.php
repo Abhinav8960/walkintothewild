@@ -2214,6 +2214,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return [
             1 => 'Terms and Condition',
             2 => 'Privacy Policy',
+            3 => 'Refund Policy',
         ];
     }
 
@@ -2236,6 +2237,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $arr = [
             '1' => 'Terms and Condition',
             '2' => 'Privacy Policy',
+            '3' => 'Refund Policy',
         ];
 
         foreach ($types as $t) {

@@ -49,6 +49,7 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['content', 'version'], 'string'],
             [['effective_date'], 'safe'],
+            [['banner_image'],'string', 'max' => 255],
         ];
     }
 
@@ -97,5 +98,16 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
         else{
             return "";
         }
+    }
+
+    public function getImagebannerpath()
+    {
+        $image_path = '';
+        if (isset($this->banner_image)) {
+            $image_path = \Yii::$app->params['s3_endpoint'] . '/' . $this->banner_image;
+        } else {
+            return '';
+        }
+        return $image_path;
     }
 }

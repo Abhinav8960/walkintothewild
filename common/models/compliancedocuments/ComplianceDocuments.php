@@ -61,6 +61,7 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
             [['content', 'version'], 'string'],
             [['effective_date'], 'safe'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
+            [['banner_image'],'string','max' =>255],
         ];
     }
     /**
@@ -97,4 +98,17 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
         }
         return $this->status;
     }
+
+    public function getImagebannerpath()
+    {
+        $image_path = '';
+        if (isset($this->banner_image)) {
+            $image_path = \Yii::$app->params['s3_endpoint'] . '/' . $this->banner_image;
+        } else {
+            return '';
+        }
+
+        return $image_path;
+    }
+
 }

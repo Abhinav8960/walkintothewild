@@ -22,7 +22,7 @@ class ComplianceDocumentsVersionForm extends model
     public $effective_date;
     public $cdocument_model;
     public $type;
-
+    public $banner_image;
     public $status;
 
     public function __construct(?ComplianceDocumentsVersion $cdocument_model = null)
@@ -37,7 +37,8 @@ class ComplianceDocumentsVersionForm extends model
             $this->content =  $this->cdocument_model->content;
             $this->status = $this->cdocument_model->status;
             $this->version = $this->cdocument_model->version;
-            $this->effective_date = $this->cdocument_model->effective_date;          
+            $this->effective_date = $this->cdocument_model->effective_date;     
+            $this->banner_image = $this->cdocument_model->banner_image;     
         }
     }
 
@@ -48,6 +49,16 @@ class ComplianceDocumentsVersionForm extends model
     public function rules()
     {
         return [
+            [
+                ['banner_image'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
+                'maxSize' => 250 * 1024,
+                'skipOnEmpty' => true,
+                // 'maxWidth' => 350,
+                // 'maxHeight' => 350,
+            ],
+            [['banner_image'],'safe'],
             [['type', 'content'], 'required'],
             [['status'], 'default', 'value' => 0],
             [['status','type'], 'integer'],
@@ -67,7 +78,8 @@ class ComplianceDocumentsVersionForm extends model
             'version'=>'Version',
             'content' => 'Content',
             'status' =>'Status',
-            'effectiv_date'=>'Effective Date'
+            'effectiv_date'=>'Effective Date',
+            'banner_image'=>'Banner Image'
         ];
     }
 
@@ -84,5 +96,21 @@ class ComplianceDocumentsVersionForm extends model
         $this->cdocument_model->content = $this->content;
         $this->cdocument_model->status  = $this->status;
         $this->cdocument_model->effective_date = $this->effective_date;
+    }
+
+    public function UploadFile()
+    {
+        if ($this->banner_image) {    
+            $storagePath = 'compliance_documents' . '/' . date('ymd');
+            $fileName =  $this->version . '_compliance_documents_banner_image' . '_' . time() . '.' . $this->banner_image->extension;
+            $filePath = $storagePath . '/' . $fileName;
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->banner_image, $filePath, $fileName, true)) {
+                    $this->cdocument_model->banner_image = $filePath;
+                    // $this->cdocument_model->original_banner_filename = $this->banner_image->name;
+                    $this->cdocument_model->save(false);
+                }
+            }
+        }
     }
 }

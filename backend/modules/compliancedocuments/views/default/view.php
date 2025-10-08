@@ -13,7 +13,7 @@ $this->params['title'] = $this->title;
 
 if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
     $this->params['buttons'][] = Html::a('Publish', ['publish', 'id' => $model->id], ['class' => 'btn mt-2 btn-orange', 'title' => 'Publish']);
-} 
+}
 
 ?>
 
@@ -23,13 +23,32 @@ if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
 
             <div class="row mb-3">
                 <div class="col-md-3 col-sm-6 mb-2">
-                    <p><strong>Type : </strong> <?= Html::encode($model->labeltype)?></p>
+                    <p><strong>Title : </strong> <?= Html::encode($model->labeltype) ?></p>
                 </div>
+
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <p><strong>Banner Image : </strong>
+                    <div class="external-preview border rounded p-2 bg-light text-center mt-1" style="width: 220px;">
+                        <?php if (!empty($model->imagebannerpath)) : ?>
+                            <img src="<?= $model->imagebannerpath ?>"
+                                alt="Current Banner"
+                                id="existingBanner"
+                                class="img-fluid rounded"
+                                style="max-height: 180px; object-fit: cover;">
+                        <?php else : ?>
+                            <div id="noImageText" class="text-muted small py-5">
+                                No image<br>uploaded
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    </p>
+                </div>
+
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Effective Date : </strong><?= Yii::$app->formatter->asDate($model->effective_date) ?></p>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
-                    <p><strong>Created At : </strong>  <?= Yii::$app->formatter->asDate($model->created_at) ?></p>
+                    <p><strong>Created At : </strong> <?= Yii::$app->formatter->asDate($model->created_at) ?></p>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Created By : </strong> <?= Html::encode($model->user->name) ?></p>
@@ -48,7 +67,7 @@ if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
             <!-- <div class="col-md-12">
                 <div class="border p-3 overflow-auto bg-light fs-6 rounded-3">
                     <p>
-                        <span class="fw-bold text-dark">Content:</span> <?= $model->content?>
+                        <span class="fw-bold text-dark">Content:</span> <?= $model->content ?>
                     </p>
                 </div>
             </div> -->
