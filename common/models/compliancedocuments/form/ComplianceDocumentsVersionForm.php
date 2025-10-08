@@ -25,6 +25,8 @@ class ComplianceDocumentsVersionForm extends model
     public $banner_image;
     public $status;
 
+    const SCENARIO_CREATE = 'create';
+
     public function __construct(?ComplianceDocumentsVersion $cdocument_model = null)
     {
         $this->cdocument_model = Yii::createObject([
@@ -53,13 +55,15 @@ class ComplianceDocumentsVersionForm extends model
                 ['banner_image'],
                 'image',
                 'extensions' => ['jpeg', 'jpg', 'png'],
-                'maxSize' => 250 * 1024,
+                'maxSize' => 500 * 1024,
                 'skipOnEmpty' => true,
                 // 'maxWidth' => 350,
                 // 'maxHeight' => 350,
             ],
+            [['banner_image'], 'required', 'on' => self::SCENARIO_CREATE],
+            [['content'], 'validateMaxWords', 'params' => ['max' => 10000]],
             [['banner_image'],'safe'],
-            [['type', 'content'], 'required'],
+            [['type','content'], 'required'],
             [['status'], 'default', 'value' => 0],
             [['status','type'], 'integer'],
             [['content','version'], 'string'],
@@ -89,6 +93,15 @@ class ComplianceDocumentsVersionForm extends model
      * @return void
      */
 
+     public function validateMaxWords($attribute, $params)
+     {
+         $maxWords = $params['max'];
+         $wordCount = str_word_count($this->$attribute);
+         if ($wordCount > $maxWords) {
+             $this->addError($attribute, "The Long Description must not exceed $maxWords words.");
+         }
+     }
+    
     public function initializeForm()
     {
         $this->cdocument_model->type = $this->type;

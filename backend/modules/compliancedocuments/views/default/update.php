@@ -64,7 +64,7 @@ $this->params['title'] = $this->title;
 
 <?php
 $script = <<< JS
-editor('compliancedocumentsform-description');
+editor('compliancedocumentsform-content');
 
 $('#bannerImageInput').on('change', function (e) {
     const file = e.target.files[0];

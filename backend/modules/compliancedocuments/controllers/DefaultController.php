@@ -39,6 +39,7 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new ComplianceDocumentsVersionForm();
+        $model->scenario = ComplianceDocumentsVersionForm::SCENARIO_CREATE;
         if (Yii::$app->request->isPost && $model->load($this->request->post())) {
             $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
             if ($model->validate()) {
@@ -79,7 +80,7 @@ class DefaultController extends Controller
                     $form_model->initializeForm();
                     if ($form_model->cdocument_model->save()) {
                         $form_model->uploadFile();
-                        Yii::$app->session->setFlash('success', 'Document created successfully.');
+                        Yii::$app->session->setFlash('success', 'Document updated successfully.');
                         return $this->redirect(['index']);
                     }
                 }
