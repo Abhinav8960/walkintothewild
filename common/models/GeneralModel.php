@@ -218,6 +218,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                 6 => 'Resort Manager',
                 7 => 'Report Manager',
                 8 => 'Community Manager',
+                9 => 'Account Manager',
             ];
         }
         //  else if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin) {
@@ -946,7 +947,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $return = [
             '1' => 'Photography',
             // '2' => 'Vlogging',
-            '3' => 'Safari Experience'
+            '3' => 'Safari Experience',
+            '4' => 'Wildlife exploration'
         ];
         return $return;
     }

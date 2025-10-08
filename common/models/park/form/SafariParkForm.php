@@ -95,6 +95,7 @@ class SafariParkForm extends model
     public $quotation_form_note;
 
     public $short_name;
+    public $template_code;
 
 
     public function __construct(SafariPark $safari_park_model = null)
@@ -182,6 +183,7 @@ class SafariParkForm extends model
             $this->accomodation = SafariParkAccomodation::find()->select('meta_stay_category_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
 
             $this->short_name = $this->safari_park_model->short_name;
+            $this->template_code = $this->safari_park_model->template_code;
         }
 
         $this->status_option = GeneralModel::newstatusoption();
@@ -464,6 +466,7 @@ class SafariParkForm extends model
                 // 'maxSize' => 250 * 1024
             ],
             [['short_name'], 'string', 'max' => 255],
+            [['template_code'],'integer'],
         ];
     }
 
@@ -559,7 +562,8 @@ class SafariParkForm extends model
             'is_most_demanding',
             'is_shared_safari',
             'quotation_form_note',
-            'short_name'
+            'short_name',
+            'template_code'
         ];
         $scenarios['howtoreach'] = [
             'status',
@@ -733,6 +737,7 @@ class SafariParkForm extends model
 
         $this->safari_park_model->quotation_form_note = $this->quotation_form_note;
         $this->safari_park_model->short_name = $this->short_name;
+        $this->safari_park_model->template_code = $this->template_code;
     }
 
 

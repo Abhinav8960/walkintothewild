@@ -31,6 +31,12 @@ class Chat extends \common\models\chat\Chat
             'id',
             'chat_hash',
             'last_message',
+            'last_message'  => function () {
+                if ($this->chat_type == self::CHAT_TYPE_QUOTE || $this->chat_type == self::CHAT_TYPE_SHARE_SAFARI) {
+                    return \common\models\GeneralModel::maskContactInfoInString($this->last_message);
+                }
+                return $this->last_message;
+            },
             'last_message_datetime'  => function () {
                 return strtotime($this->last_message_datetime);
             },

@@ -202,6 +202,10 @@ use yii\bootstrap5\ActiveForm;
                 </div>
 
                 <div class="col-md-3">
+                    <?= $form->field($model, 'template_code')->dropDownList([1 => '1. Default', 2 => '2. Antara'], ['prompt' => 'Select Template Code']) ?>
+                </div>
+
+                <div class="col-md-3">
                     <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
                 </div>
 

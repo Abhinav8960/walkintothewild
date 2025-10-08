@@ -5,6 +5,7 @@ namespace backend\modules\package\controllers;
 use common\interfaces\StatusInterface;
 use common\models\package\form\PackageDeleteForm;
 use common\models\package\form\PackageDiscountForm;
+use common\models\package\form\PackageTemplateForm;
 use common\models\package\form\PackageVersionForm;
 use common\models\package\Package;
 use common\models\package\PackageVersion;
@@ -230,5 +231,30 @@ class PreviewController extends Controller
             Yii::$app->session->setFlash('success', 'Package set as Best Deal successfully.');
             return $this->redirect(['index', 'id' => $id]);
         }
+    }
+
+    public function actionSetTemplate($id)
+    {
+        $package_template_model = Package::find()->where(['id' => $id])->limit(1)->one();
+        $model = new PackageTemplateForm($package_template_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_template_model->save(false)) {
+                        $version = PackageVersion::find()->where(['package_id' => $package_template_model->id])->andWhere(['version' => $package_template_model->live_version])->limit(1)->one();
+                        $version->template_code = $model->package_template_model->template_code;
+                        $version->save(false);
+                        \Yii::$app->session->setFlash('success', 'Successfully Template!');
+                        return $this->redirect(['index', 'id' => $id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_template_model->loadDefaultValues();
+        }
+        return $this->renderAjax('_template_form', [
+            'model' => $model,
+        ]);
     }
 }
