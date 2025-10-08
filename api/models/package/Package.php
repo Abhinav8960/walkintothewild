@@ -465,7 +465,7 @@ class Package extends \common\models\package\Package
                 ],
                 [
                     'question' => "Does the Package include transport to and from the resort?",
-                    'answer' => $this->pick_and_drop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Arrange your own or pick & drop additional additional from operator.",
+                    'answer' => $this->pick_and_drop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Arrange your own or pick & drop additional from operator.",
                 ],
                 [
                     'question' => "Are accommodation arrangements included in the Package?",
@@ -595,7 +595,7 @@ class Package extends \common\models\package\Package
         if ($this->template_code == 1) {
             return '<div><p>Please review the payment and cancellation policies:</p><a href="https://www.walkintothewild.in/refund-and-cancellation-policy">https://www.walkintothewild.in/refund-and-cancellation-policy</a></div>';
         } else {
-            return '<div><p>Please review the payment and cancellation policies:</p><a href="https://www.walkintothewild.in/refund-and-cancellation-policy">https://www.walkintothewild.in/refund-and-cancellation-policy-antara</a></div>';
+            return '<div><p>Please review the payment and cancellation policies:</p><a href="https://www.walkintothewild.in/refund-and-cancellation-policy-antara">https://www.walkintothewild.in/refund-and-cancellation-policy-antara</a></div>';
         }
     }
 }
