@@ -93,9 +93,7 @@ class DefaultController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_WITH_TOP_OPERATORS;
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
-        $condition = ['template_code' => 1];
-        return $this->dataProviderSenderWithCondition($searchModel, "parks", $condition);
-        // return $this->dataProviderSender($searchModel, $rootIndexName = "parks");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "parks");
     }
 
     /**
@@ -141,8 +139,9 @@ class DefaultController extends RestController
 
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
-        // $searchModel->show_in_filter = 1;
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "parks");
+        $condition = ['template_code' => 1];
+        return $this->dataProviderSenderWithCondition($searchModel, "parks", $condition);
+        // return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "parks");
     }
 
     public function actionReviewlist($slug, $sort_by = null)
