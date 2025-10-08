@@ -50,6 +50,7 @@ class SafariPark extends \common\models\park\SafariPark
                 return (bool)$this->status;
             },
             'is_followed',
+            'template_code'
         ];
 
         if (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
@@ -57,7 +58,7 @@ class SafariPark extends \common\models\park\SafariPark
         }
 
         if (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_FOR_FILTER_PARK, self::OPERATOR_API_LAYOUT_FULL, self::SHARE_SAFARI_API_LAYOUT_FULL, self::PACKAGE_API_LAYOUT_FULL])) {
-            $fields = ['id', 'title', 'slug', 'feature_image_path','quotation_form_note'];
+            $fields = ['id', 'title', 'slug', 'feature_image_path','quotation_form_note','template_code'];
         }
 
         if (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_FULL])) {
@@ -112,6 +113,7 @@ class SafariPark extends \common\models\park\SafariPark
             // $fields[] = 'total_view';
             // $fields[] = 'gallery';
             $fields[] = 'urls';
+            $fields[] = 'template_code';
         }
 
 

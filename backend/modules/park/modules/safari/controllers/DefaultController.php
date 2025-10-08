@@ -50,6 +50,7 @@ class DefaultController extends Controller
     {
         $model = new SafariParkForm();
         $model->status = SafariPark::STATUS_ACTIVE;
+        $model->template_code = 1;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {

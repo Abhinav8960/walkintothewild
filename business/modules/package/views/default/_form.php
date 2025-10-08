@@ -78,7 +78,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
         <div class="form_boxes mb-3">
             <label for="">Theme <span>*</span></label>
-            <?= $form->field($model, 'package_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+            <?= $form->field($model, 'package_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience', '4' => 'Wildlife exploration'], ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
         </div>
     </div>
 
