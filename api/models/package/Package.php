@@ -441,21 +441,39 @@ class Package extends \common\models\package\Package
         if ($this->getPackageFaqs()->count() > 0) {
             return $this->packageFaqs;
         }
-        return   [
-            [
-                'question' => "Are meals included in the Package?",
-                'answer' => $this->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
-            ],
-            [
-                'question' => "Does the Package include transport to and from the resort?",
-                'answer' => $this->pick_and_drop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
-            ],
-            [
-                'question' => "Are accommodation arrangements included in the Package?",
-                'answer' => $this->accomodationIncludes == 'Included' ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
-            ],
+        if ($this->template_code == 1) {
+            return   [
+                [
+                    'question' => "Are meals included in the Package?",
+                    'answer' => $this->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
+                ],
+                [
+                    'question' => "Does the Package include transport to and from the resort?",
+                    'answer' => $this->pick_and_drop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
+                ],
+                [
+                    'question' => "Are accommodation arrangements included in the Package?",
+                    'answer' => $this->accomodationIncludes == 'Included' ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
+                ],
 
-        ];
+            ];
+        } else {
+            return   [
+                [
+                    'question' => "Are meals included in the Package?",
+                    'answer' => $this->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
+                ],
+                [
+                    'question' => "Does the Package include transport to and from the resort?",
+                    'answer' => $this->pick_and_drop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Arrange your own or pick & drop additional additional from operator.",
+                ],
+                [
+                    'question' => "Are accommodation arrangements included in the Package?",
+                    'answer' => $this->accomodationIncludes == 'Included' ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
+                ],
+
+            ];
+        }
     }
 
 
