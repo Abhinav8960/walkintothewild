@@ -592,6 +592,10 @@ class Package extends \common\models\package\Package
 
     public function getCustom_term_and_condition()
     {
-        return '<div><p>Please review the payment and cancellation policies:</p><a href="https://www.walkintothewild.in/refund-and-cancellation-policy">https://www.walkintothewild.in/refund-and-cancellation-policy</a></div>';
+        if ($this->template_code == 1) {
+            return '<div><p>Please review the payment and cancellation policies:</p><a href="https://www.walkintothewild.in/refund-and-cancellation-policy">https://www.walkintothewild.in/refund-and-cancellation-policy</a></div>';
+        } else {
+            return '<div><p>Please review the payment and cancellation policies:</p><a href="https://www.walkintothewild.in/refund-and-cancellation-policy">https://www.walkintothewild.in/refund-and-cancellation-policy-antara</a></div>';
+        }
     }
 }
