@@ -2210,4 +2210,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '-1'=>'Cold Lead'
         ];
     }
+
+    public static function smslogstatusoption()
+    {
+        return ['0'=>'Pending', '1' => 'Sent', '2' =>'Delivered','3' => 'Failed'];
+    }
 }
