@@ -21,7 +21,7 @@ class MasterMetaInfoUpdateController extends Controller
         $master_arr = [
             '\common\models\master\airport\MasterAirport',
             '\common\models\master\animal\MasterAnimal',
-            '\common\models\master\bird\MasterBird',
+            // '\common\models\master\bird\MasterBird',
             '\common\models\master\bonusexperience\MasterBonusExperience',
             '\common\models\master\city\MasterCity',
             '\common\models\master\country\MasterCountry',
@@ -40,7 +40,7 @@ class MasterMetaInfoUpdateController extends Controller
         $meta_arr = [
             '\common\models\meta\MetaAccommodation',
             '\common\models\meta\MetaAnimalType',
-            '\common\models\meta\MetaBirdType',
+            // '\common\models\meta\MetaBirdType',
             // '\common\models\meta\MetaLocation',
             '\common\models\meta\MetaOperatorCredibility',
             '\common\models\meta\MetaOtherWildlifeActivities',
