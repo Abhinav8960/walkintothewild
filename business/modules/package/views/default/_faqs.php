@@ -56,9 +56,14 @@
                                         ?>
                                             <p>Yes: Transport to and from the resort is included in the Package.
                                             </p>
-                                        <?php } else { ?>
-                                            <p> No: Transport is not included; you will need to arrange your own.</p>
-                                        <?php } ?>
+                                            <?php } else {
+                                            if ($package->template_code == 1) { ?>
+                                                <p> No: Transport is not included; you will need to arrange your own.</p>
+                                            <?php } else { ?>
+                                                <p> No: Arrange your own or pick & drop additional from operator.</p>
+
+                                        <?php }
+                                        } ?>
                                     </div>
                                 </div>
                             </div>
