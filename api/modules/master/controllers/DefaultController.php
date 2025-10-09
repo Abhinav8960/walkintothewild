@@ -83,12 +83,12 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_animal");
     }
 
-    public function actionBird()
-    {
-        $searchModel = new MasterBirdSearch();
-        $searchModel->status =  MasterBirdSearch::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "master_bird");
-    }
+    // public function actionBird()
+    // {
+    //     $searchModel = new MasterBirdSearch();
+    //     $searchModel->status =  MasterBirdSearch::STATUS_ACTIVE;
+    //     return $this->dataProviderSender($searchModel, $rootIndexName = "master_bird");
+    // }
 
     public function actionBonusExperience()
     {
