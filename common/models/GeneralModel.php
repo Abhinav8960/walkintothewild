@@ -49,12 +49,12 @@ use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRating;
 use common\models\package\PackageVersion;
 use common\models\package\PackageFaq;
-use common\models\park\BirdingPark;
+// use common\models\park\BirdingPark;
 use common\models\park\Park;
 use common\models\park\SafariPark;
 use common\models\sharesafari\ShareSafariFaq;
-use frontend\models\registration\BirdingOperatorRequest;
-use frontend\models\registration\BirdingOperatorRequestPark;
+// use frontend\models\registration\BirdingOperatorRequest;
+// use frontend\models\registration\BirdingOperatorRequestPark;
 use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
 use common\models\trierror\FrontendRequestLog;
@@ -486,22 +486,22 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     //     return ArrayHelper::map(Category::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['category' => SORT_ASC])->all(), 'id', 'category');
     // }
 
-    public static function birdingparkoption()
-    {
-        $query = BirdingPark::find()
-            ->where(['status' => BirdingPark::STATUS_ACTIVE])
-            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
-            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+    // public static function birdingparkoption()
+    // {
+    //     $query = BirdingPark::find()
+    //         ->where(['status' => BirdingPark::STATUS_ACTIVE])
+    //         ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+    //         ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
-        // Get all the models
-        $parks = $query->all();
+    //     // Get all the models
+    //     $parks = $query->all();
 
-        // Use ArrayHelper::map to create the key-value pairs
-        $result = ArrayHelper::map($parks, 'id', 'title');
-        return $result;
+    //     // Use ArrayHelper::map to create the key-value pairs
+    //     $result = ArrayHelper::map($parks, 'id', 'title');
+    //     return $result;
 
-        // return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 2])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
-    }
+    //     // return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 2])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    // }
     public static function safariparkoption($column = 'id')
     {
 
@@ -611,11 +611,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park.title');
     }
 
-    public static function birdingoperatorresquestpark($birding_operator_request_id)
-    {
-        $query = BirdingOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'birding_operator_request_id' => $birding_operator_request_id]);
-        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
-    }
+    // public static function birdingoperatorresquestpark($birding_operator_request_id)
+    // {
+    //     $query = BirdingOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'birding_operator_request_id' => $birding_operator_request_id]);
+    //     return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
+    // }
 
     public static function tagoption()
     {

@@ -54,9 +54,9 @@ if (isset(Yii::$app->user->identity->can_login) && !\Yii::$app->user->identity->
 												if (Yii::$app->user->identity->is_safari_operator == 1) {
 													$roles[] = "Safari Operator";
 												}
-												if (Yii::$app->user->identity->is_birding_operator == 1) {
-													$roles[] = "Birding Operator";
-												}
+												// if (Yii::$app->user->identity->is_birding_operator == 1) {
+												// 	$roles[] = "Birding Operator";
+												// }
 												if (Yii::$app->user->identity->is_cms_manager == 1) {
 													$roles[] = "CMS Manager";
 												}
