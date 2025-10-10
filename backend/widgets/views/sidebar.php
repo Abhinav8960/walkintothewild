@@ -46,7 +46,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/master/animal/index",
 											"/master/animal/create",
 											"/master/animal/update",
-											"/master/bird/index",
+											// "/master/bird/index",
 											"/master/vehicle/index",
 											"/master/state/index",
 											"/master/country/index",
@@ -91,7 +91,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/master/animal/index",
 														"/master/animal/create",
 														"/master/animal/update",
-														"/master/bird/index",
+														// "/master/bird/index",
 														"/master/vehicle/index",
 														"/master/country/index",
 														"/master/state/index",
@@ -233,7 +233,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/meta/package",
 											"/meta/other-wildlife-activities",
 											"/meta/animal-type",
-											"/meta/bird-type",
+											// "/meta/bird-type",
 											"/meta/accommodation",
 											"/meta/safari-session"
 										)) ? "is-expanded" : "" ?>">
@@ -248,7 +248,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/meta/package",
 														"/meta/other-wildlife-activities",
 														"/meta/animal-type",
-														"/meta/bird-type",
+														// "/meta/bird-type",
 														"/meta/accommodation",
 														"/meta/safari-session"
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Meta</span><i class="angle fe fe-chevron-right"></i></a>
@@ -256,7 +256,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li class="side-menu__label1"><a href="javascript:void(0);">Meta</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/accommodation")) ? "active" : "" ?>" href="/meta/accommodation">Accommodation</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/animal-type")) ? "active" : "" ?>" href="/meta/animal-type">Animal Type</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/meta/bird-type")) ? "active" : "" ?>" href="/meta/bird-type">Bird Type</a></li>
+							<!-- <li><a class="slide-item <?= in_array($active_url, array("/meta/bird-type")) ? "active" : "" ?>" href="/meta/bird-type">Bird Type</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/operator-credibility")) ? "active" : "" ?>" href="/meta/operator-credibility">Operator Credibility</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/other-wildlife-activities")) ? "active" : "" ?>" href="/meta/other-wildlife-activities">Other Wildlife Activities</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/package")) ? "active" : "" ?>" href="/meta/package">Package</a></li>
