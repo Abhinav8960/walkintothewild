@@ -32,3 +32,19 @@ $encrypted_string = \common\components\AesCrypto::encrypt($data_to_encrypt, $enc
 echo "Paste the following string into your Postman request body:\n\n";
 echo $encrypted_string;
 echo "\n";
+
+
+// Payment link from chat
+// quotation-info/${transId}
+// transaction/initiate/${paymentHash}/${paymentOption}?utm_source=${utmSource}
+
+// transaction-info/${verifyid}
+// transaction-info/${verifyid}
+
+// book a seat
+// sharesafari/${safariSlug}/booking
+// sharesafari/${safariSlug}/initiate-booking/${paymentHash}/${paymentOption}
+
+// installement
+// transaction/order-installment-info/${transId}
+// transaction/order-installment-initiate/${transId}/${paymentOption}?utm_source=${utmSource}
