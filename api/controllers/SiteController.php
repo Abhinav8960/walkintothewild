@@ -7,6 +7,7 @@ use api\behaviours\Verbcheck;
 use api\models\cms\contentmanagement\ContentManagement;
 use api\models\operator\SafariOperator;
 use api\models\CanSocialLoginForm;
+use api\models\compliancedocuments\ComplianceDocuments;
 use api\models\LoginForm;
 use api\models\MasterMetaTableInfoSearch;
 use api\models\OtpVerificationSocialLoginForm;
@@ -467,7 +468,7 @@ class SiteController extends RestController
 
     public function actionTermofuse()
     {
-        $term_of_use = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
+        $term_of_use = ComplianceDocuments::findOne(['id' => ComplianceDocuments::TERM_OF_USE]);
         if ($term_of_use) {
             $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $term_of_use->content], ['message' => $message]);
@@ -478,7 +479,7 @@ class SiteController extends RestController
 
     public function actionPrivacypolicy()
     {
-        $privacy_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_PRIVACY_POLICY]);
+        $privacy_policy = ComplianceDocuments::findOne(['id' => ComplianceDocuments::PRIVACY_POLICY]);
         if ($privacy_policy) {
             $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $privacy_policy->content], ['message' => $message]);
@@ -489,7 +490,7 @@ class SiteController extends RestController
 
     public function actionRefundpolicy()
     {
-        $refund_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_REFUND_POLICY]);
+        $refund_policy = ComplianceDocuments::findOne(['id' => ComplianceDocuments::REFUND_POLICY]);
         if ($refund_policy) {
             $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $refund_policy->content], ['message' => $message]);

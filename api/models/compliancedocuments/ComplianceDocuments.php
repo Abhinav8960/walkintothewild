@@ -6,6 +6,12 @@ use Yii;
 
 class ComplianceDocuments extends \common\models\compliancedocuments\ComplianceDocuments
 {
+
+
+    const TERM_OF_USE = 1;
+    const PRIVACY_POLICY = 2;
+    const REFUND_POLICY = 3;
+
     public function fields()
     {
         $fields = [
