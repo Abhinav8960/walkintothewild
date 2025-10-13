@@ -468,7 +468,7 @@ class SiteController extends RestController
 
     public function actionTermofuse()
     {
-        $term_of_use = ComplianceDocuments::findOne(['id' => ComplianceDocuments::TERM_OF_USE]);
+        $term_of_use = ComplianceDocuments::findOne(['type' => ComplianceDocuments::TERM_OF_USE]);
         if ($term_of_use) {
             $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $term_of_use->content], ['message' => $message]);
@@ -479,7 +479,7 @@ class SiteController extends RestController
 
     public function actionPrivacypolicy()
     {
-        $privacy_policy = ComplianceDocuments::findOne(['id' => ComplianceDocuments::PRIVACY_POLICY]);
+        $privacy_policy = ComplianceDocuments::findOne(['type' => ComplianceDocuments::PRIVACY_POLICY]);
         if ($privacy_policy) {
             $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $privacy_policy->content], ['message' => $message]);
@@ -490,7 +490,7 @@ class SiteController extends RestController
 
     public function actionRefundpolicy()
     {
-        $refund_policy = ComplianceDocuments::findOne(['id' => ComplianceDocuments::REFUND_POLICY]);
+        $refund_policy = ComplianceDocuments::findOne(['type' => ComplianceDocuments::REFUND_POLICY]);
         if ($refund_policy) {
             $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $refund_policy->content], ['message' => $message]);
