@@ -47,7 +47,6 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -60,7 +59,6 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
             'id' => $this->id,
             'version_id'=>$this->version_id,
             'type' => $this->type,
