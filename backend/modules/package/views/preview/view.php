@@ -144,7 +144,7 @@ if ($package->popular_package != 1) {
                 </h2>
                 <div id="collapseFive" class="accordion-collapse bg-set collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
                     <div class="accordion-body height_set">
-                        <?= $this->render('_faq', ['faqs' => $faqs]) ?>
+                        <?= $this->render('_faq', ['faqs' => $faqs, 'package' => $package]) ?>
                     </div>
                 </div>
                 <!-- Rendered on 2024-07-09 13:16:37 -->

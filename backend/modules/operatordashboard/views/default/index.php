@@ -24,7 +24,7 @@ $this->params['title'] = $this->title;
                     </div>
                 </a>
             </div>
-            <div class="col-lg-6 col-xl-3 col-md-6 col-12">
+            <!-- <div class="col-lg-6 col-xl-3 col-md-6 col-12">
                 <a href="/operatordashboard/birding">
                     <div class="card bg-danger-gradient text-white">
                         <div class="card-body">
@@ -38,7 +38,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> -->
             <div class="col-lg-6 col-xl-3 col-md-6 col-12">
                 <a href="#">
                     <div class="card bg-warning-gradient text-white">

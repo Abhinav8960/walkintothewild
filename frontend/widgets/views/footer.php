@@ -45,7 +45,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="footerContent">
                         <ul class="footer_listing">
                             <!-- <li><a href="/safaritour-registration">Safari Tour Operator</a></li> -->
-                            <!-- <li><a href="/birdingtour-registration">Birding Tour Operator</a></li> -->
                             <!-- <li><a href="#" style="cursor: default;">Resorts / Lodge / Home Stay</a></li> -->
                             <li><a href="/article">Articles and Tips</a></li>
                             <li><a href="/about-us">About Us</a></li>

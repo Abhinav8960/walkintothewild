@@ -18,37 +18,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <h2>Package : <?= mb_strimwidth($package->package_name, 0, 40, "...") ?></h2>
                     </div>
                     <div class="butonsParent d-flex align-items-center gap-3">
-                        <!-- <div class="edinBtn saveBtn">
-                            <button type="btn">Save</button>
-                        </div> -->
-
-                        <!-- <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
-                            <div class="col-lg-2">
-                                <div class="editBtn float-end">
-                                    <?= Html::a('Edit', [Url::toRoute(['update', 'id' => $package->id])], ['title' => 'Edit']) ?>
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
-                            <div class="edinBtn">
-                                <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['title' => 'Send For Approval']) ?>
-                            </div>
-                        <?php } ?> -->
-                        <!-- <div class="edinBtn copyBtn">
-                            <?= Html::a('Copy', [Url::toRoute(['copy-package', 'id' => $package->id])], ['title' => 'Copy']) ?>
-                        </div> -->
-                        <!-- <div class="versions">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Versions
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item mb-2" href="#">Version 1.0</a></li>
-                                <li><a class="dropdown-item mb-2" href="#">Version 2.0</a></li>
-                                <li><a class="dropdown-item mb-2" href="#">Version 3.0</a></li>
-                            </ul>
-                        </div> -->
 
                     </div>
                 </div>
@@ -70,15 +39,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <p>Wishlist</p>
                             </div>
                         </div>
-                        <?php if ($package->live_version) { ?>
-                            <div class="numbwrCount">
-                                <h3><?= $package->whislistCount ?></h3>
-                            </div>
-                        <?php } else {  ?>
-                            <div class="numbwrCount">
-                                <h3>0</h3>
-                            </div>
-                        <?php } ?>
+                        <div class="numbwrCount">
+                            <h3><?= $package->whislistCount ?></h3>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,15 +57,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                         </div>
 
-                        <?php if ($package->live_version) { ?>
-                            <div class="numbwrCount">
-                                <h3><?= $package->leadCount ?></h3>
-                            </div>
-                        <?php } else {  ?>
-                            <div class="numbwrCount">
-                                <h3>0</h3>
-                            </div>
-                        <?php } ?>
+                        <div class="numbwrCount">
+                            <h3><?= $package->leadCount ?></h3>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,16 +75,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <p>Bookings</p>
                                 </div>
                             </div>
-
-                            <?php if ($package->live_version) { ?>
-                                <div class="numbwrCount">
-                                    <h3>300</h3>
-                                </div>
-                            <?php } else {  ?>
-                                <div class="numbwrCount">
-                                    <h3>0</h3>
-                                </div>
-                            <?php } ?>
+                            <div class="numbwrCount">
+                                <h3>0</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,16 +93,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <p>Comments</p>
                             </div>
                         </div>
-
-                        <?php if ($package->live_version) { ?>
-                            <div class="numbwrCount">
-                                <h3><?= $package->commentCount ?></h3>
-                            </div>
-                        <?php } else {  ?>
-                            <div class="numbwrCount">
-                                <h3>0</h3>
-                            </div>
-                        <?php } ?>
+                        <div class="numbwrCount">
+                            <h3><?= $package->commentCount ?></h3>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,9 +106,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
 <div class="row packageSfari mx-3">
     <div class="col-12 mt-4">
         <div class="imagesSafari d-sm-block d-none">
-            <!-- <div class="package-banner-dummy">
-                <img src="<?= isset($package->imagebannerpath) ? $package->imagebannerpath : $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>" alt="" class="w-100 h-100">
-            </div> -->
         </div>
         <div class="wrapper-skybgsafri pb-0">
             <div class="row pb-4">
@@ -295,18 +235,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <li><a rel="noopener noreferrer" class="iconSize" href=""
                                                     target="_blank"><i
                                                         class="fa-brands fa-facebook-f"></i></a></li>
-                                            <!-- <li><a rel="noopener noreferrer" class="iconSize" href=""
-                                                                    target="_blank"><i
-                                                                        class="fa-brands fa-x-twitter"></i></a></li> -->
                                             <li><a rel="noopener noreferrer" class="iconSize" href=""
                                                     target="_blank"><i
                                                         class="fa-brands fa-instagram"></i></a></li>
                                             <li><a rel="noopener noreferrer" class="iconSize" href=""
                                                     target="_blank"><i
                                                         class="fa-brands fa-whatsapp"></i></a></li>
-                                            <!-- <li><a rel="noopener noreferrer" class="iconSize" href=""
-                                                                    target="_blank"><i
-                                                                        class="fa-brands fa-linkedin-in"></i></a></li> -->
                                             <li><a rel="noopener noreferrer" class="iconSize" href=""><i
                                                         class="fa-solid fa-paper-plane pe-1"></i></a>
                                             </li>

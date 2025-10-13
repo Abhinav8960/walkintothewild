@@ -34,9 +34,9 @@ class Module extends \yii\base\Module
             'safari' => [
                 'class' => 'backend\modules\park\modules\safari\Module',
             ],
-            'birding' => [
-                'class' => 'backend\modules\park\modules\birding\Module',
-            ],
+            // 'birding' => [
+            //     'class' => 'backend\modules\park\modules\birding\Module',
+            // ],
 
         ];
     }

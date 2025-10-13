@@ -103,11 +103,11 @@ class DefaultController extends RestController
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaAnimalType");
     }
 
-    public function actionBirdType()
-    {
-        $searchModel = new MetaBirdTypeSearch();
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaBirdType");
-    }
+    // public function actionBirdType()
+    // {
+    //     $searchModel = new MetaBirdTypeSearch();
+    //     return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaBirdType");
+    // }
 
     public function actionLocation()
     {

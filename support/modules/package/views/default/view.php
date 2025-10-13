@@ -20,7 +20,6 @@ $this->title = 'Package';
 
         <div class="row py-4">
             <div class="col-xl-9">
-
                 <div class="tabContent mx-3">
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="Overview" role="tabpanel"
@@ -36,11 +35,7 @@ $this->title = 'Package';
                                         ?>
                                             <h6>Accomodation Images</h6>
                                             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                                <!-- <div class="carousel-indicators">
-                                                            <?php foreach ($images as $index => $image) { ?>
-                                                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>" aria-current="<?= $index === 0 ? 'true' : 'false' ?>" aria-label="Slide <?= $index + 1 ?>"></button>
-                                                            <?php } ?>
-                                                        </div> -->
+
                                                 <div class="carousel-inner">
                                                     <?php foreach ($images as $index => $image) { ?>
                                                         <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
@@ -53,14 +48,6 @@ $this->title = 'Package';
                                                     <?php } ?>
                                                 </div>
 
-                                                <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Previous</span>
-                                                        </button>
-                                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Next</span>
-                                                        </button> -->
                                             </div>
 
 
@@ -71,109 +58,64 @@ $this->title = 'Package';
 
 
 
-                                <?php if ($package->live_version) { ?>
-                                    <div class="col-xl-12">
-                                        <div class="itrnTextCard py-4">
-                                            <h6><?= $package->commentCount ?> Comments</h6>
-                                            <div class="one_box position-relative pb-4">
-                                                <?php if ($live_package = $package->livePackage) {
-                                                    if ($parent_comments = $live_package->getComments()->where(['parent_id' => null, 'deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all()) {
-                                                        foreach ($parent_comments as $comments) {
-                                                            $replies = $comments->getReplies()->andWhere(['deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all();
 
-                                                ?>
-                                                            <div class="postcomment d-flex gap-2 pt-3 w-100">
-                                                                <div class="avatar">
-                                                                    <img src="<?= $comments->user->profile_display_image ?>" alt="Profile"
-                                                                        class="rounded-circle bg-info">
-                                                                </div>
-                                                                <div class="text_com">
-                                                                    <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                                                        <span class="comment-author"><?= $comments->user->name ?></span>
-                                                                        <span class="userDate-time"><?= date("d F Y, h:i A", $comments->created_at); ?></span>
+                                <div class="col-xl-12">
+                                    <div class="itrnTextCard py-4">
+                                        <h6><?= $package->commentCount ?> Comments</h6>
+                                        <div class="one_box position-relative pb-4">
+                                            <?php
+                                            if ($parent_comments = $package->getComments()->where(['parent_id' => null, 'deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all()) {
+                                                foreach ($parent_comments as $comments) {
+                                                    $replies = $comments->getReplies()->andWhere(['deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all();
+
+                                            ?>
+                                                    <div class="postcomment d-flex gap-2 pt-3 w-100">
+                                                        <div class="avatar">
+                                                            <img src="<?= $comments->user->profile_display_image ?>" alt="Profile"
+                                                                class="rounded-circle bg-info">
+                                                        </div>
+                                                        <div class="text_com">
+                                                            <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                                                <span class="comment-author"><?= $comments->user->name ?></span>
+                                                                <span class="userDate-time"><?= date("d F Y, h:i A", $comments->created_at); ?></span>
+                                                            </div>
+                                                            <p><?= $comments->comment ?></p>
+                                                            <div class="user-active d-flex align-items-center gap-2">
+                                                                <a href="javascript:void(0);" class="show-replies" data-id="<?= $comments->id ?>">Reply <span><?= count($replies) ?></span></a>
+                                                            </div>
+                                                            <?php if ($replies) { ?>
+                                                                <div class="replies-wrapper mt-2" id="replies-wrapper-<?= $comments->id ?>" style="display: none;">
+                                                                    <div class="hide-and-show hide-replies" id="replies-<?= $comments->id ?>">
+                                                                        <a href=""><span>Hide replies</span></a>
                                                                     </div>
-                                                                    <p><?= $comments->comment ?></p>
-                                                                    <div class="user-active d-flex align-items-center gap-2">
-                                                                        <a href="javascript:void(0);" class="show-replies" data-id="<?= $comments->id ?>">Reply <span><?= count($replies) ?></span></a>
-                                                                    </div>
-                                                                    <?php if ($replies) { ?>
-                                                                        <div class="replies-wrapper mt-2" id="replies-wrapper-<?= $comments->id ?>" style="display: none;">
-                                                                            <div class="hide-and-show hide-replies" id="replies-<?= $comments->id ?>">
-                                                                                <a href=""><span>Hide replies</span></a>
+                                                                    <?php foreach ($replies as $reply) { ?>
+                                                                        <div class="postcomment d-flex gap-2 pt-2 w-100">
+                                                                            <div class="avatar">
+                                                                                <img src="<?= $reply->user->profile_display_image ?>" alt="Profile" class="rounded-circle bg-info">
                                                                             </div>
-                                                                            <?php foreach ($replies as $reply) { ?>
-                                                                                <div class="postcomment d-flex gap-2 pt-2 w-100">
-                                                                                    <div class="avatar">
-                                                                                        <img src="<?= $reply->user->profile_display_image ?>" alt="Profile" class="rounded-circle bg-info">
-                                                                                    </div>
-                                                                                    <div class="text_com">
-                                                                                        <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                                                                            <span class="comment-author"><?= $reply->user->name ?></span>
-                                                                                            <span class="userDate-time"><?= date("d F Y, h:i A", $reply->created_at); ?></span>
-                                                                                        </div>
-                                                                                        <p><?= $reply->comment ?></p>
-                                                                                    </div>
+                                                                            <div class="text_com">
+                                                                                <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                                                                    <span class="comment-author"><?= $reply->user->name ?></span>
+                                                                                    <span class="userDate-time"><?= date("d F Y, h:i A", $reply->created_at); ?></span>
                                                                                 </div>
-                                                                            <?php } ?>
+                                                                                <p><?= $reply->comment ?></p>
+                                                                            </div>
                                                                         </div>
                                                                     <?php } ?>
-
                                                                 </div>
-                                                            </div>
-                                                <?php }
-                                                    }
-                                                } ?>
-                                            </div>
+                                                            <?php } ?>
 
-                                            <?php if (false) { ?>
-                                                <form id="comment-form"><input type="hidden" value="TOKEN_HERE"
-                                                        name="_csrf-frontend">
-                                                    <div class="comments-persons px-0 pt-4">
-                                                        <div class="postcomment d-flex gap-3">
-                                                            <div class="avatar"><a
-                                                                    href="/profile/user/md-sarwar"
-                                                                    data-discover="true"><img alt="" width="30"
-                                                                        height="30"
-                                                                        class="me-1 d-xl-inline-flex rounded-circle bg-info"
-                                                                        src="https://dwi8hvna105nz.cloudfront.net/user/profile/2134_google_avatar.jpg"></a>
-                                                            </div>
-                                                            <div class="text-area">
-                                                                <div
-                                                                    class="mb-3 field-sharesafaricommentform-comment required">
-                                                                    <textarea
-                                                                        id="sharesafaricommentform-comment"
-                                                                        class="form-control w-100"
-                                                                        name="ShareSafariCommentForm[comment]"
-                                                                        rows="5"
-                                                                        placeholder="Write a comment..."></textarea>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="comments-persons px-4 pt-2">
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-lg-12 col-xl-8">
-                                                                <!-- <div class="post_text padding_ad">
-                                                                            <p>Commenting on this thread will notify all
-                                                                                event attendees and will also be visible
-                                                                                to everyone viewing the event.</p>
-                                                                        </div> -->
-                                                            </div>
-                                                            <div class="col-lg-12 col-xl-4">
-                                                                <div
-                                                                    class="comment_button float-end mb-lg-0 mb-3">
-                                                                    <button type="submit"
-                                                                        class="post-comment">Post
-                                                                        Comment</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            <?php } ?>
+                                            <?php }
+                                            }
+                                            ?>
                                         </div>
+
+
                                     </div>
-                                <?php } ?>
+                                </div>
+
                             </div>
                         </div>
                         <div class="tab-pane fade" id="Itinerary" role="tabpanel"
@@ -194,25 +136,27 @@ $this->title = 'Package';
                 </div>
 
             </div>
-            <div class="col-xl-2">
-                <div class="request_quote mb-4"><button type="button"
-                        class="intested_btn interestBtn d-flex justify-content-between btn btn-primary"
-                        style="background-color: #09422D; cursor: default; border: none;">Edit
-                        History</button>
-                    <div class="interst_wrapper px-3 bg-white text-center">
-                        <p class="mb-0">
-                            <?php if ($package->versions) {
-                                foreach ($package->versions as $v) { ?>
-                        <div class="border mb-2">
-                            <a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>" style="color:black;">
-                                <?= $v->version ?>-<?= $v->statusLabel ?><br>(<?= date('Y-m-d H:i:s', $v->created_at) ?>)
-                            </a>
+            <?php if (false) { ?>
+                <div class="col-xl-2">
+                    <div class="request_quote mb-4"><button type="button"
+                            class="intested_btn interestBtn d-flex justify-content-between btn btn-primary"
+                            style="background-color: #09422D; cursor: default; border: none;">Edit
+                            History</button>
+                        <div class="interst_wrapper px-3 bg-white text-center">
+                            <p class="mb-0">
+                                <?php if ($package->versions) {
+                                    foreach ($package->versions as $v) { ?>
+                            <div class="border mb-2">
+                                <a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>" style="color:black;">
+                                    <?= $v->version ?>-<?= $v->statusLabel ?><br>(<?= date('Y-m-d H:i:s', $v->created_at) ?>)
+                                </a>
+                            </div>
+                    <?php }
+                                } ?></p>
                         </div>
-                <?php }
-                            } ?></p>
                     </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
 </section>

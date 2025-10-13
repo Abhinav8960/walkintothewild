@@ -73,65 +73,6 @@ $this->title = 'Package';
                             return isset($model->stay_category_id) ? GeneralModel::packagemetastaycategory()[$model->stay_category_id] : '';
                         }
                     ],
-
-                    // [
-                    //     'label' => 'Feature',
-                    //     'headerOptions' => ['style' => 'width: 15%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         $html = '';
-                    //         $features = $model->packagefeatures;
-                    //         $displayLimit = 1;
-                    //         $count = 0;
-                    //         $total = count($features);
-
-                    //         foreach ($features as $key => $feature) {
-                    //             if (isset(GeneralModel::packagefeatureoption()[$feature->feature_id])) {
-                    //                 $text = GeneralModel::packagefeatureoption()[$feature->feature_id];
-                    //                 if ($count < $displayLimit) {
-                    //                     $html .= '<span style="display: inline-block; background-color:rgb(210, 210, 210); color: #000; border-radius: 50px; padding: 5px 10px; margin: 2px;">' . htmlspecialchars($text) . '</span>';
-                    //                 }
-                    //                 $count++;
-                    //             }
-                    //         }
-
-                    //         if ($count > $displayLimit) {
-                    //             $remaining = $count - $displayLimit;
-                    //             $html .= '<span style="display: inline-block; background-color:rgb(210, 210, 210); color: #000; border-radius: 50px; padding: 5px 10px; margin: 2px;">+' . $remaining . '</span>';
-                    //         }
-
-                    //         return $html;
-                    //     }
-                    // ],
-
-                    // [
-                    //     'label' => 'Included',
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         $html = '';
-                    //         $included = $model->packageincluded;
-                    //         foreach ($included as $key => $data) {
-                    //             if (isset(GeneralModel::packageincludeoption()[$data->include_id])) {
-                    //                 $html .= GeneralModel::packageincludeoption()[$data->include_id] . ', ';
-                    //             }
-                    //         }
-                    //         return $html;
-                    //     }
-                    // ],
-                    // [
-                    //     'label' => 'Live Version',
-                    //     'headerOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         if (!empty($model->live_version->final_approved_at)) {
-                    //             // return Html::a($model->live_version->version, Url::toRoute(['view', 'id' => $model->id]), [
-                    //             //     'class' => 'btn btn-sm btn-primary',
-                    //             // ]);
-                    //             return date("F j, Y, g:i a", $model->live_version->final_approved_at);
-                    //         }
-                    //         return '';
-                    //     }
-                    // ],
                     [
                         'label' => 'Max Booking Date',
                         'headerOptions' => ['style' => 'width: 12%;'],
@@ -155,39 +96,14 @@ $this->title = 'Package';
                         'header' => "Actions",
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}',
+                        'template' => '{view}&nbsp;&nbsp;',
                         'buttons' => [
-
-                            'update' => function ($url, $model) {
-                                if ($model->status == PackageVersion::EDIATBLE_STATUS) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
-                                ', ['/package/default/update', 'id' => $model->id], [
-                                        'class' => 'btn p-0 change-menuicon',
-                                        'title' => 'View',
-
-                                    ]);
-                                }
-                                return Html::tag('span', '', [
-                                    'style' => 'display:inline-block;width:25px;height:25px;'
-                                ]);
-                            },
                             'view' => function ($url, $model) {
                                 return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
                                 ]);
                             },
-
-                            // 'SentforApproval' => function ($url, $model) {
-                            //     if ($model->status == PackageVersion::EDIATBLE_STATUS) {
-
-                            //         return  Html::a('send-for-approval', ['send-for-approval', 'id' => $model->id], [
-                            //             'class' => 'btn btn-danger p-0 change-menuicon',
-                            //             'title' => 'send-for-approval',
-
-                            //         ]);
-                            //     }
-                            // },
                         ]
                     ],
                 ],

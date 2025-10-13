@@ -52,36 +52,41 @@ $this->params['title'] = $this->title;
                             return Html::a($name, ['/user/default/profile', 'user_id' => $model->user_id], ['style' => 'color:black !important;']);
                         },
                     ],
-                    [
-                        'label' => 'Is Deliver',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->is_deliver == 1 ? 'Yes' : 'No';
-                        }
-                    ],
+                    
                     [
                         'label' => 'Send Date Time',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => ['style' => 'width: 20%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 20%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Yii::$app->formatter->asDatetime($model->sms_send_time, 'php:d-m-Y H:i:s');
+                            return date("F j, Y, g:i a", $model->sms_send_time);
+                            // return Yii::$app->formatter->asDatetime($model->sms_send_time, 'php:d-m-Y H:i:s');
                         }
                     ],
                     [
                         'label' => 'Report Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->report_status ?? '';
                         }
                     ],   
                     [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'label' => 'Is Deliver',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->is_deliver == 2 ? 'Yes' : 'No';
+                        }
+                    ],
+                    [
+                        'label' => 'Status',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->statuslabels;
                         }
                     ],                    
                 ],

@@ -522,9 +522,9 @@ class User extends ActiveRecord implements IdentityInterface
         if ($this->is_safari_operator == 1) {
             $roles[] = "Safari Operator";
         }
-        if ($this->is_birding_operator == 1) {
-            $roles[] = "Birding Operator";
-        }
+        // if ($this->is_birding_operator == 1) {
+        //     $roles[] = "Birding Operator";
+        // }
         if ($this->is_cms_manager == 1) {
             $roles[] = "CMS Manager";
         }

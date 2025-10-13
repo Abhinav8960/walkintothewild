@@ -37,8 +37,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <div class="footerContent">
             <ul class="footer_listing d-flex gap-md-3 gap-2 flex-wrap">
               <li><a href="/safaritour-registration">Safari Tour Operator</a></li>
-              <li>|</li>
-              <li><a href="/birdingtour-registration">Birding Tour Operator</a></li>
+              <!-- <li>|</li>
+              <li><a href="/birdingtour-registration">Birding Tour Operator</a></li> -->
             </ul>
           </div>
         </div>

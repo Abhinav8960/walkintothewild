@@ -107,4 +107,22 @@ class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\
         return $this->hasOne(User::className(), ['id' => 'user_id']);
 
     }
+
+    public function getStatuslabels()
+    {
+        if (isset($this->status)) {
+            $style = 'display:inline-block; min-width:60px; text-align:center; padding:6px 10px; font-size:10px; border-radius:20px;'; 
+    
+            if ($this->status == 0) {
+                return '<span class="badge badge-pill badge-warning" style="'.$style.'">Pending</span>';
+            } else if ($this->status == 1) {
+                return '<span class="badge badge-pill badge-success" style="'.$style.'">Sent</span>';
+            } else if ($this->status == 2) {
+                return '<span class="badge badge-pill badge-info" style="'.$style.'">Delivered</span>';
+            } else if ($this->status == 3) {
+                return '<span class="badge badge-pill badge-dark" style="'.$style.'">Failed</span>';
+            }
+        }
+        return $this->status;
+    }   
 }

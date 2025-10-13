@@ -52,7 +52,7 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 mb-3  pb-5 pb-md-3 mb-lg-5">
+            <!-- <div class="col-lg-6 mb-3  pb-5 pb-md-3 mb-lg-5">
                 <div class="registration_img  position-relative">
                     <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100" loading="lazy">
                     <div class="registratin_text text-center">
@@ -64,7 +64,7 @@ $this->params['title'] = $this->title;
 
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
     </div>
