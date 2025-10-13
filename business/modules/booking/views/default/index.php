@@ -39,14 +39,6 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Date',
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date('Y-m-d H:i A', strtotime($model->transaction_datetime));
-                        }
-                    ],
-                    [
                         'label' => 'Name',
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
@@ -76,7 +68,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str = "Park: " . $model->park->title;
+                            $str = "Park: " . ($model->park->title ?? '');
                             $str .= "<br>";
                             $str .= "Safaris: " . $model->safaris;
                             $str .= "<br>";
@@ -88,7 +80,14 @@ $this->params['title'] = $this->title;
                             return $str;
                         }
                     ],
-
+                    [
+                        'label' => 'Transaction Date',
+                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date('Y-m-d H:i A', strtotime($model->transaction_datetime));
+                        }
+                    ],
                     [
                         'label' => 'Amount',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -98,7 +97,6 @@ $this->params['title'] = $this->title;
                                 . GeneralModel::number_format_indian($model->received_amount);
                         }
                     ],
-
                 ],
             ]); ?>
         </div>
