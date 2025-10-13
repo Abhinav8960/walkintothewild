@@ -10,7 +10,7 @@ use yii\bootstrap5\ActiveForm;
 ?>
 <?php $form = ActiveForm::begin([
     'options' => ['enctype' => 'multipart/form-data'],
-    'enableClientValidation' => False
+    'enableClientValidation' => false
 ]); ?>
 
 <div class="row">
