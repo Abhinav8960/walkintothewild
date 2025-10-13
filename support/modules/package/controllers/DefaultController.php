@@ -64,8 +64,8 @@ class DefaultController extends Controller
         $model = $this->findModel($id);
 
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $model->package_id;
-        $searchModel->version = $model->version;
+        $searchModel->package_id = $model->id;
+        $searchModel->version = $model->live_version;
         $searchModel->status = PackageFaq::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
@@ -85,7 +85,7 @@ class DefaultController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = PackageVersion::findOne(['id' => $id])) !== null) {
+        if (($model = Package::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

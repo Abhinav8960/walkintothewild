@@ -3,11 +3,13 @@
 namespace common\models\package;
 
 use common\models\feeds\Feeds;
+use common\models\leads\Lead;
 use Yii;
 use common\models\User;
 use common\models\meta\MetaPackageRange;
 use common\models\operator\SafariOperator;
 use common\models\master\vehicle\MasterVehicle;
+use common\models\UserWishlist;
 use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveQuery;
 
@@ -119,7 +121,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
             [['discount_in_percentage', 'price_after_discount'], 'default', 'value' => 0.00],
             [['discount_in_value'], 'default', 'value' => 0.00],
-            [['user_id','gallery_version'], 'integer'],
+            [['user_id', 'gallery_version'], 'integer'],
 
 
         ];
@@ -240,7 +242,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getComments()
     {
-        return $this->hasMany(PackageComment::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageComment::class, ['package_id' => 'id'])->andWhere(['package_comment.status' => 1]);
     }
 
 
@@ -438,7 +440,32 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         if ($this->status == Package::PACKAGE_LIVE) {
             return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/live.svg'>";
         } else if ($this->status == Package::PACKAGE_EXPIRED) {
-           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
         }
     }
+
+    public function getWhislistCount()
+    {
+        $count = UserWishlist::find()->where(['item_type_id' => 1, 'item_id' => $this->id, 'status' => 1])->count();
+        if ($count > 0) {
+            return $count;
+        }
+        return 0;
+    }
+
+    public function getLeadCount()
+    {
+        $count = Lead::find()->where(['source' => Lead::SOURCE_PACKAGE, 'package_id' => $this->id])->count();
+        if ($count > 0) {
+            return $count;
+        }
+        return 0;
+    }
+
+    public function getCommentcount()
+    {
+        // return $this->getComments()->andWhere(['parent_id' => null])->count();
+        return $this->getComments()->count();
+    }
+
 }
