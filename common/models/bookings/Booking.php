@@ -5,6 +5,7 @@ namespace common\models\bookings;
 use api\models\leads\sharesafari\ShareSafariLead;
 use common\models\leads\LeadPartners;
 use common\models\leads\sharesafari\ShareSafariLeadInstallment;
+use common\models\park\SafariPark;
 use common\models\sharesafari\ShareSafari;
 use common\models\transaction\Transaction;
 use Yii;
@@ -267,7 +268,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         $leadInstallment = ShareSafariLead::findOne($this->share_safari_lead_id);
         if ($leadInstallment) {
-            return  $leadInstallment->openChat($this->share_safari_lead_id,$this->reference_id, $this->transaction_id);
+            return  $leadInstallment->openChat($this->share_safari_lead_id, $this->reference_id, $this->transaction_id);
         }
         return true;
     }
@@ -347,5 +348,21 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             }
         }
         return true;
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::class, ['id' => 'park_id']);
+    }
+
+    public function getSourceLabelWithBadge()
+    {
+        if ($this->source == 1) {
+            return '<div style="display:flex; gap:14px; align-items:center"><span class="package-badge"></span>' . ' ' . 'Lead</div>';
+        } else if ($this->source == 2) {
+            return '<div style="display:flex; gap:14px;align-items:center"><span class="park-badge"></span>' . ' ' . 'Share Safari</div>';
+        } else {
+            return '';
+        }
     }
 }
