@@ -16,6 +16,7 @@ class ContentManagementController extends Controller
     public function actionIndex()
     {
         $searchModel = new ContentManagementSearch();
+        $searchModel->status = ContentManagement::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

@@ -17,7 +17,7 @@ class ContentManagementSearch extends ContentManagement
     public function rules()
     {
         return [
-            [['id', 'created_at', 'updated_at', 'updated_by', 'created_by'], 'integer'],
+            [['id', 'status', 'created_at', 'updated_at', 'updated_by', 'created_by'], 'safe'],
             [['name', 'type', 'content', 'remark'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class ContentManagementSearch extends ContentManagement
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
