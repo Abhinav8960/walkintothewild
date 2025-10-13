@@ -269,7 +269,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 					<li class="slide <?= in_array($active_url, array(
 											"/park/safari/default/index",
-											"/park/birding/default/index",
+											// "/park/birding/default/index",
 											"/park/safari/default/create",
 											"/park/safari/profile",
 											"/park/safari/profile/gallery",
@@ -294,28 +294,28 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/park/safari/profile/suggestions",
 
 
-											"/park/birding/default/create",
+											// "/park/birding/default/create",
 
-											"/park/birding/profile",
-											"/park/birding/profile/gallery",
-											"/park/birding/profile/creategallery",
-											"/park/birding/profile/updategallery",
-											"/park/birding/profile/animal",
-											"/park/birding/profile/createanimal",
-											"/park/birding/profile/updateanimal",
-											"/park/birding/profile/zone",
-											"/park/birding/profile/createzone",
-											"/park/birding/profile/updatezone",
-											"/park/birding/profile/vehicle",
-											"/park/birding/profile/createvehicle",
-											"/park/birding/profile/updatevehicle",
-											"/park/birding/profile/flora-fauna",
-											"/park/birding/profile/createflorafauna",
-											"/park/birding/profile/updateflorafauna",
-											"/park/birding/profile/how-to-reach",
-											"/park/birding/profile/createhowtoreach",
-											"/park/birding/profile/updatehowtoreach",
-											"/park/birding/profile/map",
+											// "/park/birding/profile",
+											// "/park/birding/profile/gallery",
+											// "/park/birding/profile/creategallery",
+											// "/park/birding/profile/updategallery",
+											// "/park/birding/profile/animal",
+											// "/park/birding/profile/createanimal",
+											// "/park/birding/profile/updateanimal",
+											// "/park/birding/profile/zone",
+											// "/park/birding/profile/createzone",
+											// "/park/birding/profile/updatezone",
+											// "/park/birding/profile/vehicle",
+											// "/park/birding/profile/createvehicle",
+											// "/park/birding/profile/updatevehicle",
+											// "/park/birding/profile/flora-fauna",
+											// "/park/birding/profile/createflorafauna",
+											// "/park/birding/profile/updateflorafauna",
+											// "/park/birding/profile/how-to-reach",
+											// "/park/birding/profile/createhowtoreach",
+											// "/park/birding/profile/updatehowtoreach",
+											// "/park/birding/profile/map",
 
 											"/park/operator-quote/index",
 											"/park/operator-quote/view",
@@ -349,29 +349,29 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 
 
-														"/park/birding/default/create",
+														// "/park/birding/default/create",
 
-														"/park/birding/default/index",
-														"/park/birding/profile",
-														"/park/birding/profile/gallery",
-														"/park/birding/profile/creategallery",
-														"/park/birding/profile/updategallery",
-														"/park/birding/profile/animal",
-														"/park/birding/profile/createanimal",
-														"/park/birding/profile/updateanimal",
-														"/park/birding/profile/zone",
-														"/park/birding/profile/createzone",
-														"/park/birding/profile/updatezone",
-														"/park/birding/profile/vehicle",
-														"/park/birding/profile/createvehicle",
-														"/park/birding/profile/updatevehicle",
-														"/park/birding/profile/flora-fauna",
-														"/park/birding/profile/createflorafauna",
-														"/park/birding/profile/updateflorafauna",
-														"/park/birding/profile/how-to-reach",
-														"/park/birding/profile/createhowtoreach",
-														"/park/birding/profile/updatehowtoreach",
-														"/park/birding/profile/map",
+														// "/park/birding/default/index",
+														// "/park/birding/profile",
+														// "/park/birding/profile/gallery",
+														// "/park/birding/profile/creategallery",
+														// "/park/birding/profile/updategallery",
+														// "/park/birding/profile/animal",
+														// "/park/birding/profile/createanimal",
+														// "/park/birding/profile/updateanimal",
+														// "/park/birding/profile/zone",
+														// "/park/birding/profile/createzone",
+														// "/park/birding/profile/updatezone",
+														// "/park/birding/profile/vehicle",
+														// "/park/birding/profile/createvehicle",
+														// "/park/birding/profile/updatevehicle",
+														// "/park/birding/profile/flora-fauna",
+														// "/park/birding/profile/createflorafauna",
+														// "/park/birding/profile/updateflorafauna",
+														// "/park/birding/profile/how-to-reach",
+														// "/park/birding/profile/createhowtoreach",
+														// "/park/birding/profile/updatehowtoreach",
+														// "/park/birding/profile/map",
 
 														"/park/operator-quote/index",
 														"/park/operator-quote/view",
@@ -404,30 +404,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/park/safari/profile/map",
 															"/park/safari/profile/suggestions",
 														)) ? "active" : "" ?>" href="/park/safari/default/index">Safari Park</a></li>
-							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-																"/park/birding/default/index",
-																"/park/birding/default/create",
-																"/park/birding/profile",
-																"/park/birding/profile/gallery",
-																"/park/birding/profile/creategallery",
-																"/park/birding/profile/updategallery",
-																"/park/birding/profile/animal",
-																"/park/birding/profile/createanimal",
-																"/park/birding/profile/updateanimal",
-																"/park/birding/profile/zone",
-																"/park/birding/profile/createzone",
-																"/park/birding/profile/updatezone",
-																"/park/birding/profile/vehicle",
-																"/park/birding/profile/createvehicle",
-																"/park/birding/profile/updatevehicle",
-																"/park/birding/profile/flora-fauna",
-																"/park/birding/profile/createflorafauna",
-																"/park/birding/profile/updateflorafauna",
-																"/park/birding/profile/how-to-reach",
-																"/park/birding/profile/createhowtoreach",
-																"/park/birding/profile/updatehowtoreach",
-																"/park/birding/profile/map"
-															)) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li> -->
+							
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
 																"/park/operator-quote/index",
 																"/park/operator-quote/view",
@@ -812,11 +789,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 												"/registration/safari-operator-tour/view",
 												"/registration/safari-operator-tour/create",
 												"/registration/safari-operator-tour/update",
-												"/registration/birding-operator-tour",
-												"/registration/birding-operator-tour/index",
-												"/registration/birding-operator-tour/view",
-												"/registration/birding-operator-tour/create",
-												"/registration/birding-operator-tour/update",
+												// "/registration/birding-operator-tour",
+												// "/registration/birding-operator-tour/index",
+												// "/registration/birding-operator-tour/view",
+												// "/registration/birding-operator-tour/create",
+												// "/registration/birding-operator-tour/update",
 											)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/registration/safari-operator-tour",
@@ -824,11 +801,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/registration/safari-operator-tour/view",
 														"/registration/safari-operator-tour/create",
 														"/registration/safari-operator-tour/update",
-														"/registration/birding-operator-tour",
-														"/registration/birding-operator-tour/index",
-														"/registration/birding-operator-tour/view",
-														"/registration/birding-operator-tour/create",
-														"/registration/birding-operator-tour/update",
+														// "/registration/birding-operator-tour",
+														// "/registration/birding-operator-tour/index",
+														// "/registration/birding-operator-tour/view",
+														// "/registration/birding-operator-tour/create",
+														// "/registration/birding-operator-tour/update",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_app-registration.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Registrations</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Registrations</a></li>
@@ -839,21 +816,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/registration/safari-operator-tour/create",
 															"/registration/safari-operator-tour/update",
 														)) ? "active" : "" ?>" href="/registration/safari-operator-tour">Safari Tour Operator</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
-															"/registration/birding-operator-tour",
-															"/registration/birding-operator-tour/index",
-															"/registration/birding-operator-tour/view",
-															"/registration/birding-operator-tour/create",
-															"/registration/birding-operator-tour/update",
-														)) ? "active" : "" ?>" href="/registration/birding-operator-tour">Birding Tour Operator</a></li>
+							
 						</ul>
 					</li> -->
 
 					<li class="slide <?= in_array($active_url, array(
 											"/operator/safari-operator/index",
 											"/operator/safari-operator/index/view",
-											"/operator/birding-operator/index",
-											"/operator/birding-operator/index/view",
 											"/operator/safari-operator/index",
 											"/operator/safari-operator/index/view",
 											"/gallery/default/index",
@@ -861,8 +830,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/gallery/default/view",
 											"/operator/safari-operator/index",
 											"/operator/safari-operator/index/view",
-											"/operator/birding-operator/index",
-											"/operator/birding-operator/view",
 											"/operator/safari-operator/index",
 											"/operator/safari-operator/view",
 											"/operatorapproval/default/index",
@@ -894,11 +861,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														)) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a></li>
 
 					</li>
-					<!-- <li><a class="slide-item <?= in_array($active_url, array(
-														"/operator/birding-operator/index",
-														"/operator/birding-operator/index/view",
-													)) ? "active" : "" ?>" href="/operator/birding-operator/index">Biriding Tour Operator</a></li>
-							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li> -->
+					
 			</ul>
 			</li>
 
@@ -1023,8 +986,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 								</ul>
 							</li>
-							<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/birding') ? "active" : "" ?>" href="/operatordashboard/birding/index">Biriding Tour Operator</a></li>
-							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
 						</ul>
 					</li> -->
 		<?php endif; ?>
