@@ -25,7 +25,7 @@ if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Title : </strong> <?= Html::encode($model->labeltype) ?></p>
                 </div>
-<!-- 
+                <!-- 
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Banner Image : </strong>
                     <div class="external-preview border rounded p-2 bg-light text-center mt-1" style="width: 220px;">
@@ -45,15 +45,15 @@ if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
                 </div> -->
 
                 <div class="col-md-3 col-sm-6 mb-2">
-               <?php if ($model->effective_date) { ?>
-                    <p><strong>Effective Date : </strong><?= Yii::$app->formatter->asDate($model->effective_date) ?></p>
-                <?php } ?>
+                    <?php if ($model->effective_date) { ?>
+                        <p><strong>Effective Date : </strong><?= Yii::$app->formatter->asDate($model->effective_date) ?></p>
+                    <?php } ?>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Created At : </strong> <?= Yii::$app->formatter->asDate($model->created_at) ?></p>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
-                    <p><strong>Created By : </strong> <?= Html::encode($model->user->name) ?></p>
+                    <p><strong>Created By : </strong> <?= Html::encode($model->user->name ?? '') ?></p>
                 </div>
             </div>
 
