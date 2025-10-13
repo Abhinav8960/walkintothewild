@@ -94,36 +94,6 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionEdit($id)
-    {
-        $model = $this->findModel($id);
-        if (!$model) {
-            throw new NotFoundHttpException('Document not found');
-        }
-
-        $lastVersion = ComplianceDocumentsVersion::find()
-            ->where(['id' => $model->id])
-            ->andWhere(['status' => 1])
-            ->one();
-
-        $form_model = new ComplianceDocumentsVersionForm($lastVersion);
-        if (Yii::$app->request->isPost && $form_model->load($this->request->post())) {
-            if ($form_model->validate()) {
-                $form_model->initializeForm();
-                if ($form_model->cdocument_model->save(false)) {
-                    $this->copynewversion($id);
-                    Yii::$app->session->setFlash('success', 'Document created successfully.');
-                    return $this->redirect(['index']);
-                }
-            }
-        } else {
-            $form_model->cdocument_model->loadDefaultValues();
-        }
-        return $this->render('update', [
-            'model' => $form_model,
-        ]);
-    }
-
     public function actionView($id, $version = null)
     {
         $model = $this->findModel($id);

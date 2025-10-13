@@ -95,15 +95,6 @@ if (!empty($dropdown)) {
 
                                     ]);
                                 }
-                                
-                                // else{
-                                //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
-                                // ', ['edit', 'id' => $model->id], [
-                                //         'class' => 'btn p-0 change-menuicon',
-                                //         'title' => 'Update',
-
-                                //     ]);
-                                // }
                             },
                         ]
                     ],
