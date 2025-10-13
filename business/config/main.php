@@ -43,6 +43,9 @@ return [
         ],
         'fixeddeparturechat' => [
             'class' => 'business\modules\fixeddeparturechat\Module'
+        ],
+        'booking' => [
+            'class' => 'business\modules\booking\Module'
         ]
 
 

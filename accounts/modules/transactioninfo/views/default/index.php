@@ -138,9 +138,9 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str = "Park: " . $model->safaris;
+                            $str = "Park: " . $model->park->title;
                             $str .= "<br>";
-                            $str = "Safaris: " . $model->safaris;
+                            $str .= "Safaris: " . $model->safaris;
                             $str .= "<br>";
                             $str .= "Travelers: " . $model->travelers;
                             $str .= "<br>";
