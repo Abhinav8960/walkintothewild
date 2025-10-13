@@ -14,6 +14,7 @@ use common\models\operator\form\SafariOperatorForm;
 use common\models\operator\form\SafariOperatorLogoForm;
 use common\models\operator\form\SafariOperatorParkForm;
 use common\models\operator\form\SafariOperatorRequestForm;
+use common\models\operator\form\SafariOperatorUpdateForm;
 use common\models\operator\OperatorQuoteSearch;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
@@ -23,6 +24,7 @@ use common\models\operator\SafariOperatorRatingReportSearch;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\SafariOperatorSearch;
 use common\models\package\Package;
+use common\models\partnerregistration\PartnerRegistration;
 use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
@@ -68,7 +70,7 @@ class SafariOperatorController extends Controller
     }
 
     /**
-     * View Partner Registration Details
+     * View Partner Registration DetailsBank
      */
     public function actionBankAndKycDetails($id)
     {
@@ -605,6 +607,47 @@ class SafariOperatorController extends Controller
                     return $this->redirect(['index']);
                 }
             }
+        }
+    }
+
+
+    public function actionUpdateDetails($id)
+    {
+        $safari_operator_update_model = $this->findModel($id);
+        $model = new SafariOperatorUpdateForm($safari_operator_update_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->logo_file = UploadedFile::getInstance($model, 'logo_file');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safari_operator_update_model->save(false)) {
+                        $model->uploadFile();
+                        // $this->archiveupdate($safari_operator_update_model);
+                        \Yii::$app->session->setFlash('success', 'Successfully Changed');
+                        return $this->redirect(['view', 'id' => $safari_operator_update_model->id]);
+                    }
+                }
+            }
+        } else {
+            $model->safari_operator_update_model->loadDefaultValues();
+        }
+        return $this->render('_update_form', [
+            'model' => $model,
+            'safari_operator_update_model' => $safari_operator_update_model,
+        ]);
+    }
+
+    public function archiveupdate(SafariOperator $safari_operator_update_model)
+    {
+        $model = $this->findModel($safari_operator_update_model->id);
+        $parter_registration_model = PartnerRegistration::find()->where(['id' => $model->safari_operator_request_id])->one();
+        if ($parter_registration_model) {
+            $parter_registration_model->legal_entity_name = $model->operator_name;
+            $parter_registration_model->brand_name = $model->business_name;
+            $parter_registration_model->address = $model->address;
+            $parter_registration_model->about_business = $model->about_business;
+            $parter_registration_model->logo = $model->logo;
+            $parter_registration_model->save(false);
         }
     }
 }
