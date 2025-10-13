@@ -2214,7 +2214,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function complianceDocumentsTitleoption()
     {
         return [
-            1 => 'Terms and Condition',
+            1 => 'Term of Use',
             2 => 'Privacy Policy',
             3 => 'Refund Policy',
         ];
@@ -2237,7 +2237,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             ->column(); 
             
         $arr = [
-            '1' => 'Terms and Condition',
+            '1' => 'Term of Use',
             '2' => 'Privacy Policy',
             '3' => 'Refund Policy',
         ];

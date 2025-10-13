@@ -20,7 +20,7 @@ $this->params['title'] = $this->title;
             <h5><?= $model->cdocument_model->labeltype ?></h5>
 
 
-            <div class="col-md-6 mb-3">
+            <!-- <div class="col-md-6 mb-3">
                 <div class="d-flex align-items-start gap-3">
                     <div class="flex-grow-1">
                         <?= $form->field($model, 'banner_image')->fileInput(['class' => 'form-control', 'id' => 'bannerImageInput', 'accept' => 'image/*'])->label('Banner Image <span class="necessary">*</span>', ['encode' => false]) ?>
@@ -36,7 +36,7 @@ $this->params['title'] = $this->title;
                         <img id="imagePreviewBottom" src="#" alt="Image Preview" class="img-fluid rounded mt-2" style="display:none; max-height: 180px; object-fit: cover; border: 1px solid #ccc;">
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
 

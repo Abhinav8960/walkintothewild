@@ -90,7 +90,7 @@ class ComplianceDocumentsVersion extends \yii\db\ActiveRecord
 
     public function getLabeltype(){
         if($this->type == 1){
-            return "Terms and Conditions";
+            return "Term of Use";
         }
         elseif($this->type == 2){
             return "Privacy Policy";

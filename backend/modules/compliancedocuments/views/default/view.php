@@ -25,7 +25,7 @@ if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Title : </strong> <?= Html::encode($model->labeltype) ?></p>
                 </div>
-
+<!-- 
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Banner Image : </strong>
                     <div class="external-preview border rounded p-2 bg-light text-center mt-1" style="width: 220px;">
@@ -42,10 +42,12 @@ if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
                         <?php endif; ?>
                     </div>
                     </p>
-                </div>
+                </div> -->
 
                 <div class="col-md-3 col-sm-6 mb-2">
+               <?php if ($model->effective_date) { ?>
                     <p><strong>Effective Date : </strong><?= Yii::$app->formatter->asDate($model->effective_date) ?></p>
+                <?php } ?>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
                     <p><strong>Created At : </strong> <?= Yii::$app->formatter->asDate($model->created_at) ?></p>
@@ -58,19 +60,11 @@ if ($model->status == ComplianceDocuments::STATUS_UNPUBLISHED) {
             <div class="row mb-3">
                 <div class="col-md-12">
                     <div class="text-box border p-3 bg-light rounded-3">
-                        <p><strong>Content:</strong><br> <?= nl2br(Html::encode($model->content)) ?></p>
+                        <p><strong>Content:</strong><br> <?= $model->content ?></p>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- <div class="col-md-12">
-                <div class="border p-3 overflow-auto bg-light fs-6 rounded-3">
-                    <p>
-                        <span class="fw-bold text-dark">Content:</span> <?= $model->content ?>
-                    </p>
-                </div>
-            </div> -->
 
         <div class="mt-3">
             <?= Html::a('Back', ['index'], ['class' => 'btn btn-orange text-white']) ?>

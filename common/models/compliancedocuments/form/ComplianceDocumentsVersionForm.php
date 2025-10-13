@@ -51,16 +51,16 @@ class ComplianceDocumentsVersionForm extends model
     public function rules()
     {
         return [
-            [
-                ['banner_image'],
-                'image',
-                'extensions' => ['jpeg', 'jpg', 'png'],
-                'maxSize' => 500 * 1024,
-                'skipOnEmpty' => true,
-                // 'maxWidth' => 350,
-                // 'maxHeight' => 350,
-            ],
-            [['banner_image'], 'required', 'on' => self::SCENARIO_CREATE],
+            // [
+            //     ['banner_image'],
+            //     'image',
+            //     'extensions' => ['jpeg', 'jpg', 'png'],
+            //     'maxSize' => 500 * 1024,
+            //     'skipOnEmpty' => true,
+            //     // 'maxWidth' => 350,
+            //     // 'maxHeight' => 350,
+            // ],
+            // [['banner_image'], 'required', 'on' => self::SCENARIO_CREATE],
             [['content'], 'validateMaxWords', 'params' => ['max' => 100000]],
             [['banner_image'],'safe'],
             [['type','content'], 'required'],
