@@ -74,7 +74,7 @@ if (!empty($dropdown)) {
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'template' => '{view}&nbsp;{update}&nbsp;{versionview}',
                         'buttons' => [
                             'view' => function ($url, $model) {
