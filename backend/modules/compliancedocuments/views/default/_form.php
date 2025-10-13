@@ -8,7 +8,10 @@ use yii\bootstrap5\ActiveForm;
 /** @var common\models\compliancedocuments\ComplianceDocuments $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+<?php $form = ActiveForm::begin([
+    'options' => ['enctype' => 'multipart/form-data'],
+    'enableClientValidation' => False
+]); ?>
 
 <div class="row">
 
@@ -19,7 +22,7 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-6 mb-3">
         <div class="d-flex align-items-start gap-3">
             <div class="flex-grow-1">
-                <?= $form->field($model, 'banner_image')->fileInput(['class' => 'form-control','id' => 'bannerImageInput','accept' => 'image/*'])->label('Banner Image <span class="necessary">*</span>', ['encode' => false]) ?>
+                <?= $form->field($model, 'banner_image')->fileInput(['class' => 'form-control', 'id' => 'bannerImageInput', 'accept' => 'image/*'])->label('Banner Image <span class="necessary">*</span>', ['encode' => false]) ?>
             </div>
 
             <div class="external-preview border rounded p-2 bg-light text-center" style="width: 220px;">
@@ -37,7 +40,7 @@ use yii\bootstrap5\ActiveForm;
 
 
     <div class="row">
-        <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['id' => 'compliancedocumentsform-content','rows' => '6', 'placeholder' => 'Add Content Here'])->label('Content <span class="necessary">*</span>') ?>
+        <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'Modal_label']])->textarea(['id' => 'compliancedocumentsform-content', 'rows' => '6', 'placeholder' => 'Add Content Here'])->label('Content <span class="necessary">*</span>') ?>
     </div>
     <hr>
     <div class="col-md-12">
