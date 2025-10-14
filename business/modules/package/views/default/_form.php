@@ -226,16 +226,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             'class' => 'form-control'
                         ])->label(false) ?>
                     </div>
-
                     <div class="form_boxes mb-3">
                         <label for="">Custom Package Tag Color<span>*</span></label>
                         <?= $form->field($model, 'custom_package_tag_color')->textInput([
-                            'type' => 'color',
+                            'id' => 'tag_color_input',
                             'maxlength' => true,
                             'placeholder' => 'Enter Cusom Package Tag Color',
                             'class' => 'form-control'
                         ])->label(false) ?>
                     </div>
+                    <input type="color" id="tag_color_picker" class="form-control form-control-color border-0" style="width: 3rem; height: 2.4rem;">
+
                 </div>
             </div>
 
@@ -481,6 +482,21 @@ function galleryfunction() {
     });
 }
 galleryfunction();
+
+function syncColorInputs() {
+    let color = $('#tag_color_input').val();
+    $('#tag_color_picker').val(color);
+}
+
+$('#tag_color_picker').on('input', function() {
+    $('#tag_color_input').val($(this).val());
+});
+
+$('#tag_color_input').on('input', function() {
+    $('#tag_color_picker').val($(this).val());
+});
+
+syncColorInputs();
 JS;
 $this->registerJs($script);
 ?>

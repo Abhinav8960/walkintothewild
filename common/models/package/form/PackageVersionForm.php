@@ -216,7 +216,7 @@ class PackageVersionForm extends \yii\base\Model
 
             [['master_package_tag_id', 'tag_type'], 'integer'],
             [['custom_package_tag_color'], 'string', 'max' => 7],
-            [['custom_package_tag'], 'string', 'max' => 50],
+            [['custom_package_tag'], 'string', 'max' => 255],
             [['tag_type'], 'integer'],
             [['master_package_tag_id'], 'required', 'when' => function ($model) {
                 return $model->tag_type == 1;

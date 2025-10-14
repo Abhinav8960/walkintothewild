@@ -124,7 +124,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['user_id', 'gallery_version'], 'integer'],
             [['master_package_tag_id', 'tag_type'], 'integer'],
             [['custom_package_tag_color'], 'string', 'max' => 7],
-            [['custom_package_tag'], 'string', 'max' => 50],
+            [['custom_package_tag'], 'string', 'max' => 255],
             [['custom_activity_message', 'custom_price_message'], 'string', 'max' => 255],
             [['cost_per_person_strike_off'], 'integer'],
 
