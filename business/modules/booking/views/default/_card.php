@@ -6,7 +6,7 @@ $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 ?>
-<section class="listCard mx-3">
+<section class="listCard mb-3">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-4">

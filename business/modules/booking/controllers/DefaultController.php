@@ -28,18 +28,17 @@ class DefaultController extends Controller
         $searchModel->partner_id = $safari_operator->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-
-        $totalbookings = Booking::find()->where(['status'=>Booking::STATUS_ACTIVE,'partner_id' => $safari_operator->id])->count();
-        $totalcustomers = Booking::find()->select('email')->where(['status'=>Booking::STATUS_ACTIVE,'partner_id' => $safari_operator->id])->distinct()->count();
-        $totalamount = Booking::find()->where(['status'=>Booking::STATUS_ACTIVE,'partner_id' => $safari_operator->id])->sum('received_amount');
-
+        $tiles_data = Yii::$app->db->createCommand("SELECT 
+        (SELECT COUNT(*) FROM `booking` WHERE (`status`=1) AND (`partner_id`=4)) as totalbookings,
+        (SELECT count(DISTINCT `email`) FROM `booking` WHERE (`status`=1) AND (`partner_id`=4)) as totalcustomers,
+        (SELECT SUM(received_amount) FROM `booking` WHERE (`status`=1) AND (`partner_id`=4)) as totalamount")->queryOne();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'totalbookings' => $totalbookings,
-            'totalcustomers' => $totalcustomers,
-            'totalamount' => $totalamount,
+            'totalbookings' => $tiles_data['totalbookings'],
+            'totalcustomers' => $tiles_data['totalcustomers'],
+            'totalamount' => $tiles_data['totalamount'],
         ]);
     }
 }
