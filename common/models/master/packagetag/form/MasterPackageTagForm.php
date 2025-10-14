@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\master\packagefeature\form;
+namespace common\models\master\packagetag\form;
 
 use Yii;
 use yii\base\Model;
