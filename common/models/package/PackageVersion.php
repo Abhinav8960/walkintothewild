@@ -4,6 +4,7 @@ namespace common\models\package;
 
 use common\models\feeds\Feeds;
 use common\models\leads\Lead;
+use common\models\master\packagetag\MasterPackageTag;
 use Yii;
 use common\models\User;
 use common\models\meta\MetaPackageRange;
@@ -495,5 +496,10 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
         } else if ($this->status == PackageVersion::TERMINATED_STATUS) {
             return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
         }
+    }
+
+    public function getMaster_package_tag()
+    {
+        return $this->hasOne(MasterPackageTag::class, ['id' => 'master_package_tag_id']);
     }
 }

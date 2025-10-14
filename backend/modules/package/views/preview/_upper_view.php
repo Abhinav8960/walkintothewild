@@ -82,8 +82,16 @@ use common\models\GeneralModel;
                                 <h5 class="fs-4"><?= $package->package_name ?></h5>
                                 <p class="mb-0 ">Organized by <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></p>
 
-                            </div>
+                                <?php if ($package->master_package_tag_id != null) { ?>
+                                    <h5><span class="badge badge-pill" style="background-color: <?= $package->master_package_tag->tag_color ?>;"><?= $package->master_package_tag->tag_name ?></span></h5>
+                                <?php } else { ?>
+                                    <h5><span class="badge badge-pill" style="background-color: <?= $package->custom_package_tag_color ?>;"><?= $package->custom_package_tag ?></span></h5>
+                                <?php } ?>
 
+                            </div>
+                            <p class="fs-6 mb-0">
+                                <span class=""><?= $package->custom_activity_message ?? '' ?></span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -193,10 +201,15 @@ use common\models\GeneralModel;
                                 </h6>
 
                             <?php } else { ?>
+                                <del>
+                                    <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="16px" class="me-1 mb-1">
+                                    <?= GeneralModel::number_format_indian($package->cost_per_person_strike_off) ?> /- <span class="perpersonText"></span>
+                                </del>
                                 <h6 class="fs-4 mb-0 fw-bold">
                                     <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1">
-                                    <?= GeneralModel::number_format_indian($package->cost_per_person) ?> /- <span class="perpersonText">Per 1 Person</span>
+                                    <?= GeneralModel::number_format_indian($package->cost_per_person) ?> / <span class="perpersonText">Per 1 Person</span>
                                 </h6>
+                                <br>
                                 <h6 class="fs-4 mb-0 fw-bold">
                                     <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1">
                                     <?= GeneralModel::number_format_indian($package->cost_per_two_person) ?> /- <span class="perpersonText">Per 2 Person</span>
@@ -204,6 +217,9 @@ use common\models\GeneralModel;
                             <?php } ?>
 
                         </div>
+                        <p class="fs-6 mb-0">
+                            <span class=""><?= $package->custom_price_message ?? '' ?></span>
+                        </p>
                     </div>
                 </div>
             </div>

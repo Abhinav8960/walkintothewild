@@ -138,7 +138,19 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 ?>
                                 <p class="mb-0 ">Organized by <a href=""
                                         data-discover="true"><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></a></p>
+
+                                <?php if ($package->master_package_tag_id != null) { ?>
+                                    <h5><span class="badge badge-pill" style="background-color: <?= $package->master_package_tag->tag_color ?>;"><?= $package->master_package_tag->tag_name ?></span></h5>
+                                <?php } else { ?>
+                                    <h5><span class="badge badge-pill" style="background-color: <?= $package->custom_package_tag_color ?>;"><?= $package->custom_package_tag ?></span></h5>
+                                <?php } ?>
+
                             </div>
+
+                            <p class="fs-6 mb-0">
+                                <span class=""><?= $package->custom_activity_message ?? '' ?></span>
+                            </p>
+
                         </div>
 
                     </div>
@@ -253,15 +265,21 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         </div>
                     <?php } ?>
                     <div class="d-lg-block  mobile_didplay_block col-lg-4 ">
+                        <del>
+                            <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_person_strike_off) ?>/-</h6>
+                        </del>
                         <div
                             class="d-flex justify-content-md-start align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
                             <div class="pakageCost mb-xxl-0 mb-2">
+
                                 <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?>/ Person
                                 </h6>
                             </div>
                         </div>
                     </div>
-
+                    <p class="fs-6 mb-0">
+                        <span class=""><?= $package->custom_price_message ?? '' ?></span>
+                    </p>
                 </div>
 
             </div>

@@ -48,18 +48,18 @@ $this->params['buttons'][] =  Html::button(
     ]
 );
 
-$this->params['buttons'][] =  Html::button(
-    '<span class="fa-stack fa-sm">
-                <i class="fa fa-certificate fa-stack-2x"></i>
-                <i class="fa fa-tag fa-stack-1x fa-inverse"></i>
-            </span> Platform Discount',
-    [
-        'value' => Url::toRoute(['platform-discount', 'id' => $package->id]),
-        'class' => 'btn mt-2 discountPopup',
-        'style' => 'background-color:#f7f5b2; color:#ed8739; margin-right:5px',
-        'title' => 'Platform Discount'
-    ]
-);
+// $this->params['buttons'][] =  Html::button(
+//     '<span class="fa-stack fa-sm">
+//                 <i class="fa fa-certificate fa-stack-2x"></i>
+//                 <i class="fa fa-tag fa-stack-1x fa-inverse"></i>
+//             </span> Platform Discount',
+//     [
+//         'value' => Url::toRoute(['platform-discount', 'id' => $package->id]),
+//         'class' => 'btn mt-2 discountPopup',
+//         'style' => 'background-color:#f7f5b2; color:#ed8739; margin-right:5px',
+//         'title' => 'Platform Discount'
+//     ]
+// );
 
 if ($package->popular_package != 1) {
     $this->params['buttons'][] = Html::a('Mark As Popular', [Url::toRoute(['mark-as-popular', 'id' => $package->id])], ['class' => 'btn mt-2 btn-orange', 'title' => 'Mark as Popular']);
