@@ -122,6 +122,11 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['discount_in_percentage', 'price_after_discount'], 'default', 'value' => 0.00],
             [['discount_in_value'], 'default', 'value' => 0.00],
             [['user_id', 'gallery_version'], 'integer'],
+            [['master_package_tag_id', 'tag_type'], 'integer'],
+            [['custom_package_tag_color'], 'string', 'max' => 7],
+            [['custom_package_tag'], 'string', 'max' => 50],
+            [['custom_activity_message', 'custom_price_message'], 'string', 'max' => 255],
+            [['cost_per_person_strike_off'], 'integer'],
 
 
         ];
@@ -155,6 +160,13 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             'is_published_on_api' => 'Is Published On Api',
             'is_published_on_web' => 'Is Published On Web',
             'status' => 'Status',
+            'tag_type' => 'Tag Type',
+            'master_package_tag_id' => 'Master Package Tag',
+            'custom_package_tag' => 'Custom Package Tag',
+            'custom_package_tag_color' => 'Custom Package Tag Color',
+            'custom_activity_message' => 'Custom Activity Message',
+            'custom_price_message' => 'Custom Price Message',
+            'cost_per_person_strike_off' => 'Cost Per Person Strike Off',
         ];
     }
 
@@ -467,5 +479,4 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         // return $this->getComments()->andWhere(['parent_id' => null])->count();
         return $this->getComments()->count();
     }
-
 }

@@ -144,6 +144,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
             ])->label(false) ?>
         </div>
         <div class="form_boxes mb-3">
+            <label for="">Cost Per Person Strike Off <span>*</span></label>
+            <?= $form->field($model, 'cost_per_person_strike_off')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Enter',
+                'class' => 'form-control'
+            ])->label(false) ?>
+        </div>
+        <div class="form_boxes mb-3">
             <label for="">Cost Per 2 Person <span>*</span></label>
             <?= $form->field($model, 'cost_per_two_person')->textInput([
                 'maxlength' => true,
@@ -167,7 +175,72 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
 
     </div>
+    <div class="row">
+        <div class="col-md-12 d-flex gap-2">
+            <div class="col-md-6">
+                <div class="form_boxes mb-3">
+                    <label for="">Custom Activity Message <span>*</span></label>
+                    <?= $form->field($model, 'custom_activity_message')->textInput([
+                        'maxlength' => true,
+                        'placeholder' => 'Enter Custom Activity Message',
+                        'class' => 'form-control'
+                    ])->label(false) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form_boxes mb-3">
+                    <label for="">Custom Price Message <span>*</span></label>
+                    <?= $form->field($model, 'custom_price_message')->textInput([
+                        'maxlength' => true,
+                        'placeholder' => 'Enter Custom Price Message',
+                        'class' => 'form-control'
+                    ])->label(false) ?>
+                </div>
+            </div>
+        </div>
 
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 d-flex gap-2">
+            <div class="col-md-6">
+                <div class="form_boxes mb-3 choose_tag_type">
+                    <label for="">Tag Type <span>*</span></label>
+                    <?= $form->field($model, 'tag_type')->dropDownList(['1' => 'Predefined Tag', '2' => 'Custom Tag'], ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form_boxes mb-3 inbuilt_tag">
+                    <label for="">Package Tag <span>*</span></label>
+                    <?= $form->field($model, 'master_package_tag_id')->dropDownList(['1' => 'Best Deal', '2' => 'Exclusive Deal'], ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="custom_tag">
+                    <div class="form_boxes mb-3">
+                        <label for="">Custom Package Tag <span>*</span></label>
+                        <?= $form->field($model, 'custom_package_tag')->textInput([
+                            'maxlength' => true,
+                            'placeholder' => 'Enter Custom Package Tag',
+                            'class' => 'form-control'
+                        ])->label(false) ?>
+                    </div>
+
+                    <div class="form_boxes mb-3">
+                        <label for="">Custom Package Tag Color<span>*</span></label>
+                        <?= $form->field($model, 'custom_package_tag_color')->textInput([
+                            'type' => 'color',
+                            'maxlength' => true,
+                            'placeholder' => 'Enter Cusom Package Tag Color',
+                            'class' => 'form-control'
+                        ])->label(false) ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-6">
@@ -370,6 +443,29 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 <?php
 $script = <<< JS
+
+$(document).ready(function () {
+
+    function toggleTagFields(type) {
+        if (type == 1) {
+            $('.inbuilt_tag').show();
+            $('.custom_tag').hide();
+        } else if (type == 2) {
+            $('.inbuilt_tag').hide();
+            $('.custom_tag').show();
+        } else { 
+            $('.inbuilt_tag').hide();
+            $('.custom_tag').hide();
+        }
+    }
+
+    toggleTagFields($('#packageversionform-tag_type').val());
+
+    $('#packageversionform-tag_type').on('change', function () {
+        toggleTagFields($(this).val());
+    });
+
+});
 
 function galleryfunction() {
 	  $('.galleryModal').on('click', function () {

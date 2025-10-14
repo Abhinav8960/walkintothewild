@@ -136,6 +136,13 @@ class DefaultController extends Controller
             $package->edit_status = 0;
             $package->pending_status = 0;
             $package->retail_price = $model->retail_price;
+            $package->tag_type = $model->tag_type;
+            $package->master_package_tag_id = $model->master_package_tag_id;
+            $package->custom_package_tag = $model->custom_package_tag;
+            $package->custom_package_tag_color = $model->custom_package_tag_color;
+            $package->custom_activity_message = $model->custom_activity_message;
+            $package->custom_price_message = $model->custom_price_message;
+            $package->cost_per_person_strike_off = $model->cost_per_person_strike_off;
             $package->save(false);
 
             $package->static_json = $this->prepareJson($package->id);

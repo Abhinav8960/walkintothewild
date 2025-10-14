@@ -86,6 +86,14 @@ class PackageVersionForm extends \yii\base\Model
     public $gallery_version;
     public $retail_price;
 
+    public $tag_type; // 1=>master tag, 2=>custom tag
+    public $master_package_tag_id;
+    public $custom_package_tag;
+    public $custom_package_tag_color;
+    public $custom_activity_message;
+    public $custom_price_message;
+    public $cost_per_person_strike_off;
+
     /**
      * @param [type] $package_version_model
      */
@@ -151,6 +159,14 @@ class PackageVersionForm extends \yii\base\Model
             $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
             $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageSafariPark::STATUS_ACTIVE])->column();
             $this->retail_price = $this->package_version_model->retail_price;
+
+            $this->tag_type = $this->package_version_model->tag_type;
+            $this->master_package_tag_id = $this->package_version_model->master_package_tag_id;
+            $this->custom_package_tag = $this->package_version_model->custom_package_tag;
+            $this->custom_package_tag_color = $this->package_version_model->custom_package_tag_color;
+            $this->custom_activity_message = $this->package_version_model->custom_activity_message;
+            $this->custom_price_message = $this->package_version_model->custom_price_message;
+            $this->cost_per_person_strike_off = $this->package_version_model->cost_per_person_strike_off;
         }
     }
 
@@ -198,6 +214,30 @@ class PackageVersionForm extends \yii\base\Model
             [['gallery_json'], 'safe'],
             [['retail_price'], 'number', 'min' => 1000, 'max' => 9999999],
 
+            [['master_package_tag_id', 'tag_type'], 'integer'],
+            [['custom_package_tag_color'], 'string', 'max' => 7],
+            [['custom_package_tag'], 'string', 'max' => 50],
+            [['tag_type'], 'integer'],
+            [['master_package_tag_id'], 'required', 'when' => function ($model) {
+                return $model->tag_type == 1;
+            }, 'whenClient' => "function (attribute, value) {
+                     return $('#packageversionform-tag_type').val() == '1';
+            }"],
+
+            [['custom_package_tag', 'custom_package_tag_color'], 'required', 'when' => function ($model) {
+                return $model->tag_type == 2;
+            }, 'whenClient' => "function (attribute, value) {
+            return $('#packageversionform-tag_type').val() == '2';
+            }"],
+
+            [
+                ['custom_package_tag_color'],
+                'match',
+                'pattern' => '/^#[0-9A-Fa-f]{6}$/',
+                'message' => 'Please enter a valid hex color code (e.g., #FF5733)'
+            ],
+            [['custom_activity_message', 'custom_price_message'], 'string', 'max' => 255],
+            [['cost_per_person_strike_off'], 'number', 'min' => 1000, 'max' => 9999999],
 
         ];
     }
@@ -246,6 +286,13 @@ class PackageVersionForm extends \yii\base\Model
             'gallery_json',
             'gallery_version',
             'retail_price',
+            'master_package_tag_id',
+            'custom_package_tag',
+            'custom_package_tag_color',
+            'tag_type',
+            'custom_activity_message',
+            'custom_price_message',
+            'cost_per_person_strike_off',
         ];
         $scenarios['update'] = [
             'package_name',
@@ -286,6 +333,14 @@ class PackageVersionForm extends \yii\base\Model
             'gallery_json',
             'gallery_version',
             'retail_price',
+            'master_package_tag_id',
+            'custom_package_tag',
+            'custom_package_tag_color',
+            'tag_type',
+            'custom_activity_message',
+            'custom_price_message',
+            'cost_per_person_strike_off',
+
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
@@ -347,6 +402,14 @@ class PackageVersionForm extends \yii\base\Model
             'gallery_version' => 'Gallery Version',
             'status' => 'Status',
             'retail_price' => 'Retail Price',
+
+            'tag_type' => 'Tag Type',
+            'master_package_tag_id' => 'Master Package Tag ID',
+            'custom_package_tag' => 'Custom Package Tag',
+            'custom_package_tag_color' => 'Custom Package Tag Color',
+            'custom_activity_message' => 'Custom Activity Message',
+            'custom_price_message' => 'Custom Price Message',
+            'cost_per_person_strike_off' => 'Cost Per Person Strike Off',
         ];
     }
 
@@ -409,6 +472,13 @@ class PackageVersionForm extends \yii\base\Model
         $m->pending_status = 0;
         $m->status = 10; //create status
         $m->retail_price = $this->retail_price;
+        $m->tag_type = $this->tag_type;
+        $m->master_package_tag_id = $this->master_package_tag_id;
+        $m->custom_package_tag = $this->custom_package_tag;
+        $m->custom_package_tag_color = $this->custom_package_tag_color;
+        $m->custom_activity_message = $this->custom_activity_message;
+        $m->custom_price_message = $this->custom_price_message;
+        $m->cost_per_person_strike_off = $this->cost_per_person_strike_off;
         $m->save(false);
         return $m->id;
     }
@@ -468,6 +538,13 @@ class PackageVersionForm extends \yii\base\Model
             }
         }
         $this->package_version_model->retail_price = $this->retail_price;
+        $this->package_version_model->tag_type = $this->tag_type;
+        $this->package_version_model->master_package_tag_id = $this->master_package_tag_id;
+        $this->package_version_model->custom_package_tag = $this->custom_package_tag;
+        $this->package_version_model->custom_package_tag_color = $this->custom_package_tag_color;
+        $this->package_version_model->custom_activity_message = $this->custom_activity_message;
+        $this->package_version_model->custom_price_message = $this->custom_price_message;
+        $this->package_version_model->cost_per_person_strike_off = $this->cost_per_person_strike_off;
         // $this->package_version_model->type = $this->type;
         // if ($this->type == 1) { // With GST
         //     $this->package_version_model->gst_percentage = $this->gst_percentage;
