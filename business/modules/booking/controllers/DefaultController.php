@@ -29,9 +29,9 @@ class DefaultController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $tiles_data = Yii::$app->db->createCommand("SELECT 
-        (SELECT COUNT(*) FROM `booking` WHERE (`status`=1) AND (`partner_id`=4)) as totalbookings,
-        (SELECT count(DISTINCT `email`) FROM `booking` WHERE (`status`=1) AND (`partner_id`=4)) as totalcustomers,
-        (SELECT SUM(received_amount) FROM `booking` WHERE (`status`=1) AND (`partner_id`=4)) as totalamount")->queryOne();
+        (SELECT COUNT(*) FROM `booking` WHERE (`status`=1) AND (`partner_id`=$safari_operator->id)) as totalbookings,
+        (SELECT count(DISTINCT `email`) FROM `booking` WHERE (`status`=1) AND (`partner_id`=$safari_operator->id)) as totalcustomers,
+        (SELECT SUM(received_amount) FROM `booking` WHERE (`status`=1) AND (`partner_id`=$safari_operator->id)) as totalamount")->queryOne();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
