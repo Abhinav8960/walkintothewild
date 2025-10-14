@@ -4,6 +4,7 @@ namespace common\models\package;
 
 use common\models\feeds\Feeds;
 use common\models\leads\Lead;
+use common\models\master\packagetag\MasterPackageTag;
 use Yii;
 use common\models\User;
 use common\models\meta\MetaPackageRange;
@@ -478,5 +479,10 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         // return $this->getComments()->andWhere(['parent_id' => null])->count();
         return $this->getComments()->count();
+    }
+
+    public function getMaster_package_tag()
+    {
+        return $this->hasOne(MasterPackageTag::class, ['id' => 'master_package_tag_id']);
     }
 }

@@ -213,12 +213,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-md-6">
                 <div class="form_boxes mb-3 inbuilt_tag">
                     <label for="">Package Tag <span>*</span></label>
-                    <?= $form->field($model, 'master_package_tag_id')->dropDownList(['1' => 'Best Deal', '2' => 'Exclusive Deal'], ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+                    <?= $form->field($model, 'master_package_tag_id')->dropDownList(GeneralModel::masterpackagetag(), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="custom_tag">
-                    <div class="form_boxes mb-3">
+            <div class="col-md-6 custom_tag">
+                <div class=" d-flex gap-2 align-items-center">
+                    <div class="form_boxes mb-3" style="min-width: 250px;">
                         <label for="">Custom Package Tag <span>*</span></label>
                         <?= $form->field($model, 'custom_package_tag')->textInput([
                             'maxlength' => true,
@@ -226,7 +226,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             'class' => 'form-control'
                         ])->label(false) ?>
                     </div>
-                    <div class="form_boxes mb-3">
+                    <div class="form_boxes mb-3" style="min-width: 250px;">
                         <label for="">Custom Package Tag Color<span>*</span></label>
                         <?= $form->field($model, 'custom_package_tag_color')->textInput([
                             'id' => 'tag_color_input',
@@ -235,8 +235,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             'class' => 'form-control'
                         ])->label(false) ?>
                     </div>
-                    <input type="color" id="tag_color_picker" class="form-control form-control-color border-0" style="width: 3rem; height: 2.4rem;">
-
+                    <div style="min-width: 50PX;">
+                        <input type="color" id="tag_color_picker" class="form-control form-control-color border-0" style="width: 3rem; height: 3rem;">
+                    </div>
                 </div>
             </div>
 

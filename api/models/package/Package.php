@@ -99,6 +99,23 @@ class Package extends \common\models\package\Package
                 return $this->custom_term_and_condition;
             },
             'template_code',
+            'custom_activity_message',
+            'custom_price_message',
+            'cost_per_person_strike_off',
+            'package_tag' => function () {
+                if ($this->tag_type == 1) {
+                    return $this->master_package_tag_id ? $this->master_package_tag->tag_name : null;
+                } else {
+                    return $this->custom_package_tag;
+                }
+            },
+            'package_tag_color' => function () {
+                if ($this->tag_type == 1) {
+                    return $this->master_package_tag_id ? $this->master_package_tag->tag_color : null;
+                } else {
+                    return $this->custom_package_tag_color;
+                }
+            },
         ]);
 
         $fields[] = 'image_thumbnails';
@@ -598,4 +615,5 @@ class Package extends \common\models\package\Package
             return '<div><p>Please review the payment and cancellation policies:</p><a href="https://www.walkintothewild.in/refund-and-cancellation-policy-antara">https://www.walkintothewild.in/refund-and-cancellation-policy-antara</a></div>';
         }
     }
+
 }
