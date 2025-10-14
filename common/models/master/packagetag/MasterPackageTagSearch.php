@@ -18,7 +18,7 @@ class MasterPackageTagSearch extends MasterPackageTag
     {
         return [
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['title'], 'safe'],
+            [['tag_name'], 'safe'],
         ];
     }
 
@@ -66,7 +66,7 @@ class MasterPackageTagSearch extends MasterPackageTag
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'tag_name', $this->tag_name]);
 
         return $dataProvider;
     }
