@@ -28,9 +28,18 @@ class DefaultController extends Controller
         $searchModel->partner_id = $safari_operator->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+
+        $totalbookings = Booking::find()->where(['status'=>Booking::STATUS_ACTIVE,'partner_id' => $safari_operator->id])->count();
+        $totalcustomers = Booking::find()->select('email')->where(['status'=>Booking::STATUS_ACTIVE,'partner_id' => $safari_operator->id])->distinct()->count();
+        $totalamount = Booking::find()->where(['status'=>Booking::STATUS_ACTIVE,'partner_id' => $safari_operator->id])->sum('received_amount');
+
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalbookings' => $totalbookings,
+            'totalcustomers' => $totalcustomers,
+            'totalamount' => $totalamount,
         ]);
     }
 }
