@@ -27,7 +27,18 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'tag_name',
-                    'tag_color',
+                    [
+                        'attribute' => 'tag_color',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $color = $model->tag_color ?? '#000000';
+                            return '<div style="display:flex; align-items:center; gap:8px;">
+                                        <span style="display:inline-block; width:25px; height:25px; border-radius:4px; border:1px solid #ccc; background-color:'.$color.';"></span>
+                                        <span>'.$color.'</span>
+                                    </div>';
+                        },
+                    ],
+            
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [

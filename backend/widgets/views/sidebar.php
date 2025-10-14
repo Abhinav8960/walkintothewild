@@ -80,6 +80,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/master/operator-category/index",
 											"/master/suggestion-category/index",
 											"/master/suggestion-category/create",
+											"/master/packagetag/index",
+											"/master/packagetag/create",
+											"/master/packagetag/update",
 
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
@@ -124,6 +127,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/master/operator-category/index",
 														"/master/suggestion-category/index",
 														"/master/suggestion-category/create",
+														"/master/packagetag/index",
+														"/master/packagetag/create",
+											  			"/master/packagetag/update",
 
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
@@ -196,6 +202,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/master/packageinclude/create",
 															"/master/packageinclude/update",
 														)) ? "active" : "" ?>" href="/master/packageinclude/index">Package Include</a></li>
+				            <li><a class="slide-item <?= in_array($active_url, array(
+															"/master/packagetag/index",
+															"/master/packagetag/create",
+											  				"/master/packagetag/update",
+														)) ? "active" : "" ?>" href="/master/packagetag/index">Package Tag</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/railway-station/index")) ? "active" : "" ?>" href="/master/railway-station/index">Railway Station</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/master/share-safari-reason/index",
