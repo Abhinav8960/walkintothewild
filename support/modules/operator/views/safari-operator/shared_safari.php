@@ -28,12 +28,12 @@ foreach ($activies as $key => $role) {
 }
 
 $html_park = '';
-$park = GeneralModel::operatorresquestpark($model->id);
-foreach ($park as $key => $role) {
-    if (isset(GeneralModel::safariparkoption()[$key])) {
-        $html_park .= GeneralModel::safariparkoption()[$key] . ', ';
-    }
-}
+// $park = GeneralModel::operatorresquestpark($model->id);
+// foreach ($park as $key => $role) {
+//     if (isset(GeneralModel::safariparkoption()[$key])) {
+//         $html_park .= GeneralModel::safariparkoption()[$key] . ', ';
+//     }
+// }
 ?>
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('@support/modules/operator/views/safari-operator/_navbar.php', ['model' => $model, 'active_navbar' => 'sharedsafari']) ?>

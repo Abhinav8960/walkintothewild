@@ -98,11 +98,11 @@ class SafariOperatorController extends Controller
     /**
      * View Operator
      */
-    public function actionSharedsafari($id)
-    {
-        $model = $this->findModel($id);
-        return $this->render('shared_safari', ['model' => $model]);
-    }
+    // public function actionSharedsafari($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     return $this->render('shared_safari', ['model' => $model]);
+    // }
 
     /**
      * View Operator
@@ -341,16 +341,16 @@ class SafariOperatorController extends Controller
     //     }
     // }
 
-    public function actionValidate($id)
-    {
-        $safari_operator = $this->findModel($id);
-        $model = new SafariOperatorRequestForm($safari_operator);
+    // public function actionValidate($id)
+    // {
+    //     $safari_operator = $this->findModel($id);
+    //     $model = new SafariOperatorRequestForm($safari_operator);
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($model);
-        }
-    }
+    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    //         return \yii\widgets\ActiveForm::validate($model);
+    //     }
+    // }
 
     public function actionDelete($id)
     {
