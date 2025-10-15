@@ -106,9 +106,6 @@ class Package extends \common\models\package\Package
             'cost_per_person_strike_off' => function () {
                 return (int) ceil($this->cost_per_person_strike_off);
             },
-            'retail_price' => function () {
-                return (int) ceil($this->retail_price);
-            },
             'package_tag' => function () {
                 if ($this->tag_type == 1) {
                     return $this->master_package_tag_id ? $this->master_package_tag->tag_name : null;
@@ -128,6 +125,10 @@ class Package extends \common\models\package\Package
         $fields[] = 'image_thumbnails';
         $fields[] = 'banner_thumbnails';
 
+        unset($fields['master_package_tag_id']);
+        unset($fields['custom_package_tag']);
+        unset($fields['custom_package_tag_color']);
+        unset($fields['retail_price']);
         return $fields;
     }
 

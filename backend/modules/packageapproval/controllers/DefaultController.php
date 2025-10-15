@@ -567,6 +567,7 @@ class DefaultController extends Controller
                 'cost_per_person' => (int) ceil($package->cost_per_person),
                 'cost_per_two_person' => (int) ceil($package->cost_per_two_person),
                 'retail_price' => (int) ceil($package->retail_price),
+                'total_price' => (int) ceil($package->total_price),
 
                 'package_description' => $package->package_description,
                 'image_path' => $package->image_path,
@@ -606,7 +607,15 @@ class DefaultController extends Controller
 
                 'partner_gallery_id' => $package->partner_gallery_id,
                 'gallery_json' => $package->gallery_json,
-                'gallery_version' => $package->gallery_version
+                'gallery_version' => $package->gallery_version,
+
+                'tag_type' => $package->tag_type,
+                'master_package_tag_id' => $package->master_package_tag_id,
+                'custom_package_tag' => $package->custom_package_tag,
+                'custom_package_tag_color' => $package->custom_package_tag_color,
+                'custom_activity_message' => $package->custom_activity_message,
+                'custom_price_message' => $package->custom_price_message,
+                'cost_per_person_strike_off' => $package->cost_per_person_strike_off,
             ],
         ];
 

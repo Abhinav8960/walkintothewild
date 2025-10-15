@@ -439,7 +439,7 @@ class PackageVersionForm extends \yii\base\Model
         $m->stay_category_id = $this->stay_category_id;
         $m->cost_per_person = $this->cost_per_person;
         $m->cost_per_two_person = $this->cost_per_two_person;
-        $m->total_price = (float)$this->cost_per_person;
+        $m->total_price = (float)$this->retail_price;
         $m->type = $this->type;
         $m->package_description = $this->package_description;
         $m->package_itinerary_overview = $this->package_itinerary_overview;
@@ -522,7 +522,7 @@ class PackageVersionForm extends \yii\base\Model
         $this->package_version_model->lunch_included = $this->lunch_included;
         $this->package_version_model->dinner_included = $this->dinner_included;
         $this->package_version_model->meal_not_included = $this->meal_not_included;
-        $this->package_version_model->total_price = (float)$this->cost_per_person;
+        $this->package_version_model->total_price = (float)$this->retail_price;
         $this->package_version_model->status = $this->status;
         $this->package_version_model->master_vehicle_id = $this->master_vehicle_id;
         $this->package_version_model->popular_package = $this->popular_package;
