@@ -280,7 +280,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
         return '';
     }
 
-    public function getActiveLeadCount()
+    public function getTotalActiveLeadCount()
     {
         $count = Lead::find()->where(['status'=>Lead::STATUS_ACTIVE])->count();
         if ($count) {
@@ -289,22 +289,16 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
         return 0;
     }
 
-    public function getPaymentReceivedCount()
+    public function getTilesLeadCount()
     {
-        $count = Lead::find()->where(['status'=>Lead::STATUS_ACTIVE,'is_payment_received'=>1])->count();
-        if ($count) {
-            return $count;
-        }
-        return 0;
+        $lead = Yii::$app->db->createCommand("SELECT 
+        (SELECT COUNT(*) FROM `lead` WHERE (`status`=1)) as totalactivelead,
+        (SELECT COUNT(*) FROM `lead` WHERE (`status`=1) AND (`from_date` >= '2025-10-15')) as currentactivelead,
+        (SELECT COUNT(*) FROM `lead` WHERE ((`status`=1) AND (`is_chat_started`=1)) AND (`from_date` >= '2025-10-15')) as leadindiscussion,
+        (SELECT COUNT(*) FROM `lead` WHERE (`status`=1) AND (`is_payment_received` = 1)) as paymentrecieved,
+        (SELECT COUNT(*) FROM `lead` WHERE ((`status`=1) AND (`is_payment_received`=0)) AND (`is_payment_link_send`=1)) as pendingpayment")->queryOne();
+
+        return $lead;
     }
 
-    public function getPendingPaymentCount()
-    {
-        $count = Lead::find()->where(['status'=>Lead::STATUS_ACTIVE,'is_payment_received'=>0])->andWhere(['is_payment_link_send'=>1])->count();
-        if ($count) {
-            return $count;
-        }
-        return 0;
-    }
-    
 }
