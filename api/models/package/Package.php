@@ -101,7 +101,12 @@ class Package extends \common\models\package\Package
             'template_code',
             'custom_activity_message',
             'custom_price_message',
-            'cost_per_person_strike_off',
+            'cost_per_person_strike_off' => function () {
+                return (int) ceil($this->cost_per_person_strike_off);
+            },
+            'retail_price' => function () {
+                return (int) ceil($this->retail_price);
+            },
             'package_tag' => function () {
                 if ($this->tag_type == 1) {
                     return $this->master_package_tag_id ? $this->master_package_tag->tag_name : null;
@@ -615,5 +620,4 @@ class Package extends \common\models\package\Package
             return '<div><p>Please review the payment and cancellation policies:</p><a href="https://www.walkintothewild.in/refund-and-cancellation-policy-antara">https://www.walkintothewild.in/refund-and-cancellation-policy-antara</a></div>';
         }
     }
-
 }
