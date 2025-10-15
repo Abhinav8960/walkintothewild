@@ -100,7 +100,7 @@ class Package extends \common\models\package\Package
             },
             'template_code',
             'custom_activity_message' => function () {
-                return $this->custom_activity_message ? $this->custom_activity_message : 'Shared Safari';
+                return $this->custom_activity_message ? $this->custom_activity_message : $this->no_of_safari.' Shared Safari';
             },
             'custom_price_message',
             'cost_per_person_strike_off' => function () {
