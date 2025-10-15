@@ -80,7 +80,7 @@ class PackageSearch extends PackageVersion
      */
     public function search($params)
     {
-        $query = Package::find()->where([Package::tableName() . '.status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
+        $query = Package::find()->where([Package::tableName() . '.status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND, Package::STATUS_BLOCKED]]);
 
         // add conditions that should always apply here
 

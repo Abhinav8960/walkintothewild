@@ -1165,6 +1165,18 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $return;
     }
 
+    public static function fdoptionswithdelete()
+    {
+        $return = [
+            '3' => 'Live',
+            '1' => 'Active',
+            '0' => 'Inactive',
+            '-1' => 'Delete by Admin',
+            '20' => 'Blocked'
+        ];
+        return $return;
+    }
+
     public static function getsitepagessubcategory($category_name)
     {
         $return = [];
@@ -2207,7 +2219,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return [
             '0' => 'Not in use',
             '1' => 'Hot Lead',
-            '-1'=>'Cold Lead'
+            '-1' => 'Cold Lead'
         ];
     }
 
@@ -2234,8 +2246,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $types = \common\models\compliancedocuments\ComplianceDocumentsVersion::find()
             ->select(['type'])
             ->distinct()
-            ->column(); 
-            
+            ->column();
+
         $arr = [
             '1' => 'Term of Use',
             '2' => 'Privacy Policy',
@@ -2245,13 +2257,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         foreach ($types as $t) {
             unset($arr[$t]);
         }
-    
+
         return $arr;
     }
 
-    
+
     public static function smslogstatusoption()
     {
-        return ['0'=>'Pending', '1' => 'Sent', '2' =>'Delivered','3' => 'Failed'];
+        return ['0' => 'Pending', '1' => 'Sent', '2' => 'Delivered', '3' => 'Failed'];
     }
 }

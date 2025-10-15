@@ -59,13 +59,8 @@ class DefaultController extends Controller
     public function actionFixedDeparture()
     {
         $searchModel = new ShareSafariSearch();
-
-        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !Yii::$app->user->identity->is_admin) {
-            $searchModel->host_user_id = Yii::$app->user->identity->id;
-        }
-
-        $searchModel->status = 1;
         $dataProvider = $searchModel->fixeddeparturesearch(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['!=', 'status', 10]);
 
         return $this->render('fixed_departure_index', [
             'searchModel' => $searchModel,
