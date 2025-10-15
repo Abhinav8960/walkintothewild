@@ -5,10 +5,36 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 ?>
 
+<?php $leadCount = $leadModel->getTilesLeadCount(); ?>
+
 <section class="listCard mx-3">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-3">
+            <div class="col-md-2">
+                <div class="mainCard py-3 px-3">
+                    <div class="cardChild">
+                        <div class="text-card mb-3">
+                            <p>Total Active Leads</p>
+                        </div>
+                        <div class="numbwrCount d-flex gap-5">
+                            <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
+                                <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg"
+                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
+                            </div>
+                            <?php if ($leadModel) { ?>
+                                <div class="numbwrCount">
+                                    <h3><?= $leadCount['totalactivelead'] ?></h3>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="numbwrCount">
+                                    <h3>0</h3>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
                 <div class="mainCard py-3 px-3">
                     <div class="cardChild">
                         <div class="text-card mb-3">
@@ -21,7 +47,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                             <?php if ($leadModel) { ?>
                                 <div class="numbwrCount">
-                                    <h3><?= $leadModel->activeLeadCount ?></h3>
+                                    <h3><?= $leadCount['currentactivelead'] ?></h3>
                                 </div>
                             <?php } else {  ?>
                                 <div class="numbwrCount">
@@ -32,7 +58,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3">
+            <div class="col-md-2">
                 <div class="mainCard py-3 px-3">
                     <div class="cardChild">
                         <div class="text-card mb-3">
@@ -45,7 +71,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                             <?php if ($leadModel) { ?>
                                 <div class="numbwrCount">
-                                    <h3><?= $leadModel->partner_chat_started_count ?></h3>
+                                    <h3><?= $leadCount['leadindiscussion'] ?></h3>
                                 </div>
                             <?php } else {  ?>
                                 <div class="numbwrCount">
@@ -56,7 +82,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3">
+            <div class="col-md-2">
                 <div class="mainCard py-3 px-3">
                     <div class="cardChild">
                         <div class="text-card mb-3">
@@ -69,7 +95,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                             <?php if ($leadModel) { ?>
                                 <div class="numbwrCount">
-                                    <h3><?= $leadModel->paymentReceivedCount ?></h3>
+                                    <h3><?= $leadCount['paymentrecieved'] ?></h3>
                                 </div>
                             <?php } else {  ?>
                                 <div class="numbwrCount">
@@ -80,7 +106,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3">
+            <div class="col-md-2">
                 <div class="mainCard py-3 px-3">
                     <div class="cardChild">
                         <div class="text-card mb-3">
@@ -93,7 +119,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                             <?php if ($leadModel) { ?>
                                 <div class="numbwrCount">
-                                    <h3><?= $leadModel->pendingPaymentCount ?></h3>
+                                    <h3><?= $leadCount['pendingpayment'] ?></h3>
                                 </div>
                             <?php } else {  ?>
                                 <div class="numbwrCount">
