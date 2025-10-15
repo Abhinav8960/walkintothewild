@@ -219,6 +219,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                 7 => 'Report Manager',
                 8 => 'Community Manager',
                 9 => 'Account Manager',
+                10 => 'Support User',
             ];
         }
         //  else if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin) {
