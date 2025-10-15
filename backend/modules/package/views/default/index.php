@@ -158,6 +158,9 @@ $this->params['buttons'][] = Html::a('Package Reject List', [Url::toRoute(['reje
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
+                            if($model->status == GeneralModel::STATUS_BLOCKED){
+                                return '<br/> <span class="text-danger"> (Blocked)</span>';
+                            }
                             return $model->newstatuslabel;
                         }
                     ],

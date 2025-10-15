@@ -381,6 +381,29 @@ class ShareSafariSearch extends ShareSafari
             }]);
         }
 
+        if ($this->custom_status != null) {
+            switch ($this->custom_status) {
+                case -1:
+                    $query->andWhere(['status' => -1]);
+                    break;
+                case 0:
+                    $query->andWhere(['status' => 0]);
+                    break;
+                case 1:
+                    $query->andWhere(['status' => 1]);
+                    break;
+                case 2:
+                    $query->andWhere(['status' => 2]);
+                    break;
+                case 3:
+                    $query->andWhere(['>=', 'start_date', date('Y-m-d')])->andWhere(['status' => 1]);
+                    break;
+                case 20:
+                    $query->andWhere(['status' => 20]);
+                    break;
+            };
+        }
+
         if ($this->report_days) {
 
             // 

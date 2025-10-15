@@ -14,59 +14,60 @@ AppAsset::register($this);
 $this->title = 'Package : ' . $package->package_name;
 $this->params['title'] = $this->title;
 
-if ($package->is_best_deal != 1) {
-    $this->params['buttons'][] = Html::a(
-        '<img src="' . $this->params['baseurl'] . '/img/best-deal.png" alt="Deal" height="20px" class="me-2"> Set As Best Deal',
-        Url::toRoute(['set-as-best-deal', 'id' => $package->id]),
+if ($package->status == GeneralModel::STATUS_ACTIVE) {
+    if ($package->is_best_deal != 1) {
+        $this->params['buttons'][] = Html::a(
+            '<img src="' . $this->params['baseurl'] . '/img/best-deal.png" alt="Deal" height="20px" class="me-2"> Set As Best Deal',
+            Url::toRoute(['set-as-best-deal', 'id' => $package->id]),
+            [
+                'class' => 'btn mt-2 btn-info',
+                'style' => 'margin-right:5px',
+                'data-confirm' => 'Are you sure you want to set this package as best deal?',
+                'data-method' => 'post',
+                'title' => 'Set As Best Deal'
+            ]
+        );
+    }
+
+    $this->params['buttons'][] =  Html::button(
+        'Template',
         [
-            'class' => 'btn mt-2 btn-info',
+            'value' => Url::toRoute(['set-template', 'id' => $package->id]),
+            'class' => 'btn mt-2 btn-success btn_template',
             'style' => 'margin-right:5px',
-            'data-confirm' => 'Are you sure you want to set this package as best deal?',
-            'data-method' => 'post',
-            'title' => 'Set As Best Deal'
+            'title' => 'Delete'
         ]
     );
-}
 
-$this->params['buttons'][] =  Html::button(
-    'Template',
-    [
-        'value' => Url::toRoute(['set-template', 'id' => $package->id]),
-        'class' => 'btn mt-2 btn-success btn_template',
-        'style' => 'margin-right:5px',
-        'title' => 'Delete'
-    ]
-);
+    $this->params['buttons'][] =  Html::button(
+        'Delete',
+        [
+            'value' => Url::toRoute(['delete', 'id' => $package->id]),
+            'class' => 'btn mt-2 btn-danger btn_userarticle',
+            'style' => 'margin-right:5px',
+            'title' => 'Delete'
+        ]
+    );
 
-$this->params['buttons'][] =  Html::button(
-    'Delete',
-    [
-        'value' => Url::toRoute(['delete', 'id' => $package->id]),
-        'class' => 'btn mt-2 btn-danger btn_userarticle',
-        'style' => 'margin-right:5px',
-        'title' => 'Delete'
-    ]
-);
-
-$this->params['buttons'][] =  Html::button(
-    '<span class="fa-stack fa-sm">
+    $this->params['buttons'][] =  Html::button(
+        '<span class="fa-stack fa-sm">
                 <i class="fa fa-certificate fa-stack-2x"></i>
                 <i class="fa fa-tag fa-stack-1x fa-inverse"></i>
             </span> Platform Discount',
-    [
-        'value' => Url::toRoute(['platform-discount', 'id' => $package->id]),
-        'class' => 'btn mt-2 discountPopup',
-        'style' => 'background-color:#f7f5b2; color:#ed8739; margin-right:5px',
-        'title' => 'Platform Discount'
-    ]
-);
+        [
+            'value' => Url::toRoute(['platform-discount', 'id' => $package->id]),
+            'class' => 'btn mt-2 discountPopup',
+            'style' => 'background-color:#f7f5b2; color:#ed8739; margin-right:5px',
+            'title' => 'Platform Discount'
+        ]
+    );
 
-if ($package->popular_package != 1) {
-    $this->params['buttons'][] = Html::a('Mark As Popular', [Url::toRoute(['mark-as-popular', 'id' => $package->id])], ['class' => 'btn mt-2 btn-orange', 'title' => 'Mark as Popular']);
-} else {
-    $this->params['buttons'][] = Html::a('Remove As Popular', [Url::toRoute(['remove-popular', 'id' => $package->id])], ['class' => 'btn mt-2 btn-danger', 'title' => 'Remove Popular']);
+    if ($package->popular_package != 1) {
+        $this->params['buttons'][] = Html::a('Mark As Popular', [Url::toRoute(['mark-as-popular', 'id' => $package->id])], ['class' => 'btn mt-2 btn-orange', 'title' => 'Mark as Popular']);
+    } else {
+        $this->params['buttons'][] = Html::a('Remove As Popular', [Url::toRoute(['remove-popular', 'id' => $package->id])], ['class' => 'btn mt-2 btn-danger', 'title' => 'Remove Popular']);
+    }
 }
-
 
 ?>
 

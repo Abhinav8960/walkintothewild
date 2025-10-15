@@ -107,7 +107,7 @@ use common\models\sharesafari\ShareSafariIncluded;
                                     <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Accommodation">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0"><?= isset(GeneralModel::fdStayOption()[$share_safari->stay_category_id]) ?  GeneralModel::budgetoption()[$share_safari->stay_category_id] : 'Not Included'  ?></p>
+                                    <p class="mb-0"><?= isset(GeneralModel::fdStayOption()[$share_safari->stay_category_id]) ?  GeneralModel::fdStayOption()[$share_safari->stay_category_id] : 'Not Included'  ?></p>
                                 </div>
                             </div>
                         </div>

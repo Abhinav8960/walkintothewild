@@ -1,29 +1,28 @@
 <?php
 
-$webasset = $this->assetManager->getBundle('\support\assets\NovaAppAsset');
+use common\models\GeneralModel;
+
+$webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 ?>
-
-<?php $leadCount = $leadModel->getTilesLeadCount(); ?>
-
-<section class="listCard mx-3">
+<section class="listCard mb-3">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-xl-4">
                 <div class="mainCard py-3 px-3">
                     <div class="cardChild">
                         <div class="text-card mb-3">
-                            <p>Total Active Leads</p>
+                            <p>Total Bookings</p>
                         </div>
                         <div class="numbwrCount d-flex gap-5">
                             <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
                                 <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg"
                                     class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
                             </div>
-                            <?php if ($leadModel) { ?>
+                            <?php if ($totalbookings) { ?>
                                 <div class="numbwrCount">
-                                    <h3><?= $leadCount['totalactivelead'] ?></h3>
+                                    <h3><?= $totalbookings ?></h3>
                                 </div>
                             <?php } else {  ?>
                                 <div class="numbwrCount">
@@ -34,44 +33,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-xl-4">
                 <div class="mainCard py-3 px-3">
                     <div class="cardChild">
                         <div class="text-card mb-3">
-                            <p>Current Active Leads</p>
-                        </div>
-                        <div class="numbwrCount d-flex gap-5">
-                            <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
-                                <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg"
-                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
-                            </div>
-                            <?php if ($leadModel) { ?>
-                                <div class="numbwrCount">
-                                    <h3><?= $leadCount['currentactivelead'] ?></h3>
-                                </div>
-                            <?php } else {  ?>
-                                <div class="numbwrCount">
-                                    <h3>0</h3>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="mainCard py-3 px-3">
-                    <div class="cardChild">
-                        <div class="text-card mb-3">
-                            <p>Leads in Discussion</p>
+                            <p>Total Customers</p>
                         </div>
                         <div class="numbwrCount d-flex gap-5">
                             <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #FFF4EE;">
                                 <img src="<?= $this->params['baseurl'] ?>/images/fixeddepa.png"
                                     class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
                             </div>
-                            <?php if ($leadModel) { ?>
+                            <?php if ($totalcustomers) { ?>
                                 <div class="numbwrCount">
-                                    <h3><?= $leadCount['leadindiscussion'] ?></h3>
+                                    <h3><?= $totalcustomers ?></h3>
                                 </div>
                             <?php } else {  ?>
                                 <div class="numbwrCount">
@@ -82,44 +57,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-xl-4">
                 <div class="mainCard py-3 px-3">
                     <div class="cardChild">
                         <div class="text-card mb-3">
-                            <p>Payment Received</p>
+                            <p>Total Amount</p>
                         </div>
                         <div class="numbwrCount d-flex gap-5">
                             <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #DDFFE7;">
                                 <img src="<?= $this->params['baseurl'] ?>/images/package.png"
                                     class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
                             </div>
-                            <?php if ($leadModel) { ?>
+                            <?php if ($totalamount) { ?>
                                 <div class="numbwrCount">
-                                    <h3><?= $leadCount['paymentrecieved'] ?></h3>
-                                </div>
-                            <?php } else {  ?>
-                                <div class="numbwrCount">
-                                    <h3>0</h3>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="mainCard py-3 px-3">
-                    <div class="cardChild">
-                        <div class="text-card mb-3">
-                            <p>Pending Payments</p>
-                        </div>
-                        <div class="numbwrCount d-flex gap-5">
-                            <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #AAAAAA;">
-                                <img src="<?= $this->params['baseurl'] ?>/images/qut.png"
-                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
-                            </div>
-                            <?php if ($leadModel) { ?>
-                                <div class="numbwrCount">
-                                    <h3><?= $leadCount['pendingpayment'] ?></h3>
+                                    <h3><?= '<span style="font-weight: bold; color: #2E8B57; margin-right:5px">₹</span>'. GeneralModel::number_format_indian($totalamount) ?></h3>
                                 </div>
                             <?php } else {  ?>
                                 <div class="numbwrCount">
