@@ -1046,7 +1046,7 @@ p {
 
 .table-responsive {
 
-  overflow-x: hidden !important;
+  overflow-x: auto;
 }
 
 .filterItem .form-control:focus {
