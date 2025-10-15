@@ -18,14 +18,16 @@ AppAsset::register($this);
 <div class="table-wrapper remove-css mb-4">
     <div class="table-responsive">
         <div class="min-width-table">
-            <div id="w0" class="grid-view">
+            <div id="w0" class="table-responsive">
                 <table class="table tablecustoms table-striped align-middle w-100">
                     <thead>
                         <tr>
                             <th style="width: 1%;">#</th>
-                            <th style="width: 5%;">Name</th>
+                            <th style="width: 5%;">User Name</th>
+                            <th style="width: 5%;">Travel Interest</th>
                             <th style="width: 2%;">Safaris</th>
                             <th style="width: 2%;">Travelers</th>
+                            <th style="width: 2%;">Accomodation</th>
                             <th style="width: 15%;">User Notes</th>
                             <th style="width: 3%;">Travel Date looking For</th>
                             <th style="width: 3%;">Lead Received Date</th>
@@ -35,9 +37,21 @@ AppAsset::register($this);
                     <tbody>
                         <tr data-key="840">
                             <td>1</td>
+                            <td><?php
+                                if ($user = $model->user) {
+                                    $name = $user->name ?? '';
+                                    $imageUrl = $user->profile_display_image ?:  $this->params['baseurl'] . '/images/dpmain.png';
+                                    echo
+                                    Html::img($imageUrl, [
+                                        'class' => "rounded profile-picture",
+                                        'style' => "width:28px;"
+                                    ]) . ' ' . Html::encode($name);
+                                }
+                                ?></td>
                             <td><?= $model->displayLabel ?></td>
                             <td><?= !empty($model->safaris) ? $model->safaris : ''; ?></td>
                             <td><?= !empty($model->travelers) ? $model->travelers : '' ?></td>
+                            <td><?= !empty($model->staycatgory) ? $model->staycatgory->title : '' ?></td>
                             <td style="text-align: left;"><?= !empty($model->user_notes) ? $model->user_notes : '' ?></td>
                             <td style="text-align: left;">
                                 <?php
@@ -93,7 +107,7 @@ AppAsset::register($this);
 <div class="table-wrapper remove-css mb-4">
     <div class="table-responsive">
         <div class="min-width-table">
-            <div id="w0" class="grid-view">
+            <div id="w0" class="table-responsive">
                 <table class="table tablecustoms table-striped align-middle w-100">
                     <thead>
                         <tr>
@@ -156,26 +170,32 @@ AppAsset::register($this);
 <div class="table-wrapper remove-css mb-4">
     <div class="table-responsive">
         <div class="min-width-table">
-            <div id="w0" class="grid-view">
+            <div id="w0" class="table-responsive">
                 <table class="table tablecustoms table-striped align-middle w-100">
                     <thead>
                         <tr>
+                            <th>Caller Name</th>
                             <th>Call Date</th>
                             <th>Talk Duration</th>
                             <th>API Call Status</th>
                             <th>Call Status</th>
-                            <th>View Recording</th>
+                            <!-- <th>View Recording</th> -->
+                            <th>Last Note</th>
+                            <th>Update Note</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if ($calllogs && false) { ?>
+                        <?php if ($calllogs) { ?>
                             <?php foreach ($calllogs as $call_log) { ?>
                                 <tr>
+                                    <td><?= $call_log->callerUser2->name ?></td>
                                     <td><?= date('d M Y, h:i A', $call_log->created_at) ?></td>
                                     <td><?= $call_log->talk_duration ?></td>
                                     <td><?= $call_log->call_status ?></td>
                                     <td><?= $call_log->status == 1 ? 'Dialed' : 'Failed' ?></td>
-                                    <td></td>
+                                    <!-- <td></td> -->
+                                    <td><?= $call_log->support_user_note ?></td>
+                                    <td><?= Html::a('<i class="fa fa-edit"></i> Update', ['updatecall', 'id' => $model->id, 'call_log_id' => $call_log->id], ['class' => 'btn btn-info btn-sm']) ?></td>
                                 </tr>
                             <?php } ?>
                         <?php } ?>

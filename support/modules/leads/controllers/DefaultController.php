@@ -18,6 +18,7 @@ use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGalleryVersion;
 use common\models\User;
 use Yii;
+use yii\base\DynamicModel;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -83,7 +84,7 @@ class DefaultController extends  Controller
     {
         $model = $this->findModel($id);
         $quotations = $model->quotation;
-        $calllogs = \common\models\CallLog::find()->where(['call_source' => 'support_lead', 'lead_id' => $model->id])->all();
+        $calllogs = \common\models\CallLog::find()->where(['call_source' => 'support_lead', 'lead_id' => $model->id])->orderby(['id' => SORT_DESC])->all();
 
         return $this->render('view', [
             'model' => $model,
@@ -132,7 +133,7 @@ class DefaultController extends  Controller
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
         $chat = ApiChat::find()->where(['lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
-        $calllogs = \common\models\CallLog::find()->where(['call_source' => 'support_lead', 'lead_id' => $model->id])->all();
+        $calllogs = \common\models\CallLog::find()->where(['call_source' => 'support_lead', 'lead_id' => $model->id])->orderby(['id' => SORT_DESC])->all();
 
         return $this->render(
             'view',
@@ -194,8 +195,12 @@ class DefaultController extends  Controller
             );
             // Call the callNow method
             $result = $callingService->callNowImmediately();
+            $call_model = $callingService->call_model;
+            if ($call_model) {
+                $lead_model->support_call_count++;
+                $lead_model->save(false);
+            }
             $transaction->commit();
-            \Yii::$app->session->setFlash('success', 'Call initiated successfully.');
             return $this->redirect(Yii::$app->request->referrer);
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -204,6 +209,28 @@ class DefaultController extends  Controller
         }
 
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionUpdatecall($id, $call_log_id)
+    {
+        $lead_model = $this->findModel($id);
+        $call_log = \common\models\CallLog::find()->where(['call_source' => 'support_lead', 'lead_id' => $id, 'id' => $call_log_id])->one();
+        $model = new DynamicModel(['support_user_note']);
+        $model->addRule(['support_user_note'], 'string', ['max' => 1000]);
+        $model->support_user_note = $call_log->support_user_note;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $call_log->support_user_note = $model->support_user_note;
+                if ($call_log->save(false)) {
+                    \Yii::$app->session->setFlash('success', 'Call Detail Updated.');
+                    return $this->redirect(['view', 'id' => $id]);
+                }
+            }
+        }
+        return $this->render('_updatecall', [
+            'model' => $model,
+            'lead_model' => $lead_model,
+        ]);
     }
 
     // public function actionQuotationValidate($id)
@@ -327,84 +354,84 @@ class DefaultController extends  Controller
     //     }
     // }
 
-    public function actionMakeCallOnChat($id, $chat_hash)
-    {
+    // public function actionMakeCallOnChat($id, $chat_hash)
+    // {
 
-        $model = $this->findModel($id);
-        $chat_model = Chat::find()->andWhere(['or', ['user_id' => Yii::$app->user->identity->id, 'recipient_user_id' => $model->user_id], ['user_id' => $model->user_id, 'recipient_user_id' => Yii::$app->user->identity->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
-
-
-        if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
-            \Yii::$app->session->setFlash('danger', 'You cannot perform this action, as phone is not available or verified for any of the chat members');
-            return $this->redirect(['view', 'id' => $id]);
-        }
-
-        // Example parameters
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-
-            if (!$chat_model->user->is_mobile_no_verified) {
-                \Yii::$app->session->setFlash('danger', 'User number is not verified.');
-                return $this->redirect(['view', 'id' => $id]);
-            }
+    //     $model = $this->findModel($id);
+    //     $chat_model = Chat::find()->andWhere(['or', ['user_id' => Yii::$app->user->identity->id, 'recipient_user_id' => $model->user_id], ['user_id' => $model->user_id, 'recipient_user_id' => Yii::$app->user->identity->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
 
 
-            $chat_id = $chat_model->id;
-            $lead_id = $chat_model->lead_id;
-            $call_initiated_user_id = Yii::$app->user->identity->id; // Example user ID who initiated the call
-            $operator_user_id =  Yii::$app->user->identity->id; // Example operator user ID
-            $call_initiated_partner_id = $chat_model->operator->id; // can be null
-            $request_caller_1_no = $chat_model->user->mobile_no;
-            $request_caller_1_user_id = $chat_model->user->id;
-            $request_caller_2_no = $chat_model->operator->phone_no; // Optional
-            $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
+    //     if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
+    //         \Yii::$app->session->setFlash('danger', 'You cannot perform this action, as phone is not available or verified for any of the chat members');
+    //         return $this->redirect(['view', 'id' => $id]);
+    //     }
+
+    //     // Example parameters
+    //     $transaction = Yii::$app->db->beginTransaction();
+    //     try {
+
+    //         if (!$chat_model->user->is_mobile_no_verified) {
+    //             \Yii::$app->session->setFlash('danger', 'User number is not verified.');
+    //             return $this->redirect(['view', 'id' => $id]);
+    //         }
 
 
-            // Instantiate the CallingService
-            $callingService = new \common\calling\services\CallingService(
-                $chat_id,
-                $lead_id,
-                $operator_user_id,
-                $call_initiated_user_id,
-                $call_initiated_partner_id,
-                $request_caller_1_no,
-                $request_caller_1_user_id,
-                $request_caller_2_no,
-                $request_caller_2_user_id
-            );
-            // Call the callNow method
-            $result = $callingService->callNow();
-            $transaction->commit();
-            \Yii::$app->session->setFlash('success', 'Call initiated successfully.');
-            return $this->redirect(['view', 'id' => $id]);
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
-            return $this->redirect(['view', 'id' => $id]);
-        }
-    }
+    //         $chat_id = $chat_model->id;
+    //         $lead_id = $chat_model->lead_id;
+    //         $call_initiated_user_id = Yii::$app->user->identity->id; // Example user ID who initiated the call
+    //         $operator_user_id =  Yii::$app->user->identity->id; // Example operator user ID
+    //         $call_initiated_partner_id = $chat_model->operator->id; // can be null
+    //         $request_caller_1_no = $chat_model->user->mobile_no;
+    //         $request_caller_1_user_id = $chat_model->user->id;
+    //         $request_caller_2_no = $chat_model->operator->phone_no; // Optional
+    //         $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
 
-    public function actionSendNotification($chat_hash)
-    {
-        if (Yii::$app->request->isPost) {
-            $chat = Chat::find()->where(['chat_hash' => $chat_hash])->one();
-            $reciverId = $chat->user_id;
-            $sender_user_id = $chat->recipient_user_id;
-            $sender_user_handle = User::find()->where(['id' => $sender_user_id])->one();
-            $safari_operator_model = SafariOperator::find()->where(['user_id' => $sender_user_id])->one();
-            $message = Yii::$app->request->post('message');
 
-            if (empty($message)) {
-                Yii::$app->session->setFlash('error', 'Message cannot be empty.');
-                return $this->redirect(Yii::$app->request->referrer);
-            }
-            new \common\events\systemnotification\LeadChatMessageNotification([$reciverId], $safari_operator_model->business_name, $sender_user_handle->user_handle, \common\models\GeneralModel::strMaxWord($message), $chat->chat_hash, $chat);
-            Yii::$app->session->setFlash('success', 'Notification sent successfully.');
-            return $this->redirect(Yii::$app->request->referrer);
-        }
+    //         // Instantiate the CallingService
+    //         $callingService = new \common\calling\services\CallingService(
+    //             $chat_id,
+    //             $lead_id,
+    //             $operator_user_id,
+    //             $call_initiated_user_id,
+    //             $call_initiated_partner_id,
+    //             $request_caller_1_no,
+    //             $request_caller_1_user_id,
+    //             $request_caller_2_no,
+    //             $request_caller_2_user_id
+    //         );
+    //         // Call the callNow method
+    //         $result = $callingService->callNow();
+    //         $transaction->commit();
+    //         \Yii::$app->session->setFlash('success', 'Call initiated successfully.');
+    //         return $this->redirect(['view', 'id' => $id]);
+    //     } catch (\Exception $e) {
+    //         $transaction->rollBack();
+    //         \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
+    //         return $this->redirect(['view', 'id' => $id]);
+    //     }
+    // }
 
-        return $this->renderAjax('_notification_form');
-    }
+    // public function actionSendNotification($chat_hash)
+    // {
+    //     if (Yii::$app->request->isPost) {
+    //         $chat = Chat::find()->where(['chat_hash' => $chat_hash])->one();
+    //         $reciverId = $chat->user_id;
+    //         $sender_user_id = $chat->recipient_user_id;
+    //         $sender_user_handle = User::find()->where(['id' => $sender_user_id])->one();
+    //         $safari_operator_model = SafariOperator::find()->where(['user_id' => $sender_user_id])->one();
+    //         $message = Yii::$app->request->post('message');
+
+    //         if (empty($message)) {
+    //             Yii::$app->session->setFlash('error', 'Message cannot be empty.');
+    //             return $this->redirect(Yii::$app->request->referrer);
+    //         }
+    //         new \common\events\systemnotification\LeadChatMessageNotification([$reciverId], $safari_operator_model->business_name, $sender_user_handle->user_handle, \common\models\GeneralModel::strMaxWord($message), $chat->chat_hash, $chat);
+    //         Yii::$app->session->setFlash('success', 'Notification sent successfully.');
+    //         return $this->redirect(Yii::$app->request->referrer);
+    //     }
+
+    //     return $this->renderAjax('_notification_form');
+    // }
 
     public function actionUserList($q = null)
     {
