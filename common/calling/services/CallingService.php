@@ -34,10 +34,11 @@ class CallingService
     public $call_initiated_user_id;
     public $call_initiated_partner_id;
     public $file_path;
+    public $call_source;
 
     public $call_model;
 
-    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no, $request_caller_2_user_id, $has_direct_call = false, $fromCLI =null)
+    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no, $request_caller_2_user_id, $has_direct_call = false, $fromCLI = null, $call_source = '')
     {
         $this->reference_id = \Yii::$app->security->generateRandomString(5) . '_' . time() . '_' . \Yii::$app->security->generateRandomString(5);
         $this->request_vnm = time() . rand(1, 1000);
@@ -52,7 +53,7 @@ class CallingService
         $this->call_initiated_partner_id = $call_initiated_partner_id;  // Default user ID if not provided
         $this->request_caller_2_no = $request_caller_2_no != null  ? $request_caller_2_no :  $this->request_caller_2_no; // Default number if not provided
         $this->request_caller_2_user_id = $request_caller_2_user_id != null  ? $request_caller_2_user_id :  $this->request_caller_2_user_id;  // Default user ID if not provided
-
+        $this->call_source = $call_source;
     }
 
     /**
@@ -74,12 +75,32 @@ class CallingService
     }
 
     /**
+     * Handle sending based on the mode (immediate or queued).
+     */
+    public function callNowImmediately()
+    {
+
+        if (empty($this->call_source) ||  empty($this->request_caller_1_no) || empty($this->request_caller_1_user_id)) {
+            \Yii::error('Missing required parameters for call: ' . json_encode([
+                'call_source' => $this->call_source,
+                'lead_id' => $this->lead_id,
+                'request_caller_1_no' => $this->request_caller_1_no,
+                'request_caller_1_user_id' => $this->request_caller_1_user_id
+            ]), __METHOD__);
+            return false;
+        }
+        return $this->queue() && $this->callImmediately() && $this->preparechat();
+    }
+
+
+    /**
      * Queue the event for later processing.
      */
 
     private function queue()
     {
         $this->call_model  = new CallLog();
+        $this->call_model->call_source = $this->call_source;
         $this->call_model->reference_id = $this->reference_id;
         $this->call_model->is_dedicated = $this->has_direct_call;
         $this->call_model->chat_id = $this->chat_id;

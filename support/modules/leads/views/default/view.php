@@ -148,6 +148,45 @@ AppAsset::register($this);
         </div>
     </div>
 </div>
+
+<div class="d-flex justify-content-between">
+    <p class="page-header">Call Logs</p>
+    <a href="<?= Url::toRoute(['makeacall', 'id' => $model->id]) ?>" class="text-end btn btn-success" data-confirm="Are You Sure You want to make a New Call With this Customer?"><i class="fa fa-phone"></i> Make a New Call</a>
+</div>
+<div class="table-wrapper remove-css mb-4">
+    <div class="table-responsive">
+        <div class="min-width-table">
+            <div id="w0" class="grid-view">
+                <table class="table tablecustoms table-striped align-middle w-100">
+                    <thead>
+                        <tr>
+                            <th>Call Date</th>
+                            <th>Talk Duration</th>
+                            <th>API Call Status</th>
+                            <th>Call Status</th>
+                            <th>View Recording</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if ($calllogs && false) { ?>
+                            <?php foreach ($calllogs as $call_log) { ?>
+                                <tr>
+                                    <td><?= date('d M Y, h:i A', $call_log->created_at) ?></td>
+                                    <td><?= $call_log->talk_duration ?></td>
+                                    <td><?= $call_log->call_status ?></td>
+                                    <td><?= $call_log->status == 1 ? 'Dialed' : 'Failed' ?></td>
+                                    <td></td>
+                                </tr>
+                            <?php } ?>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="table-wrapper">
     <div class="breadcrumb-header assignPara justify-content-between align-items-center">
         <div>
