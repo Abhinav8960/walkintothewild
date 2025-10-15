@@ -66,6 +66,10 @@ return [
             'class' => 'support\modules\whatsapp\Module',
         ],
 
+        'booking' => [
+            'class' => 'support\modules\booking\Module',
+        ],
+
     ],
 
 

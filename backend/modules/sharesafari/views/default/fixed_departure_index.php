@@ -138,7 +138,11 @@ $this->params['buttons'][] = Html::a('Fixed Departure Reject List', [Url::toRout
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            if ($model->status == 20) {
+                                return '<span class="badge badge-danger" style="border-radius:50px;">Blocked</span>';
+                            } else {
+                                return $model->newstatuslabel;
+                            }
                         }
                     ],
 
@@ -161,7 +165,7 @@ $this->params['buttons'][] = Html::a('Fixed Departure Reject List', [Url::toRout
                                 );
                             },
                             'chat' => function ($url, $model) {
-                                if ($model->status == 1) {
+                                // if ($model->status == 1) {
                                     return Html::a(
                                         '<img src="' . $this->params['baseurl'] . '/img/chat.png" alt="" width="20" height="20">',
                                         Url::toRoute(['chat-view', 'id' => $model->id]),
@@ -169,10 +173,10 @@ $this->params['buttons'][] = Html::a('Fixed Departure Reject List', [Url::toRout
                                             'title' => 'Chat',
                                         ]
                                     );
-                                }
+                                // }
                             },
                             'booked' => function ($url, $model) {
-                                if ($model->status == 1) {
+                                // if ($model->status == 1) {
                                     return Html::a(
                                         '<img src="' . $this->params['baseurl'] . '/img/booked.png" alt="" width="20" height="20">',
                                         Url::toRoute(['booked-user', 'id' => $model->id]),
@@ -180,7 +184,7 @@ $this->params['buttons'][] = Html::a('Fixed Departure Reject List', [Url::toRout
                                             'title' => 'Booked User',
                                         ]
                                     );
-                                }
+                                // }
                             },
                         ]
                     ],

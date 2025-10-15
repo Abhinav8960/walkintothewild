@@ -1166,6 +1166,18 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $return;
     }
 
+    public static function fdoptionswithdelete()
+    {
+        $return = [
+            '3' => 'Live',
+            '1' => 'Active',
+            '0' => 'Inactive',
+            '-1' => 'Delete by Admin',
+            '20' => 'Blocked'
+        ];
+        return $return;
+    }
+
     public static function getsitepagessubcategory($category_name)
     {
         $return = [];
