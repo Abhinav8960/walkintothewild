@@ -11,8 +11,9 @@ $this->title = 'Bookings';
 $this->params['title'] = $this->title;
 ?>
 
-<div class="row mb-2">
+<?= $this->render('_card', ['totalbookings' => $totalbookings,'totalcustomers' => $totalcustomers,'totalamount' => $totalamount]) ?>
 
+<div class="row mb-2">
 </div>
 <div class="table-wrapper">
     <div class="table-responsive">
