@@ -99,7 +99,9 @@ class Package extends \common\models\package\Package
                 return $this->custom_term_and_condition;
             },
             'template_code',
-            'custom_activity_message',
+            'custom_activity_message' => function () {
+                return $this->custom_activity_message ? $this->custom_activity_message : 'Shared Safari';
+            },
             'custom_price_message',
             'cost_per_person_strike_off' => function () {
                 return (int) ceil($this->cost_per_person_strike_off);
