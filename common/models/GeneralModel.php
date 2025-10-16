@@ -588,11 +588,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map(Flagreason::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'reason');
     }
 
-    public static function operatorresquestactivties($safari_operator_request_id)
-    {
-        $query = SafariOperatorRequestActivities::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
-        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'wildlife_activity_id', 'wildlife_activity_id');
-    }
+    // public static function operatorresquestactivties($safari_operator_request_id)
+    // {
+    //     $query = SafariOperatorRequestActivities::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
+    //     return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'wildlife_activity_id', 'wildlife_activity_id');
+    // }
 
     public static function operatoractivties($safari_operator_id)
     {

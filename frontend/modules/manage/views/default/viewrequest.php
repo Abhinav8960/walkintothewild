@@ -15,13 +15,13 @@ if ($safari_operator_request->is_offer_economical_budget == 1) {
     $budget[] = "Economical";
 }
 
-$html = '';
-$activies = GeneralModel::operatorresquestactivties($safari_operator_request->id);
-foreach ($activies as $key => $role) {
-    if (isset(GeneralModel::wildlifeactivities()[$key])) {
-        $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
-    }
-}
+// $html = '';
+// $activies = GeneralModel::operatorresquestactivties($safari_operator_request->id);
+// foreach ($activies as $key => $role) {
+//     if (isset(GeneralModel::wildlifeactivities()[$key])) {
+//         $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
+//     }
+// }
 
 // $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
 
