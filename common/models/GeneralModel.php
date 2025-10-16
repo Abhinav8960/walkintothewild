@@ -1979,7 +1979,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $decrypted_data;
     }
 
-    public static function maskContactInfoInString(string $text): string
+    public static function maskContactInfoInString(?string $text=''): string
     {
 
         // Define a mapping for number words to digits
