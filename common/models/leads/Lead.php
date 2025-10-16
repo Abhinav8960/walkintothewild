@@ -293,8 +293,8 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     {
         $lead = Yii::$app->db->createCommand("SELECT 
         (SELECT COUNT(*) FROM `lead` WHERE (`status`=1)) as totalactivelead,
-        (SELECT COUNT(*) FROM `lead` WHERE (`status`=1) AND (`from_date` >= '2025-10-15')) as currentactivelead,
-        (SELECT COUNT(*) FROM `lead` WHERE ((`status`=1) AND (`is_chat_started`=1)) AND (`from_date` >= '2025-10-15')) as leadindiscussion,
+        (SELECT COUNT(*) FROM `lead` WHERE (`status`=1) AND (`from_date` >= CURDATE())) as currentactivelead,
+        (SELECT COUNT(*) FROM `lead` WHERE ((`status`=1) AND (`is_chat_started`=1)) AND (`from_date` >= CURDATE())) as leadindiscussion,
         (SELECT COUNT(*) FROM `lead` WHERE (`status`=1) AND (`is_payment_received` = 1)) as paymentrecieved,
         (SELECT COUNT(*) FROM `lead` WHERE ((`status`=1) AND (`is_payment_received`=0)) AND (`is_payment_link_send`=1)) as pendingpayment")->queryOne();
 
