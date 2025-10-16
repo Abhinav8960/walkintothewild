@@ -622,7 +622,7 @@ class SafariOperatorController extends Controller
                     $model->initializeForm();
                     if ($model->safari_operator_update_model->save(false)) {
                         $model->uploadFile();
-                        // $this->archiveupdate($safari_operator_update_model);
+                        // $model->partnerRegistrationTableUpdate($safari_operator_update_model);
                         \Yii::$app->session->setFlash('success', 'Successfully Changed');
                         return $this->redirect(['view', 'id' => $safari_operator_update_model->id]);
                     }
@@ -635,19 +635,5 @@ class SafariOperatorController extends Controller
             'model' => $model,
             'safari_operator_update_model' => $safari_operator_update_model,
         ]);
-    }
-
-    public function archiveupdate(SafariOperator $safari_operator_update_model)
-    {
-        $model = $this->findModel($safari_operator_update_model->id);
-        $parter_registration_model = PartnerRegistration::find()->where(['id' => $model->safari_operator_request_id])->one();
-        if ($parter_registration_model) {
-            $parter_registration_model->legal_entity_name = $model->operator_name;
-            $parter_registration_model->brand_name = $model->business_name;
-            $parter_registration_model->address = $model->address;
-            $parter_registration_model->about_business = $model->about_business;
-            $parter_registration_model->logo = $model->logo;
-            $parter_registration_model->save(false);
-        }
     }
 }

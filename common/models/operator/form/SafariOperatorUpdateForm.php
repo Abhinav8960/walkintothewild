@@ -2,10 +2,11 @@
 
 namespace common\models\operator\form;
 
-use common\Helper\FsHelper;
 use Yii;
 use yii\base\Model;
+use common\Helper\FsHelper;
 use common\models\operator\SafariOperator;
+use common\models\partnerregistration\PartnerRegistration;
 
 class SafariOperatorUpdateForm extends model
 {
@@ -101,6 +102,22 @@ class SafariOperatorUpdateForm extends model
                     throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
                 }
             }
+        }
+    }
+
+    /**
+     * Update Partner Registration Table Update
+     */
+    public function partnerRegistrationTableUpdate(SafariOperator $model)
+    {
+        $parter_registration_model = PartnerRegistration::find()->where(['id' => $model->safari_operator_request_id])->one();
+        if ($parter_registration_model) {
+            $parter_registration_model->legal_entity_name = $model->operator_name;
+            $parter_registration_model->brand_name = $model->business_name;
+            $parter_registration_model->address = $model->address;
+            $parter_registration_model->about_business = $model->about_business;
+            $parter_registration_model->logo = $model->logo;
+            $parter_registration_model->save(false);
         }
     }
 }
