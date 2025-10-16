@@ -4,10 +4,7 @@ namespace support\modules\sharesafari\controllers;
 
 
 use common\interfaces\StatusInterface;
-use common\models\MailLog;
-use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
-use common\models\sharesafari\form\ShareSafariApprovalForm;
 use common\models\sharesafari\form\ShareSafariDeleteForm;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
@@ -15,10 +12,8 @@ use common\models\sharesafari\ShareSafariCommentReport;
 use common\models\sharesafari\ShareSafariCommentSearch;
 use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIntrested;
-use common\models\sharesafari\ShareSafariRequest;
 use common\models\sharesafari\ShareSafariSearch;
 use common\models\User;
-use frontend\models\form\SharedSafariRequestForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -148,21 +143,21 @@ class DefaultController extends Controller
     }
 
 
-    public function actionValidate($id = null)
-    {
+    // public function actionValidate($id = null)
+    // {
 
-        if ($id != null) {
-            $shared_safari_request_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
-            $model = new SharedSafariRequestForm($shared_safari_request_model);
-        } else {
+    //     if ($id != null) {
+    //         $shared_safari_request_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+    //         $model = new SharedSafariRequestForm($shared_safari_request_model);
+    //     } else {
 
-            $model = new SharedSafariRequestForm();
-        }
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($model);
-        }
-    }
+    //         $model = new SharedSafariRequestForm();
+    //     }
+    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    //         return \yii\widgets\ActiveForm::validate($model);
+    //     }
+    // }
 
     public function actionInterestview($share_safari_id)
     {
