@@ -264,22 +264,52 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                         </div>
                     <?php } ?>
-                    <div class="d-lg-block  mobile_didplay_block col-lg-4 ">
-                        <del>
-                            <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_person_strike_off) ?>/-</h6>
-                        </del>
-                        <div
-                            class="d-flex justify-content-md-start align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
-                            <div class="pakageCost mb-xxl-0 mb-2">
-
-                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?>/ Person
+                    <div class=" pakageCost  mobile_didplay_block col-lg-4 d-flex">
+                        <div>
+                            <?php if ($package->cost_per_person_strike_off > 0) { ?>
+                                <h6 class="mb-0 text-muted">
+                                    <del>
+                                        <img src="<?= $this->params['baseurl'] ?>/images/rupees.png" width="20" height="20" class="me-1">
+                                        <?= GeneralModel::number_format_indian($package->cost_per_person_strike_off) ?> /-
+                                        <span class="perpersonText"></span>
+                                    </del>
                                 </h6>
-                            </div>
+                            <?php } ?>
+                            <h6 class="fs-4 fw-bold mb-1">
+                                <img src="<?= $this->params['baseurl'] ?>/images/rupees.png" width="20" height="20" class="me-1">
+                                <?= number_format($package->cost_per_person) ?> /-
+                                <span class="perpersonText">1 Person</span>
+                            </h6>
+
+                            <h6 class="fs-4 fw-bold mb-1">
+                                <span class="text-danger">Total Price: </span>
+                                <img src="<?= $this->params['baseurl'] ?>/images/rupees.png" width="20" height="20" class="me-1">
+                                <?= number_format($package->total_price) ?>
+                            </h6>
                         </div>
+
+                        <div>
+                            <?php if ($package->cost_per_two_person > 0) { ?>
+                                <div class="d-flex">
+                                    <div class="vr"></div>
+                                    <div>
+                                        <h6 class="fs-4 fw-bold mb-1">
+                                            <img src="<?= $this->params['baseurl'] ?>/images/rupees.png" width="20" height="20" class="me-1">
+                                            <?= number_format($package->cost_per_two_person) ?> /-
+                                            <span class="perpersonText">2 Person</span>
+                                        </h6>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+
                     </div>
-                    <p class="fs-6 mb-0">
-                        <span class=""><?= $package->custom_price_message ?? '' ?></span>
-                    </p>
+                    <?php if ($package->custom_price_message != null && $package->custom_price_message != '') { ?>
+                        <hr>
+                        <p class="fs-6 mb-0">
+                            <span class=""><?= $package->custom_price_message ?? '' ?></span>
+                        </p>
+                    <?php } ?>
                 </div>
 
             </div>

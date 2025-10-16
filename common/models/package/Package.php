@@ -485,4 +485,17 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         return $this->hasOne(MasterPackageTag::class, ['id' => 'master_package_tag_id']);
     }
+
+    public function getCustom_message_details()
+    {
+        if ($this->safari_type == 1) {
+            return $this->no_of_safari . ' Shared Safari';
+        } elseif ($this->safari_type == 2) {
+            return $this->no_of_safari . ' Private Safari';
+        } else if ($this->custom_activity_message) {
+            return $this->custom_activity_message;
+        } else {
+            return $this->no_of_safari . ' Shared Safari';
+        }
+    }
 }

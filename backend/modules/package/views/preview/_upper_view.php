@@ -199,22 +199,40 @@ use common\models\GeneralModel;
                                     <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1">
                                     <?= GeneralModel::number_format_indian($package->cost_per_two_person) ?> /- <span class="perpersonText">Per 2 Person</span>
                                 </h6>
+                                <?php } else {
+                                if ($package->cost_per_person_strike_off > 0) { ?>
+                                    <p class="mb-0 text-muted">
+                                        <del>
+                                            <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" width="16" height="16" class="me-1">
+                                            <?= GeneralModel::number_format_indian($package->cost_per_person_strike_off) ?> /-
+                                            <span class="perpersonText"></span>
+                                        </del>
+                                    </p>
+                                <?php } ?>
 
-                            <?php } else { ?>
-                                <del>
-                                    <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="16px" class="me-1 mb-1">
-                                    <?= GeneralModel::number_format_indian($package->cost_per_person_strike_off) ?> /- <span class="perpersonText"></span>
-                                </del>
-                                <h6 class="fs-4 mb-0 fw-bold">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1">
-                                    <?= GeneralModel::number_format_indian($package->cost_per_person) ?> / <span class="perpersonText">Per 1 Person</span>
-                                </h6>
-                                <br>
-                                <h6 class="fs-4 mb-0 fw-bold">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1">
-                                    <?= GeneralModel::number_format_indian($package->cost_per_two_person) ?> /- <span class="perpersonText">Per 2 Person</span>
-                                </h6>
-                            <?php } ?>
+                                <div>
+                                    <p class="mb-1">
+                                        <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" width="16" height="16" class="me-1">
+                                        <?= number_format($package->cost_per_person) ?> /-
+                                        <span class="perpersonText">1 Person</span>
+                                    </p>
+
+                                    <p class="mb-1">
+                                        <span class="text-danger">Total Price: </span>
+                                        <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" width="16" height="16" class="me-1">
+                                        <?= number_format($package->total_price) ?>
+                                    </p>
+                                </div>
+
+                                <?php if ($package->cost_per_two_person > 0) { ?>
+                                    <div class="vr"></div>
+                                    <p class="mb-0">
+                                        <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" width="16" height="16" class="me-1">
+                                        <?= number_format($package->cost_per_two_person) ?> /-
+                                        <span class="perpersonText">2 Person</span>
+                                    </p>
+                            <?php }
+                            } ?>
 
                         </div>
                         <p class="fs-6 mb-0">

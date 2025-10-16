@@ -63,12 +63,12 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Retail Price',
+                        'label' => 'Total Price',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'contentOptions' => ['style' => 'text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return GeneralModel::number_format_indian($model->retail_price);
+                            return GeneralModel::number_format_indian($model->total_price);
                         }
                     ],
                     [
