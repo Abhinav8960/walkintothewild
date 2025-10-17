@@ -19,21 +19,21 @@ if ($model->is_offer_economical_budget == 1) {
     $budget[] = "Economical";
 }
 
-$html = '';
-$activies = GeneralModel::operatorresquestactivties($model->id);
-foreach ($activies as $key => $role) {
-    if (isset(GeneralModel::wildlifeactivities()[$key])) {
-        $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
-    }
-}
+// $html = '';
+// $activies = GeneralModel::operatorresquestactivties($model->id);
+// foreach ($activies as $key => $role) {
+//     if (isset(GeneralModel::wildlifeactivities()[$key])) {
+//         $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
+//     }
+// }
 
-$html_park = '';
-$park = GeneralModel::operatorresquestpark($model->id);
-foreach ($park as $key => $role) {
-    if (isset(GeneralModel::safariparkoption()[$key])) {
-        $html_park .= GeneralModel::safariparkoption()[$key] . ', ';
-    }
-}
+// $html_park = '';
+// $park = GeneralModel::operatorresquestpark($model->id);
+// foreach ($park as $key => $role) {
+//     if (isset(GeneralModel::safariparkoption()[$key])) {
+//         $html_park .= GeneralModel::safariparkoption()[$key] . ', ';
+//     }
+// }
 ?>
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('@support/modules/operator/views/safari-operator/_navbar.php', ['model' => $model, 'active_navbar' => 'sharedsafari']) ?>

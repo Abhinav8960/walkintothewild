@@ -220,6 +220,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                 7 => 'Report Manager',
                 8 => 'Community Manager',
                 9 => 'Account Manager',
+                10 => 'Support User',
             ];
         }
         //  else if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin) {
@@ -588,11 +589,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map(Flagreason::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'reason');
     }
 
-    public static function operatorresquestactivties($safari_operator_request_id)
-    {
-        $query = SafariOperatorRequestActivities::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
-        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'wildlife_activity_id', 'wildlife_activity_id');
-    }
+    // public static function operatorresquestactivties($safari_operator_request_id)
+    // {
+    //     $query = SafariOperatorRequestActivities::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
+    //     return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'wildlife_activity_id', 'wildlife_activity_id');
+    // }
 
     public static function operatoractivties($safari_operator_id)
     {
@@ -600,11 +601,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'wildlife_activity_id', 'wildlife_activity_id');
     }
 
-    public static function operatorresquestpark($safari_operator_request_id)
-    {
-        $query = SafariOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
-        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park.title');
-    }
+    // public static function operatorresquestpark($safari_operator_request_id)
+    // {
+    //     $query = SafariOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
+    //     return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park.title');
+    // }
 
     public static function operatorpark($safari_operator_id)
     {
@@ -1979,7 +1980,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $decrypted_data;
     }
 
-    public static function maskContactInfoInString(string $text): string
+    public static function maskContactInfoInString(?string $text=''): string
     {
 
         // Define a mapping for number words to digits

@@ -71,73 +71,73 @@ class DefaultController extends RestController
     }
 
 
-    public function actionEditRequest()
-    {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+    // public function actionEditRequest()
+    // {
+    //     return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
 
-        $safari_operator = $this->module->operatormodel();
-        $safari_operator_id = $safari_operator->id;
+    //     $safari_operator = $this->module->operatormodel();
+    //     $safari_operator_id = $safari_operator->id;
 
-        $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $model = new SafariOperatorRequestForm($safari_operator_model);
-        $model->user_id = $safari_operator->user_id;
-        $model->status = SafariOperator::STATUS_ACTIVE;
-        //     $model->action_url = '/manage/default/edit-request';
-        //     $model->action_validate_url = '/manage/default/validate';
-        $model->referrer_url = \Yii::$app->request->referrer;
+    //     $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
+    //     $model = new SafariOperatorRequestForm($safari_operator_model);
+    //     $model->user_id = $safari_operator->user_id;
+    //     $model->status = SafariOperator::STATUS_ACTIVE;
+    //     //     $model->action_url = '/manage/default/edit-request';
+    //     //     $model->action_validate_url = '/manage/default/validate';
+    //     $model->referrer_url = \Yii::$app->request->referrer;
 
-        $model->attributes = $this->request;
-        $model->logo = UploadedFile::getInstanceByName('logo');
-        if ($model->validate()) {
-            $model->initializeForm();
+    //     $model->attributes = $this->request;
+    //     $model->logo = UploadedFile::getInstanceByName('logo');
+    //     if ($model->validate()) {
+    //         $model->initializeForm();
 
-            // Revome All Previouse Request if Any Pending for Approval
-            SafariOperatorRequest::updateAll(['status' => NewStatusInterface::STATUS_DELETE], ['safari_operator_id' => $safari_operator_model->id, 'status' => 1, 'is_approved' => 0]);
+    //         // Revome All Previouse Request if Any Pending for Approval
+    //         SafariOperatorRequest::updateAll(['status' => NewStatusInterface::STATUS_DELETE], ['safari_operator_id' => $safari_operator_model->id, 'status' => 1, 'is_approved' => 0]);
 
-            if ($model->safari_operator_request_model->save(false)) {
-                $model->uploadFile();
-                $parks = $model->park_id;
-                SafariOperatorRequestPark::updateAll(['status' => 0], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
-                if ($parks) {
-                    foreach ($parks as $park) {
-                        $safarioperatorrequestpark = new SafariOperatorRequestPark();
-                        $safarioperatorrequestpark->safari_operator_request_id = $model->safari_operator_request_model->id;
-                        $safarioperatorrequestpark->park_id = $park;
-                        $safarioperatorrequestpark->save(false);
-                    }
-                }
+    //         if ($model->safari_operator_request_model->save(false)) {
+    //             $model->uploadFile();
+    //             $parks = $model->park_id;
+    //             SafariOperatorRequestPark::updateAll(['status' => 0], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
+    //             if ($parks) {
+    //                 foreach ($parks as $park) {
+    //                     $safarioperatorrequestpark = new SafariOperatorRequestPark();
+    //                     $safarioperatorrequestpark->safari_operator_request_id = $model->safari_operator_request_model->id;
+    //                     $safarioperatorrequestpark->park_id = $park;
+    //                     $safarioperatorrequestpark->save(false);
+    //                 }
+    //             }
 
 
-                $activities = $model->offers_other_wildlifeactivities;
-                SafariOperatorRequestActivities::updateAll(['status' => 0], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
-                if ($activities) {
-                    foreach ($activities as $activity) {
-                        $safarioperatorrequestactivity = new SafariOperatorRequestActivities();
-                        $safarioperatorrequestactivity->safari_operator_request_id = $model->safari_operator_request_model->id;
-                        $safarioperatorrequestactivity->wildlife_activity_id = $activity;
-                        $safarioperatorrequestactivity->save(false);
-                    }
-                }
+    //             $activities = $model->offers_other_wildlifeactivities;
+    //             SafariOperatorRequestActivities::updateAll(['status' => 0], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
+    //             if ($activities) {
+    //                 foreach ($activities as $activity) {
+    //                     $safarioperatorrequestactivity = new SafariOperatorRequestActivities();
+    //                     $safarioperatorrequestactivity->safari_operator_request_id = $model->safari_operator_request_model->id;
+    //                     $safarioperatorrequestactivity->wildlife_activity_id = $activity;
+    //                     $safarioperatorrequestactivity->save(false);
+    //                 }
+    //             }
 
-                // $to_mail = $model->safari_operator_request_model->email;
-                // $subject = 'Information Update Successfully!';
-                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
-                // $req = ['username' => $model->safari_operator_request_model->business_name];
+    //             // $to_mail = $model->safari_operator_request_model->email;
+    //             // $subject = 'Information Update Successfully!';
+    //             // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
+    //             // $req = ['username' => $model->safari_operator_request_model->business_name];
 
-                // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                // \Yii::$app->session->setFlash('success', 'Safari Operator Update Request Sent Successfully, Please Wait Until Approval');
-                // return $this->redirect(['index']);
-                $model->safari_operator_request_model->is_approved = 1;
-                if ($model->safari_operator_request_model->save(false)) {
-                    $safari_operator = $model->safari_operator_request_model->safariapproved($model->safari_operator_request_model);
-                    if ($safari_operator) {
-                        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Information Updated Successfully"]);
-                    }
-                }
-            }
-        }
-        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-    }
+    //             // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+    //             // \Yii::$app->session->setFlash('success', 'Safari Operator Update Request Sent Successfully, Please Wait Until Approval');
+    //             // return $this->redirect(['index']);
+    //             $model->safari_operator_request_model->is_approved = 1;
+    //             if ($model->safari_operator_request_model->save(false)) {
+    //                 $safari_operator = $model->safari_operator_request_model->safariapproved($model->safari_operator_request_model);
+    //                 if ($safari_operator) {
+    //                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Information Updated Successfully"]);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    // }
 
     /**
      * Validate Safari Operator Edit Form

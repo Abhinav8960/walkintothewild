@@ -39,7 +39,7 @@ use yii\helpers\Url;
                                                     </div>
                                                     <div class="d-flex align-items-center gap-1">
 
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20" height="20">
+                                                        <img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20" height="20">
                                                         <span><b style="font-size: 20px;"><?= GeneralModel::number_format_indian($chat_message->quote->net_payment_price) ?? '' ?></b></span>
 
                                                     </div>

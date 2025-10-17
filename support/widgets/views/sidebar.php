@@ -294,9 +294,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         "/flag/article/index",
                                                         "/flag/article/view",
                                                         "/flag/article/flagview",
-                                                        "/flag/blog/index",
-                                                        "/flag/blog/view",
-                                                        "/flag/blog/flagview",
+                                                        // "/flag/blog/index",
+                                                        // "/flag/blog/view",
+                                                        // "/flag/blog/flagview",
                                                         "/flag/operator/index",
                                                         "/flag/operator/view",
                                                         "/flag/operator/flagview",
@@ -329,9 +329,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     "/flag/article/index",
                                     "/flag/article/view",
                                     "/flag/article/flagview",
-                                    "/flag/blog/index",
-                                    "/flag/blog/view",
-                                    "/flag/blog/flagview",
+                                    // "/flag/blog/index",
+                                    // "/flag/blog/view",
+                                    // "/flag/blog/flagview",
                                     "/flag/operator/index",
                                     "/flag/operator/view",
                                     "/flag/operator/flagview",
@@ -357,9 +357,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     "/flag/article/index",
                                                                                                     "/flag/article/view",
                                                                                                     "/flag/article/flagview",
-                                                                                                    "/flag/blog/index",
-                                                                                                    "/flag/blog/view",
-                                                                                                    "/flag/blog/flagview",
+                                                                                                    // "/flag/blog/index",
+                                                                                                    // "/flag/blog/view",
+                                                                                                    // "/flag/blog/flagview",
                                                                                                     "/flag/operator/index",
                                                                                                     "/flag/operator/view",
                                                                                                     "/flag/operator/flagview",
@@ -387,9 +387,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     "/flag/article/index",
                                                     "/flag/article/view",
                                                     "/flag/article/flagview",
-                                                    "/flag/blog/index",
-                                                    "/flag/blog/view",
-                                                    "/flag/blog/flagview",
+                                                    // "/flag/blog/index",
+                                                    // "/flag/blog/view",
+                                                    // "/flag/blog/flagview",
                                                     "/flag/operator/index",
                                                     "/flag/operator/view",
                                                     "/flag/operator/flagview",
@@ -458,17 +458,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </li>
 
                 <?php if(false){ ?>
-                <li class="navItems mb-2">
+                <!-- <li class="navItems mb-2">
                     <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
-                                                                                    "/flag/blog/index",
-                                                                                    "/flag/blog/view",
-                                                                                    "/flag/blog/flagview",
+                                                                                    // "/flag/blog/index",
+                                                                                    // "/flag/blog/view",
+                                                                                    // "/flag/blog/flagview",
                                                                                 )) ? "active" : "" ?>" href="/flag/blog/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                    "/flag/blog/index",
-                                                                                                                                                                                    "/flag/blog/view",
-                                                                                                                                                                                    "/flag/blog/flagview",
+                                                                                                                                                                                    // "/flag/blog/index",
+                                                                                                                                                                                    // "/flag/blog/view",
+                                                                                                                                                                                    // "/flag/blog/flagview",
                                                                                                                                                                                 )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Blog Comment</span></a>
-                </li>
+                </li> -->
                 <?php } ?>
             </ul>
 

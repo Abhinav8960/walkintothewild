@@ -59,12 +59,6 @@ return [
         'portalsetting' => [
             'class' => 'backend\modules\portalsetting\Module',
         ],
-        'operatordashboard' => [
-            'class' => 'backend\modules\operatordashboard\Module',
-        ],
-        'article' => [
-            'class' => 'backend\modules\article\Module',
-        ],
         'pendingapproval' => [
             'class' => 'backend\modules\pendingapproval\Module',
         ],

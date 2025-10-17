@@ -2,32 +2,18 @@
 
 namespace support\modules\operator\controllers;
 
-use common\interfaces\NewStatusInterface;
-use common\models\Auth;
+
 use Yii;
-use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use common\models\MailLog;
 use common\models\operator\form\SafariOperatorDeleteForm;
-use common\models\operator\form\SafariOperatorForm;
-use common\models\operator\form\SafariOperatorLogoForm;
 use common\models\operator\form\SafariOperatorParkForm;
-use common\models\operator\form\SafariOperatorRequestForm;
-use common\models\operator\OperatorQuoteSearch;
 use common\models\operator\SafariOperator;
-use common\models\operator\SafariOperatorActivities;
-use common\models\operator\SafariOperatorFollowSearch;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRatingReportSearch;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\SafariOperatorSearch;
-use common\models\registration\SafariOperatorRequest;
-use common\models\registration\SafariOperatorRequestActivities;
-use common\models\registration\SafariOperatorRequestPark;
-use common\models\SafariOperatorRequestSearch;
 use common\models\User;
-use common\models\UserFollow;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -238,16 +224,16 @@ class SafariOperatorController extends Controller
 
    
 
-    public function actionValidate($id)
-    {
-        $safari_operator = $this->findModel($id);
-        $model = new SafariOperatorRequestForm($safari_operator);
+    // public function actionValidate($id)
+    // {
+    //     $safari_operator = $this->findModel($id);
+    //     $model = new SafariOperatorRequestForm($safari_operator);
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($model);
-        }
-    }
+    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    //         return \yii\widgets\ActiveForm::validate($model);
+    //     }
+    // }
 
     public function actionDelete($id)
     {

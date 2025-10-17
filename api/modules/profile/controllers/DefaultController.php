@@ -18,6 +18,7 @@ use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -96,11 +97,11 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
         if ($user->id == $this->userinfoId) {
-            $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT, ShareSafari::STATUS_SUSPEND]])->asArray()->all();
-            return Yii::$app->api->sendResponse($data = ['share_safari' => $organized_by]);
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT, ShareSafari::STATUS_SUSPEND]])->all();
+            return Yii::$app->api->sendResponse($data = ['share_safari' => ArrayHelper::toArray($organized_by)]);
         } else {
-            $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->asArray()->all();
-            return Yii::$app->api->sendResponse($data = ['share_safari' => $organized_by]);
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->all();
+            return Yii::$app->api->sendResponse($data = ['share_safari' => ArrayHelper::toArray($organized_by)]);
         }
     }
 
@@ -119,8 +120,8 @@ class DefaultController extends RestController
             $shared_safari = ShareSafari::find()
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
-                ->asArray()->all();
-            return Yii::$app->api->sendResponse($data = ['share_safari' => $shared_safari]);
+                ->all();
+            return Yii::$app->api->sendResponse($data = ['share_safari' => ArrayHelper::toArray($shared_safari)]);
         } else {
             $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id, 'status' => ShareSafariIntrested::STATUS_ACTIVE])->all();
             $safariIds = array_map(function ($item) {
@@ -129,8 +130,8 @@ class DefaultController extends RestController
             $shared_safari = ShareSafari::find()
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
-                ->asArray()->all();
-            return Yii::$app->api->sendResponse($data = ['share_safari' => $shared_safari]);
+                ->all();
+            return Yii::$app->api->sendResponse($data = ['share_safari' => ArrayHelper::toArray($shared_safari)]);
         }
     }
 

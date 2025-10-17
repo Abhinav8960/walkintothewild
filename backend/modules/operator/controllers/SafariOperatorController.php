@@ -14,6 +14,7 @@ use common\models\operator\form\SafariOperatorForm;
 use common\models\operator\form\SafariOperatorLogoForm;
 use common\models\operator\form\SafariOperatorParkForm;
 use common\models\operator\form\SafariOperatorRequestForm;
+use common\models\operator\form\SafariOperatorUpdateForm;
 use common\models\operator\OperatorQuoteSearch;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
@@ -23,6 +24,7 @@ use common\models\operator\SafariOperatorRatingReportSearch;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\SafariOperatorSearch;
 use common\models\package\Package;
+use common\models\partnerregistration\PartnerRegistration;
 use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
@@ -68,7 +70,7 @@ class SafariOperatorController extends Controller
     }
 
     /**
-     * View Partner Registration Details
+     * View Partner Registration DetailsBank
      */
     public function actionBankAndKycDetails($id)
     {
@@ -98,11 +100,11 @@ class SafariOperatorController extends Controller
     /**
      * View Operator
      */
-    public function actionSharedsafari($id)
-    {
-        $model = $this->findModel($id);
-        return $this->render('shared_safari', ['model' => $model]);
-    }
+    // public function actionSharedsafari($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     return $this->render('shared_safari', ['model' => $model]);
+    // }
 
     /**
      * View Operator
@@ -341,16 +343,16 @@ class SafariOperatorController extends Controller
     //     }
     // }
 
-    public function actionValidate($id)
-    {
-        $safari_operator = $this->findModel($id);
-        $model = new SafariOperatorRequestForm($safari_operator);
+    // public function actionValidate($id)
+    // {
+    //     $safari_operator = $this->findModel($id);
+    //     $model = new SafariOperatorRequestForm($safari_operator);
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($model);
-        }
-    }
+    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    //         return \yii\widgets\ActiveForm::validate($model);
+    //     }
+    // }
 
     public function actionDelete($id)
     {
@@ -606,5 +608,32 @@ class SafariOperatorController extends Controller
                 }
             }
         }
+    }
+
+
+    public function actionUpdateDetails($id)
+    {
+        $safari_operator_update_model = $this->findModel($id);
+        $model = new SafariOperatorUpdateForm($safari_operator_update_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->logo_file = UploadedFile::getInstance($model, 'logo_file');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safari_operator_update_model->save(false)) {
+                        $model->uploadFile();
+                        // $model->partnerRegistrationTableUpdate($safari_operator_update_model);
+                        \Yii::$app->session->setFlash('success', 'Successfully Changed');
+                        return $this->redirect(['view', 'id' => $safari_operator_update_model->id]);
+                    }
+                }
+            }
+        } else {
+            $model->safari_operator_update_model->loadDefaultValues();
+        }
+        return $this->render('_update_form', [
+            'model' => $model,
+            'safari_operator_update_model' => $safari_operator_update_model,
+        ]);
     }
 }

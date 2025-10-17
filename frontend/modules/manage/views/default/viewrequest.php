@@ -15,15 +15,15 @@ if ($safari_operator_request->is_offer_economical_budget == 1) {
     $budget[] = "Economical";
 }
 
-$html = '';
-$activies = GeneralModel::operatorresquestactivties($safari_operator_request->id);
-foreach ($activies as $key => $role) {
-    if (isset(GeneralModel::wildlifeactivities()[$key])) {
-        $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
-    }
-}
+// $html = '';
+// $activies = GeneralModel::operatorresquestactivties($safari_operator_request->id);
+// foreach ($activies as $key => $role) {
+//     if (isset(GeneralModel::wildlifeactivities()[$key])) {
+//         $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
+//     }
+// }
 
-$park = GeneralModel::operatorresquestpark($safari_operator_request->id);
+// $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
 
 ?>
 
@@ -120,7 +120,7 @@ $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
                             </div>
                         </div>
 
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                             <h4>Park List</h4>
                             <table class="table">
                                 <thead>
@@ -131,8 +131,8 @@ $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $srn = 1;
-                                    foreach ($park as $key => $park_name) {
+                                    // $srn = 1;
+                                    // foreach ($park as $key => $park_name) {
                                     ?>
                                         <tr>
                                             <td><?= $srn ?></td>
@@ -140,13 +140,13 @@ $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
                                         </tr>
                                     <?php
 
-                                        $srn++;
-                                    }
+                                        // $srn++;
+                                    // }
                                     ?>
 
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

@@ -113,86 +113,86 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
         ]);
     }
 
-    public function actionRegistrationOperator()
-    {
-        if (Yii::$app->user->identity) {
-            $registration_model = SafariOperator::findOne(['user_id' => Yii::$app->user->identity->id]);
-            if ($registration_model) {
-                return $this->redirect(['/manage']);
-            }
-        }
+    // public function actionRegistrationOperator()
+    // {
+    //     if (Yii::$app->user->identity) {
+    //         $registration_model = SafariOperator::findOne(['user_id' => Yii::$app->user->identity->id]);
+    //         if ($registration_model) {
+    //             return $this->redirect(['/manage']);
+    //         }
+    //     }
 
-        $registration_model = new SafaritourRegistrationForm();
-        $registration_model->status = SafariOperator::STATUS_ACTIVE;
-        $registration_model->user_id = Yii::$app->user->identity->id;
+    //     $registration_model = new SafaritourRegistrationForm();
+    //     $registration_model->status = SafariOperator::STATUS_ACTIVE;
+    //     $registration_model->user_id = Yii::$app->user->identity->id;
 
-        $registration_model->action_url = Url::toRoute(['/account/default/registration-operator']);
-        $registration_model->action_validate_url = Url::toRoute(['/account/default/validate']);
+    //     $registration_model->action_url = Url::toRoute(['/account/default/registration-operator']);
+    //     $registration_model->action_validate_url = Url::toRoute(['/account/default/validate']);
 
-        $registration_model->referrer_url = \Yii::$app->request->referrer;
-        if ($this->request->isPost) {
-            if ($registration_model->load($this->request->post())) {
-                $registration_model->logo = UploadedFile::getInstance($registration_model, 'logo');
-                if ($registration_model->validate()) {
-                    $registration_model->initializeForm();
-                    if ($registration_model->safarioperator_request_model->save(false)) {
-                        $registration_model->uploadFile();
-                        $parks = $registration_model->park_id;
-                        if ($parks) {
-                            foreach ($parks as $park) {
-                                $safarioperatorrequestpark = new SafariOperatorRequestPark();
-                                $safarioperatorrequestpark->safari_operator_request_id = $registration_model->safarioperator_request_model->id;
-                                $safarioperatorrequestpark->park_id = $park;
-                                $safarioperatorrequestpark->save(false);
-                            }
-                        }
-
-
-                        $activities = $registration_model->offers_other_wildlifeactivities;
-                        if ($activities) {
-                            foreach ($activities as $activity) {
-                                $safarioperatorrequestpark = new SafariOperatorRequestActivities();
-                                $safarioperatorrequestpark->safari_operator_request_id = $registration_model->safarioperator_request_model->id;
-                                $safarioperatorrequestpark->wildlife_activity_id = $activity;
-                                $safarioperatorrequestpark->save(false);
-                            }
-                        }
-
-                        $registration_model->safarioperator_request_model->is_approved = 1;
-                        if ($registration_model->safarioperator_request_model->save(false)) {
-                            $safari_operator = $registration_model->safarioperator_request_model->safariapproved($registration_model->safarioperator_request_model);
-                            if ($safari_operator) {
-                                $user = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
-                                $user->account_type = $registration_model->account_type;
-                                $user->save(false);
-
-                                /*Operator Register*/
-                                $to_mail = Yii::$app->params['adminEmail'];
-                                $subject = 'New Operator Register | ' . substr($safari_operator->business_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_OPERATOR_CREATED;
-                                $operator_url = Yii::$app->urlManager->createAbsoluteUrl(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
-                                $req = ['safari_operator' => $safari_operator->attributes, 'operator_url' => $operator_url];
-                                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                                }
-
-                                return $this->redirect(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            $registration_model->safarioperator_request_model->loadDefaultValues();
-        }
+    //     $registration_model->referrer_url = \Yii::$app->request->referrer;
+    //     if ($this->request->isPost) {
+    //         if ($registration_model->load($this->request->post())) {
+    //             $registration_model->logo = UploadedFile::getInstance($registration_model, 'logo');
+    //             if ($registration_model->validate()) {
+    //                 $registration_model->initializeForm();
+    //                 if ($registration_model->safarioperator_request_model->save(false)) {
+    //                     $registration_model->uploadFile();
+    //                     $parks = $registration_model->park_id;
+    //                     if ($parks) {
+    //                         foreach ($parks as $park) {
+    //                             $safarioperatorrequestpark = new SafariOperatorRequestPark();
+    //                             $safarioperatorrequestpark->safari_operator_request_id = $registration_model->safarioperator_request_model->id;
+    //                             $safarioperatorrequestpark->park_id = $park;
+    //                             $safarioperatorrequestpark->save(false);
+    //                         }
+    //                     }
 
 
+    //                     $activities = $registration_model->offers_other_wildlifeactivities;
+    //                     if ($activities) {
+    //                         foreach ($activities as $activity) {
+    //                             $safarioperatorrequestpark = new SafariOperatorRequestActivities();
+    //                             $safarioperatorrequestpark->safari_operator_request_id = $registration_model->safarioperator_request_model->id;
+    //                             $safarioperatorrequestpark->wildlife_activity_id = $activity;
+    //                             $safarioperatorrequestpark->save(false);
+    //                         }
+    //                     }
 
-        return $this->render('_safari_tour_registration', [
-            'model' => $registration_model,
-        ]);
-    }
+    //                     $registration_model->safarioperator_request_model->is_approved = 1;
+    //                     if ($registration_model->safarioperator_request_model->save(false)) {
+    //                         $safari_operator = $registration_model->safarioperator_request_model->safariapproved($registration_model->safarioperator_request_model);
+    //                         if ($safari_operator) {
+    //                             $user = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
+    //                             $user->account_type = $registration_model->account_type;
+    //                             $user->save(false);
+
+    //                             /*Operator Register*/
+    //                             $to_mail = Yii::$app->params['adminEmail'];
+    //                             $subject = 'New Operator Register | ' . substr($safari_operator->business_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+    //                             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_OPERATOR_CREATED;
+    //                             $operator_url = Yii::$app->urlManager->createAbsoluteUrl(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
+    //                             $req = ['safari_operator' => $safari_operator->attributes, 'operator_url' => $operator_url];
+    //                             $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+    //                             if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+    //                                 GeneralModel::sendmailfromlog($maillog_data['log_id']);
+    //                             }
+
+    //                             return $this->redirect(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $registration_model->safarioperator_request_model->loadDefaultValues();
+    //     }
+
+
+
+    //     return $this->render('_safari_tour_registration', [
+    //         'model' => $registration_model,
+    //     ]);
+    // }
 
 
     /**
@@ -201,17 +201,17 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
      * @param [type] $id
      * @return void
      */
-    public function actionValidate($id = null)
-    {
-        $model = new SafaritourRegistrationForm();
-        if ($id != null) {
-            $formmodel = $this->findModel($id);
-            $model = new SafaritourRegistrationForm($formmodel);
-        }
+    // public function actionValidate($id = null)
+    // {
+    //     $model = new SafaritourRegistrationForm();
+    //     if ($id != null) {
+    //         $formmodel = $this->findModel($id);
+    //         $model = new SafaritourRegistrationForm($formmodel);
+    //     }
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($model);
-        }
-    }
+    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    //         return \yii\widgets\ActiveForm::validate($model);
+    //     }
+    // }
 }
