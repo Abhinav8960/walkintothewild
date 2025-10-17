@@ -62,20 +62,17 @@ class DefaultController extends  Controller
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($custom_status = null)
     {
-        // $safari_operator = $this->module->operatormodel();
         $searchModel = new LeadSearch();
-        $searchModel->custom_status = 1;
+        $searchModel->custom_status = isset($custom_status) ? $custom_status : 3;
         $dataProvider = $searchModel->supportsearch(Yii::$app->request->queryParams);
-
 
         return $this->render(
             'index',
             [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                // 'safari_operator' => $safari_operator,
             ]
         );
     }

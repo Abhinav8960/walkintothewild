@@ -33,7 +33,7 @@ class LeadSearch extends Lead
             [['user_name'], 'string'],
             [['safari_operator_id'], 'integer'],
             [['lead_month', 'custom_status', 'is_payment_link_send'], 'safe'],
-            [['lead_category','reminder_datetime'], 'safe']
+            [['lead_category', 'reminder_datetime'], 'safe']
         ];
     }
 
@@ -219,9 +219,9 @@ class LeadSearch extends Lead
         if (!empty($this->reminder_datetime) && strpos($this->reminder_datetime, ' - ') !== false) {
             list($start_date, $end_date) = explode(' - ', $this->reminder_datetime);
             $query->joinWith('assignOperator')
-                  ->andFilterWhere(['between', 'lead_partners.reminder_datetime', $start_date, $end_date]);
+                ->andFilterWhere(['between', 'lead_partners.reminder_datetime', $start_date, $end_date]);
         }
-        
+
         if (!empty($this->user_name)) {
             $query->joinwith(['user' => function ($query) {
                 $query->andFilterWhere(['like', 'user.name', $this->user_name]);
@@ -308,6 +308,18 @@ class LeadSearch extends Lead
                         ['<', 'lead.from_date', date('Y-m-d')],
                         ['lead.status' => 0],
                     ]);
+                    break;
+                case 3:
+                    $query->andWhere(['lead.status' => 1]);
+                    break;
+                case 4:
+                    $query->andWhere(['>=', 'lead.from_date', date('Y-m-d')])->andWhere(['lead.is_chat_started' => 1])->andWhere(['lead.status' => 1]);
+                    break;
+                case 5:
+                    $query->andWhere(['lead.is_payment_received' => 1])->andWhere(['lead.status' => 1]);
+                    break;
+                case 6:
+                    $query->andWhere(['lead.is_payment_link_send' => 1, 'lead.is_payment_received' => 0])->andWhere(['lead.status' => 1]);
                     break;
             };
         }
