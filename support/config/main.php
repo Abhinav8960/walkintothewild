@@ -69,6 +69,10 @@ return [
         'booking' => [
             'class' => 'support\modules\booking\Module',
         ],
+        
+        'fixeddeparturebooking' => [
+            'class' => 'support\modules\fixeddeparturebooking\Module',
+        ],
 
     ],
 
