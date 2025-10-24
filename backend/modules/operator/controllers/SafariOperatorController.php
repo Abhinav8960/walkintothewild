@@ -618,6 +618,13 @@ class SafariOperatorController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->logo_file = UploadedFile::getInstance($model, 'logo_file');
+                $model->registration_copy_upload = UploadedFile::getInstance($model, 'registration_copy_upload');
+                $model->pan_upload = UploadedFile::getInstance($model, 'pan_upload');
+                $model->cancel_check_upload = UploadedFile::getInstance($model, 'cancel_check_upload');
+                $model->kyc_pan_upload = UploadedFile::getInstance($model, 'kyc_pan_upload');
+                $model->aadhar_front_upload = UploadedFile::getInstance($model, 'aadhar_front_upload');
+                $model->aadhar_back_upload = UploadedFile::getInstance($model, 'aadhar_back_upload');
+                $model->pan_upload = UploadedFile::getInstance($model, 'pan_upload');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->safari_operator_update_model->save(false)) {
