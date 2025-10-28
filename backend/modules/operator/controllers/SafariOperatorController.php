@@ -624,7 +624,6 @@ class SafariOperatorController extends Controller
                 $model->kyc_pan_upload = UploadedFile::getInstance($model, 'kyc_pan_upload');
                 $model->aadhar_front_upload = UploadedFile::getInstance($model, 'aadhar_front_upload');
                 $model->aadhar_back_upload = UploadedFile::getInstance($model, 'aadhar_back_upload');
-                $model->pan_upload = UploadedFile::getInstance($model, 'pan_upload');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->safari_operator_update_model->save(false)) {
