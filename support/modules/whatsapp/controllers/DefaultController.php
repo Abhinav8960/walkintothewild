@@ -93,9 +93,10 @@ class DefaultController extends Controller
             ];
         } catch (\Exception $e) {
             Yii::error('Error in search contacts: ' . $e->getMessage(), 'whatsapp');
+            $flash_message = Yii::$app->messageCache->getMessage('common.failed', ['{var}' => 'to search contacts']);
             return [
                 'success' => false,
-                'error' => 'Failed to search contacts'
+                'error' => $flash_message,
             ];
         }
     }
@@ -135,7 +136,8 @@ class DefaultController extends Controller
 
         $contact = WhatsappContacts::findOne($contactId);
         if (!$contact) {
-            return ['success' => false, 'error' => 'Contact not found'];
+            $flash_message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Contact']);
+            return ['success' => false, 'error' => $flash_message];
         }
 
         $query = WhatsappMessages::find()
@@ -185,9 +187,10 @@ class DefaultController extends Controller
         ], 'whatsapp');
 
         if (!$contactId || !$message) {
+            $flash_message = Yii::$app->messageCache->getMessage('common.missing_required_parameters');
             return [
                 'success' => false,
-                'error' => 'Missing required parameters',
+                'error' => $flash_message,
                 'debug' => [
                     'received_data' => [
                         'contact_id' => $contactId,
@@ -200,7 +203,8 @@ class DefaultController extends Controller
 
         $contact = WhatsappContacts::findOne($contactId);
         if (!$contact) {
-            return ['success' => false, 'error' => 'Contact not found'];
+            $flash_message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Contact']);
+            return ['success' => false, 'error' => $flash_message];
         }
 
         // Send message via API
@@ -235,9 +239,10 @@ class DefaultController extends Controller
         }
 
         // Move this outside the if block
+        $flash_message = Yii::$app->messageCache->getMessage('common.failed', ['{var}' => 'to send message']);
         return [
             'success' => false,
-            'error' => $result['error'] ?? 'Failed to send message'
+            'error' => $result['error'] ?? $flash_message
         ];
     }
 

@@ -112,6 +112,8 @@ return [
         'successfully' => '{var} successfully!',
 
         'block_restricted' => 'You can not block your own account.',
+        'failed' => 'Failed {var}',
+        'missing_required_parameters' => 'Missing required parameters',
 
 
     ],
