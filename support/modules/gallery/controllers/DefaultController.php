@@ -35,7 +35,7 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Gallery']);
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }

@@ -244,7 +244,7 @@ class SafariOperatorController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->safari_operator_delete_model->save(false)) {
-                        $message = Yii::$app->messageCache->getMessage('common.deleted');
+                        $message = Yii::$app->messageManager->getMessage('common.deleted');
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
@@ -290,7 +290,7 @@ class SafariOperatorController extends Controller
                     //     $auth->source_id = time() . '_' . $auth->source_id;
                     //     $auth->save(false);
                     // }
-                    $message = Yii::$app->messageCache->getMessage('common.deleted',['{var}' => 'Temporary']);
+                    $message = Yii::$app->messageManager->getMessage('common.deleted',['{var}' => 'Temporary']);
                     \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index']);
                 }
@@ -307,7 +307,7 @@ class SafariOperatorController extends Controller
         if ($operator_park) {
             $operator_park->status = SafariOperatorPark::STATUS_SUSPEND;
             if ($operator_park->save(false)) {
-                $message = Yii::$app->messageCache->getMessage('common.removed');
+                $message = Yii::$app->messageManager->getMessage('common.removed');
                 \Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(['operator-parks', 'id' => $operator_model->id]);
             }
@@ -333,7 +333,7 @@ class SafariOperatorController extends Controller
                             $park_model->save(false);
                         }
                     }
-                    $message = Yii::$app->messageCache->getMessage('common.added',['{var}' => 'Park']);
+                    $message = Yii::$app->messageManager->getMessage('common.added',['{var}' => 'Park']);
                     \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['operator-parks', 'id' => $id]);
                 }

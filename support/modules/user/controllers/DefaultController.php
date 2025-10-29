@@ -41,7 +41,7 @@ class DefaultController extends Controller
     {
 
         if (Yii::$app->user->identity && !(Yii::$app->user->identity->is_support_user)) {
-            $message = Yii::$app->messageCache->getMessage('common.forbidden_exception');
+            $message = Yii::$app->messageManager->getMessage('common.forbidden_exception');
             throw new \yii\web\ForbiddenHttpException($message);
         }
         $model = new UserRegistrationForm();
@@ -58,7 +58,7 @@ class DefaultController extends Controller
                         $req = ['username' => $user->name, 'is_email_sending' => true];
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        $message = Yii::$app->messageCache->getMessage('common.successfully', ['{var}' => 'User Registered']);
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'User Registered']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
@@ -77,7 +77,7 @@ class DefaultController extends Controller
     public function actionUpdate($user_id)
     {
         if (Yii::$app->user->identity && Yii::$app->user->identity->is_support_user) {
-            $message = Yii::$app->messageCache->getMessage('common.forbidden_exception');
+            $message = Yii::$app->messageManager->getMessage('common.forbidden_exception');
             throw new \yii\web\ForbiddenHttpException($message);
         }
         $user = $this->findModel($user_id);
@@ -87,7 +87,7 @@ class DefaultController extends Controller
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'User']);
+                    $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'User']);
                     Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['/user']);
                 }
@@ -112,17 +112,17 @@ class DefaultController extends Controller
     public function actionBlock($id)
     {
         if ($id == \Yii::$app->user->getId()) {
-            $message = Yii::$app->messageCache->getMessage('common.block_restricted');
+            $message = Yii::$app->messageManager->getMessage('common.block_restricted');
             \Yii::$app->getSession()->setFlash('error', $message);
         } else {
             $user = $this->findModel($id);
             if ($user->getIsBlocked()) {
                 $user->unblock();
-                $message = Yii::$app->messageCache->getMessage('common.successfully',['{var}' => 'User unblocked']);
+                $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'User unblocked']);
                 \Yii::$app->getSession()->setFlash('success', $message);
             } else {
                 $user->block();
-                $message = Yii::$app->messageCache->getMessage('common.successfully',['{var}' => 'User blocked']);
+                $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'User blocked']);
                 \Yii::$app->getSession()->setFlash('success', $message);
             }
         }
@@ -142,7 +142,7 @@ class DefaultController extends Controller
                 $isexist->delete();
             }
         }
-        $message = Yii::$app->messageCache->getMessage('common.deleted',['{var}' => 'User']);
+        $message = Yii::$app->messageManager->getMessage('common.deleted',['{var}' => 'User']);
         \Yii::$app->getSession()->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer);
     }
@@ -160,7 +160,7 @@ class DefaultController extends Controller
             Yii::$app->user->switchIdentity($user, 3600);
             return $this->redirect('/');
         }
-        $message = Yii::$app->messageCache->getMessage('common.forbidden_exception');
+        $message = Yii::$app->messageManager->getMessage('common.forbidden_exception');
         throw new \yii\web\ForbiddenHttpException($message);
     }
 

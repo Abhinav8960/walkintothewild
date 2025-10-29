@@ -42,7 +42,7 @@ class ShareSafariCommentController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
-                        $message = Yii::$app->messageCache->getMessage('common.successfully', ['{var}' => 'Action Taken']);
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Action Taken']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }

@@ -125,7 +125,7 @@ return [
             'rules' => [],
         ],
        
-        'messageCache' => [
+        'messageManager' => [
             'class' => 'common\components\MessageManager',
         ],
 

@@ -93,7 +93,7 @@ class DefaultController extends Controller
             ];
         } catch (\Exception $e) {
             Yii::error('Error in search contacts: ' . $e->getMessage(), 'whatsapp');
-            $flash_message = Yii::$app->messageCache->getMessage('common.failed', ['{var}' => 'to search contacts']);
+            $flash_message = Yii::$app->messageManager->getMessage('common.failed', ['{var}' => 'to search contacts']);
             return [
                 'success' => false,
                 'error' => $flash_message,
@@ -136,7 +136,7 @@ class DefaultController extends Controller
 
         $contact = WhatsappContacts::findOne($contactId);
         if (!$contact) {
-            $flash_message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Contact']);
+            $flash_message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Contact']);
             return ['success' => false, 'error' => $flash_message];
         }
 
@@ -187,7 +187,7 @@ class DefaultController extends Controller
         ], 'whatsapp');
 
         if (!$contactId || !$message) {
-            $flash_message = Yii::$app->messageCache->getMessage('common.missing_required_parameters');
+            $flash_message = Yii::$app->messageManager->getMessage('common.missing_required_parameters');
             return [
                 'success' => false,
                 'error' => $flash_message,
@@ -203,7 +203,7 @@ class DefaultController extends Controller
 
         $contact = WhatsappContacts::findOne($contactId);
         if (!$contact) {
-            $flash_message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Contact']);
+            $flash_message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Contact']);
             return ['success' => false, 'error' => $flash_message];
         }
 
@@ -239,7 +239,7 @@ class DefaultController extends Controller
         }
 
         // Move this outside the if block
-        $flash_message = Yii::$app->messageCache->getMessage('common.failed', ['{var}' => 'to send message']);
+        $flash_message = Yii::$app->messageManager->getMessage('common.failed', ['{var}' => 'to send message']);
         return [
             'success' => false,
             'error' => $result['error'] ?? $flash_message
@@ -254,19 +254,21 @@ class DefaultController extends Controller
 
         $messageId = Yii::$app->request->post('message_id');
         if (!$messageId) {
-            return ['success' => false, 'error' => 'Message ID is required'];
+            $flash_message = Yii::$app->messageManager->getMessage('common.missing_required_parameters');
+            return ['success' => false, 'error' => $flash_message];
         }
 
         $message = WhatsappMessages::findOne($messageId);
         if (!$message) {
-            return ['success' => false, 'error' => 'Message not found'];
+            $flash_message = Yii::$app->messageManager->getMessage('common.not_found',['{var}' => 'Message']);
+            return ['success' => false, 'error' => $flash_message];
         }
 
         $message->status = 'read';
         if ($message->save()) {
             return ['success' => true];
         }
-
-        return ['success' => false, 'error' => 'Failed to mark message as read'];
+        $flash_message = Yii::$app->messageManager->getMessage('common.failed',['{var}' => 'to mark message as read']);
+        return ['success' => false, 'error' => $flash_message];
     }
 }

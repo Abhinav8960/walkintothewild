@@ -56,7 +56,7 @@ class OperatorController extends Controller
                                         $operator->google_rating = $avg;
                                         $operator->google_review_count = $count;
                                         $operator->save(false);
-                                        $message = Yii::$app->messageCache->getMessage('common.submitted', ['{var}' => 'Action']);
+                                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Action']);
                                         \Yii::$app->session->setFlash('success', $message);
                                         return $this->redirect(['index']);
                                     }
@@ -80,7 +80,7 @@ class OperatorController extends Controller
     {
         $review = SafariOperatorRating::find()->where(['id' => $id])->one();
         if (empty($review)) {
-            $message = Yii::$app->messageCache->getMessage('common.invalid_request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
             \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
@@ -102,7 +102,7 @@ class OperatorController extends Controller
     {
         $review = SafariOperatorRating::find()->where(['id' => $id])->one();
         if (empty($review)) {
-            $message = Yii::$app->messageCache->getMessage('common.invalid_request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
             \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
@@ -123,7 +123,7 @@ class OperatorController extends Controller
                     }
                 }
             }
-            $message = Yii::$app->messageCache->getMessage('common.submitted', ['{var}' => 'Action']);
+            $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Action']);
             \Yii::$app->session->setFlash('success', $message);
         }
 
