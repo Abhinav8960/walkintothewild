@@ -111,6 +111,8 @@ return [
 
         'successfully' => '{var} successfully!',
 
+        'block_restricted' => 'You can not block your own account.',
+
 
     ],
 

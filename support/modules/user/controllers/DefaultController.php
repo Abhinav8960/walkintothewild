@@ -41,7 +41,8 @@ class DefaultController extends Controller
     {
 
         if (Yii::$app->user->identity && !(Yii::$app->user->identity->is_support_user)) {
-            throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Support User can view this page.');
+            $message = Yii::$app->messageCache->getMessage('common.forbidden_exception');
+            throw new \yii\web\ForbiddenHttpException($message);
         }
         $model = new UserRegistrationForm();
         if ($this->request->isPost) {
@@ -57,8 +58,8 @@ class DefaultController extends Controller
                         $req = ['username' => $user->name, 'is_email_sending' => true];
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-
-                        \Yii::$app->session->setFlash('success', 'User Registration Successfully Completed');
+                        $message = Yii::$app->messageCache->getMessage('common.successfully', ['{var}' => 'User Registered']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -76,7 +77,8 @@ class DefaultController extends Controller
     public function actionUpdate($user_id)
     {
         if (Yii::$app->user->identity && Yii::$app->user->identity->is_support_user) {
-            throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Support User can view this page.');
+            $message = Yii::$app->messageCache->getMessage('common.forbidden_exception');
+            throw new \yii\web\ForbiddenHttpException($message);
         }
         $user = $this->findModel($user_id);
         $model = new UserUpdateForm($user);
@@ -85,7 +87,8 @@ class DefaultController extends Controller
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    Yii::$app->session->setFlash('success', 'User has been successfully Updated');
+                    $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'User']);
+                    Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['/user']);
                 }
             }
@@ -109,15 +112,18 @@ class DefaultController extends Controller
     public function actionBlock($id)
     {
         if ($id == \Yii::$app->user->getId()) {
-            \Yii::$app->getSession()->setFlash('error', 'You can not block your own account');
+            $message = Yii::$app->messageCache->getMessage('common.block_restricted');
+            \Yii::$app->getSession()->setFlash('error', $message);
         } else {
             $user = $this->findModel($id);
             if ($user->getIsBlocked()) {
                 $user->unblock();
-                \Yii::$app->getSession()->setFlash('success', 'User has been unblocked');
+                $message = Yii::$app->messageCache->getMessage('common.successfully',['{var}' => 'User unblocked']);
+                \Yii::$app->getSession()->setFlash('success', $message);
             } else {
                 $user->block();
-                \Yii::$app->getSession()->setFlash('success', 'User has been blocked');
+                $message = Yii::$app->messageCache->getMessage('common.successfully',['{var}' => 'User blocked']);
+                \Yii::$app->getSession()->setFlash('success', $message);
             }
         }
         return $this->redirect(Yii::$app->request->referrer);
@@ -136,8 +142,8 @@ class DefaultController extends Controller
                 $isexist->delete();
             }
         }
-
-        \Yii::$app->getSession()->setFlash('success', 'User has been deleted');
+        $message = Yii::$app->messageCache->getMessage('common.deleted',['{var}' => 'User']);
+        \Yii::$app->getSession()->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -154,7 +160,8 @@ class DefaultController extends Controller
             Yii::$app->user->switchIdentity($user, 3600);
             return $this->redirect('/');
         }
-        throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action.');
+        $message = Yii::$app->messageCache->getMessage('common.forbidden_exception');
+        throw new \yii\web\ForbiddenHttpException($message);
     }
 
 
