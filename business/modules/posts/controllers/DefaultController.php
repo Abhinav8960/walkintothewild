@@ -27,7 +27,7 @@ class DefaultController extends Controller
 
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','view', 'quotation', 'quotation-validate'],
+                'only' => ['index', 'view', 'quotation', 'quotation-validate'],
                 'rules' => [
                     [
                         'actions' => ['index'],
@@ -35,7 +35,7 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view','quotation', 'quotation-validate'],
+                        'actions' => ['view', 'quotation', 'quotation-validate'],
                         'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
@@ -69,11 +69,11 @@ class DefaultController extends Controller
         $safari_operator = $this->module->operatormodel();
         $model->safari_operator_id = $safari_operator->id;
         $model->status = UserPosts::STATUS_ACTIVE;
-        $model->user_id = \Yii :: $app->user->identity->id;
+        $model->user_id = \Yii::$app->user->identity->id;
         $model->version = 1;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->file = \yii\web\UploadedFile::getInstance($model,'file');
+                $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->user_image_model->save()) {
@@ -86,14 +86,14 @@ class DefaultController extends Controller
                         }
                         if ($model->user_image_model->save()) {
                             $model->user_image_model->savehistory();
-                            \Yii::$app->session->setFlash('success', 'Post added successfully');
+                            $message = Yii::$app->messageCache->getMessage('common.successfully', 'Post added');
+                            \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['index']);
                         }
                     }
                 }
             }
-        }
-        else {
+        } else {
             $model->user_image_model->loadDefaultValues();
         }
         return $this->render('create', [
@@ -101,13 +101,14 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionUpdate($id){
+    public function actionUpdate($id)
+    {
         $formModel = $this->findPostId($id);
         $model = new UserPostImageForm($formModel);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->file = \yii\web\UploadedFile::getInstance($model,'file');
+                $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->user_image_model->save()) {
@@ -120,19 +121,21 @@ class DefaultController extends Controller
                         }
                         if ($model->user_image_model->save()) {
                             $model->user_image_model->savehistory();
-                            \Yii::$app->session->setFlash('success', 'Post Edited successfully');
+                            $message = Yii::$app->messageCache->getMessage('common.successfully', ['{var}' => 'Post edited']);
+                            \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['index']);
-                        } 
+                        }
                     }
                 }
             }
-        } 
+        }
         return $this->render('update', [
             'model' => $model,
         ]);
     }
 
-    public function findPostId($id){
+    public function findPostId($id)
+    {
         if (($model = UserPosts::findOne(['id' => $id, 'status' => [UserPosts::STATUS_ACTIVE, UserPosts::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
@@ -143,7 +146,8 @@ class DefaultController extends Controller
     {
         $userpost = UserPosts::find()->where(['id' => $id])->limit(1)->one();
         if (!$userpost) {
-            \Yii::$app->session->setFlash('danger', 'Post not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Post']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
         return $this->render('view', [
@@ -155,15 +159,17 @@ class DefaultController extends Controller
         $model = $this->findPostId($id);
         $model->status = UserPosts::STATUS_DELETE;
         $model->save();
-        Yii::$app->session->setFlash('success', 'Post Deleted Successfully');
-        return $this->redirect(['index']); 
+        $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Post']);
+        Yii::$app->session->setFlash('success', $message);
+        return $this->redirect(['index']);
     }
 
     public function actionCommentListing($id)
     {
         $userpost = UserPosts::find()->where(['id' => $id])->limit(1)->one();
         if (!$userpost) {
-            \Yii::$app->session->setFlash('danger', 'Post not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Post']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
 

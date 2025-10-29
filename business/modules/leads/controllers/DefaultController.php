@@ -372,7 +372,7 @@ class DefaultController extends  Controller
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             if ($model->save()) {
-                $message = Yii::$app->messageCache->getMessage('common.updated', ['var' => 'Lead Category']);
+                $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Lead Category']);
                 Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(Yii::$app->request->referrer);
             }
