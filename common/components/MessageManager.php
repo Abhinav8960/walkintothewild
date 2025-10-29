@@ -1,15 +1,15 @@
 <?php
-// @api/components/MessageManager.php
-namespace api\components;
+
+namespace common\components;
 
 use Yii;
 use yii\base\Component;
 
 class MessageManager extends Component
 {
-    public $messageFile = '@api/config/messages.php';
-    public $cacheDuration = 3600; // Cache for 1 hour
+    public $messageFile = '@common/config/messages.php';
     public $cacheKey = 'app_flash_messages';
+    public $cacheDuration = 3600;
 
     private $_messages;
 
@@ -22,16 +22,15 @@ class MessageManager extends Component
     protected function loadMessages()
     {
 
-        $cache = \Yii::$app->messageCacheApi;
+        $cache = \Yii::$app->cache;
 
         $messages = $cache->get($this->cacheKey);
 
         if ($messages === false) {
-            // If not in cache, load from file
+
             $filePath = Yii::getAlias($this->messageFile);
             if (file_exists($filePath)) {
                 $messages = require $filePath;
-                // Store in cache
                 $cache->set($this->cacheKey, $messages, $this->cacheDuration);
             } else {
                 $messages = [];
@@ -76,21 +75,6 @@ class MessageManager extends Component
         $message = preg_replace('/\{[^\}]+\}/', '', $message);
         return trim($message);
     }
-
-    /**
-     * Clears the cached messages. Useful when you update the messages.php file.
-     */
-    // public function clearCache()
-    // {
-    //     \Yii::$app->cache->delete($this->cacheKey);
-    //     return true;
-    // }
-
-    // public static function clearAllCache()
-    // {
-    //     $manager = new self();
-    //     return $manager->clearCache();
-    // }
 
     public function clearCache($cache = null)
     {

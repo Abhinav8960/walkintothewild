@@ -61,7 +61,7 @@ return [
         'externaloperator' => [
             'class' => 'support\modules\externaloperator\Module',
         ],
-        
+
         'whatsapp' => [
             'class' => 'support\modules\whatsapp\Module',
         ],
@@ -69,7 +69,7 @@ return [
         'booking' => [
             'class' => 'support\modules\booking\Module',
         ],
-        
+
         'fixeddeparturebooking' => [
             'class' => 'support\modules\fixeddeparturebooking\Module',
         ],
@@ -124,6 +124,11 @@ return [
             'showScriptName' => false,
             'rules' => [],
         ],
+       
+        'messageCache' => [
+            'class' => 'common\components\MessageManager',
+        ],
+
 
     ],
     'container' => [
@@ -143,5 +148,6 @@ return [
             ],
         ],
     ],
+
     'params' => $params,
 ];

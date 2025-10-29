@@ -125,7 +125,8 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->partner_gallery_model->save()) {
                         $model->partner_gallery_model->versionsave();
-                        \Yii::$app->session->setFlash('success', 'Gallery added successfully');
+                        $message = Yii::$app->messageCache->getMessage('common.created', ['{var}' => 'Gallery']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }

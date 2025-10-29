@@ -4,14 +4,15 @@ return [
     // Common Messages can be used globally
     'common' => [
         'success' => 'Success!',
+        'created' => '{var} Created successfully!',
         'updated' => '{var} Updated successfully!',
         'update_failed' => '{var} not updated!',
         'update_restricted' => 'You cannot update this {var}!',
         'deleted' => '{var} Deleted successfully!',
         'delete_failed' => 'Deletion failed!',
-        'inactive' => '{var} is either inactive or deleted!',
         'delete_restricted' => 'You cannot delete this {var}!',
-        'found'=>'{var} Found!',
+        'inactive' => '{var} is either inactive or deleted!',
+        'found' => '{var} Found!',
         'not_found' => '{var} Not Found!',
         'user_not_accessible' => 'User Not Found or User Account may be Blocked!',
         'invalid_request' => 'Invalid Request!',
@@ -86,16 +87,16 @@ return [
         'send_for_approval' => '{var} sent for approval successfully!',
         'already_send_for_approval' => '{var} already sent for approval successfully!',
 
-        'upload_success'=>'Uploaded Successfully!',
-        'upload_failed'=>'Failed to upload!',
-        'try_again'=>'Please Try Again!',
+        'upload_success' => 'Uploaded Successfully!',
+        'upload_failed' => 'Failed to upload!',
+        'try_again' => 'Please Try Again!',
 
-        'set_success'=>'{var} set successfully!',
-        'set_failed'=>'Failed to set {var}!',
+        'set_success' => '{var} set successfully!',
+        'set_failed' => 'Failed to set {var}!',
 
-        'message_required'=>'Message is required!',
-        'message_send'=>'Message Sent!',
-        'message_not_sent'=>'Message not sent!',
+        'message_required' => 'Message is required!',
+        'message_send' => 'Message Sent!',
+        'message_not_sent' => 'Message not sent!',
         'operator_cannot_review' => 'Operator Cannot Review!',
 
     ],
@@ -181,24 +182,24 @@ return [
         'inclusion' => [
             'fail_to_save' => 'Failed to save package inclusion option!',
         ]
+    ],
+    'chat' => [
+        'make_call_on_chat' => [
+            'phone_unavailable_or_unverified' => 'You cannot perform this action, as phone is not available or verified for any of the chat members',
+            'call_requested' => 'Call Requested!',
+            'call_initiated' => 'Call initiated!',
+            'call_initiation_failed' => 'Failed to initiate the call!',
+            'user_number_not_verified' => 'User number is not verified!'
         ],
-    'chat'=>[
-        'make_call_on_chat'=>[
-            'phone_unavailable_or_unverified'=>'You cannot perform this action, as phone is not available or verified for any of the chat members',
-            'call_requested'=>'Call Requested!',
-            'call_initiated'=>'Call initiated!',
-            'call_initiation_failed'=>'Failed to initiate the call!',
-            'user_number_not_verified'=>'User number is not verified!'            
+        'edit_message' => [
+            'id_message_required' => 'Chat message ID and message are required!',
+            'chat_permission_denied' => 'Chat message not found or you do not have permission to edit it.',
+            'edit_time_limit' => 'You can only edit messages within 10 minutes!',
         ],
-        'edit_message'=>[
-            'id_message_required'=>'Chat message ID and message are required!',
-            'chat_permission_denied'=>'Chat message not found or you do not have permission to edit it.',
-            'edit_time_limit'=>'You can only edit messages within 10 minutes!',
-        ],
-        'delete_message'=>[
-            'chat_permission_denied'=>'Chat message not found or you do not have permission to delete it',
-            'can_not_delete'=>'You cannot delete messages!',
-            
+        'delete_message' => [
+            'chat_permission_denied' => 'Chat message not found or you do not have permission to delete it',
+            'can_not_delete' => 'You cannot delete messages!',
+
         ]
-    ]
+    ],
 ];

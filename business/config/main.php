@@ -103,6 +103,10 @@ return [
             ],
         ],
 
+        'messageCache' => [
+            'class' => 'common\components\MessageManager',
+        ],
+
     ],
     'container' => [
         'definitions' => [
@@ -121,5 +125,6 @@ return [
             ],
         ],
     ],
+
     'params' => $params,
 ];
