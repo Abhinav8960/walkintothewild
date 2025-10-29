@@ -4,14 +4,16 @@ return [
     // Common Messages can be used globally
     'common' => [
         'success' => 'Success!',
-        'created' => '{var} Created successfully!',
+        'created' => '{var} created successfully!',
+        'created_failed' => 'Failed to create {var}!',
         'updated' => '{var} Updated successfully!',
         'update_failed' => '{var} not updated!',
         'update_restricted' => 'You cannot update this {var}!',
         'deleted' => '{var} Deleted successfully!',
         'delete_failed' => 'Deletion failed!',
         'delete_restricted' => 'You cannot delete this {var}!',
-        'inactive' => '{var} is either inactive or deleted!',
+        'active' => 'Successfully Active!',
+        'inactive' => 'Successfully Inactive',
         'found' => '{var} Found!',
         'not_found' => '{var} Not Found!',
         'user_not_accessible' => 'User Not Found or User Account may be Blocked!',
@@ -98,6 +100,8 @@ return [
         'message_send' => 'Message Sent!',
         'message_not_sent' => 'Message not sent!',
         'operator_cannot_review' => 'Operator Cannot Review!',
+        'technical_issue' => 'Technical Issue! Please try again later.',
+        'done' => 'Done!',
 
     ],
 

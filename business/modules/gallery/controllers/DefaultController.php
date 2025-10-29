@@ -145,7 +145,8 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -166,7 +167,8 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -193,7 +195,8 @@ class DefaultController extends Controller
                         $model->uploadFile();
                         $partner_gallery_model->gallery_images_count = $partner_gallery_model->gallery_count;
                         $partner_gallery_model->save(false);
-                        \Yii::$app->session->setFlash('success', 'Successfully Uploaded');
+                        $message = Yii::$app->messageCache->getMessage('common.upload_success');
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['view', 'id' => $partner_gallery_model->id]);
                     }
                 }
@@ -213,7 +216,8 @@ class DefaultController extends Controller
         $safari_operator = $this->module->operatormodel();
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'edit_status' => 1, 'safari_operator_id' => $safari_operator->id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $partner_gallery_model->edit_status = 2;
@@ -230,7 +234,8 @@ class DefaultController extends Controller
 
             new \common\events\operator\GallerySendForApprovalEvent($safari_operator->id, $partner_gallery_model->title);
 
-            \Yii::$app->session->setFlash('success', 'Gallery Send For Approval!!!');
+            $message = Yii::$app->messageCache->getMessage('common.send_for_approval', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['index']);
         }
     }
@@ -247,9 +252,11 @@ class DefaultController extends Controller
         $partner_gallery_model->edit_status = 1;
 
         if ($partner_gallery_model->save(false)) {
-            \Yii::$app->session->setFlash('success', 'Done!!!');
+             $message = Yii::$app->messageCache->getMessage('done');
+            \Yii::$app->session->setFlash('error', $message);
         } else {
-            \Yii::$app->session->setFlash('error', 'Technical Issue!!!');
+            $message = Yii::$app->messageCache->getMessage('technical_issue');
+            \Yii::$app->session->setFlash('error', $message);
         }
         return $this->redirect(['index']);
     }
@@ -261,7 +268,8 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator_model->id,  'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -276,7 +284,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->partner_gallery_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Gallery Updated Successfully!!!');
+                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Gallery']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -297,7 +306,8 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator_model->id, 'edit_status' => 2, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -314,7 +324,8 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -345,7 +356,8 @@ class DefaultController extends Controller
             $count++;
         }
 
-        Yii::$app->session->setFlash('success', 'Image order updated successfully.');
+        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Image order']);
+        Yii::$app->session->setFlash('success', $message);
 
         return ['status' => 'success'];
     }
@@ -368,19 +380,23 @@ class DefaultController extends Controller
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'safari_operator_id' => $safari_operator->id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
 
         if (!$partner_gallery_model) {
-            return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Gallery Not Found!!!"]);
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
+            return $this->redirect(['index']);
         }
 
         $update_model = PartnerGalleryImage::updateAll(['set_as_thumbnail' => 0], ['partner_gallery_id' => $partner_gallery_id]);
 
         $model = PartnerGalleryImage::find()->where(['id' => $id, 'partner_gallery_id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            $message = Yii::$app->messageCache->getMessage('common.page_not_exist');
+            throw new NotFoundHttpException($message);
         }
 
         $model->set_as_thumbnail = 1;
         if ($model->save(false)) {
-            Yii::$app->session->setFlash('success', 'Updated successfully.');
+            $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Thumbnail']);
+            Yii::$app->session->setFlash('success', $message);
             return $this->redirect(Yii::$app->request->referrer);
         }
     }
@@ -389,12 +405,14 @@ class DefaultController extends Controller
     {
         $model = PartnerGalleryImage::find()->where(['id' => $id, 'status' => [PartnerGalleryImage::STATUS_ACTIVE, PartnerGalleryImage::STATUS_SUSPEND]])->limit(1)->one();
         if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            $message = Yii::$app->messageCache->getMessage('common.page_not_exist');
+            throw new NotFoundHttpException($message);
         }
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $model->partner_gallery_id])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -403,13 +421,15 @@ class DefaultController extends Controller
             $model->save(false);
             $partner_gallery_model->gallery_images_count = $partner_gallery_model->gallery_count;
             $partner_gallery_model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Successfully Inactive !!!');
+            $message = Yii::$app->messageCache->getMessage('common.inactive');
+            \Yii::$app->getSession()->setFlash('success', $message);
         } else {
             $model->status = PartnerGalleryImage::STATUS_ACTIVE;
             $model->save(false);
             $partner_gallery_model->gallery_images_count = $partner_gallery_model->gallery_count;
             $partner_gallery_model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Successfully Active!!!');
+            $message = Yii::$app->messageCache->getMessage('common.active');
+            \Yii::$app->getSession()->setFlash('success', $message);
         }
 
         return $this->redirect(Yii::$app->request->referrer);
@@ -419,7 +439,8 @@ class DefaultController extends Controller
     {
         $partner_gallery_image_model = PartnerGalleryImage::find()->where(['id' => $id, 'status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]])->limit(1)->one();
         if (!$partner_gallery_image_model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            $message = Yii::$app->messageCache->getMessage('common.page_not_exist');
+            throw new NotFoundHttpException($message);
         }
 
         $model = new PartnerGalleryImageForm($partner_gallery_image_model);
@@ -431,7 +452,8 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->partner_gallery_image_model->save()) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Successfully Uploaded');
+                        $message = Yii::$app->messageCache->getMessage('common.upload_success');
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['view', 'id' => $partner_gallery_image_model->partner_gallery_id]);
                     }
                 }
@@ -451,7 +473,8 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -460,7 +483,7 @@ class DefaultController extends Controller
             $partner_gallery_model->listing_status = PartnerGallery::STATUS_DELETE;
             $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partner_gallery_model->id, 'listing_status' => 1])->limit(1)->one();
             if ($partner_gallery_version) {
-                $partner_gallery_version->status = -1;
+                $partner_gallery_version->listing_status = -1;
                 $partner_gallery_version->save(false);
             }
         } else {
@@ -500,7 +523,8 @@ class DefaultController extends Controller
                 }
             }
 
-            \Yii::$app->session->setFlash('error', 'Gallery Deleted Successfully!!!');
+            $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         return $this->redirect(Yii::$app->request->referrer);
@@ -512,7 +536,8 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -528,13 +553,15 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
         $partner_gallery_model->status = PartnerGallery::STATUS_DELETE;
         if ($partner_gallery_model->save(false)) {
-            \Yii::$app->session->setFlash('success', 'Gallery Deleted Successfully!!!');
+            $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['index']);
         }
         return $this->redirect(Yii::$app->request->referrer);
