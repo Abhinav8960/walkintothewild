@@ -212,4 +212,16 @@ return [
 
         ]
     ],
+    'leads' => [
+        'quotation' => [
+            'submit' => 'Quotation Submitted Successfully!',
+        ],
+        'partner' => [
+            'found' => 'Partner Found!',
+            'not_found' => 'Partner Not Found!',
+        ],
+        'reminder' => [
+            'added_success' => 'Reminder added successfully!',
+        ],
+    ],
 ];
