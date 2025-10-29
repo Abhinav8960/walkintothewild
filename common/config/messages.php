@@ -12,8 +12,8 @@ return [
         'deleted' => '{var} Deleted successfully!',
         'delete_failed' => 'Deletion failed!',
         'delete_restricted' => 'You cannot delete this {var}!',
-        'active' => 'Successfully Active!',
-        'inactive' => 'Successfully Inactive',
+        'active' => '{var} Successfully Active!',
+        'inactive' => '{var} Successfully Inactive',
         'found' => '{var} Found!',
         'not_found' => '{var} Not Found!',
         'user_not_accessible' => 'User Not Found or User Account may be Blocked!',
@@ -84,6 +84,7 @@ return [
 
         'error_occurred' => 'An error occurred while updating data!',
         'page_not_exist' => 'The requested page does not exist!',
+        'forbidden_exception' => 'You do not have permission to access this page!',
         'not_operator' => 'You are not operator!',
         'send_for_approval_failed' => 'An error occurred while sending for approval!',
         'send_for_approval' => '{var} sent for approval successfully!',
@@ -107,6 +108,8 @@ return [
         'rejected'=>'{var} Rejected successfully!',
         'removed' => '{var} removed successfully!',
         'added' => '{var} Added successfully!',
+
+        'successfully' => '{var} successfully!',
 
 
     ],

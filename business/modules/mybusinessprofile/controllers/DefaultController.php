@@ -30,8 +30,9 @@ class DefaultController extends Controller
         if (($model = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null,'status'=>SafariOperator::STATUS_ACTIVE])->limit(1)->one()) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        
+        $message = Yii::$app->messageCache->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
 }
