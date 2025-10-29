@@ -5,6 +5,7 @@ namespace accounts\modules\operator\controllers;
 use common\models\operator\SafariOperator;
 use yii\web\Controller;
 use common\models\operator\SafariOperatorSearch;
+use Yii;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -42,7 +43,8 @@ class DefaultController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_found');
+        throw new NotFoundHttpException($message);
     }
 
 }

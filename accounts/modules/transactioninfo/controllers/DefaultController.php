@@ -9,7 +9,6 @@ use yii\web\Controller;
 use yii;
 use yii\web\NotFoundHttpException;
 
-use function PHPUnit\Framework\throwException;
 
 /**
  * Default controller for the `transactioninfo` module
