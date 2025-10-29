@@ -103,7 +103,7 @@ return [
             ],
         ],
 
-        'messageCache' => [
+        'messageManager' => [
             'class' => 'common\components\MessageManager',
         ],
 

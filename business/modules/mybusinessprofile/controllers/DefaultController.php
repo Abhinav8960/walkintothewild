@@ -31,7 +31,7 @@ class DefaultController extends Controller
             return $model;
         }
         
-        $message = Yii::$app->messageCache->getMessage('common.page_not_exist');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
         throw new NotFoundHttpException($message);
     }
 
