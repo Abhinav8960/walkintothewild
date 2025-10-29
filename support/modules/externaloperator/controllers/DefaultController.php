@@ -48,7 +48,8 @@ class DefaultController extends Controller
                     if ($model->externaloperator_model->save(false)) {
                         $selectedParkIds = $model->park_list ?? [];
                         $this->ExternalOperatorParks($selectedParkIds, $model->externaloperator_model->id);
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageCache->getMessage('common.created', ['{var}' => 'External Operator']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -73,7 +74,8 @@ class DefaultController extends Controller
                     if ($model->externaloperator_model->save(false)) {
                         $selectedParkIds = $model->park_list ?? [];
                         $this->ExternalOperatorParks($selectedParkIds, $model->externaloperator_model->id);
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'External Operator']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -150,7 +152,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->externaloperator_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Call status updated successfully.');
+                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Call Status']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -169,7 +172,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->externaloperator_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Email status updated successfully.');
+                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Email Status']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -188,7 +192,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->externaloperator_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Commented successfully.');
+                        $message = Yii::$app->messageCache->getMessage('common.comment_success');
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -202,7 +207,8 @@ class DefaultController extends Controller
         $model = $this->findModel($id);
         $model->status = -1;
         if ($model->save()) {
-            \Yii::$app->session->setFlash('success', 'Deleted Successfully');
+            $message = Yii::$app->messageCache->getMessage('common.deleted');
+            \Yii::$app->session->setFlash('success', $message);
         }
         return $this->redirect(['index']);
     }

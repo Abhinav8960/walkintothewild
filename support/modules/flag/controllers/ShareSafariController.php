@@ -57,7 +57,8 @@ class ShareSafariController extends Controller
                                         }
                                     }
                                     ShareSafariCommentReport::updateAll(['status' => 3], ['share_safari_comment_id' => $share_safari_comment->id, 'status' => 1]);
-                                    \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                    $message = Yii::$app->messageCache->getMessage('common.submitted', ['{var}' => 'Action']);
+                                    \Yii::$app->session->setFlash('success', $message);
                                     return $this->redirect(['index']);
                                 }
                             }
@@ -79,7 +80,8 @@ class ShareSafariController extends Controller
     {
         $review = ShareSafariComment::find()->where(['id' => $id])->one();
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageCache->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -99,7 +101,8 @@ class ShareSafariController extends Controller
     {
         $review = ShareSafariComment::find()->where(['id' => $id])->one();
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageCache->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -119,7 +122,8 @@ class ShareSafariController extends Controller
                     }
                 }
             }
-            \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+            $message = Yii::$app->messageCache->getMessage('common.submitted', ['{var}' => 'Action']);
+            \Yii::$app->session->setFlash('success', $message);
         }
 
         //form model

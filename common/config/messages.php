@@ -103,6 +103,9 @@ return [
         'technical_issue' => 'Technical Issue! Please try again later.',
         'done' => 'Done!',
 
+        'approved_success'=>'{var} Approved successfully!',
+        'rejected'=>'{var} Rejected successfully!'
+
     ],
 
     'authorization' => [
