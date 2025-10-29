@@ -40,7 +40,8 @@ class DefaultController extends Controller
     {
         $sighting = Sighting::find()->where(['id' => $id])->limit(1)->one();
         if (!$sighting) {
-            \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Sighting']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
 
@@ -57,7 +58,8 @@ class DefaultController extends Controller
                 $comment_model->status = 1;
 
                 if ($comment_model->save(false)) {
-                    Yii::$app->session->setFlash('success', 'Comment submitted successfully.');
+                    $message = Yii::$app->messageCache->getMessage('common.submitted', ['{var}' => 'Comment']);
+                    Yii::$app->session->setFlash('success', $message);
                     return $this->refresh();
                 }
             }
@@ -72,7 +74,8 @@ class DefaultController extends Controller
     {
         $sighting = Sighting::find()->where(['id' => $id])->limit(1)->one();
         if (!$sighting) {
-            \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Sighting']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
 
@@ -116,7 +119,8 @@ class DefaultController extends Controller
     {
         $sighting_delete_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_delete_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => 'Sighting Not Found!!!']);
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Sighting']);
+            \Yii::$app->session->setFlash('danger', $message);
         }
 
         $model = new SightingDeleteForm($sighting_delete_model);
@@ -127,7 +131,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->sighting_delete_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Sighting']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -146,7 +151,8 @@ class DefaultController extends Controller
         $comment = SightingComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
 
         if (!$comment) {
-            Yii::$app->session->setFlash('error', 'Comment not found');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Comment']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -160,11 +166,12 @@ class DefaultController extends Controller
                     $rep->save(false);
                 }
             }
-            Yii::$app->session->setFlash('success', 'Comment and Replies related to it has been deleted successfully.');
+            $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Related Comment and Replies']);
+            Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $comment->sighting_id]);
         }
-
-        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
+        $message = Yii::$app->messageCache->getMessage('common.delete_failed');
+        Yii::$app->session->setFlash('danger', $message);
         return $this->redirect(['index']);
     }
 
@@ -172,17 +179,19 @@ class DefaultController extends Controller
     {
         $reply = SightingComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
         if (!$reply) {
-            Yii::$app->session->setFlash('error', 'Reply not found');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Reply']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $reply->status = SightingComment::STATUS_DELETE;
 
         if ($reply->save(false)) {
-            Yii::$app->session->setFlash('success', 'Reply has been deleted successfully.');
+            $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Reply']);
+            Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $reply->sighting_id]);
         }
-
-        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
+        $message = Yii::$app->messageCache->getMessage('common.delete_failed');
+        Yii::$app->session->setFlash('danger', $message);
         return $this->redirect(['index']);
     }
 
@@ -202,21 +211,21 @@ class DefaultController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
-    public function actionMarkAsDaily($id)
-    {
-        $model = $this->findModel($id);
-        if ($model->show_in_front == 1) {
-            $model->show_in_front = 0;
-            $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Sighting Remove from Daily Update !!!');
-        } else {
-            $model->show_in_front = 1;
-            $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Sighting Add to Daily Update !!!');
-        }
+    // public function actionMarkAsDaily($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     if ($model->show_in_front == 1) {
+    //         $model->show_in_front = 0;
+    //         $model->save(false);
+    //         \Yii::$app->getSession()->setFlash('success', 'Sighting Remove from Daily Update !!!');
+    //     } else {
+    //         $model->show_in_front = 1;
+    //         $model->save(false);
+    //         \Yii::$app->getSession()->setFlash('success', 'Sighting Add to Daily Update !!!');
+    //     }
 
-        return $this->redirect(Yii::$app->request->referrer);
-    }
+    //     return $this->redirect(Yii::$app->request->referrer);
+    // }
 
     // public function actionUpdateThumbnail($id)
     // {

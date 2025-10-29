@@ -112,6 +112,8 @@ return [
         'successfully' => '{var} successfully!',
         'availabe_for_draft' => '{var} available for draft!',
 
+        'block_restricted' => 'You can not block your own account.',
+
 
     ],
 
