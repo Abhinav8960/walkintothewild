@@ -39,7 +39,8 @@ class DefaultController extends Controller
         // $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'send_for_approval' => 1, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
 
@@ -60,7 +61,8 @@ class DefaultController extends Controller
         // $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'send_for_approval' => 1, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
 
@@ -76,7 +78,8 @@ class DefaultController extends Controller
 
         if ($partner_gallery_model->save(false)) {
             $partner_gallery_model->versionsave();
-            \Yii::$app->session->setFlash('danger', 'Gallery Approved SuccessFully!!!');
+            $message = Yii::$app->messageCache->getMessage('common.approved_success', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['index']);
         }
     }
@@ -86,7 +89,8 @@ class DefaultController extends Controller
         // $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'send_for_approval' => 1, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
 
@@ -102,7 +106,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->rejection_model->save(false)) {
-                        \Yii::$app->session->setFlash('danger', 'Gallery Reject SuccessFully!!!');
+                        $message = Yii::$app->messageCache->getMessage('common.rejected', ['{var}' => 'Gallery']);
+                        \Yii::$app->session->setFlash('danger', $message);
                         return $this->redirect(['index']);
                     }
                 }
