@@ -38,7 +38,8 @@ class DefaultController extends Controller
     {
         $userpost = UserPosts::find()->where(['id' => $id])->limit(1)->one();
         if (!$userpost) {
-            \Yii::$app->session->setFlash('danger', 'Post not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found',['{var}' => 'Post']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
 
@@ -56,7 +57,8 @@ class DefaultController extends Controller
                 $comment_model->status = 1;
 
                 if ($comment_model->save(false)) {
-                    Yii::$app->session->setFlash('success', 'Comment submitted successfully.');
+                    $message = Yii::$app->messageCache->getMessage('common.submitted',['{var}' => 'Comment']);
+                    \Yii::$app->session->setFlash('success', $message);
                     return $this->refresh();
                 }
             }
@@ -72,7 +74,8 @@ class DefaultController extends Controller
     {
         $userpost = UserPosts::find()->where(['id' => $id])->limit(1)->one();
         if (!$userpost) {
-            \Yii::$app->session->setFlash('danger', 'Post not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found',['{var}' => 'Post']);
+            \Yii::$app->session->setFlash('danger',$message);
             return $this->redirect(['index']);
         }
 
@@ -116,7 +119,8 @@ class DefaultController extends Controller
     {
         $user_posts_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$user_posts_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->messageCache->getMessage('common.not_found',['{var}' => 'Post']);
+            \Yii::$app->session->setFlash('danger', $message);
         }
 
         $model = new UserPostDeleteForm($user_posts_model);
@@ -127,7 +131,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->user_posts_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        $message = Yii::$app->messageCache->getMessage('common.deleted');
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -148,7 +153,8 @@ class DefaultController extends Controller
         $comment = UserPostComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
 
         if (!$comment) {
-            Yii::$app->session->setFlash('error', 'Comment not found');
+            $message = Yii::$app->messageCache->getMessage('common.not_found',['{var}' => 'Comment']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -162,11 +168,12 @@ class DefaultController extends Controller
                     $rep->save(false);
                 }
             }
-            Yii::$app->session->setFlash('success', 'Comment and Replies related to it has been deleted successfully.');
+            $message = Yii::$app->messageCache->getMessage('common.deleted',['{var}' => 'Related Comment and Replies']);
+            Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $comment->user_posts_id]);
         }
-
-        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
+        $message = Yii::$app->messageCache->getMessage('common.delete_failed');
+        Yii::$app->session->setFlash('danger', $message);
         return $this->redirect(['index']);
     }
 
@@ -174,17 +181,19 @@ class DefaultController extends Controller
     {
         $reply = UserPostComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
         if (!$reply) {
-            Yii::$app->session->setFlash('error', 'Reply not found');
+            $message = Yii::$app->messageCache->getMessage('common.not_found',['{var}' => 'Reply']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $reply->status = UserPostComment::STATUS_DELETE;
 
         if ($reply->save(false)) {
-            Yii::$app->session->setFlash('success', 'Reply has been deleted successfully.');
+            $message = Yii::$app->messageCache->getMessage('common.deleted',['{var}' => 'Reply']);
+            Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $reply->user_posts_id]);
         }
-
-        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
+        $message = Yii::$app->messageCache->getMessage('common.delete_failed');
+        Yii::$app->session->setFlash('danger', $message);
         return $this->redirect(['index']);
     }
 
