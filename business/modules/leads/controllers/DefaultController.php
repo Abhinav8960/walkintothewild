@@ -277,7 +277,8 @@ class DefaultController extends  Controller
 
 
         if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
-            \Yii::$app->session->setFlash('danger', 'You cannot perform this action, as phone is not available or verified for any of the chat members');
+            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
 
@@ -286,7 +287,8 @@ class DefaultController extends  Controller
         try {
 
             if (!$chat_model->user->is_mobile_no_verified) {
-                \Yii::$app->session->setFlash('danger', 'User number is not verified.');
+                $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.user_number_not_verified');
+                \Yii::$app->session->setFlash('danger', $message);
                 return $this->redirect(['view', 'id' => $id]);
             }
 

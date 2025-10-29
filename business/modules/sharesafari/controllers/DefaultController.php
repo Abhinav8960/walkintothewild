@@ -310,11 +310,13 @@ class DefaultController extends Controller
                             \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['inclusion', 'id' => $shared_safari_departure_version_model->id]);
                         } else {
-                            Yii::$app->session->setFlash('danger', 'Failed to update fixed departure details.');
+                            $message = Yii::$app->messageCache->getMessage('common.update_failed', ['{var}' => 'Fixed departure details']);
+                            \Yii::$app->session->setFlash('danger', $message);
                         }
                     } catch (\Exception $e) {
                         $transaction->rollBack();
-                        Yii::$app->session->setFlash('danger', 'An error occurred while updating data: ' . $e->getMessage());
+                        $message = Yii::$app->messageCache->getMessage('common.error_occurred');
+                        Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
                     }
                 }
             }
@@ -495,7 +497,8 @@ class DefaultController extends Controller
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            $message = Yii::$app->messageCache->getMessage('common.send_for_approval_failed');
+            Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
             die();
@@ -585,7 +588,8 @@ class DefaultController extends Controller
                 } catch (\Exception $e) {
                     Yii::error($e->getMessage());
                     $transaction->rollBack();
-                    Yii::$app->session->setFlash('error', 'An error occurred while updation: ' . $e->getMessage());
+                    $message = Yii::$app->messageCache->getMessage('common.error_occurred');
+                    Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
                     echo "<pre>";
                     print_r($e->getMessage());
                     die();
@@ -765,7 +769,9 @@ class DefaultController extends Controller
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+
+            $message = Yii::$app->messageCache->getMessage('common.send_for_approval_failed');
+            Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
             die();
@@ -1049,7 +1055,8 @@ class DefaultController extends Controller
 
 
         if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
-            \Yii::$app->session->setFlash('danger', 'You cannot perform this action, as phone is not available or verified for any of the chat members');
+            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
 
@@ -1057,7 +1064,8 @@ class DefaultController extends Controller
         try {
 
             if (!$chat_model->user->is_mobile_no_verified) {
-                \Yii::$app->session->setFlash('danger', 'User number is not verified.');
+                $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.user_number_not_verified');
+                \Yii::$app->session->setFlash('danger', $message);
                 return $this->redirect(['view', 'id' => $id]);
             }
 
@@ -1192,7 +1200,8 @@ class DefaultController extends Controller
 
 
         if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
-            \Yii::$app->session->setFlash('danger', 'You cannot perform this action, as phone is not available or verified for any of the chat members');
+             $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
+                \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
 
@@ -1200,7 +1209,8 @@ class DefaultController extends Controller
         try {
 
             if (!$chat_model->user->is_mobile_no_verified) {
-                \Yii::$app->session->setFlash('danger', 'User number is not verified.');
+                 $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.user_number_not_verified');
+                \Yii::$app->session->setFlash('danger', $message);
                 return $this->redirect(['view', 'id' => $id]);
             }
 

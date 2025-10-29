@@ -247,7 +247,8 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'listing_status' => 1])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery not available for draft!!!');
+            $message = Yii::$app->messageCache->getMessage('common.availabe_for_draft', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error',  $message);
         }
         $partner_gallery_model->edit_status = 1;
 
