@@ -104,7 +104,10 @@ return [
         'done' => 'Done!',
 
         'approved_success'=>'{var} Approved successfully!',
-        'rejected'=>'{var} Rejected successfully!'
+        'rejected'=>'{var} Rejected successfully!',
+        'removed' => '{var} removed successfully!',
+        'added' => '{var} Added successfully!',
+
 
     ],
 

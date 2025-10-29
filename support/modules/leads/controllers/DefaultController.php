@@ -119,12 +119,14 @@ class DefaultController extends  Controller
         try {
 
             if (!$lead_model->user->is_mobile_no_verified) {
-                \Yii::$app->session->setFlash('error', 'User number is not verified.');
+                $message = Yii::$app->messageCache->getMessage('common.chat.user_number_not_verified');
+                \Yii::$app->session->setFlash('error', $message);
                 return $this->redirect(Yii::$app->request->referrer);
             }
 
             if (!Yii::$app->user->identity->is_mobile_no_verified) {
-                \Yii::$app->session->setFlash('error', 'Your number is not verified.');
+                $message = Yii::$app->messageCache->getMessage('common.chat.user_number_not_verified');
+                \Yii::$app->session->setFlash('error', $message);
                 return $this->redirect(Yii::$app->request->referrer);
             }
 
@@ -167,7 +169,8 @@ class DefaultController extends  Controller
             return $this->redirect(Yii::$app->request->referrer);
         } catch (\Exception $e) {
             $transaction->rollBack();
-            \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
+            $message = Yii::$app->messageCache->getMessage('common.chat.call_initiation_failed');
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(Yii::$app->request->referrer);
         }
 
@@ -185,7 +188,8 @@ class DefaultController extends  Controller
             if ($model->load($this->request->post())) {
                 $call_log->support_user_note = $model->support_user_note;
                 if ($call_log->save(false)) {
-                    \Yii::$app->session->setFlash('success', 'Call Detail Updated.');
+                    $message = Yii::$app->messageCache->getMessage('common.updated',['{var}' => 'Call Detail']);
+                    \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['view', 'id' => $id]);
                 }
             }
