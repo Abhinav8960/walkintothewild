@@ -329,11 +329,13 @@ class DefaultController extends Controller
                             \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['inclusion', 'id' => $package_version_model->id]);
                         } else {
-                            Yii::$app->session->setFlash('error', 'Failed to update package details.');
+                            $message = Yii::$app->messageCache->getMessage('common.update_failed', ['{var}' => 'Package details']);
+                            Yii::$app->session->setFlash('error', $message);
                         }
                     } catch (\Exception $e) {
                         $transaction->rollBack();
-                        Yii::$app->session->setFlash('error', 'An error occurred while updating data: ' . $e->getMessage());
+                        $message = Yii::$app->messageCache->getMessage('common.error_occurred');
+                        Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
                     }
                 }
             }
@@ -565,7 +567,8 @@ class DefaultController extends Controller
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            $message = Yii::$app->messageCache->getMessage('common.send_for_approval_failed');
+            Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
             die();
@@ -886,7 +889,8 @@ class DefaultController extends Controller
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            $message = Yii::$app->messageCache->getMessage('common.send_for_approval_failed');
+            Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
             die();
@@ -932,7 +936,8 @@ class DefaultController extends Controller
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            $message = Yii::$app->messageCache->getMessage('common.send_for_approval_failed');
+            Yii::$app->session->setFlash('error', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
             die();
