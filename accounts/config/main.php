@@ -71,6 +71,10 @@ return [
             'showScriptName' => false,
             'rules' => [],
         ],
+        
+        'messageManager' => [
+            'class' => 'common\components\MessageManager',
+        ],
 
     ],
     'container' => [

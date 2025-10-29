@@ -66,7 +66,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->transation_update_detail_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Update Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}'=>'Transaction Details']);
+                        Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
