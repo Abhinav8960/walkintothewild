@@ -80,7 +80,7 @@ class DefaultController extends Controller
                         $model->sighting_model->v_size = $model->file->size;
                         $model->sighting_model->v_duration = $this->getVideoDuration($model->file);
                         if ($model->sighting_model->save()) {
-                            $message = Yii::$app->messageCache->getMessage('common.successfully', ['{var}' => 'Sighting added']);
+                            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Sighting added']);
                             \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['index']);
                         }
@@ -144,7 +144,7 @@ class DefaultController extends Controller
     {
         $sighting = Sighting::find()->where(['id' => $id])->limit(1)->one();
         if (!$sighting) {
-            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Sighting']);
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
@@ -158,7 +158,7 @@ class DefaultController extends Controller
         $model = $this->findSightingId($id);
         $model->status = Sighting::STATUS_DELETE;
         $model->save();
-        $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Sighting']);
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Sighting']);
         Yii::$app->session->setFlash('success',  $message);
         return $this->redirect(['index']);
     }
@@ -167,7 +167,7 @@ class DefaultController extends Controller
     {
         $sighting = Sighting::find()->where(['id' => $id])->limit(1)->one();
         if (!$sighting) {
-            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Sighting']);
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }

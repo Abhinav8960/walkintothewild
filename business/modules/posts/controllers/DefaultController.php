@@ -86,7 +86,7 @@ class DefaultController extends Controller
                         }
                         if ($model->user_image_model->save()) {
                             $model->user_image_model->savehistory();
-                            $message = Yii::$app->messageCache->getMessage('common.successfully', ['{var}'=>'Post added']);
+                            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}'=>'Post added']);
                             \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['index']);
                         }
@@ -121,7 +121,7 @@ class DefaultController extends Controller
                         }
                         if ($model->user_image_model->save()) {
                             $model->user_image_model->savehistory();
-                            $message = Yii::$app->messageCache->getMessage('common.successfully', ['{var}' => 'Post edited']);
+                            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Post edited']);
                             \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['index']);
                         }
@@ -146,7 +146,7 @@ class DefaultController extends Controller
     {
         $userpost = UserPosts::find()->where(['id' => $id])->limit(1)->one();
         if (!$userpost) {
-            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Post']);
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
@@ -159,7 +159,7 @@ class DefaultController extends Controller
         $model = $this->findPostId($id);
         $model->status = UserPosts::STATUS_DELETE;
         $model->save();
-        $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Post']);
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Post']);
         Yii::$app->session->setFlash('success', $message);
         return $this->redirect(['index']);
     }
@@ -168,7 +168,7 @@ class DefaultController extends Controller
     {
         $userpost = UserPosts::find()->where(['id' => $id])->limit(1)->one();
         if (!$userpost) {
-            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Post']);
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }

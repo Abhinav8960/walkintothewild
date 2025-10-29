@@ -41,7 +41,7 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->faqs_model->save(false)) {
-                        $message = Yii::$app->messageCache->getMessage('common.created', ['{var}' => 'Faq']);
+                        $message = Yii::$app->messageManager->getMessage('common.created', ['{var}' => 'Faq']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
@@ -68,7 +68,7 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->faqs_model->save(false)) {
-                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Faq']);
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Faq']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
@@ -132,7 +132,7 @@ class DefaultController extends Controller
         $model = $this->findModel($id, $safari_operator->id);
         $model->status = SafariOperatorFaq::STATUS_DELETE;
         $model->save();
-        $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Faq']);
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Faq']);
         \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer);
     }

@@ -124,7 +124,7 @@ class DefaultController extends  Controller
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     if ($model->request(\Yii::$app->user->identity)) {
-                        $message = Yii::$app->messageCache->getMessage('lead.quotation.submit');
+                        $message = Yii::$app->messageManager->getMessage('lead.quotation.submit');
                         \Yii::$app->session->setFlash('success', $message);
                         return  $this->redirect(Yii::$app->request->referrer);
                     }
@@ -162,7 +162,7 @@ class DefaultController extends  Controller
             return $model;
         }
 
-        $message = Yii::$app->messageCache->getMessage('common.page_not_exist');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
         throw new NotFoundHttpException($message);
     }
 
@@ -261,10 +261,10 @@ class DefaultController extends  Controller
             $chat->is_seen = 0;
             $chat->created_at = time();
             $chat->save(false);
-            $message = Yii::$app->messageCache->getMessage('common.message_send');
+            $message = Yii::$app->messageManager->getMessage('common.message_send');
             return  \Yii::$app->session->setFlash('success', $message);
         } else {
-            $message = Yii::$app->messageCache->getMessage('common.message_not_sent');
+            $message = Yii::$app->messageManager->getMessage('common.message_not_sent');
             return  \Yii::$app->session->setFlash('success', $message);
         }
     }
@@ -277,7 +277,7 @@ class DefaultController extends  Controller
 
 
         if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
-            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
+            $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
@@ -287,7 +287,7 @@ class DefaultController extends  Controller
         try {
 
             if (!$chat_model->user->is_mobile_no_verified) {
-                $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.user_number_not_verified');
+                $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.user_number_not_verified');
                 \Yii::$app->session->setFlash('danger', $message);
                 return $this->redirect(['view', 'id' => $id]);
             }
@@ -326,12 +326,12 @@ class DefaultController extends  Controller
             // Call the callNow method
             $result = $callingService->callNow();
             $transaction->commit();
-            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiated');
+            $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.call_initiated');
             \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $id]);
         } catch (\Exception $e) {
             $transaction->rollBack();
-            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiation_failed');
+            $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.call_initiation_failed');
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
@@ -343,7 +343,7 @@ class DefaultController extends  Controller
         $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
 
         if (!$model) {
-            $message = Yii::$app->messageCache->getMessage('leads.partner.not_found');
+            $message = Yii::$app->messageManager->getMessage('leads.partner.not_found');
             throw new NotFoundHttpException($message);
         }
 
@@ -351,7 +351,7 @@ class DefaultController extends  Controller
             if ($model->save()) {
                 LeadPartners::reminderHistory($model);
                 LeadPartners::preparechatmessage($model, $id);
-                $message = Yii::$app->messageCache->getMessage('leads.reminder.added_success');
+                $message = Yii::$app->messageManager->getMessage('leads.reminder.added_success');
                 Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(Yii::$app->request->referrer);
             }
@@ -368,13 +368,13 @@ class DefaultController extends  Controller
         $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
 
         if (!$model) {
-            $message = Yii::$app->messageCache->getMessage('leads.partner.not_found');
+            $message = Yii::$app->messageManager->getMessage('leads.partner.not_found');
             throw new NotFoundHttpException($message);
         }
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             if ($model->save()) {
-                $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Lead Category']);
+                $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Lead Category']);
                 Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(Yii::$app->request->referrer);
             }

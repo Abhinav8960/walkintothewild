@@ -149,7 +149,7 @@ class DefaultController extends Controller
                             }
                         }
 
-                        $message = Yii::$app->messageCache->getMessage('common.created', ['{var}' => 'Fixed departure']);
+                        $message = Yii::$app->messageManager->getMessage('common.created', ['{var}' => 'Fixed departure']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['itinerary', 'id' => $model->shared_safari_departure_version_model->id]);
                     } else {
@@ -202,7 +202,7 @@ class DefaultController extends Controller
                             }
                         }
 
-                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Fixed departure']);
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Fixed departure']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
@@ -245,7 +245,7 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->share_safari_day_model->save(false)) {
                         // $model->uploadFile();
-                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Itinerary']);
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Itinerary']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['itinerary', 'id' => $shared_safari_departure_version_model->id, 'day' => $day]);
                     }
@@ -306,16 +306,16 @@ class DefaultController extends Controller
                             }
 
                             $transaction->commit();
-                            $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Data']);
+                            $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
                             \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['inclusion', 'id' => $shared_safari_departure_version_model->id]);
                         } else {
-                            $message = Yii::$app->messageCache->getMessage('common.update_failed', ['{var}' => 'Fixed departure details']);
+                            $message = Yii::$app->messageManager->getMessage('common.update_failed', ['{var}' => 'Fixed departure details']);
                             \Yii::$app->session->setFlash('danger', $message);
                         }
                     } catch (\Exception $e) {
                         $transaction->rollBack();
-                        $message = Yii::$app->messageCache->getMessage('common.error_occurred');
+                        $message = Yii::$app->messageManager->getMessage('common.error_occurred');
                         Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
                     }
                 }
@@ -349,7 +349,7 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_version_model->save(false)) {
-                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Getting there']);
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Getting there']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['getting-there', 'id' => $shared_safari_departure_version_model->id]);
                     }
@@ -379,7 +379,7 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_version_model->save(false)) {
-                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Policy info']);
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Policy info']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['policy-info', 'id' => $shared_safari_departure_version_model->id]);
                     }
@@ -428,7 +428,7 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->share_safari_faq_model->save(false)) {
-                        $message = Yii::$app->messageCache->getMessage('common.submitted', ['{var}' => 'Faq']);
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Faq']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['faq', 'id' => $shared_safari_departure_version_model->id]);
                     }
@@ -463,7 +463,7 @@ class DefaultController extends Controller
                 $model->initializeForm();
                 if ($faq_model->load($this->request->post())) {
                     if ($model->share_safari_faq_model->save(false)) {
-                        $message = Yii::$app->messageCache->getMessage('common.submitted', ['{var}' => 'Faq']);
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Faq']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['faq', 'id' => $shared_safari_departure_version_model->id]);
                     }
@@ -492,12 +492,12 @@ class DefaultController extends Controller
             if ($m->status == ShareSafariVersion::SEND_FOR_APPROVAL_STATUS) {
                 new \common\events\operator\FixedDepartureSendForApprovalEvent($m->safari_operator_id, $m->share_safari_title);
             }
-            $message = Yii::$app->messageCache->getMessage('common.send_for_approval', ['{var}' => 'FixedDeparture']);
+            $message = Yii::$app->messageManager->getMessage('common.send_for_approval', ['{var}' => 'FixedDeparture']);
             \Yii::$app->session->setFlash('success', $message);
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-            $message = Yii::$app->messageCache->getMessage('common.send_for_approval_failed');
+            $message = Yii::$app->messageManager->getMessage('common.send_for_approval_failed');
             Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
@@ -583,12 +583,12 @@ class DefaultController extends Controller
                         $share_safari_version->save(false);
                     }
 
-                    $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Seat']);
+                    $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Seat']);
                     Yii::$app->session->setFlash('success', $message);
                 } catch (\Exception $e) {
                     Yii::error($e->getMessage());
                     $transaction->rollBack();
-                    $message = Yii::$app->messageCache->getMessage('common.error_occurred');
+                    $message = Yii::$app->messageManager->getMessage('common.error_occurred');
                     Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
                     echo "<pre>";
                     print_r($e->getMessage());
@@ -694,13 +694,13 @@ class DefaultController extends Controller
                 $model->edit_status = 0;
                 $model->editable_version = null;
                 if ($model->save(false)) {
-                    $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Fixed Departure']);
+                    $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Fixed Departure']);
                     Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index']);
                 }
             }
         }
-        $message = Yii::$app->messageCache->getMessage('common.delete_failed');
+        $message = Yii::$app->messageManager->getMessage('common.delete_failed');
         Yii::$app->session->setFlash('error', $message);
         return $this->redirect(['index']);
     }
@@ -770,7 +770,7 @@ class DefaultController extends Controller
             Yii::error($e->getMessage());
             $transaction->rollBack();
 
-            $message = Yii::$app->messageCache->getMessage('common.send_for_approval_failed');
+            $message = Yii::$app->messageManager->getMessage('common.send_for_approval_failed');
             Yii::$app->session->setFlash('danger', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
@@ -819,12 +819,12 @@ class DefaultController extends Controller
         if ($share_safari->status == 1) {
             $share_safari->status = 0;
             $share_safari->save(false);
-            $message = Yii::$app->messageCache->getMessage('common.inactive', ['{var}' => 'Fixed Departure']);
+            $message = Yii::$app->messageManager->getMessage('common.inactive', ['{var}' => 'Fixed Departure']);
             \Yii::$app->getSession()->setFlash('success', $message);
         } else {
             $share_safari->status = 1;
             $share_safari->save(false);
-            $message = Yii::$app->messageCache->getMessage('common.active', ['{var}' => 'Fixed Departure']);
+            $message = Yii::$app->messageManager->getMessage('common.active', ['{var}' => 'Fixed Departure']);
             \Yii::$app->getSession()->setFlash('success', $message);
         }
 
@@ -1040,10 +1040,10 @@ class DefaultController extends Controller
             $chat->created_at = time();
             $chat->save(false);
 
-            $message = Yii::$app->messageCache->getMessage('common.message_send');
+            $message = Yii::$app->messageManager->getMessage('common.message_send');
             return  \Yii::$app->session->setFlash('success', $message);
         } else {
-            $message = Yii::$app->messageCache->getMessage('common.message_not_sent');
+            $message = Yii::$app->messageManager->getMessage('common.message_not_sent');
             return  \Yii::$app->session->setFlash('success', $message);
         }
     }
@@ -1055,7 +1055,7 @@ class DefaultController extends Controller
 
 
         if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
-            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
+            $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
@@ -1064,7 +1064,7 @@ class DefaultController extends Controller
         try {
 
             if (!$chat_model->user->is_mobile_no_verified) {
-                $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.user_number_not_verified');
+                $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.user_number_not_verified');
                 \Yii::$app->session->setFlash('danger', $message);
                 return $this->redirect(['view', 'id' => $id]);
             }
@@ -1094,12 +1094,12 @@ class DefaultController extends Controller
 
             $result = $callingService->callNow();
             $transaction->commit();
-            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiated');
+            $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.call_initiated');
             \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['chat-view', 'id' => $chat_model->share_safari_id, 'chat_id' => $chat_model->id]);
         } catch (\Exception $e) {
             $transaction->rollBack();
-            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiation_failed');
+            $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.call_initiation_failed');
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['chat-view', 'id' => $chat_model->share_safari_id, 'chat_id' => $chat_model->id]);
         }
@@ -1200,7 +1200,7 @@ class DefaultController extends Controller
 
 
         if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
-             $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
+             $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
                 \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
@@ -1209,7 +1209,7 @@ class DefaultController extends Controller
         try {
 
             if (!$chat_model->user->is_mobile_no_verified) {
-                 $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.user_number_not_verified');
+                 $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.user_number_not_verified');
                 \Yii::$app->session->setFlash('danger', $message);
                 return $this->redirect(['view', 'id' => $id]);
             }
@@ -1239,12 +1239,12 @@ class DefaultController extends Controller
 
             $result = $callingService->callNow();
             $transaction->commit();
-            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiated');
+            $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.call_initiated');
             \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['booked-user-chat', 'share_safari_id' => $share_safari_id, 'share_safari_lead_id' => $share_safari_lead_id]);
         } catch (\Exception $e) {
             $transaction->rollBack();
-            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiation_failed');
+            $message = Yii::$app->messageManager->getMessage('chat.make_call_on_chat.call_initiation_failed');
             \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['booked-user-chat', 'share_safari_id' => $share_safari_id, 'share_safari_lead_id' => $share_safari_lead_id]);
         }
