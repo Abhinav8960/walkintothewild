@@ -86,7 +86,7 @@ class DefaultController extends Controller
                         }
                         if ($model->user_image_model->save()) {
                             $model->user_image_model->savehistory();
-                            $message = Yii::$app->messageCache->getMessage('common.successfully', 'Post added');
+                            $message = Yii::$app->messageCache->getMessage('common.successfully', ['{var}'=>'Post added']);
                             \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['index']);
                         }

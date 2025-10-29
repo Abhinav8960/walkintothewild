@@ -12,7 +12,7 @@ return [
         'deleted' => '{var} Deleted successfully!',
         'delete_failed' => 'Deletion failed!',
         'delete_restricted' => 'You cannot delete this {var}!',
-        'active' => '{var} Successfully Active!',
+        'active' => '{var} Successfully Active',
         'inactive' => '{var} Successfully Inactive',
         'found' => '{var} Found!',
         'not_found' => '{var} Not Found!',

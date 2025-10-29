@@ -69,10 +69,10 @@ class DefaultController extends Controller
         $safari_operator = $this->module->operatormodel();
         $model->safari_operator_id = $safari_operator->id;
         $model->status = Sighting::STATUS_ACTIVE;
-        $model->user_id = \Yii :: $app->user->identity->id;
+        $model->user_id = \Yii::$app->user->identity->id;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->file = \yii\web\UploadedFile::getInstance($model,'file');
+                $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->sighting_model->save()) {
@@ -80,14 +80,14 @@ class DefaultController extends Controller
                         $model->sighting_model->v_size = $model->file->size;
                         $model->sighting_model->v_duration = $this->getVideoDuration($model->file);
                         if ($model->sighting_model->save()) {
-                            \Yii::$app->session->setFlash('success', 'Sighting added successfully');
+                            $message = Yii::$app->messageCache->getMessage('common.successfully', ['{var}' => 'Sighting added']);
+                            \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['index']);
                         }
                     }
                 }
             }
-        }
-        else {
+        } else {
             $model->sighting_model->loadDefaultValues();
         }
         return $this->render('create', [
@@ -132,7 +132,8 @@ class DefaultController extends Controller
     //     ]);
     // }
 
-    public function findSightingId($id){
+    public function findSightingId($id)
+    {
         if (($model = Sighting::findOne(['id' => $id, 'status' => [Sighting::STATUS_ACTIVE, Sighting::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
@@ -143,7 +144,8 @@ class DefaultController extends Controller
     {
         $sighting = Sighting::find()->where(['id' => $id])->limit(1)->one();
         if (!$sighting) {
-            \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Sighting']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
         return $this->render('view', [
@@ -156,15 +158,17 @@ class DefaultController extends Controller
         $model = $this->findSightingId($id);
         $model->status = Sighting::STATUS_DELETE;
         $model->save();
-        Yii::$app->session->setFlash('success', 'Sighting Deleted Successfully');
-        return $this->redirect(['index']); 
+        $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Sighting']);
+        Yii::$app->session->setFlash('success',  $message);
+        return $this->redirect(['index']);
     }
 
     public function actionCommentListing($id)
     {
         $sighting = Sighting::find()->where(['id' => $id])->limit(1)->one();
         if (!$sighting) {
-            \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
+            $message = Yii::$app->messageCache->getMessage('common.not_found', ['{var}' => 'Sighting']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
 
