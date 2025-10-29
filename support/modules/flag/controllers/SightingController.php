@@ -55,7 +55,8 @@ class SightingController extends Controller
                                         }
                                     }
                                     SightingCommentFlag::updateAll(['status' => 3], ['sighting_comment_id' => $sighting_comment->id, 'status' => 1]);
-                                    \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                    $message = Yii::$app->messageCache->getMessage('common.submitted', ['{var}' => 'Action']);
+                                    \Yii::$app->session->setFlash('success', $message);
                                     return $this->redirect(['index']);
                                 }
                             }
@@ -77,7 +78,8 @@ class SightingController extends Controller
     {
         $flag_comment = SightingComment::find()->where(['id' => $id])->one();
         if (empty($flag_comment)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageCache->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
