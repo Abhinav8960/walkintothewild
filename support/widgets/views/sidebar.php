@@ -4,7 +4,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 $webasset = $this->assetManager->getBundle('\support\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
-<nav class="side_bar sidebar-offcanvas d-flex justify-content-center">
+<nav class="side_bar sidebar-offcanvas d-flex justify-content-center collapsed-sidebar">
     <ul class="nav">
         <li class="nav-item-profile d-flex justify-content-between align-items-center nav-item mb-5">
             <div class="profile-ditails d-flex justify-content-around align-items-center">
