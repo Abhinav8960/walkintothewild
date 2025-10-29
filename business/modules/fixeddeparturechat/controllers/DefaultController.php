@@ -115,9 +115,11 @@ class DefaultController extends  Controller
             $chat->is_seen = 0;
             $chat->created_at = time();
             $chat->save(false);
-            return  \Yii::$app->session->setFlash('success', 'Message Sent Successfully');
+            $message = Yii::$app->messageCache->getMessage('common.message_send');
+            return  \Yii::$app->session->setFlash('success', $message);
         } else {
-            return  \Yii::$app->session->setFlash('success', 'Message not Sent Successfully');
+            $message = Yii::$app->messageCache->getMessage('common.message_not_sent');
+            return  \Yii::$app->session->setFlash('success', $message);
         }
     }
 
@@ -128,7 +130,8 @@ class DefaultController extends  Controller
 
 
         if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
-            \Yii::$app->session->setFlash('danger', 'You cannot perform this action, as phone is not available or verified for any of the chat members');
+            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
 
@@ -136,7 +139,8 @@ class DefaultController extends  Controller
         try {
 
             if (!$chat_model->user->is_mobile_no_verified) {
-                \Yii::$app->session->setFlash('danger', 'User number is not verified.');
+                $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.user_number_not_verified');
+                \Yii::$app->session->setFlash('danger', $message);
                 return $this->redirect(['view', 'id' => $id]);
             }
 
@@ -165,11 +169,13 @@ class DefaultController extends  Controller
 
             $result = $callingService->callNow();
             $transaction->commit();
-            \Yii::$app->session->setFlash('success', 'Call initiated successfully.');
+            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiated');
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $id]);
         } catch (\Exception $e) {
             $transaction->rollBack();
-            \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
+            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiation_failed');
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
     }

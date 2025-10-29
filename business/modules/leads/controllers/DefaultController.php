@@ -124,7 +124,8 @@ class DefaultController extends  Controller
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     if ($model->request(\Yii::$app->user->identity)) {
-                        \Yii::$app->session->setFlash('success', 'Quotation Submitted Successfully');
+                        $message = Yii::$app->messageCache->getMessage('lead.quotation.submit');
+                        \Yii::$app->session->setFlash('success', $message);
                         return  $this->redirect(Yii::$app->request->referrer);
                     }
                 } else {
@@ -161,7 +162,8 @@ class DefaultController extends  Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageCache->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     private function isOwner()
@@ -259,9 +261,11 @@ class DefaultController extends  Controller
             $chat->is_seen = 0;
             $chat->created_at = time();
             $chat->save(false);
-            return  \Yii::$app->session->setFlash('success', 'Message Sent Successfully');
+            $message = Yii::$app->messageCache->getMessage('common.message_send');
+            return  \Yii::$app->session->setFlash('success', $message);
         } else {
-            return  \Yii::$app->session->setFlash('success', 'Message not Sent Successfully');
+            $message = Yii::$app->messageCache->getMessage('common.message_not_sent');
+            return  \Yii::$app->session->setFlash('success', $message);
         }
     }
 
@@ -305,26 +309,28 @@ class DefaultController extends  Controller
 
             // Instantiate the CallingService
             $callingService = new \common\calling\services\CallingService(
-                    $chat_id,
-                    $lead_id,
-                    $operator_user_id,
-                    $call_initiated_user_id,
-                    $call_initiated_partner_id,
-                    $request_caller_1_no,
-                    $request_caller_1_user_id,
-                    $request_caller_2_no,
-                    $request_caller_2_user_id,
-                    $has_direct_call,
-                    $fromCLI,
-                );
+                $chat_id,
+                $lead_id,
+                $operator_user_id,
+                $call_initiated_user_id,
+                $call_initiated_partner_id,
+                $request_caller_1_no,
+                $request_caller_1_user_id,
+                $request_caller_2_no,
+                $request_caller_2_user_id,
+                $has_direct_call,
+                $fromCLI,
+            );
             // Call the callNow method
             $result = $callingService->callNow();
             $transaction->commit();
-            \Yii::$app->session->setFlash('success', 'Call initiated successfully.');
+            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiated');
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $id]);
         } catch (\Exception $e) {
             $transaction->rollBack();
-            \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
+            $message = Yii::$app->messageCache->getMessage('chat.make_call_on_chat.call_initiation_failed');
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
     }
@@ -335,14 +341,16 @@ class DefaultController extends  Controller
         $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
 
         if (!$model) {
-            throw new NotFoundHttpException('Lead partner not found.');
+            $message = Yii::$app->messageCache->getMessage('leads.partner.not_found');
+            throw new NotFoundHttpException($message);
         }
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 LeadPartners::reminderHistory($model);
-                LeadPartners::preparechatmessage($model,$id);
-                Yii::$app->session->setFlash('success', 'Reminder added successfully.');
+                LeadPartners::preparechatmessage($model, $id);
+                $message = Yii::$app->messageCache->getMessage('leads.reminder.added_success');
+                Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
@@ -358,12 +366,14 @@ class DefaultController extends  Controller
         $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
 
         if (!$model) {
-            throw new NotFoundHttpException('Lead partner not found.');
+            $message = Yii::$app->messageCache->getMessage('leads.partner.not_found');
+            throw new NotFoundHttpException($message);
         }
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Lead Category updated successfully.');
+                $message = Yii::$app->messageCache->getMessage('common.updated', ['var' => 'Lead Category']);
+                Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }

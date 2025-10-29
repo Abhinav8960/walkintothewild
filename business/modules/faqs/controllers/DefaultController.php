@@ -41,7 +41,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->faqs_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageCache->getMessage('common.created', ['{var}' => 'Faq']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -59,7 +60,7 @@ class DefaultController extends Controller
     public function actionUpdate($id)
     {
         $safari_operator = $this->operatormodel();
-        $faqs_model = $this->findModel($id,$safari_operator->id);
+        $faqs_model = $this->findModel($id, $safari_operator->id);
         $model = new SafariOperatorFaqsForm($faqs_model);
         $model->safari_operator_id = $safari_operator->id;
         if ($this->request->isPost) {
@@ -67,8 +68,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->faqs_model->save(false)) {
-                        $model->faqs_model->save(false);
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageCache->getMessage('common.updated', ['{var}' => 'Faq']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -83,14 +84,6 @@ class DefaultController extends Controller
         ]);
     }
 
-    // public function actionView($id)
-    // {
-    //     $model = $this->findModel($id);
-
-    //     return $this->render('view', [
-    //         'model' => $model,
-    //     ]);
-    // }
 
     /**
      * Set Sequence of Privacy Policy
@@ -136,16 +129,17 @@ class DefaultController extends Controller
     public function actionDelete($id)
     {
         $safari_operator = $this->operatormodel();
-        $model = $this->findModel($id,$safari_operator->id);
+        $model = $this->findModel($id, $safari_operator->id);
         $model->status = SafariOperatorFaq::STATUS_DELETE;
         $model->save();
-        Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-        return $this->redirect(Yii::$app->request->referrer); 
+        $message = Yii::$app->messageCache->getMessage('common.deleted', ['{var}' => 'Faq']);
+        \Yii::$app->session->setFlash('success', $message);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
-    protected function findModel($id,$safari_operator_id)
+    protected function findModel($id, $safari_operator_id)
     {
-        if (($model = SafariOperatorFaq::findOne(['id' => $id,'safari_operator_id'=>$safari_operator_id])) !== null) {  
+        if (($model = SafariOperatorFaq::findOne(['id' => $id, 'safari_operator_id' => $safari_operator_id])) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
