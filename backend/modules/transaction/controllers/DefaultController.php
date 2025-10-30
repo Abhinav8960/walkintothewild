@@ -38,7 +38,7 @@ class DefaultController extends Controller
         } elseif ($payment_gateway == LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_HDFC) {
             return $this->redirect(['hdfc', 'lead_partner_quotes_id' => $lead_partner_quotes_id]);
         } else {
-            $message = Yii::$app->messageManager->getMessage('common.invalid',['{var}' => 'payment gateway selected.']);
+            $message = Yii::$app->messageManager->getMessage('common.invalid_gateway');
             Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
