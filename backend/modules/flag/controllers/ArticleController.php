@@ -45,7 +45,8 @@ class ArticleController extends Controller
                                 $article_comment->is_deleted = 1;
                                 if ($article_comment->save()) {
                                     ArticleCommentReport::updateAll(['status' => 3], ['article_comment_id' => $article_comment->id, 'status' => 1]);
-                                    \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                    $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Action Taken']);
+                                    \Yii::$app->session->setFlash('success', $message);
                                     return $this->redirect(['index']);
                                 }
                             }
@@ -67,7 +68,8 @@ class ArticleController extends Controller
     {
         $review = ArticleComment::find()->where(['id' => $id])->one();
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $dataProvider = new ActiveDataProvider([
@@ -86,7 +88,8 @@ class ArticleController extends Controller
     {
         $review = ArticleComment::find()->where(['id' => $id])->one();
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -106,7 +109,8 @@ class ArticleController extends Controller
                     }
                 }
             }
-            \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Action Taken']);
+            \Yii::$app->session->setFlash('success', $message);
         }
 
         //form model
