@@ -252,8 +252,8 @@ class SiteController extends Controller
             }
             return $this->redirect($url->shortner_url, $url->code ?? '302');
         }
-
-        throw new NotFoundHttpException('Short URL not found.');
+        $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}' => 'Short URL']);
+        throw new NotFoundHttpException($message);
     }
 
     // 'successUrl' => 'http://admin.walkintothewild.io/payu/success',
@@ -269,10 +269,12 @@ class SiteController extends Controller
         if (isset($data['status']) && $data['status'] == 'success') {
             // Handle success response
             // You can process the payment details here
-            Yii::$app->session->setFlash('success', 'Payment successful!');
+            $message = Yii::$app->messageManager->getMessage('payment.payment_success');
+            Yii::$app->session->setFlash('success', $message);
         } else {
             // Handle failure response
-            Yii::$app->session->setFlash('error', 'Payment failed or cancelled.');
+            $message = Yii::$app->messageManager->getMessage('payment.pament_failed');
+            Yii::$app->session->setFlash('error', $message);
         }
 
         return $this->redirect(Yii::$app->params['partner_url'] . '/payu-response/' . $data['txnid']);
@@ -298,8 +300,8 @@ class SiteController extends Controller
             $manager = new \api\components\MessageManager();
             $manager->clearCache($cache);
         }
-
-        Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
+        $message = Yii::$app->messageManager->getMessage('common.cache_cleared');
+        Yii::$app->session->setFlash('success', $message);
         return $this->redirect(['index']);
     }
 }

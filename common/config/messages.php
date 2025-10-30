@@ -246,4 +246,9 @@ return [
             'added_success' => 'Reminder added successfully!',
         ],
     ],
+
+    'payment' => [
+        'payment_success' => 'Payment Successfull!',
+        'pament_failed' => 'Payment Failed or Cancelled!',
+    ]
 ];
