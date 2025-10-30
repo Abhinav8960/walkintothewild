@@ -94,7 +94,9 @@ class DefaultController extends  Controller
                 if ($chat_message_model->validate()) {
                     $chat_message_model->initializeForm();
                     $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $chat_message_model->chat_form_model->message, $gallery = NULL, $data = NULL, Yii::$app->user->identity, $partner_gallery_version_id = NULL, $partner_gallery_version = NULL);
-                    $chat_message_model->message = '';
+                    // $chat_message_model->message = '';
+
+                    return $this->redirect(['view', 'id' => $id]);
                 }
             }
         }
@@ -305,18 +307,18 @@ class DefaultController extends  Controller
 
             // Instantiate the CallingService
             $callingService = new \common\calling\services\CallingService(
-                    $chat_id,
-                    $lead_id,
-                    $operator_user_id,
-                    $call_initiated_user_id,
-                    $call_initiated_partner_id,
-                    $request_caller_1_no,
-                    $request_caller_1_user_id,
-                    $request_caller_2_no,
-                    $request_caller_2_user_id,
-                    $has_direct_call,
-                    $fromCLI,
-                );
+                $chat_id,
+                $lead_id,
+                $operator_user_id,
+                $call_initiated_user_id,
+                $call_initiated_partner_id,
+                $request_caller_1_no,
+                $request_caller_1_user_id,
+                $request_caller_2_no,
+                $request_caller_2_user_id,
+                $has_direct_call,
+                $fromCLI,
+            );
             // Call the callNow method
             $result = $callingService->callNow();
             $transaction->commit();
@@ -341,7 +343,7 @@ class DefaultController extends  Controller
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 LeadPartners::reminderHistory($model);
-                LeadPartners::preparechatmessage($model,$id);
+                LeadPartners::preparechatmessage($model, $id);
                 Yii::$app->session->setFlash('success', 'Reminder added successfully.');
                 return $this->redirect(Yii::$app->request->referrer);
             }
