@@ -106,7 +106,7 @@ class ShareSafariReasonController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->title = $model->id . '_' . $model->title;
+        // $model->title = $model->id . '_' . $model->title;
         $model->status = MasterShareSafariReason::STATUS_DELETE;
         $model->save(false);
         $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
