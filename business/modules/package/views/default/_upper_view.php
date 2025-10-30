@@ -232,7 +232,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <div class="text-form">
                                     <!-- <p class="mb-0"><?= $package->custom_message_details ?>
                                     </p> -->
-                                     <p class="mb-0"><?= $package->no_of_safari ?> <?php
+                                    <p class="mb-0"><?= $package->no_of_safari ?> <?php
                                                                                     if ($package->safari_type == 1) {
                                                                                         echo 'Shared Safari';
                                                                                     } elseif ($package->safari_type == 2) {
@@ -374,8 +374,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                                 <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_person) ?>/- 1 Person
                                 </h6>
-                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_two_person) ?>/- 2 Person
-                                </h6>
+                                <?php if ($package->cost_per_two_person > 0) { ?>
+                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_two_person) ?>/- 2 Person
+                                    </h6>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
