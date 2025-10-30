@@ -4,6 +4,7 @@ namespace backend\modules\reportsection\controllers;
 
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentSearch;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
@@ -43,7 +44,8 @@ class CommentReportController extends Controller
     {
         $review = ShareSafariComment::find()->where(['parent_id' => $id]);
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $dataProvider = new ActiveDataProvider([

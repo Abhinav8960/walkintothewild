@@ -92,7 +92,8 @@ class UserDeviceController extends Controller
         $user = User::find()->where(['id' => $id])->one();
 
         if ($user === null) {
-            throw new \yii\web\NotFoundHttpException('The requested page does not exist');
+            $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+            throw new \yii\web\NotFoundHttpException($message);
         }
         return $user;
     }

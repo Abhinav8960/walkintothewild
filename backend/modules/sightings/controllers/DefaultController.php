@@ -39,7 +39,8 @@ class DefaultController extends Controller
     {
         $sighting = Sighting::find()->where(['id' => $id])->limit(1)->one();
         if (!$sighting) {
-            \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
         return $this->render('view', [
@@ -51,7 +52,8 @@ class DefaultController extends Controller
     {
         $sighting = Sighting::find()->where(['id' => $id])->limit(1)->one();
         if (!$sighting) {
-            \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['index']);
         }
 
@@ -96,7 +98,7 @@ class DefaultController extends Controller
     {
         $sighting_delete_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_delete_model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Sighting']);
+            $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}'=>'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -108,6 +110,7 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->sighting_delete_model->save(false)) {
+                        $message = Yii::$app->messageManager->getMessage('common.deleted');
                         \Yii::$app->session->setFlash('success', 'Successfully Deleted');
                         return $this->redirect(['index']);
                     }
@@ -127,7 +130,8 @@ class DefaultController extends Controller
         $comment = SightingComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
 
         if (!$comment) {
-            Yii::$app->session->setFlash('error', 'Comment not found');
+            $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}'=>'Comment']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -141,11 +145,12 @@ class DefaultController extends Controller
                     $rep->save(false);
                 }
             }
-            Yii::$app->session->setFlash('success', 'Comment and Replies related to it has been deleted successfully.');
+            $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Related Comment and Replies']);
+            Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $comment->sighting_id]);
         }
-
-        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
+        $message = Yii::$app->messageManager->getMessage('common.delete_failed');
+        Yii::$app->session->setFlash('danger', $message);
         return $this->redirect(['index']);
     }
 
@@ -153,17 +158,19 @@ class DefaultController extends Controller
     {
         $reply = SightingComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
         if (!$reply) {
-            Yii::$app->session->setFlash('error', 'Reply not found');
+            $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}'=>'Reply']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $reply->status = SightingComment::STATUS_DELETE;
 
         if ($reply->save(false)) {
-            Yii::$app->session->setFlash('success', 'Reply has been deleted successfully.');
+            $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Reply']);
+            Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $reply->sighting_id]);
         }
-
-        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
+        $message = Yii::$app->messageManager->getMessage('common.delete_failed');
+        Yii::$app->session->setFlash('danger', $message);
         return $this->redirect(['index']);
     }
 
@@ -189,11 +196,13 @@ class DefaultController extends Controller
         if ($model->show_in_front == 1) {
             $model->show_in_front = 0;
             $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Sighting Remove from Daily Update !!!');
+            $message = Yii::$app->messageManager->getMessage('common.removed', ['{var}' => 'Sighting from Daily Update']);
+            \Yii::$app->getSession()->setFlash('success', $message);
         } else {
             $model->show_in_front = 1;
             $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Sighting Add to Daily Update !!!');
+            $message = Yii::$app->messageManager->getMessage('common.added', ['{var}' => 'Sighting to Daily Update']);
+            \Yii::$app->getSession()->setFlash('success', $message);
         }
 
         return $this->redirect(Yii::$app->request->referrer);
@@ -229,7 +238,7 @@ class DefaultController extends Controller
     {
         $sighting_thumbnail_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_thumbnail_model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Sighting']);
+            $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}'=>'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -240,7 +249,8 @@ class DefaultController extends Controller
                 $model->thumbnail = UploadedFile::getInstance($model, 'thumbnail');
                 if ($model->validate()) {
                     $model->uploadFile($url_path);
-                    \Yii::$app->session->setFlash('success', 'Successfully Change');
+                    $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Changed']);
+                    \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['view', 'id' => $sighting_thumbnail_model->id]);
                 }
             }
@@ -258,8 +268,8 @@ class DefaultController extends Controller
         if (($model = Sighting::findOne(['id' => $id, 'status' => [Sighting::STATUS_ACTIVE, Sighting::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionDownload($url)
@@ -283,7 +293,8 @@ class DefaultController extends Controller
         curl_close($ch);
 
         if (!$out || stripos($out, '<html') !== false) {
-            Yii::$app->session->setFlash('error', 'Invalid file content received.');
+            $message = Yii::$app->messageManager->getMessage('common.invalid',['{var}' => 'file content received']);
+            Yii::$app->session->setFlash('error', $message);
             return;
         }
 

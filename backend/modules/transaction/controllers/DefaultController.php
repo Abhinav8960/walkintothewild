@@ -38,7 +38,8 @@ class DefaultController extends Controller
         } elseif ($payment_gateway == LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_HDFC) {
             return $this->redirect(['hdfc', 'lead_partner_quotes_id' => $lead_partner_quotes_id]);
         } else {
-            Yii::$app->session->setFlash('error', 'Invalid payment gateway selected.');
+            $message = Yii::$app->messageManager->getMessage('common.invalid',['{var}' => 'payment gateway selected.']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
     }
@@ -47,11 +48,13 @@ class DefaultController extends Controller
     {
         $model = LeadPartnerQuotes::find()->andWhere(['id' => $lead_partner_quotes_id])->one();
         if (!$model) {
-            Yii::$app->session->setFlash('error', 'Lead Partner Quote not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}' => 'Lead Partner Quote']);
+            Yii::$app->session->setFlash('error', $message);
             return  $this->redirect(Yii::$app->request->referrer);
         }
         if ($model->status != LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED) {
-            Yii::$app->session->setFlash('error', 'Lead Partner Quote is not approved by admin.');
+            $message = Yii::$app->messageManager->getMessage('common.not_approved_by_admin',['{var}' => 'Lead Partner Quote']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(Yii::$app->request->referrer);
         }
         return $model;

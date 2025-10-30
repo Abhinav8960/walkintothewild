@@ -61,8 +61,8 @@ class UserArticleController extends Controller
         if (($model = Article::findOne(['id' => $id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionDelete($id)
@@ -72,7 +72,8 @@ class UserArticleController extends Controller
         $model->slug = $model->id . '_' . $model->slug;
         $model->status = Article::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Deleted Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.deleted');
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer);
     }
 }

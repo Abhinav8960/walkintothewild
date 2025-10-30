@@ -36,7 +36,8 @@ class ArticleCommentController extends Controller
         $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
         if (empty($article)) {
             return $this->redirect(['/pendingapproval/article-comment/index']);
-            throw new NotFoundHttpException('The requested page does not exist.');
+            $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+            throw new NotFoundHttpException($message);
         }
 
 

@@ -4,6 +4,7 @@ namespace backend\modules\reportsection\controllers;
 
 use common\models\quatation\QuotationRequests;
 use common\models\quatation\QuotationRequestsSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -61,7 +62,7 @@ class QuotationController extends Controller
         if (($model = QuotationRequests::findOne($id)) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

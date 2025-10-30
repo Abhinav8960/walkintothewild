@@ -70,8 +70,8 @@ class ProfileController extends Controller
                                 $packagesafaripark->save(false);
                             }
                         }
-
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index', 'package_id' => $package_id]);
                     }
                 }
@@ -98,7 +98,8 @@ class ProfileController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_version_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['policy-info', 'package_id' => $package_id]);
                     }
                 }
@@ -125,7 +126,8 @@ class ProfileController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_version_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['getting-there', 'package_id' => $package_id]);
                     }
                 }
@@ -188,14 +190,17 @@ class ProfileController extends Controller
                             }
 
                             $transaction->commit();
-                            Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                            $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                            Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['inclusion', 'package_id' => $package_id]);
                         } else {
-                            Yii::$app->session->setFlash('error', 'Failed to update package details.');
+                            $message = Yii::$app->messageManager->getMessage('common.failed_to', ['{var}' => 'update package details']);
+                            Yii::$app->session->setFlash('error', $message);
                         }
                     } catch (\Exception $e) {
                         $transaction->rollBack();
-                        Yii::$app->session->setFlash('error', 'An error occurred while updating data: ' . $e->getMessage());
+                        $message = Yii::$app->messageManager->getMessage('common.error_occurred');
+                        Yii::$app->session->setFlash('error', $message.': ' . $e->getMessage());
                     }
                 }
             }
@@ -243,7 +248,8 @@ class ProfileController extends Controller
                     $model->initializeForm();
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['itinerary', 'package_id' => $package_id]);
                     }
                 }
@@ -299,7 +305,8 @@ class ProfileController extends Controller
                             $model->package_faq_model->faq_id = $faq->id;
                             $model->package_faq_model->save(false);
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
                 }
@@ -344,7 +351,8 @@ class ProfileController extends Controller
                             $model->package_faq_model->faq_id = $faq->id;
                             $model->package_faq_model->save(false);
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
                 }
@@ -378,7 +386,8 @@ class ProfileController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_faq_select_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
                 }
@@ -449,7 +458,8 @@ class ProfileController extends Controller
                     $model->initializeForm();
                     if ($model->package_gallery_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['gallery', 'package_id' => $package_id]);
                     }
                 }
@@ -518,8 +528,8 @@ class ProfileController extends Controller
         if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     protected function findModelfaq($id)
@@ -527,8 +537,8 @@ class ProfileController extends Controller
         if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     protected function findModelgallery($id)
@@ -536,8 +546,8 @@ class ProfileController extends Controller
         if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
 

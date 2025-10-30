@@ -48,7 +48,8 @@ class OperatorQuoteController extends Controller
         $model->full_name = $model->id . '_' . $model->full_name;
         $model->status = OperatorQuote::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
@@ -58,7 +59,7 @@ class OperatorQuoteController extends Controller
         if (($model = OperatorQuote::findOne(['id' => $id, 'status' => [OperatorQuote::STATUS_ACTIVE, OperatorQuote::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

@@ -81,8 +81,8 @@ class DefaultController extends Controller
         if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionPublishOnApi($id)
@@ -91,9 +91,11 @@ class DefaultController extends Controller
         if ($model) {
             $model->is_published_on_api = !$model->is_published_on_api;
             $model->save(false);
-            \Yii::$app->session->setFlash('success', 'Api Publish change Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.publish', ['{var}' => 'Api']);
+            \Yii::$app->session->setFlash('success', $message);
         } else {
-            \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.facing_technical_problem');
+            \Yii::$app->session->setFlash('error', $message);
         }
         return $this->redirect(Yii::$app->request->referrer);
     }
@@ -104,9 +106,11 @@ class DefaultController extends Controller
         if ($model) {
             $model->is_published_on_web = !$model->is_published_on_web;
             $model->save(false);
-            \Yii::$app->session->setFlash('success', 'Web Publish change Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.publish', ['{var}' => 'Web']);
+            \Yii::$app->session->setFlash('success', $message);
         } else {
-            \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.facing_technical_problem');
+            \Yii::$app->session->setFlash('error', $message);
         }
         return $this->redirect(Yii::$app->request->referrer);
     }

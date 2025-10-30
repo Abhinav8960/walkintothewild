@@ -43,8 +43,8 @@ class OperatorReviewController extends Controller
                     ]);
                 new \common\events\operator\NewReviewByUserToOperator($model->operator->email, $operator_url);
             }
-
-            \Yii::$app->getSession()->setFlash('success', 'Approved Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Approved']);
+            \Yii::$app->getSession()->setFlash('success', $message);
         }
         return $this->redirect(['index']);
     }
@@ -57,6 +57,7 @@ class OperatorReviewController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

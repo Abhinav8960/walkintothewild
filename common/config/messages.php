@@ -124,6 +124,11 @@ return [
         'publish' => '{var} Published successfully!',
         'phone_set_verified' => '{var} phone is set to verified!',
         'phone_set_not_verified' => '{var} phone is set to not verified!',
+        'facing_technical_problem' => 'Facing Technical Problem',
+        'invalid' => 'Invalid {var}',
+        'not_approved_by_admin' => '{var} is not approved by admin',
+
+        'session_destroyed' => '{var} session destroyed!',
 
 
     ],

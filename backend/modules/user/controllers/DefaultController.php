@@ -41,7 +41,8 @@ class DefaultController extends Controller
     {
 
         if (Yii::$app->user->identity && !Yii::$app->user->identity->is_admin) {
-            throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Adminstrator can view this page.');
+            $message = Yii::$app->messageManager->getMessage('common.forbidden_exception');
+            throw new \yii\web\ForbiddenHttpException($message);
         }
         $model = new UserRegistrationForm();
         if ($this->request->isPost) {
@@ -57,8 +58,8 @@ class DefaultController extends Controller
                         $req = ['username' => $user->name, 'is_email_sending' => true];
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-
-                        \Yii::$app->session->setFlash('success', 'User Registration Successfully Completed');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'User Registered']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -76,7 +77,8 @@ class DefaultController extends Controller
     public function actionUpdate($user_id)
     {
         if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin != 1) {
-            throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Adminstrator can view this page.');
+            $message = Yii::$app->messageManager->getMessage('common.forbidden_exception');
+            throw new \yii\web\ForbiddenHttpException($message);
         }
         $user = $this->findModel($user_id);
         $model = new UserUpdateForm($user);
@@ -85,7 +87,8 @@ class DefaultController extends Controller
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    Yii::$app->session->setFlash('success', 'User has been successfully Updated');
+                    $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'User']);
+                    Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['/user']);
                 }
             }
@@ -109,15 +112,18 @@ class DefaultController extends Controller
     public function actionBlock($id)
     {
         if ($id == \Yii::$app->user->getId()) {
-            \Yii::$app->getSession()->setFlash('error', 'You can not block your own account');
+            $message = Yii::$app->messageManager->getMessage('common.block_restricted');
+            \Yii::$app->getSession()->setFlash('error', $message);
         } else {
             $user = $this->findModel($id);
             if ($user->getIsBlocked()) {
                 $user->unblock();
-                \Yii::$app->getSession()->setFlash('success', 'User has been unblocked');
+                $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'User Unblocked']);
+                \Yii::$app->getSession()->setFlash('success', $message);
             } else {
                 $user->block();
-                \Yii::$app->getSession()->setFlash('success', 'User has been blocked');
+                $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'User blocked']);
+                \Yii::$app->getSession()->setFlash('success', $message);
             }
         }
         return $this->redirect(Yii::$app->request->referrer);
@@ -136,8 +142,8 @@ class DefaultController extends Controller
                 $isexist->delete();
             }
         }
-
-        \Yii::$app->getSession()->setFlash('success', 'User has been deleted');
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'User']);
+        \Yii::$app->getSession()->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -154,7 +160,8 @@ class DefaultController extends Controller
             Yii::$app->user->switchIdentity($user, 3600);
             return $this->redirect('/');
         }
-        throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action.');
+        $message = Yii::$app->messageManager->getMessage('common.forbidden_exception');
+        throw new \yii\web\ForbiddenHttpException($message);
     }
 
 
@@ -193,7 +200,8 @@ class DefaultController extends Controller
         $user = User::find()->where(['id' => $id])->one();
 
         if ($user === null) {
-            throw new \yii\web\NotFoundHttpException('The requested page does not exist');
+            $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+            throw new \yii\web\NotFoundHttpException($message);
         }
         return $user;
     }
@@ -236,12 +244,15 @@ class DefaultController extends Controller
         if ($user) {
             $user->is_blue_badge_verified = !$user->is_blue_badge_verified;
             if ($user->save(false)) {
-                Yii::$app->session->setFlash('success', 'Badge updated successfully.');
+                $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Badge']);
+                Yii::$app->session->setFlash('success', $message);
             } else {
-                Yii::$app->session->setFlash('error', 'Failed to update badge.');
+                $message = Yii::$app->messageManager->getMessage('common.update_failed', ['{var}' => 'Badge']);
+                Yii::$app->session->setFlash('error', $message);
             }
         } else {
-            Yii::$app->session->setFlash('error', 'User not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'User']);
+            Yii::$app->session->setFlash('error', $message);
         }
 
         return $this->redirect(Yii::$app->request->referrer);

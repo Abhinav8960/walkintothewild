@@ -32,7 +32,8 @@ class ParkReviewApprovalController extends Controller
                 $safari_park = $model->park;
                 GeneralModel::updateRatingintoTable($safari_park);
             }
-            \Yii::$app->getSession()->setFlash('success', 'Approved Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Approved']);
+            \Yii::$app->getSession()->setFlash('success', $message);
         } else {
             $model->status = SafariParkRating::STATUS_SUSPEND;
             $model->save(false);
@@ -40,7 +41,8 @@ class ParkReviewApprovalController extends Controller
                 $safari_park = $model->park;
                 GeneralModel::updateRatingintoTable($safari_park);
             }
-            \Yii::$app->getSession()->setFlash('success', 'Disapproved Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Disapproved']);
+            \Yii::$app->getSession()->setFlash('success', $message);
         }
 
         return $this->redirect(['index']);
@@ -53,7 +55,7 @@ class ParkReviewApprovalController extends Controller
         if (($model = SafariParkRating::findOne(['id' => $id, 'status' => [SafariParkRating::STATUS_ACTIVE, SafariParkRating::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

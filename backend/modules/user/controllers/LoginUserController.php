@@ -37,8 +37,8 @@ class LoginUserController extends Controller
         if ($user_session) {
             $user_session->delete();
         }
-
-        Yii::$app->session->setFlash('User Session Destoryed');
+        $message = Yii::$app->messageManager->getMessage('common.session_destroyed', ['{var}' => 'User']);
+        Yii::$app->session->setFlash($message);
         return $this->redirect(Yii::$app->request->referrer ? Yii::$app->request->referrer : '/');
     }
 
@@ -51,8 +51,8 @@ class LoginUserController extends Controller
         $user_affected = Yii::$app->db->createCommand()
             ->delete('user_session', 'last_activity < NOW() - INTERVAL 720 MINUTE') // Extend to 12 hours
             ->execute();
-
-        Yii::$app->session->setFlash($user_affected . ' User Session Destoryed');
+        $message = Yii::$app->messageManager->getMessage('common.session_destroyed', ['{var}' => 'User']);
+        Yii::$app->session->setFlash($user_affected . ' '.$message);
         return $this->redirect(Yii::$app->request->referrer ? Yii::$app->request->referrer : '/');
     }
 
@@ -64,8 +64,8 @@ class LoginUserController extends Controller
         $user_affected = Yii::$app->db->createCommand()
             ->delete('user_session', '1=1')
             ->execute();
-
-        Yii::$app->session->setFlash($user_affected . ' User Session Destoryed');
+            $message = Yii::$app->messageManager->getMessage('common.session_destroyed', ['{var}' => 'User']);
+        Yii::$app->session->setFlash($user_affected . ' '.$message);
         return $this->redirect(Yii::$app->request->referrer ? Yii::$app->request->referrer : '/');
     }
 

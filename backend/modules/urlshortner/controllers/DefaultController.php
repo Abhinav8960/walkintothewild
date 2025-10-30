@@ -5,6 +5,7 @@ namespace backend\modules\urlshortner\controllers;
 use common\models\urlshortner\form\UrlShortnerForm;
 use common\models\urlshortner\UrlShortner;
 use common\models\urlshortner\UrlShortnerSearch;
+use Yii;
 use yii\web\Controller;
 
 /**
@@ -37,7 +38,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->url_shortner_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Created Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.created');
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }

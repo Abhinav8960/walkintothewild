@@ -37,7 +37,8 @@ class PreviewController extends Controller
         $package = $this->findModel($id);
         if (empty($package)) {
             return $this->redirect(['/package']);
-            throw new NotFoundHttpException('The requested page does not exist.');
+            $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+            throw new NotFoundHttpException($message);
         }
 
         $searchModel = new PackageFaqSearch();
@@ -69,7 +70,8 @@ class PreviewController extends Controller
         $package_version_model = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
         if (empty($package_version_model)) {
             return $this->redirect(['/package']);
-            throw new NotFoundHttpException('The requested page does not exist.');
+            $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+            throw new NotFoundHttpException($message);
         }
 
         $model = new PackageVersionForm($package_version_model);
@@ -79,7 +81,8 @@ class PreviewController extends Controller
             if ($model->load($this->request->post())) {
                 $model->package_version_model->popular_package = $model->popular_package;
                 if ($model->package_version_model->save(false)) {
-                    \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                    $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                    \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index', 'id' => $package_version_model->id]);
                 }
             }
@@ -105,15 +108,16 @@ class PreviewController extends Controller
         if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND, Package::STATUS_BLOCKED]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionReplyview($id)
     {
         $review = PackageComment::find()->where(['parent_id' => $id]);
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $dataProvider = new ActiveDataProvider([
@@ -131,7 +135,8 @@ class PreviewController extends Controller
     {
         $review = PackageCommentReport::find()->where(['package_comment_id' => $id]);
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $dataProvider = new ActiveDataProvider([
@@ -155,7 +160,8 @@ class PreviewController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_delete_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        $message = Yii::$app->messageManager->getMessage('common.deleted');
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['/package/default/index']);
                     }
                 }
@@ -173,7 +179,8 @@ class PreviewController extends Controller
         $model = Package::find()->where(['id' => $id])->limit(1)->one();
         $model->popular_package = 1;
         if ($model->save(false)) {
-            \Yii::$app->session->setFlash('success', 'Mark Popular Successfully!!!');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Mark Popular']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(\Yii::$app->request->referrer);
         }
     }
@@ -183,7 +190,8 @@ class PreviewController extends Controller
         $model = Package::find()->where(['id' => $id])->limit(1)->one();
         $model->popular_package = 0;
         if ($model->save(false)) {
-            \Yii::$app->session->setFlash('success', 'Remove From Successfully!!!');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Removed']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(\Yii::$app->request->referrer);
         }
     }
@@ -193,7 +201,8 @@ class PreviewController extends Controller
     {
         $package = Package::find()->where(['id' => $id])->one();
         if (empty($package)) {
-            Yii::$app->session->setFlash('error', 'Package not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -204,7 +213,8 @@ class PreviewController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_discount_model->save(false)) {
-                        Yii::$app->session->setFlash('success', 'Platform Discount Save successfully.');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Platform Discount Saved']);
+                        Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index', 'id' => $id]);
                     }
                 }
@@ -222,13 +232,15 @@ class PreviewController extends Controller
     {
         $package = Package::find()->where(['id' => $id])->one();
         if (empty($package)) {
-            Yii::$app->session->setFlash('error', 'Package not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
         $package->is_best_deal = 1;
         if ($package->save(false)) {
-            Yii::$app->session->setFlash('success', 'Package set as Best Deal successfully.');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Package set as Best Deal']);
+            Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['index', 'id' => $id]);
         }
     }
@@ -245,7 +257,8 @@ class PreviewController extends Controller
                         $version = PackageVersion::find()->where(['package_id' => $package_template_model->id])->andWhere(['version' => $package_template_model->live_version])->limit(1)->one();
                         $version->template_code = $model->package_template_model->template_code;
                         $version->save(false);
-                        \Yii::$app->session->setFlash('success', 'Successfully Template!');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Template']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index', 'id' => $id]);
                     }
                 }
