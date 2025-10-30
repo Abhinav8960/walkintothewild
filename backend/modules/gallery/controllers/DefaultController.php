@@ -35,7 +35,8 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -49,7 +50,8 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -61,7 +63,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->deletion_model->save()) {
-                        \Yii::$app->session->setFlash('danger', 'Gallery Deleted SuccessFully!!!');
+                        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Gallery']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }

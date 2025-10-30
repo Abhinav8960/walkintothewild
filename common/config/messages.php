@@ -118,7 +118,7 @@ return [
 
         'cannot_empty' => '{var} cannot be empty',
         'duration_exceed' => '{var} duration exceed',
-        'approved_live' => '{var} approved and live successfully.',
+        'approved_and_live' => '{var} approved and live successfully.',
         'failed_to' => 'Failed to {var}',
         'failed_to_approve' => 'Failed to approve {var}.',
         'publish' => '{var} Published successfully!',

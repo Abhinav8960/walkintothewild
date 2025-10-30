@@ -195,8 +195,8 @@ class SafariOperatorController extends Controller
         if (($model = SafariOperator::findOne(['id' => $id, 'status' => [SafariOperator::STATUS_ACTIVE, SafariOperator::STATUS_SUSPEND, NewStatusInterface::STATUS_BLOCKED]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     // public function actionUpdate($id)
@@ -363,7 +363,8 @@ class SafariOperatorController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->safari_operator_delete_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        $message = Yii::$app->messageManager->getMessage('common.deleted');
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -447,7 +448,8 @@ class SafariOperatorController extends Controller
                     //     $auth->source_id = time() . '_' . $auth->source_id;
                     //     $auth->save(false);
                     // }
-                    \Yii::$app->session->setFlash('success', 'Successfully Temporary Deleted');
+                    $message = Yii::$app->messageManager->getMessage('common.deleted',['{var}' => 'Temporary']);
+                    \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index']);
                 }
             }
@@ -478,7 +480,8 @@ class SafariOperatorController extends Controller
         if ($operator_park) {
             $operator_park->status = SafariOperatorPark::STATUS_SUSPEND;
             if ($operator_park->save(false)) {
-                \Yii::$app->session->setFlash('success', 'Successfully Removed');
+                $message = Yii::$app->messageManager->getMessage('common.removed');
+                \Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(['operator-parks', 'id' => $operator_model->id]);
             }
         }
@@ -503,7 +506,8 @@ class SafariOperatorController extends Controller
                             $park_model->save(false);
                         }
                     }
-                    \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                    $message = Yii::$app->messageManager->getMessage('common.deleted');
+                    \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['operator-parks', 'id' => $id]);
                 }
             }
@@ -537,11 +541,14 @@ class SafariOperatorController extends Controller
         if ($model->is_phone_no_verified == 1) {
             $model->is_phone_no_verified = 0;
             $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Operator phone is set to not verified!');
+            $message = Yii::$app->messageManager->getMessage('common.phone_set_not_verified',['{var}' => 'Operator']);
+            dd($message);
+            Yii::$app->getSession()->setFlash('success', $message);
         } else {
             $model->is_phone_no_verified = 1;
             $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Operator phone is set to verified !');
+            $message = Yii::$app->messageManager->getMessage('common.phone_set_verified',['{var}' => 'Operator']);
+            \Yii::$app->getSession()->setFlash('success', $message);
         }
 
         return $this->redirect(Yii::$app->request->referrer);
@@ -571,7 +578,8 @@ class SafariOperatorController extends Controller
                         $st->status = NewStatusInterface::STATUS_BLOCKED;
                         $st->save();
                     }
-                    \Yii::$app->session->setFlash('success', 'Blocked Successfully!!!');
+                    $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Blocked']);
+                    \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index']);
                 }
             }
@@ -603,7 +611,8 @@ class SafariOperatorController extends Controller
                         $st->status = 1;
                         $st->save();
                     }
-                    \Yii::$app->session->setFlash('success', 'UnBlocked Successfully!!!');
+                    $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'UnBlocked']);
+                    \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index']);
                 }
             }
@@ -629,7 +638,8 @@ class SafariOperatorController extends Controller
                     if ($model->safari_operator_update_model->save(false)) {
                         $model->uploadFile();
                         // $model->partnerRegistrationTableUpdate($safari_operator_update_model);
-                        \Yii::$app->session->setFlash('success', 'Successfully Changed');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Changed']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['view', 'id' => $safari_operator_update_model->id]);
                     }
                 }
