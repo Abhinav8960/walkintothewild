@@ -86,7 +86,8 @@ class SitePagesController extends Controller
                     $model->last_update_at = date("Y-m-d H:i:s");
                     $model->counter = 0;
                     if ($model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                         $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -105,7 +106,8 @@ class SitePagesController extends Controller
         $model->status = 0;
         $model->save();
 
-        \Yii::$app->session->setFlash('success', 'Record delete successfully');
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Record']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(['index']);
     }
 
@@ -121,7 +123,8 @@ class SitePagesController extends Controller
                     $model->initializeForm();
                     if ($model->site_pages_seo->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                         $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                     }
                 }
             }
@@ -138,7 +141,8 @@ class SitePagesController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionGetsubcategorylist($category_id)

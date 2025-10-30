@@ -56,7 +56,8 @@ class SiteUntracedRequestController extends Controller
 
         //$this->create_robots_txt();
 
-        \Yii::$app->session->setFlash('success', 'Record delete successfully');
+         $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Record']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(['index']);
     }
 
@@ -66,6 +67,7 @@ class SiteUntracedRequestController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+         $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }
