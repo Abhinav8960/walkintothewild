@@ -118,7 +118,7 @@ class OperatorCategoryController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->vehicle_name = $model->id . '_' . $model->vehicle_name;
+        // $model->vehicle_name = $model->id . '_' . $model->vehicle_name;
         $model->status = MasterOperatorCategory::STATUS_DELETE;
         $model->save(false);
         $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
