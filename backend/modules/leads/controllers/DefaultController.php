@@ -92,7 +92,8 @@ class DefaultController extends  Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     // public function actionApprove()
@@ -401,7 +402,8 @@ class DefaultController extends  Controller
                     $chat->status = Chat::STATUS_SUSPEND;
                     $chat->save(false);
                 }
-                \Yii::$app->session->setFlash('success', 'Inactive Successfully!!!');
+                $message = Yii::$app->messageManager->getMessage('common.inactive');
+                \Yii::$app->session->setFlash('success', $message);
                 return  $this->redirect(['index']);
             }
         }
@@ -418,7 +420,8 @@ class DefaultController extends  Controller
                     $chat->status = Chat::STATUS_ACTIVE;
                     $chat->save(false);
                 }
-                \Yii::$app->session->setFlash('success', 'Active Successfully!!!');
+                $message = Yii::$app->messageManager->getMessage('common.active');
+                \Yii::$app->session->setFlash('success', $message);
                 return  $this->redirect(['index']);
             }
         }
@@ -435,11 +438,14 @@ class DefaultController extends  Controller
             $message = Yii::$app->request->post('message');
 
             if (empty($message)) {
-                Yii::$app->session->setFlash('error', 'Message cannot be empty.');
+                $message = Yii::$app->messageManager->getMessage('common.cannot_empty', ['{var}' => 'Message']);
+                \Yii::$app->session->setFlash('error', $message);
                 return $this->redirect(Yii::$app->request->referrer);
             }
             new \common\events\systemnotification\LeadChatMessageNotification([$reciverId], $safari_operator_model->business_name, $sender_user_handle->user_handle, \common\models\GeneralModel::strMaxWord($message), $chat->chat_hash, $chat);
-            Yii::$app->session->setFlash('success', 'Notification sent successfully.');
+
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Notification sent ']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(Yii::$app->request->referrer);
         }
 
@@ -469,7 +475,8 @@ class DefaultController extends  Controller
 
             $lead_assign_form->assign($model, $lead_assign_form->partner_id);
 
-            Yii::$app->session->setFlash('success', 'Assigned Successfully!');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Assigned ']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['view', 'id' => $id]);
         }
 

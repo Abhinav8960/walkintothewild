@@ -94,7 +94,8 @@ class DefaultController extends Controller
             $model->updated_time_form_5 = date('Y-m-d H:i:s');
         }
         if ($model->save(false)) {
-            \Yii::$app->session->setFlash('success', 'Approved Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Approved']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['update', 'id' => $model->id]);
         }
     }
@@ -142,7 +143,8 @@ class DefaultController extends Controller
                         $model->form5_reject_reason = $reason;
                     }
                     if ($model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Reject Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Reject']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['update', 'id' => $model->id]);
                     }
                 }
@@ -353,7 +355,8 @@ class DefaultController extends Controller
         if (($model = PartnerRegistration::findOne(['id' => $id])) !== null) {
             return $model;
         }
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionFinalApproved($id)
@@ -378,11 +381,13 @@ class DefaultController extends Controller
                 $model_user->is_safari_operator = 1;
                 $model_user->account_type = 3;
                 $model_user->save(false);
-                \Yii::$app->session->setFlash('success', 'Final Approval Successful');
+                $message = Yii::$app->messageManager->getMessage('common.approved_success', ['{var}' => 'Final']);
+                \Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(['update', 'id' => $model->id]);
             }
         } else {
-            \Yii::$app->session->setFlash('danger', 'Reject Finally');
+            $message = Yii::$app->messageManager->getMessage('common.rejected', ['{var}' => 'Final']);
+            \Yii::$app->session->setFlash('danger', $message);
             return $this->redirect(['update', 'id' => $model->id]);
         }
     }
@@ -400,5 +405,4 @@ class DefaultController extends Controller
         $url = Yii::$app->rfs->temporaryUrl($relativePath, $expiresAt);
         return $this->renderAjax('_file_view', ['fileUrl' => $url]);
     }
-    
 }

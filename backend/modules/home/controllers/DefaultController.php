@@ -31,11 +31,13 @@ class DefaultController extends Controller
         if ($model->status == 0) {
             $model->status = UserPosts::STATUS_ACTIVE;
             $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Published Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Published ']);
+            \Yii::$app->session->setFlash('success', $message);
         } else {
             $model->status = UserPosts::STATUS_SUSPEND;
             $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Suspend Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Suspend ']);
+            \Yii::$app->session->setFlash('success', $message);
         }
 
         return $this->redirect(['index']);
@@ -49,6 +51,7 @@ class DefaultController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

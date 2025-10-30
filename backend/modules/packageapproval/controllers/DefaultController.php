@@ -67,14 +67,16 @@ class DefaultController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionApproved($package_id, $version)
     {
         $package = Package::find()->where(['id' => $package_id, 'pending_for_approval_version' => $version])->one();
         if (empty($package)) {
-            Yii::$app->session->setFlash('error', 'Package not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['index']);
         }
 
@@ -156,17 +158,20 @@ class DefaultController extends Controller
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            $message = Yii::$app->messageManager->getMessage('common.send_for_approval_failed');
+            Yii::$app->session->setFlash('error', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
             die();
-            Yii::$app->session->setFlash('error', 'Failed to approve package.');
+            $message = Yii::$app->messageManager->getMessage('common.failed_to_approve', ['{var}' => 'Package']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $transaction->commit();
 
 
-        Yii::$app->session->setFlash('success', 'Package approved and Live successfully.');
+        $message = Yii::$app->messageManager->getMessage('common.approved_and_live', ['{var}' => 'Package']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(['index']);
     }
 
@@ -187,7 +192,8 @@ class DefaultController extends Controller
     {
         $package = Package::find()->where(['id' => $package_id, 'pending_for_approval_version' => $version])->one();
         if (empty($package)) {
-            Yii::$app->session->setFlash('error', 'Package not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
+            \Yii::$app->session->setFlash('success', $message);
             return $this->redirect(['index']);
         }
         $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
@@ -202,7 +208,8 @@ class DefaultController extends Controller
                 $model->status = PackageVersion::NOT_APPROVED_STATUS;
                 $model->cancellation_reason = \Yii::$app->request->post('PackageVersion')['cancellation_reason'] ?? NULL;
                 $model->save(false);
-                Yii::$app->session->setFlash('success', 'Package rejected successfully.');
+                $message = Yii::$app->messageManager->getMessage('common.rejected', ['{var}' => 'Package']);
+                \Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(['index']);
             }
         }
@@ -268,7 +275,8 @@ class DefaultController extends Controller
                             }
                         }
 
-                        \Yii::$app->session->setFlash('success', 'Package updated successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Package']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -304,7 +312,8 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['itinerary', 'id' => $id]);
                     }
                 }
@@ -361,14 +370,17 @@ class DefaultController extends Controller
                             }
 
                             $transaction->commit();
-                            Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                            $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                            \Yii::$app->session->setFlash('success', $message);
                             return $this->redirect(['inclusion', 'id' => $package_version_model->id]);
                         } else {
-                            Yii::$app->session->setFlash('error', 'Failed to update package details.');
+                            $message = Yii::$app->messageManager->getMessage('common.update_failed', ['{var}' => 'Package']);
+                            \Yii::$app->session->setFlash('error', $message);
                         }
                     } catch (\Exception $e) {
                         $transaction->rollBack();
-                        Yii::$app->session->setFlash('error', 'An error occurred while updating data: ' . $e->getMessage());
+                        $message = Yii::$app->messageManager->getMessage('common.send_for_approval_failed');
+                        Yii::$app->session->setFlash('error', $message . '' . $e->getMessage());
                     }
                 }
             }
@@ -398,7 +410,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_version_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['policy-info', 'id' => $id]);
                     }
                 }
@@ -425,7 +438,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_version_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['getting-there', 'id' => $id]);
                     }
                 }
@@ -477,7 +491,8 @@ class DefaultController extends Controller
                             $model->package_faq_model->faq_id = $faq->id;
                             $model->package_faq_model->save(false);
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
                 }
@@ -522,7 +537,8 @@ class DefaultController extends Controller
                             $model->package_faq_model->faq_id = $faq->id;
                             $model->package_faq_model->save(false);
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
                 }

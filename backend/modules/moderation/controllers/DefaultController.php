@@ -51,35 +51,41 @@ class DefaultController extends Controller
                         $model->uploadFile();
                         if ($model->moderation_model->type == 1) {
                             Yii::$app->moderation->textFeedback($model->moderation_model->text, $model->moderation_model->id);
-                            \Yii::$app->session->setFlash('success', 'Extracted Successfully');
+                            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Extracted']);
+                            \Yii::$app->session->setFlash('success', $message);
                         } elseif ($model->moderation_model->type == 2) {
-                            $format = $this->getVideoFormat(Yii::$app->params['s3_endpoint'] .'/'. $model->moderation_model->video_url, $model->moderation_model->id);
-                            $this->getVideoStream(Yii::$app->params['s3_endpoint'] .'/'. $model->moderation_model->video_url, $model->moderation_model->id);
-                            $this->getVideoAudioStream(Yii::$app->params['s3_endpoins3_endpointt'] .'/'. $model->moderation_model->video_url, $model->moderation_model->id);
+                            $format = $this->getVideoFormat(Yii::$app->params['s3_endpoint'] . '/' . $model->moderation_model->video_url, $model->moderation_model->id);
+                            $this->getVideoStream(Yii::$app->params['s3_endpoint'] . '/' . $model->moderation_model->video_url, $model->moderation_model->id);
+                            $this->getVideoAudioStream(Yii::$app->params['s3_endpoins3_endpointt'] . '/' . $model->moderation_model->video_url, $model->moderation_model->id);
                             if ($format->duration <= 30) {
-                                $saved = Yii::$app->moderation->videoFeedback(Yii::$app->params['s3_endpoint'] .'/'. $model->moderation_model->video_url, $model->moderation_model->id);
+                                $saved = Yii::$app->moderation->videoFeedback(Yii::$app->params['s3_endpoint'] . '/' . $model->moderation_model->video_url, $model->moderation_model->id);
                                 if (!$saved) {
                                     $model->moderation_model->is_api_failed = 1;
                                     $model->moderation_model->save(false);
-                                    \Yii::$app->session->setFlash('success', 'Video Not Extracted Successfully');
+                                    $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Video Not Extracted']);
+                                    \Yii::$app->session->setFlash('error', $message);
                                 } else {
-                                    \Yii::$app->session->setFlash('success', 'Video Extracted Successfully');
+                                    $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Video Extracted']);
+                                    \Yii::$app->session->setFlash('success', $message);
                                 }
                             } else {
                                 $model->moderation_model->duration_flag = 1;
                                 $model->moderation_model->save(false);
-                                \Yii::$app->session->setFlash('success', 'Video Duration Exceed');
+                                $message = Yii::$app->messageManager->getMessage('common.duration_exceed', ['{var}' => 'Video']);
+                                \Yii::$app->session->setFlash('success', $message);
                             }
                         } elseif ($model->moderation_model->type == 3) {
                             $this->getImageMetadata($model);
 
-                            $saved =  Yii::$app->moderation->imageFeedback(Yii::$app->params['s3_endpoint'] .'/'. $model->moderation_model->image_url, $model->moderation_model->id);
+                            $saved =  Yii::$app->moderation->imageFeedback(Yii::$app->params['s3_endpoint'] . '/' . $model->moderation_model->image_url, $model->moderation_model->id);
                             if (!$saved) {
                                 $model->moderation_model->is_api_failed = 1;
                                 $model->moderation_model->save(false);
-                                \Yii::$app->session->setFlash('success', 'Not Extracted Successfully');
+                                $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Not Extracted']);
+                                \Yii::$app->session->setFlash('error', $message);
                             } else {
-                                \Yii::$app->session->setFlash('success', 'Extracted Successfully');
+                                $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Extracted']);
+                                \Yii::$app->session->setFlash('success', $message);
                             }
                         }
 
@@ -250,6 +256,7 @@ class DefaultController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

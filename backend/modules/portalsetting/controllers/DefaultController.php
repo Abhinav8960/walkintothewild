@@ -31,9 +31,11 @@ class DefaultController extends Controller
     {
         // Clear Cache the log file
         if (Yii::$app->cache->flush()) {
-            Yii::$app->session->setFlash('success', 'Cache successfully cleared.');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Cache Cleared']);
+            \Yii::$app->session->setFlash('success', $message);
         } else {
-            Yii::$app->session->setFlash('error', 'Failed to clear cache.');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'cleared Cache']);
+            \Yii::$app->session->setFlash('error', $message);
         }
 
         return $this->redirect(\Yii::$app->request->referrer);
@@ -62,10 +64,11 @@ class DefaultController extends Controller
                     unlink($itemPath); // Delete the file
                 }
             }
-
-            Yii::$app->session->setFlash('success', 'Assets cleared successfully.');
+            $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Assets cleared']);
+            \Yii::$app->session->setFlash('success', $message);
         } else {
-            Yii::$app->session->setFlash('error', 'Assets directory not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Assets directory']);
+            \Yii::$app->session->setFlash('error', $message);
         }
 
         return $this->redirect(\Yii::$app->request->referrer);

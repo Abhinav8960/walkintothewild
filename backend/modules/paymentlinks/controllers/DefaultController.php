@@ -46,11 +46,13 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->form_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
-                }else{
-                    \Yii::$app->session->setFlash('error', 'Data Not Submitted');
+                } else {
+                    $message = Yii::$app->messageManager->getMessage('common.not_submitted', ['{var}' => 'Data']);
+                    \Yii::$app->session->setFlash('error', $message);
                     print_r($model->errors);
                     die();
                 }
@@ -104,8 +106,7 @@ class DefaultController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
-
-    
 }
