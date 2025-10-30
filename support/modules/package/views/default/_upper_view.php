@@ -139,17 +139,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <p class="mb-0 ">Organized by <a href=""
                                         data-discover="true"><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></a></p>
 
-                                <?php if ($package->master_package_tag_id != null) { ?>
+                                <!-- <?php if ($package->master_package_tag_id != null) { ?>
                                     <h5><span class="badge badge-pill" style="background-color: <?= $package->master_package_tag->tag_color ?>;"><?= $package->master_package_tag->tag_name ?></span></h5>
                                 <?php } else { ?>
                                     <h5><span class="badge badge-pill" style="background-color: <?= $package->custom_package_tag_color ?>;"><?= $package->custom_package_tag ?></span></h5>
-                                <?php } ?>
+                                <?php } ?> -->
 
                             </div>
 
-                            <p class="fs-6 mb-0">
+                            <!-- <p class="fs-6 mb-0">
                                 <span class=""><?= $package->custom_activity_message ?? '' ?></span>
-                            </p>
+                            </p> -->
 
                         </div>
 
