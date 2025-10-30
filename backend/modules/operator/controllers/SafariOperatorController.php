@@ -542,7 +542,6 @@ class SafariOperatorController extends Controller
             $model->is_phone_no_verified = 0;
             $model->save(false);
             $message = Yii::$app->messageManager->getMessage('common.phone_set_not_verified',['{var}' => 'Operator']);
-            dd($message);
             Yii::$app->getSession()->setFlash('success', $message);
         } else {
             $model->is_phone_no_verified = 1;
