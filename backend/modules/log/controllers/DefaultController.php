@@ -7,6 +7,7 @@ use common\models\MailLogSearch;
 use common\models\master\email\MasterMailTemplate;
 use common\models\sharesafari\ShareSafari;
 use common\models\transaction\TransactionSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -46,8 +47,8 @@ class DefaultController extends Controller
         if (($model = MailLog::findOne(['id' => $id, 'status' => [MailLog::STATUS_ACTIVE, MailLog::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionTransaction()
