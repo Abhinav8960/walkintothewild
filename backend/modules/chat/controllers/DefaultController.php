@@ -76,7 +76,8 @@ class DefaultController extends Controller
         if (($model = Chat::find()->where(['id'=>$id])->one()) !== null) {
             return $model;
         }
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionViewLeadDetails($chat_id)
@@ -96,7 +97,7 @@ class DefaultController extends Controller
         if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->one()) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

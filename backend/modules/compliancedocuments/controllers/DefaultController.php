@@ -46,7 +46,8 @@ class DefaultController extends Controller
                 $model->initializeForm();
                 if ($model->cdocument_model->save(false)) {
                     // $model->uploadFile();
-                    Yii::$app->session->setFlash('success', 'Document created successfully.');
+                    $message = Yii::$app->messageManager->getMessage('common.created',['{var}' => 'Document']);
+                    Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index']);
                 }
             }
@@ -70,7 +71,8 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
         if (!$model) {
-            throw new NotFoundHttpException('Document not found');
+            $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}' => 'Document']);
+            throw new NotFoundHttpException($message);
         }
         $form_model = new ComplianceDocumentsVersionForm($model);
         if ($this->request->isPost) {
@@ -80,7 +82,8 @@ class DefaultController extends Controller
                     $form_model->initializeForm();
                     if ($form_model->cdocument_model->save()) {
                         // $form_model->uploadFile();
-                        Yii::$app->session->setFlash('success', 'Document updated successfully.');
+                        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Document']);
+                        Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -107,14 +110,16 @@ class DefaultController extends Controller
         if (($model = ComplianceDocumentsVersion::findOne($id)) !== null) {
             return $model;
         }
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionPublish($id)
     {
         $model = $this->findModel($id);
         if (!$model) {
-            Yii::$app->session->setFlash('error', 'Document not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}' => 'Document']);
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(Yii::$app->request->referrer);
         }
 
@@ -140,9 +145,11 @@ class DefaultController extends Controller
             $model_main->effective_date = $model->effective_date;
             $model_main->status = ComplianceDocuments::STATUS_PUBLISHED;
             $model_main->save(false);
-            Yii::$app->session->setFlash('success', 'Published Successfully!');
+            $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Published']);
+            Yii::$app->session->setFlash('success', $message);
         } else {
-            Yii::$app->session->setFlash('error', 'Failed to publish document.');
+            $message = Yii::$app->messageManager->getMessage('common.failed',['{var}' => 'to Publish']);
+            Yii::$app->session->setFlash('error', $message);
         }
 
         return $this->redirect(Yii::$app->request->referrer);
@@ -152,7 +159,8 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
         if (!$model) {
-            throw new NotFoundHttpException('Document not found');
+            $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}' => 'Document']);
+            throw new NotFoundHttpException($message);
         }
 
         $version_model = new ComplianceDocumentsVersion();
