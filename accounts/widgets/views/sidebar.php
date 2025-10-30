@@ -21,7 +21,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </button>
         </li>
         <li class="navItems mb-2">
-            <a href="/" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/"]) ? "active" : "" ?>">
+            <a href="/" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/"]) ? "active" : "" ?>" data-toggle="tooltip" data-placement="top" title="Dashboard">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/",
                                                                                                 )) ? 'Home2.svg' : 'home.svg' ?>" alt="" width="17" height="20"></span>
@@ -30,7 +30,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </li>
 
         <li class="navItems mb-2">
-            <a href="/transactioninfo/default/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/transactioninfo/default/index"]) ? "active" : "" ?>">
+            <a href="/transactioninfo/default/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/transactioninfo/default/index"]) ? "active" : "" ?>" data-toggle="tooltip" data-placement="top" title="Transaction">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/transactioninfo/default/index",
                                                                                                 )) ? 'transaction_active.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
@@ -39,7 +39,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </li>
 
         <li class="navItems mb-2">
-            <a href="/booking/fixed-departure/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/booking/fixed-departure/index"]) ? "active" : "" ?>">
+            <a href="/booking/fixed-departure/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/booking/fixed-departure/index"]) ? "active" : "" ?>" data-toggle="tooltip" data-placement="top" title="Fixed Departure Booking">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/booking/fixed-departure/index",
                                                                                                 )) ? 'transaction.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
@@ -48,7 +48,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </li>
 
         <li class="navItems mb-2">
-            <a href="/operator/default/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/operator/default/index"]) ? "active" : "" ?>">
+            <a href="/operator/default/index" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/operator/default/index"]) ? "active" : "" ?>" data-toggle="tooltip" data-placement="top" title="Operator">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/operator/default/index",
                                                                                                 )) ? 'transaction_active.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
