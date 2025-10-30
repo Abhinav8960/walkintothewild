@@ -72,7 +72,8 @@ class PartnerRegistrationController extends Controller
                     } else {
                         // print_r($model->partner_model->getErrors());
                         // die();
-                        Yii::$app->session->setFlash('error', 'Please fill all required fields.');
+                        $message = Yii::$app->messageManager->getMessage('common.fill_required_fields');
+                        Yii::$app->session->setFlash('error', $message);
                     }
                 }
             }
@@ -357,7 +358,8 @@ class PartnerRegistrationController extends Controller
 
         $partner_model = $this->findModel();
         if ($partner_model === null) {
-            throw new NotFoundHttpException('Partner not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Partner']);
+            throw new NotFoundHttpException($message);
         }
         if ($partner_model != null && ($partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
             $partner_model->final_approved = 0;
@@ -378,8 +380,8 @@ class PartnerRegistrationController extends Controller
         if (($model = PartnerRegistration::find()->where(['user_id' => Yii::$app->user->identity->id])->orderBy(['id' => SORT_DESC])->one()) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionSendApproval($id)
@@ -402,14 +404,17 @@ class PartnerRegistrationController extends Controller
 
         if ($model->save(false)) {
             if (!($model->is_phone_no_verified && $model->is_billing_mail_verified && $model->is_kyc_phone_verified)) {
-                Yii::$app->session->setFlash('error', 'Phone or Email is Not Verified!');
+                $message = Yii::$app->messageManager->getMessage('common.phone_email_not_verified');
+                Yii::$app->session->setFlash('error', $message);
                 return $this->redirect(Yii::$app->request->referrer ?: ['final-view']);
             } else {
-                Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
+                $message = Yii::$app->messageManager->getMessage('common.send_for_approval');
+                Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(['thank-you']);
             }
         } else {
-            Yii::$app->session->setFlash('error', 'There was an error while sending for approval.');
+            $message = Yii::$app->messageManager->getMessage('common.send_for_approval_failed');
+            Yii::$app->session->setFlash('error', $message);
             return $this->redirect(Yii::$app->request->referrer ?: ['final-view']);
         }
     }
@@ -429,7 +434,8 @@ class PartnerRegistrationController extends Controller
 
         $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity->id])->orderBy(['id' => SORT_DESC])->one();
         if ($model === null) {
-            throw new NotFoundHttpException('Registration record not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Registration record']);
+            throw new NotFoundHttpException($message);
         }
 
         if ($model->final_approved == 1 && $model->is_sendforapproval == 1 && $safari_operator->status = SafariOperator::STATUS_ACTIVE) {
@@ -571,6 +577,7 @@ class PartnerRegistrationController extends Controller
 
             if ($mobileNo) {
                 if ($mobileNo != $partner_model->legal_entity_phone && $mobileNo != $partner_model->kyc_phone) {
+
                     return \yii\helpers\Json::encode([
                         'error' => true,
                         'message' => 'Number is Invalid or Not Matched !!'
@@ -608,30 +615,34 @@ class PartnerRegistrationController extends Controller
 
         $otpByUser = Yii::$app->request->post('otp_by_user');
         if (!$otpByUser) {
+            $message = Yii::$app->messageManager->getMessage('common.missing', ['{var}' => 'OTP']);
             return [
                 'success' => false,
-                'message' => 'Missing OTP'
+                'message' => $message
             ];
         }
 
         $model = MobileVerification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->id])->orderBy(['id' => SORT_DESC])->one();
         if (!$model) {
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'OTP record']);
             return [
                 'success' => false,
-                'message' => 'OTP record not found'
+                'message' => $message
             ];
         }
         if ($model->otp != $otpByUser) {
+            $message = Yii::$app->messageManager->getMessage('common.not_matched_otp');
             return [
                 'success' => false,
-                'message' => 'Incorrect OTP'
+                'message' => $message
             ];
         }
 
         if (strtotime($model->exp_datetime) < time()) {
+            $message = Yii::$app->messageManager->getMessage('common.expired',['{var}' => 'OTP']);
             return [
                 'success' => false,
-                'message' => 'OTP has expired'
+                'message' => $message
             ];
         }
 
@@ -643,7 +654,8 @@ class PartnerRegistrationController extends Controller
         if ($partner_model->legal_entity_phone == $model->mobile_no) {
             $partner_model->is_phone_no_verified = 1;
             if ($model->status == 2) {
-                Yii::$app->session->setFlash('success', 'Phone Number verified successfully');
+                $message = Yii::$app->messageManager->getMessage('common.mobile_verification_success');
+                Yii::$app->session->setFlash('success', $message);
             }
             $partner_model->save(false);
         }
@@ -651,7 +663,8 @@ class PartnerRegistrationController extends Controller
         if ($partner_model->kyc_phone == $model->mobile_no) {
             $partner_model->is_kyc_phone_verified = 1;
             if ($model->status == 2) {
-                Yii::$app->session->setFlash('success', 'Phone Number verified successfully');
+                $message = Yii::$app->messageManager->getMessage('common.mobile_verification_success');
+                Yii::$app->session->setFlash('success', $message);
             }
             $partner_model->save(false);
         }
@@ -675,6 +688,7 @@ class PartnerRegistrationController extends Controller
 
             if ($email) {
                 if ($email != $partner_model->billing_mail) {
+
                     return \yii\helpers\Json::encode([
                         'error' => true,
                         'message' => 'Email is Invalid or Not Matched !!'
@@ -703,30 +717,34 @@ class PartnerRegistrationController extends Controller
 
         $otpByUser = Yii::$app->request->post('otp_by_user');
         if (!$otpByUser) {
+            $message = Yii::$app->messageManager->getMessage('common.missing', ['{var}' => 'OTP']);
             return [
                 'success' => false,
-                'message' => 'Missing OTP'
+                'message' => $message
             ];
         }
 
         $model = EmailVerification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->id])->orderBy(['id' => SORT_DESC])->one();
         if (!$model) {
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'OTP record']);
             return [
                 'success' => false,
-                'message' => 'OTP record not found'
+                'message' => $message
             ];
         }
         if ($model->otp != $otpByUser) {
+            $message = Yii::$app->messageManager->getMessage('common.not_matched_otp');
             return [
                 'success' => false,
-                'message' => 'Incorrect OTP'
+                'message' => $message
             ];
         }
 
         if (strtotime($model->exp_datetime) < time()) {
+            $message = Yii::$app->messageManager->getMessage('common.expired',['{var}' => 'OTP']);
             return [
                 'success' => false,
-                'message' => 'OTP has expired'
+                'message' => $message
             ];
         }
 
@@ -738,7 +756,8 @@ class PartnerRegistrationController extends Controller
             $model->save(false);
             $partner_model->is_billing_mail_verified = 1;
             if ($model->status == 2) {
-                Yii::$app->session->setFlash('success', 'Email verified successfully');
+                $message = Yii::$app->messageManager->getMessage('common.email_verification_success');
+                Yii::$app->session->setFlash('success', $message);
             }
             $partner_model->save(false);
         }
@@ -775,9 +794,10 @@ class PartnerRegistrationController extends Controller
                 $headers->add('X-Rate-Limit-Reset', time() + $blockDuration);
             }
 
+            $message = Yii::$app->messageManager->getMessage('common.rate_limit_exceeded');
             return \yii\helpers\Json::encode([
                 'error' => true,
-                'message' => 'Rate limit exceeded. Please try again later.'
+                'message' => $message
             ]);
         } else {
             $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;

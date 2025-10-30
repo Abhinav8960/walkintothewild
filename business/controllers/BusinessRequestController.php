@@ -24,7 +24,8 @@ class BusinessRequestController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->business_request_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Request Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Request']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['/']);
                     }
                 }

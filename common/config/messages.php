@@ -38,6 +38,7 @@ return [
         'not_approved' => 'Your account is not approved yet! Please wait for approval.',
         'not_verified_email' => 'Your email is not verified! Please verify your email address.',
         'mobile_verification_success' => 'Mobile Number Verified successfully!',
+        'email_verification_success' => 'Email Verified successfully!',
         'already_verified_mobile' => 'Mobile Number Already Verified!',
         'not_verified_mobile' => 'Your mobile number is not verified! Please verify your mobile number.',
         'otp_sent' => 'OTP Sent to your mobile number. Please check your mobile.',
@@ -45,6 +46,7 @@ return [
         'not_verified_otp' => 'Your OTP is not verified. Please verify your OTP.',
         'not_matched_otp' => 'Your OTP did not match. Please enter the correct OTP.',
         'issue_occurred' => 'Facing some issues. Please try again later!',
+        'phone_email_not_verified'=>'Phone or Email is Not Verified!',
         'cache_cleared' => 'Cache Cleared successfully!',
 
         'operator_comment_restricted' => 'You are an operator. You cannot comment!',
@@ -128,6 +130,8 @@ return [
         'not_approved_by_admin' => '{var} is not approved by admin',
 
         'session_destroyed' => '{var} session destroyed!',
+        'fill_required_fields' => 'Please fill all required fields.',
+        'missing' => '{var} is missing!',
 
 
     ],
