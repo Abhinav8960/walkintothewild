@@ -62,7 +62,8 @@ class FeatureParkController extends Controller
         }
 
         Yii::error('Invalid AJAX request');
-        throw new BadRequestHttpException('Invalid request');
+        $message = Yii::$app->messageManager->getMessage('invalid_request');
+        throw new BadRequestHttpException($message);
     }
 
     public function actionFeatureParkTitle()
@@ -74,7 +75,8 @@ class FeatureParkController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->feature_page_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }

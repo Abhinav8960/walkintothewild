@@ -81,7 +81,8 @@ class ArticleController extends Controller
                                 $articleTag->save(false);
                             }
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['/cms/article/index']);
                     }
                 }
@@ -141,7 +142,8 @@ class ArticleController extends Controller
                             }
                         }
 
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['/cms/article/index']);
                     }
                 }
@@ -203,7 +205,8 @@ class ArticleController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Action Taken']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(\Yii::$app->request->referrer);
                     }
                 }

@@ -36,7 +36,8 @@ class FrontendBannerController extends Controller
                     $model->initializeForm();
                     if ($model->frontend_banner_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                         $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -64,7 +65,8 @@ class FrontendBannerController extends Controller
                     if ($model->frontend_banner_model->save()) {
                         $model->uploadFile();
                         $model->frontend_banner_model->save();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -117,7 +119,8 @@ class FrontendBannerController extends Controller
         $model->id = $model->id;
         $model->status = FrontendBanner::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(['index']);
     }
 
@@ -127,6 +130,7 @@ class FrontendBannerController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

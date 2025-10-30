@@ -39,7 +39,8 @@ class FeatureRareExoticController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ['success' => true, 'message' => 'Data Saved'];
         } else {
-            throw new BadRequestHttpException('Invalid request');
+            $message = Yii::$app->messageManager->getMessage('invalid_request');
+            throw new BadRequestHttpException($message);
         }
     }
 

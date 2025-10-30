@@ -38,7 +38,8 @@ class ContentManagementController extends Controller
                     $model->initializeForm();
                     if ($model->formModel->save(false)) {
                         //$model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -62,7 +63,8 @@ class ContentManagementController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->formModel->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -102,6 +104,7 @@ class ContentManagementController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

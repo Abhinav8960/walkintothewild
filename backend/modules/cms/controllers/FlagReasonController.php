@@ -6,6 +6,7 @@ namespace backend\modules\cms\controllers;
 use common\models\cms\flagreason\form\FlagreasonSearch;
 use common\models\cms\flagreason\Flagreason;
 use common\models\cms\flagreason\form\FlagreasonForm;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -45,7 +46,8 @@ class FlagReasonController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->reason_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -76,7 +78,8 @@ class FlagReasonController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->reason_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -102,7 +105,8 @@ class FlagReasonController extends Controller
         $model->reason = $model->id . '_' . $model->reason;
         $model->status = Flagreason::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(['index']);
     }
 
@@ -119,6 +123,7 @@ class FlagReasonController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

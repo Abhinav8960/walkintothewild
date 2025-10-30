@@ -243,7 +243,8 @@ class BlogController extends Controller
         $model->slug = $model->id . '_' . $model->slug;
         $model->status = Blog::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -305,7 +306,8 @@ class BlogController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Action Taken']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(\Yii::$app->request->referrer);
                     }
                 }
@@ -346,7 +348,8 @@ class BlogController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     // public function actionBlogdelete($id)
@@ -367,7 +370,8 @@ class BlogController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->delete_blog_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Update');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }

@@ -35,7 +35,8 @@ class FaqcategoryController extends Controller
                     $model->initializeForm();
                     if ($model->faq_model->save(false)) {
                         //$model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -60,7 +61,8 @@ class FaqcategoryController extends Controller
                     $model->initializeForm();
                     if ($model->faq_model->save()) {
                         $model->faq_model->save();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -90,7 +92,8 @@ class FaqcategoryController extends Controller
         $model->name = $model->id . '_' . $model->name;
         $model->status = FaqCategory::STATUS_DELETE;
         $model->save();
-        Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer); // corrected Yii::$app->request
     }
 
@@ -100,6 +103,7 @@ class FaqcategoryController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

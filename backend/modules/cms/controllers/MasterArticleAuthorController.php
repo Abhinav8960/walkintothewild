@@ -43,7 +43,8 @@ class MasterArticleAuthorController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->master_article_author_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['/cms/master-article-author/index']);
                     }
                 }
@@ -75,7 +76,8 @@ class MasterArticleAuthorController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->master_article_author_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['/cms/master-article-author/index']);
                     }
                 }
@@ -104,7 +106,8 @@ class MasterArticleAuthorController extends Controller
         $model = $this->findModel($id);
         $model->status = MasterArticleAuthor::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -121,6 +124,7 @@ class MasterArticleAuthorController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

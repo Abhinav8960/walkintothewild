@@ -6,7 +6,7 @@ use common\interfaces\StatusInterface;
 use common\models\cms\disclaimer\Disclaimer;
 use common\models\cms\disclaimer\DisclaimerSearch;
 use common\models\cms\disclaimer\form\DisclaimerForm;
-
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -39,7 +39,8 @@ class DisclaimerController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->disclaimer_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -64,7 +65,8 @@ class DisclaimerController extends Controller
                     $model->initializeForm();
                     if ($model->disclaimer_model->save()) {
                         // $model->disclaimer_model->save();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -97,7 +99,8 @@ class DisclaimerController extends Controller
         $model->title = $model->id . '_' . $model->title;
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save(false);
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
@@ -107,6 +110,7 @@ class DisclaimerController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+         $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

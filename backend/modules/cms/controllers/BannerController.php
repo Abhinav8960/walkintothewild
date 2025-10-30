@@ -43,7 +43,8 @@ class BannerController extends Controller
                     $model->initializeForm();
                     if ($model->banner_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Data Submitted ']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -70,7 +71,8 @@ class BannerController extends Controller
                     $model->initializeForm();
                     if ($model->banner_model->save()) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -99,7 +101,8 @@ class BannerController extends Controller
         $model = $this->findModel($id);
         $model->status = Banner::STATUS_DELETE;
         $model->save();
-        Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer); // corrected Yii::$app->request
     }
 
@@ -109,7 +112,8 @@ class BannerController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
 
