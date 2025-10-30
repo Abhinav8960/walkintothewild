@@ -94,7 +94,9 @@ class DefaultController extends  Controller
                 if ($chat_message_model->validate()) {
                     $chat_message_model->initializeForm();
                     $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $chat_message_model->chat_form_model->message, $gallery = NULL, $data = NULL, Yii::$app->user->identity, $partner_gallery_version_id = NULL, $partner_gallery_version = NULL);
-                    $chat_message_model->message = '';
+                    // $chat_message_model->message = '';
+
+                    return $this->redirect(['view', 'id' => $id]);
                 }
             }
         }

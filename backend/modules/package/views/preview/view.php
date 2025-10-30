@@ -49,16 +49,6 @@ if ($package->status == GeneralModel::STATUS_ACTIVE) {
         ]
     );
 
-    $this->params['buttons'][] =  Html::button(
-        'Delete',
-        [
-            'value' => Url::toRoute(['delete', 'id' => $package->id]),
-            'class' => 'btn mt-2 btn-danger btn_userarticle',
-            'style' => 'margin-right:5px',
-            'title' => 'Delete'
-        ]
-    );
-
     // $this->params['buttons'][] =  Html::button(
     //     '<span class="fa-stack fa-sm">
     //                 <i class="fa fa-certificate fa-stack-2x"></i>

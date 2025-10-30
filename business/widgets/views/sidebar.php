@@ -4,7 +4,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
-<nav class="side_bar sidebar-offcanvas d-flex justify-content-start">
+<nav class="side_bar sidebar-offcanvas d-flex justify-content-start collapsed-sidebar">
     <ul class="nav">
         <li class="nav-item-profile d-flex justify-content-between align-items-center nav-item mb-5">
             <div class="profile-ditails d-flex justify-content-around align-items-center">
@@ -21,7 +21,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </button>
         </li>
         <li class="navItems mb-2">
-            <a href="/" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/"]) ? "active" : "" ?>">
+            <a href="/" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/"]) ? "active" : "" ?>" data-toggle="tooltip" data-placement="top" title="Dashboard">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/",
                                                                                                 )) ? 'Home2.svg' : 'home.svg' ?>" alt="" width="17" height="20"></span>
@@ -33,7 +33,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                 "/leads/default/index",
                                                                 "/leads/default/create",
                                                                 "/leads/default/view",
-                                                            )) ? "active" : "" ?>" href="/leads/default/index">
+                                                            )) ? "active" : "" ?>" href="/leads/default/index" data-toggle="tooltip" data-placement="top" title="Leads">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/leads/default/index",
                                                                                                     "/leads/default/create",
@@ -65,7 +65,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                 "/package/default/policy-info",
                                                                 "/package/default/faq",
                                                                 "/package/default/getting-there",
-                                                            )) ? "active" : "" ?>" href="/package/default/index">
+                                                            )) ? "active" : "" ?>" href="/package/default/index" data-toggle="tooltip" data-placement="top" title="Package">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/package/default/index",
                                                                                                     "/package/default/create",
@@ -85,7 +85,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/sharesafari/default/index",
                                                                 "/sharesafari/default/create",
-                                                            )) ? "active" : "" ?>" href="/sharesafari/default/index">
+                                                            )) ? "active" : "" ?>" href="/sharesafari/default/index" data-toggle="tooltip" data-placement="top" title="My Fixed Departures">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/sharesafari/default/index",
                                                                                                     "/sharesafari/default/create",
@@ -96,7 +96,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
          <li class="navItems mb-2">
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/booking/default/index",
-                                                            )) ? "active" : "" ?>" href="/booking/default/index">
+                                                            )) ? "active" : "" ?>" href="/booking/default/index" data-toggle="tooltip" data-placement="top" title="Booking">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/booking/default/index",
                                                                                                 )) ? 'transaction_active.png' : 'transaction.png' ?>" alt="" width="17" height="20"></span>
@@ -184,7 +184,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                 "/gallery/default/view",
                                                                 "/gallery/default/approved-view",
 
-                                                            )) ? "active" : "" ?>" href="/gallery/default/approved">
+                                                            )) ? "active" : "" ?>" href="/gallery/default/approved" data-toggle="tooltip" data-placement="top" title="Gallery">
                 <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/gallery/default/approved",
                                                                                                     "/gallery/default/create",
@@ -205,7 +205,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                 "/faqs/default/index",
                                                                 "/faqs/default/create",
 
-                                                            )) ? "active" : "" ?>" href="/faqs/default/index">
+                                                            )) ? "active" : "" ?>" href="/faqs/default/index" data-toggle="tooltip" data-placement="top" title="Faqs">
                 <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/faqs/default/index",
                                                                                                     "/faqs/default/create",
@@ -217,7 +217,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/mybusinessprofile/default/index",
-                                                            )) ? "active" : "" ?>" href="/mybusinessprofile/default/index">
+                                                            )) ? "active" : "" ?>" href="/mybusinessprofile/default/index" data-toggle="tooltip" data-placement="top" title="My Business Profile">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/mybusinessprofile/default/index",
                                                                                                 )) ? 'dpmain.png' : 'dpmain.png' ?>" alt="" width="17" height="20"></span>

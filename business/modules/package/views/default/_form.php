@@ -143,14 +143,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 'class' => 'form-control'
             ])->label(false) ?>
         </div>
-        <div class="form_boxes mb-3">
+        <!-- <div class="form_boxes mb-3">
             <label for="">Cost Per Person Strike Off <span>*</span></label>
             <?= $form->field($model, 'cost_per_person_strike_off')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter',
                 'class' => 'form-control'
             ])->label(false) ?>
-        </div>
+        </div> -->
         <div class="form_boxes mb-3">
             <label for="">Cost Per 2 Person <span>*</span></label>
             <?= $form->field($model, 'cost_per_two_person')->textInput([
@@ -160,14 +160,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
             ])->label(false) ?>
         </div>
 
-        <div class="form_boxes mb-3">
+        <!-- <div class="form_boxes mb-3">
             <label for="">Retail Price<span>*</span></label>
             <?= $form->field($model, 'retail_price')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter',
                 'class' => 'form-control'
             ])->label(false) ?>
-        </div>
+        </div> -->
 
         <div class="form_boxes mb-3">
             <label for="">Validity Date</label>
@@ -175,7 +175,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
 
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12 d-flex gap-2">
             <div class="col-md-6">
                 <div class="form_boxes mb-3">
@@ -199,9 +199,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
 
-    </div>
+    </div> -->
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-6 d-flex gap-2">
             <div class="col-md-6">
                 <div class="form_boxes mb-3 choose_tag_type">
@@ -242,7 +242,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
 
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="col-md-6">

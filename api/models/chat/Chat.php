@@ -161,7 +161,7 @@ class Chat extends \common\models\chat\Chat
 
     public function getChatmessages()
     {
-        return $this->hasMany(ChatMessage::className(), ['chat_id' => 'id']);
+        return $this->hasMany(ChatMessage::className(), ['chat_id' => 'id'])->andWhere(['IN','chat_message.status',[1,0]]);
     }
 
 
