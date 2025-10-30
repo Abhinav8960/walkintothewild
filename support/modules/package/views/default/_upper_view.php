@@ -264,7 +264,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                         </div>
                     <?php } ?>
-                    <div class=" pakageCost  mobile_didplay_block col-lg-4 d-flex">
+                    <!-- <div class=" pakageCost  mobile_didplay_block col-lg-4 d-flex">
                         <div>
                             <?php if ($package->cost_per_person_strike_off > 0) { ?>
                                 <h6 class="mb-0 text-muted">
@@ -309,7 +309,25 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <p class="fs-6 mb-0">
                             <span class=""><?= $package->custom_price_message ?? '' ?></span>
                         </p>
-                    <?php } ?>
+                    <?php } ?> -->
+                    <div class="d-lg-block  mobile_didplay_block col-lg-4 ">
+                        <!-- <del>
+                            <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_person_strike_off) ?>/-</h6>
+                        </del> -->
+                        <div
+                            class="d-flex justify-content-md-start align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
+                            <div class="pakageCost mb-xxl-0 mb-2 gap-2 d-flex">
+
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_person) ?>/- 1 Person
+                                </h6>
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_two_person) ?>/- 2 Person
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="fs-6 mb-0">
+                        <span class=""><?= $package->custom_price_message ?? '' ?></span>
+                    </p>
                 </div>
 
             </div>

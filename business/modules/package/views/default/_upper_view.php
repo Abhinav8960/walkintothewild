@@ -230,7 +230,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <div class="iconImg"> <img src="<?= $this->params['baseurl'] ?>/images/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0"><?= $package->custom_message_details ?>
+                                    <!-- <p class="mb-0"><?= $package->custom_message_details ?>
+                                    </p> -->
+                                     <p class="mb-0"><?= $package->no_of_safari ?> <?php
+                                                                                    if ($package->safari_type == 1) {
+                                                                                        echo 'Shared Safari';
+                                                                                    } elseif ($package->safari_type == 2) {
+                                                                                        echo 'Private Safari';
+                                                                                    } else {
+                                                                                        echo 'Shared Safari';
+                                                                                    } ?>
                                     </p>
                                 </div>
                             </div>
@@ -309,7 +318,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                         </div>
                     <?php } ?>
-                    <div class=" pakageCost d-lg-block  mobile_didplay_block col-lg-4 ">
+                    <!-- <div class=" pakageCost d-lg-block  mobile_didplay_block col-lg-4 ">
                         <?php if ($package->cost_per_person_strike_off > 0) { ?>
                             <h6 class="mb-0 text-muted">
                                 <del>
@@ -349,66 +358,89 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <span class=""><?= $package->custom_price_message ?? '' ?></span>
                         </p>
                     <?php } ?>
+                    
+                </div> -->
+
+
+
+                    <div class="d-lg-block  mobile_didplay_block col-lg-4 ">
+                        <!-- <del>
+                            <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_person_strike_off) ?>/-</h6>
+                        </del> -->
+                        <div
+                            class="d-flex justify-content-md-start align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
+
+                            <div class="pakageCost mb-xxl-0 mb-2 gap-2 d-flex">
+
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_person) ?>/- 1 Person
+                                </h6>
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_two_person) ?>/- 2 Person
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="fs-6 mb-0">
+                        <span class=""><?= $package->custom_price_message ?? '' ?></span>
+                    </p>
+
                 </div>
-
             </div>
-        </div>
-        <div class="col-12 pt-3">
-            <div class="row">
-                <div class="col-6">
-                    <div class="packageTabMain">
-                        <ul class="nav-tabs flex-row d-flex justify-content-between p-0 m-0" id="myTab"
-                            role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                    data-bs-target="#Overview" type="button" role="tab"
-                                    aria-controls="home" aria-selected="true">Overview</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="itinerary-tab" data-bs-toggle="tab"
-                                    data-bs-target="#Itinerary" type="button" role="tab"
-                                    aria-controls="itinerary" aria-selected="true">Itinerary</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                    data-bs-target="#Inclusions" type="button" role="tab"
-                                    aria-controls="profile"
-                                    aria-selected="false">Inclusions</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                    data-bs-target="#Exclusions" type="button" role="tab"
-                                    aria-controls="contact"
-                                    aria-selected="false" style="white-space: nowrap;">Getting There</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                    data-bs-target="#common" type="button" role="tab"
-                                    aria-controls="contact" aria-selected="false">T&C</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                    data-bs-target="#FAQ" type="button" role="tab"
-                                    aria-controls="contact" aria-selected="false">FAQ</button>
-                            </li>
-                        </ul>
+            <div class="col-12 pt-3">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="packageTabMain">
+                            <ul class="nav-tabs flex-row d-flex justify-content-between p-0 m-0" id="myTab"
+                                role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                        data-bs-target="#Overview" type="button" role="tab"
+                                        aria-controls="home" aria-selected="true">Overview</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="itinerary-tab" data-bs-toggle="tab"
+                                        data-bs-target="#Itinerary" type="button" role="tab"
+                                        aria-controls="itinerary" aria-selected="true">Itinerary</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                        data-bs-target="#Inclusions" type="button" role="tab"
+                                        aria-controls="profile"
+                                        aria-selected="false">Inclusions</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                                        data-bs-target="#Exclusions" type="button" role="tab"
+                                        aria-controls="contact"
+                                        aria-selected="false" style="white-space: nowrap;">Getting There</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                                        data-bs-target="#common" type="button" role="tab"
+                                        aria-controls="contact" aria-selected="false">T&C</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                                        data-bs-target="#FAQ" type="button" role="tab"
+                                        aria-controls="contact" aria-selected="false">FAQ</button>
+                                </li>
+                            </ul>
 
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
 
-<style>
-    .editBtn a {
-        background-color: #237F40;
-        color: #ffffff;
-        border: 0;
-        border-radius: 4px;
-        font-size: 15px;
-        font-weight: 700;
-        padding: 10px 50px;
-    }
-</style>
+    <style>
+        .editBtn a {
+            background-color: #237F40;
+            color: #ffffff;
+            border: 0;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 10px 50px;
+        }
+    </style>

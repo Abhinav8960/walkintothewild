@@ -62,17 +62,27 @@ use common\models\GeneralModel;
                                     <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0"><?php
-                                                    if ($package->safari_type == 1) {
-                                                        echo $package->no_of_safari . ' Shared Safari';
-                                                    } elseif ($package->safari_type == 2) {
-                                                        echo $package->no_of_safari . ' Private Safari';
-                                                    } else if ($package->custom_activity_message) {
-                                                        echo $package->custom_activity_message;
-                                                    } else {
-                                                        echo $package->no_of_safari . ' Shared Safari';
-                                                    } ?>
+                                    <!-- <p class="mb-0"><?php
+                                                            if ($package->safari_type == 1) {
+                                                                echo $package->no_of_safari . ' Shared Safari';
+                                                            } elseif ($package->safari_type == 2) {
+                                                                echo $package->no_of_safari . ' Private Safari';
+                                                            } else if ($package->custom_activity_message) {
+                                                                echo $package->custom_activity_message;
+                                                            } else {
+                                                                echo $package->no_of_safari . ' Shared Safari';
+                                                            } ?>
+                                    </p> -->
+                                    <p class="mb-0"><?= $package->no_of_safari ?> <?php
+                                                                                    if ($package->safari_type == 1) {
+                                                                                        echo 'Shared Safari';
+                                                                                    } elseif ($package->safari_type == 2) {
+                                                                                        echo 'Private Safari';
+                                                                                    } else {
+                                                                                        echo 'Shared Safari';
+                                                                                    } ?>
                                     </p>
+
                                 </div>
                             </div>
                         </div>
@@ -119,10 +129,10 @@ use common\models\GeneralModel;
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-12 m-3">
                     <div class="d-flex align-items-start gap-3">
-                        <?php if ($package->cost_per_person_strike_off > 0){ ?>
+                        <?php if ($package->cost_per_person_strike_off > 0) { ?>
                             <p class="mb-0 text-muted">
                                 <del>
                                     <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" width="16" height="16" class="me-1">
@@ -165,6 +175,29 @@ use common\models\GeneralModel;
                 <?php } ?>
 
 
+            </div> -->
+            <div class="row">
+                <div class="col-12 m-3">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
+
+                        <div class="pakageCost mb-xxl-0 mb-2 d-flex">
+                            <!-- <del>
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="16px" class="me-1 mb-1">
+                                    <?= GeneralModel::number_format_indian($package->cost_per_person_strike_off) ?> /- <span class="perpersonText"></span></h6>
+                            </del> -->
+                            <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_person) ?> / <span class="perpersonText">Per 1 Person</span></h6>
+                            <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->cost_per_two_person) ?> / <span class="perpersonText">Per 2 Person</span></h6>
+                        </div>
+                        <div class="btn-delet float-end py-2">
+                            <!-- <a style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" href="<?= \yii\helpers\Url::toRoute(['/package/preview/update', 'id' => $package->id]) ?>"><i class="fas fa-check me-1"></i>Mark Package As Pouplar</a>
+                                    <button class="btn_userarticle" style="background:red !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/package/preview/delete', 'id' => $package->id]) ?>"><i class="fas fa-trash me-1"></i>Delete</button> -->
+                        </div>
+
+                    </div>
+                    <p class="fs-6 mb-0">
+                        <span class=""><?= $package->custom_price_message ?? '' ?></span>
+                    </p>
+                </div>
             </div>
         </div>
 
