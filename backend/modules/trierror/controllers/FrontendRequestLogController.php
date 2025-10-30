@@ -171,7 +171,8 @@ class FrontendRequestLogController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
      public function actionUserList($q = null)
