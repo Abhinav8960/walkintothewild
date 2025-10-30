@@ -121,6 +121,9 @@ return [
         'approved_live' => '{var} approved and live successfully.',
         'failed_to' => 'Failed to {var}',
         'failed_to_approve' => 'Failed to approve {var}.',
+        'publish' => '{var} Published successfully!',
+        'phone_set_verified' => '{var} phone is set to verified!',
+        'phone_set_not_verified' => '{var} phone is set to not verified!',
 
 
     ],
