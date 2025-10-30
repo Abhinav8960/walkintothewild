@@ -145,7 +145,7 @@ class AnimalController extends Controller
         if (($model = MasterAnimal::findOne(['id' => $id, 'status' => [MasterAnimal::STATUS_ACTIVE, MasterAnimal::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
+        $message = Yii::$app->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
+      }
 }
