@@ -269,8 +269,8 @@ return [
         'api' => [
             'class' => 'api\components\Api',
              'messageManager' => [
-                'class' => 'api\components\MessageManager',
-                'messageFile' => '@api/config/messages.php', 
+                'class' => 'common\components\MessageManager',
+                // 'messageFile' => '@api/config/messages.php', 
                 'cacheDuration' => 3600,
             ],
         ],
