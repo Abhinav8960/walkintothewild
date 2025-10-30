@@ -56,7 +56,8 @@ class OperatorController extends Controller
                                         $operator->google_rating = $avg;
                                         $operator->google_review_count = $count;
                                         $operator->save(false);
-                                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                        $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Action Taken']);
+                                        \Yii::$app->session->setFlash('success', $message);
                                         return $this->redirect(['index']);
                                     }
                                 }
@@ -79,7 +80,8 @@ class OperatorController extends Controller
     {
         $review = SafariOperatorRating::find()->where(['id' => $id])->one();
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -100,7 +102,8 @@ class OperatorController extends Controller
     {
         $review = SafariOperatorRating::find()->where(['id' => $id])->one();
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -120,7 +123,8 @@ class OperatorController extends Controller
                     }
                 }
             }
-            \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Action Taken']);
+            \Yii::$app->session->setFlash('success', $message);
         }
 
         //form model

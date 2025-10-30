@@ -55,7 +55,8 @@ class UserPostController extends Controller
                                         }
                                     }
                                     UserPostCommentFlag::updateAll(['status' => 3], ['user_post_comment_id' => $user_post_comment->id, 'status' => 1]);
-                                    \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                    $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Action Taken']);
+                                    \Yii::$app->session->setFlash('success', $message);
                                     return $this->redirect(['index']);
                                 }
                             }
@@ -77,7 +78,8 @@ class UserPostController extends Controller
     {
         $flag_comment = UserPostComment::find()->where(['id' => $id])->one();
         if (empty($flag_comment)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('common.invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
