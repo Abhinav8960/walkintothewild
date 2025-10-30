@@ -6,6 +6,7 @@ use common\interfaces\StatusInterface;
 use common\models\master\vehicle\form\MasterVehicleForm;
 use common\models\master\vehicle\MasterVehicle;
 use common\models\master\vehicle\MasterVehicleSearch;
+use Yii;
 use yii\web\UploadedFile;
 
 use yii\web\Controller;
@@ -51,7 +52,8 @@ class VehicleController extends Controller
                     $model->initializeForm();
                     if ($model->vehicle_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted',['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -84,7 +86,8 @@ class VehicleController extends Controller
                     $model->initializeForm();
                     if ($model->vehicle_model->save()) {
                         $model->uploadFile($model->vehicle_model->id);
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -124,7 +127,8 @@ class VehicleController extends Controller
         $model->vehicle_name = $model->id . '_' . $model->vehicle_name;
         $model->status = MasterVehicle::STATUS_DELETE;
         $model->save(false);
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 

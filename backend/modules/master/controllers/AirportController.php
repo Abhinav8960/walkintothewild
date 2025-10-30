@@ -53,7 +53,8 @@ class AirportController extends Controller
                     $model->initializeForm();
                     if ($model->airport_model->save(false)) {
                         //$model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -85,7 +86,8 @@ class AirportController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->airport_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -145,7 +147,8 @@ class AirportController extends Controller
                         $model->airport_model->status = MasterAirport::STATUS_ACTIVE;
                         $model->airport_model->save(false);
                     }
-                    \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' airport Successfully Imported');
+                    $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Airport imported']);
+                    \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess .' '.$message);
                     return $this->redirect(['/master/airport/index']);
                 }
             }
@@ -171,7 +174,8 @@ class AirportController extends Controller
         $model->name = $model->id . '_' . $model->name;
         $model->status = MasterAirport::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 

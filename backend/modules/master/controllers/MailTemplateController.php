@@ -6,7 +6,7 @@ use common\interfaces\StatusInterface;
 use common\models\master\email\form\MasterMailTemplateForm;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\email\MasterMailTemplateSearch;
-
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -48,7 +48,8 @@ class MailTemplateController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->mail_template_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -79,7 +80,8 @@ class MailTemplateController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->mail_template_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -110,7 +112,8 @@ class MailTemplateController extends Controller
         $model->name = $model->id . '_' . $model->name;
         $model->status = MasterMailTemplate::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 

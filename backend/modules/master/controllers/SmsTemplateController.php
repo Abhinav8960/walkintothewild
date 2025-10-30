@@ -5,6 +5,7 @@ namespace backend\modules\master\controllers;
 use common\models\master\smstemplate\form\MasterSmsTemplateForm;
 use common\models\master\smstemplate\MasterSmsTemplate;
 use common\models\master\smstemplate\MasterSmsTemplateSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -45,7 +46,8 @@ class SmsTemplateController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->sms_template_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Created');
+                        $message = Yii::$app->messageManager->getMessage('common.created');
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -76,7 +78,8 @@ class SmsTemplateController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->sms_template_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Updated');
+                        $message = Yii::$app->messageManager->getMessage('common.updated');
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -103,7 +106,8 @@ class SmsTemplateController extends Controller
         $model = $this->findModel($id);
         $model->status = MasterSmsTemplate::STATUS_DELETE;
         $model->save(false);
-        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+        $message = Yii::$app->messageManager->getMessage('common.deleted');
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 

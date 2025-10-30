@@ -6,7 +6,7 @@ namespace backend\modules\master\controllers;
 use common\models\master\operatorcategory\form\MasterOperatorCategoryForm;
 use common\models\master\operatorcategory\MasterOperatorCategory;
 use common\models\master\operatorcategory\MasterOperatorCategorySearch;
-
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -48,7 +48,8 @@ class OperatorCategoryController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->operator_category_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted',['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -79,7 +80,8 @@ class OperatorCategoryController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->operator_category_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -119,7 +121,8 @@ class OperatorCategoryController extends Controller
         $model->vehicle_name = $model->id . '_' . $model->vehicle_name;
         $model->status = MasterOperatorCategory::STATUS_DELETE;
         $model->save(false);
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 

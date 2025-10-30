@@ -199,6 +199,10 @@ return [
             ],
         ],
 
+        'messageManager' => [
+            'class' => 'common\components\MessageManager',
+        ],
+
     ],
     'container' => [
         'definitions' => [

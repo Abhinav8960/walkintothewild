@@ -6,7 +6,7 @@ namespace backend\modules\master\controllers;
 use common\models\master\country\form\MasterCountryForm;
 use common\models\master\country\MasterCountry;
 use common\models\master\country\MasterCountrySearch;
-
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -48,7 +48,8 @@ class CountryController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->country_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -79,7 +80,8 @@ class CountryController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->country_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -119,7 +121,8 @@ class CountryController extends Controller
         $model->country_name = $model->id . '_' . $model->country_name;
         $model->status = MasterCountry::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 

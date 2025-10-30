@@ -51,7 +51,8 @@ class StateController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->state_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted',['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -83,7 +84,8 @@ class StateController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->state_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -143,7 +145,8 @@ class StateController extends Controller
                         $model->state_model->status = 1;
                         $model->state_model->save(false);
                     }
-                    \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' State Successfully Imported');
+                    $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'State Imported']);
+                    \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' ' . $message);
                     return $this->redirect(['/master/state/index']);
                 }
             }
@@ -180,7 +183,8 @@ class StateController extends Controller
         $model->state_name = $model->id . '_' . $model->state_name;
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 

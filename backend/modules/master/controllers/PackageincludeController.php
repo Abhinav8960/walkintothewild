@@ -6,6 +6,7 @@ namespace backend\modules\master\controllers;
 use common\models\master\packageinclude\form\MasterPackageIncludeForm;
 use common\models\master\packageinclude\MasterPackageInclude;
 use common\models\master\packageinclude\MasterPackageIncludeSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -47,7 +48,8 @@ class PackageincludeController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_include_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted',['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -78,7 +80,8 @@ class PackageincludeController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_include_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -106,7 +109,8 @@ class PackageincludeController extends Controller
         $model->title = $model->id . '_' . $model->title;
         $model->status = MasterPackageInclude::STATUS_DELETE;
         $model->save(false);
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.updated',['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 

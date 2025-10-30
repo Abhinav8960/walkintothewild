@@ -6,6 +6,7 @@ namespace backend\modules\master\controllers;
 use common\models\master\animal\form\MasterAnimalForm;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\animal\MasterAnimalSearch;
+use Yii;
 use yii\web\UploadedFile;
 
 use yii\web\Controller;
@@ -53,7 +54,8 @@ class AnimalController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->animal_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.submitted', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -85,7 +87,8 @@ class AnimalController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->animal_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -125,7 +128,8 @@ class AnimalController extends Controller
         $model->name = $model->id . '_' . $model->name;
         $model->status = MasterAnimal::STATUS_DELETE;
         $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        $message = Yii::$app->messageManager->getMessage('common.updated', ['{var}' => 'Data']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
