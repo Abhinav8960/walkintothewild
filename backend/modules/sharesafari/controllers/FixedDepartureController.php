@@ -64,14 +64,16 @@ class FixedDepartureController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionApproved($share_safari_id, $version)
     {
         $fixed_departure = ShareSafari::find()->where(['id' => $share_safari_id, 'pending_for_approval_version' => $version])->one();
         if (empty($fixed_departure)) {
-            Yii::$app->session->setFlash('error', 'Fixed Departure not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Fixed Departure']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
 
@@ -133,17 +135,20 @@ class FixedDepartureController extends Controller
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            $message = Yii::$app->messageManager->getMessage('common.send_for_approval_failed');
+            Yii::$app->session->setFlash('error', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
             die();
-            Yii::$app->session->setFlash('error', 'Failed to approve fixed departure.');
+            $message = Yii::$app->messageManager->getMessage('common.failed_to_approve', ['{var}' => 'Fixed Departure']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $transaction->commit();
 
 
-        Yii::$app->session->setFlash('success', 'Fixed departure approved and Live successfully.');
+        $message = Yii::$app->messageManager->getMessage('common.approved_and_live', ['{var}' => 'Fixed Departure']);
+        \Yii::$app->session->setFlash('success', $message);
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -160,7 +165,8 @@ class FixedDepartureController extends Controller
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            $message = Yii::$app->messageManager->getMessage('common.send_for_approval_failed');
+            Yii::$app->session->setFlash('error', $message . '' . $e->getMessage());
             echo "<pre>";
             print_r($e->getMessage());
             die();
@@ -340,7 +346,8 @@ class FixedDepartureController extends Controller
     {
         $share_safari = ShareSafari::find()->where(['id' => $share_safari_id, 'pending_for_approval_version' => $version])->one();
         if (empty($share_safari)) {
-            Yii::$app->session->setFlash('error', 'Package not found.');
+            $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Fixed Departure']);
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $model = ShareSafariVersion::find()->where(['share_safari_id' => $share_safari_id, 'version' => $version])->one();
@@ -355,7 +362,8 @@ class FixedDepartureController extends Controller
                 $model->status = ShareSafariVersion::NOT_APPROVED_STATUS;
                 $model->cancellation_reason = \Yii::$app->request->post('ShareSafariVersion')['cancellation_reason'] ?? NULL;
                 $model->save(false);
-                Yii::$app->session->setFlash('success', 'Package rejected successfully.');
+                $message = Yii::$app->messageManager->getMessage('common.rejected', ['{var}' => 'Fixed Departure']);
+                \Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(['index']);
             }
         }

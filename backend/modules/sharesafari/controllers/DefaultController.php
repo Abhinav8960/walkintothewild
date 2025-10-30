@@ -92,7 +92,8 @@ class DefaultController extends Controller
     {
         $review = ShareSafariComment::find()->where(['parent_id' => $id]);
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $dataProvider = new ActiveDataProvider([
@@ -110,7 +111,8 @@ class DefaultController extends Controller
     {
         $review = ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id]);
         if (empty($review)) {
-            \Yii::$app->session->setFlash('error', 'Invalid request');
+            $message = Yii::$app->messageManager->getMessage('invalid_request');
+            \Yii::$app->session->setFlash('error', $message);
             return $this->redirect(['index']);
         }
         $dataProvider = new ActiveDataProvider([
@@ -334,7 +336,8 @@ class DefaultController extends Controller
         if ($model = ShareSafari::find()->limit(1)->one()) {
             return $model;
         }
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->messageManager->getMessage('page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     public function actionFixedView($id)
@@ -369,7 +372,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->share_safari_delete_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Fixed Departure']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['fixed-departure']);
                     }
                 }
@@ -391,7 +395,8 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->share_safari_delete_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Share Safari']);
+                        \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['index']);
                     }
                 }
@@ -471,9 +476,11 @@ class DefaultController extends Controller
         if ($model) {
             $model->is_published_on_api = !$model->is_published_on_api;
             $model->save(false);
-            \Yii::$app->session->setFlash('success', 'Api Publish change Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.publish', ['{var}' => 'Api']);
+            \Yii::$app->session->setFlash('success', $message);
         } else {
-            \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.technical_issue');
+            \Yii::$app->session->setFlash('error', $message);
         }
         return $this->redirect(Yii::$app->request->referrer);
     }
@@ -484,9 +491,11 @@ class DefaultController extends Controller
         if ($model) {
             $model->is_published_on_web = !$model->is_published_on_web;
             $model->save(false);
-            \Yii::$app->session->setFlash('success', 'Web Publish change Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.publish', ['{var}' => 'Web']);
+            \Yii::$app->session->setFlash('success', $message);
         } else {
-            \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
+            $message = Yii::$app->messageManager->getMessage('common.technical_issue');
+            \Yii::$app->session->setFlash('error', $message);
         }
         return $this->redirect(Yii::$app->request->referrer);
     }
@@ -498,11 +507,13 @@ class DefaultController extends Controller
         if ($share_safari) {
             $share_safari->status = ShareSafari::STATUS_ACTIVE;
             if ($share_safari->save(false)) {
-                \Yii::$app->session->setFlash('success', 'Active Successfully!!!');
+                $message = Yii::$app->messageManager->getMessage('common.active');
+                \Yii::$app->session->setFlash('success', $message);
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
-        \Yii::$app->session->setFlash('danger', 'Not Found!!!');
+        $message = Yii::$app->messageManager->getMessage('common.not_found');
+        \Yii::$app->session->setFlash('danger', $message);
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -629,7 +640,8 @@ class DefaultController extends Controller
         $share_safari_lead = ShareSafariLead::find()->where(['id' => $share_safari_lead_id])->andWhere(['status' => 1])->limit(1)->one();
 
         if (!$share_safari_lead) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            $message = Yii::$app->messageManager->getMessage('page_not_exist');
+            throw new NotFoundHttpException($message);
         }
 
         $chat_model = Chat::find()->where(['user_id' => $share_safari_lead->user_id, 'recipient_user_id' => $share_safari->user_id])->andWhere(['chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->limit(1)->one();
