@@ -10,3 +10,4 @@ Yii::setAlias('@webhook', dirname(dirname(__DIR__)) . '/webhook');
 Yii::setAlias('@accounts', dirname(dirname(__DIR__)) . '/accounts');
 Yii::setAlias('@support', dirname(dirname(__DIR__)) . '/support');
 Yii::setAlias('@cms', dirname(dirname(__DIR__)) . '/cms');
+Yii::setAlias('@developer', dirname(dirname(__DIR__)) . '/developer');
