@@ -14,11 +14,11 @@ use api\models\package\PackageVersionSearch;
 use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariSearch;
 use api\models\User;
+use api\models\UserPrivacyPolicyAcknowledgement;
 use api\models\UserWishlist;
-use common\models\compliancedocuments\ComplianceDocuments;
+use api\models\compliancedocuments\ComplianceDocuments;
 use common\models\GeneralModel;
 use common\models\MailLog;
-use common\models\userprivacypolicyacknowledgement\UserPrivacyPolicyAcknowledgement;
 use frontend\models\profile\PrivacyForm;
 use frontend\models\profile\UserForm;
 use Yii;
@@ -323,13 +323,7 @@ class DefaultController extends RestController
     {
         $user_model = $this->userinfo;
 
-        if ($user_model && $user_model->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
-        }
-
-        $document_type = Yii::$app->request->post('document_type');
-        $document = ComplianceDocuments::find()->where(['type' => $document_type, 'status' => 1])->one();
+        $document = ComplianceDocuments::find()->where(['type' => ComplianceDocuments::PRIVACY_POLICY, 'status' => 1])->one(); 
         
         $user_acknowledgement = new UserPrivacyPolicyAcknowledgement();
         $user_acknowledgement->user_id = $user_model->id;
