@@ -9,9 +9,11 @@ use yii\base\NotSupportedException;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use common\behaviors\UserHandleBehavior;
+use common\models\compliancedocuments\ComplianceDocuments;
 use common\models\master\userflag\MasterUserFlag;
 use common\models\sharesafari\ShareSafari;
 use common\models\operator\SafariOperator;
+use common\models\userprivacypolicyacknowledgement\UserPrivacyPolicyAcknowledgement;
 
 /**
  * User model
@@ -84,7 +86,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            [['is_admin', 'is_support_user','is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'name','is_account_manager','is_support_user'], 'safe'],
+            [['is_admin', 'is_support_user', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'name', 'is_account_manager', 'is_support_user'], 'safe'],
             [['user_handle', 'user_bio', 'user_flaged', 'mobile_no', 'is_mobile_no_verified', 'mobile_no_verified_at'], 'safe']
         ];
     }
@@ -192,7 +194,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'OR',
                 // ['is_adminstrator' => 1],
                 ['is_admin' => 1],
-                ['is_support_user'=>1],
+                ['is_support_user' => 1],
                 ['is_cms_manager' => 1],
                 ['is_resort_manager' => 1],
                 ['is_report_manager' => 1],
@@ -466,7 +468,7 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
-    
+
 
     public function getCover_display_image()
     {
@@ -537,7 +539,7 @@ class User extends ActiveRecord implements IdentityInterface
         if ($this->is_community_manager == 1) {
             $roles[] = "Community Manager";
         }
-        if($this->is_support_user == 1){
+        if ($this->is_support_user == 1) {
             $roles[] = "Support User";
         }
         return implode(', ', $roles);
@@ -547,45 +549,44 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
     }
-    
 
-   /**
- * Create a permanent User from a TemporaryUser.
- *
- * @param \common\models\TemporaryUser $tempUser
- * @return static|null  The newly created User or null if failed
- */
-public static function createFromTemporary($tempUser)
-{
-    if (!$tempUser) {
+
+    /**
+     * Create a permanent User from a TemporaryUser.
+     *
+     * @param \common\models\TemporaryUser $tempUser
+     * @return static|null  The newly created User or null if failed
+     */
+    public static function createFromTemporary($tempUser)
+    {
+        if (!$tempUser) {
+            return null;
+        }
+
+        $user = new self();
+        $user->username = $tempUser->email;
+        $user->email = $tempUser->email;
+        $user->mobile_no = $tempUser->mobile_no;
+        $user->is_mobile_no_verified = $tempUser->is_mobile_verified;
+        $user->mobile_no_verified_at = time();
+        $user->name = $tempUser->name;
+        $user->password_hash = Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString(8));
+        $user->auth_key = Yii::$app->security->generateRandomString();
+        $user->status = self::STATUS_ACTIVE;
+        $user->created_at = time();
+        $user->updated_at = time();
+
+
+        if ($user->save(false)) {
+            // Mark temp user as migrated 
+            $tempUser->status = \common\models\TemporaryUser::STATUS_MIGRATED;
+            $tempUser->user_id = $user->id ?? null;
+            $tempUser->updated_at = time();
+            $tempUser->save(false);
+
+            return $user;
+        }
+
         return null;
     }
-
-    $user = new self();
-    $user->username = $tempUser->email;
-    $user->email = $tempUser->email;
-    $user->mobile_no = $tempUser->mobile_no;
-    $user->is_mobile_no_verified = $tempUser->is_mobile_verified;
-    $user->mobile_no_verified_at = time();
-    $user->name = $tempUser->name;
-    $user->password_hash = Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString(8));
-    $user->auth_key = Yii::$app->security->generateRandomString();
-    $user->status = self::STATUS_ACTIVE;
-    $user->created_at = time();
-    $user->updated_at = time();
-
-   
-    if ($user->save(false)) {
-        // Mark temp user as migrated 
-        $tempUser->status = \common\models\TemporaryUser::STATUS_MIGRATED;
-        $tempUser->user_id = $user->id ?? null;
-        $tempUser->updated_at = time();
-        $tempUser->save(false);
-
-        return $user;
-    }
-
-    return null;
-}
-
 }

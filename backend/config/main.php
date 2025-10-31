@@ -135,6 +135,10 @@ return [
             'class' => 'backend\modules\transactioninfo\Module',
         ],
 
+        'userprivacypolicyacknowledgement' => [
+            'class' => 'backend\modules\userprivacypolicyacknowledgement\Module',
+        ]
+
     ],
     'components' => [
         'reCaptcha3' => [

@@ -15,8 +15,10 @@ use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariSearch;
 use api\models\User;
 use api\models\UserWishlist;
+use common\models\compliancedocuments\ComplianceDocuments;
 use common\models\GeneralModel;
 use common\models\MailLog;
+use common\models\userprivacypolicyacknowledgement\UserPrivacyPolicyAcknowledgement;
 use frontend\models\profile\PrivacyForm;
 use frontend\models\profile\UserForm;
 use Yii;
@@ -41,10 +43,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari','profile-delete'],
+                'only' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari','profile-delete','privacy-policy-acknowledge'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari','profile-delete'],
+                        'actions' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari','profile-delete','privacy-policy-acknowledge'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -61,7 +63,8 @@ class DefaultController extends RestController
                     'dropdownoptions' => ['GET'],
                     'wishlist-package' => ['GET'],
                     'wishlist-shared-safari' => ['GET'],
-                    'profile-delete' => ['POST']
+                    'profile-delete' => ['POST'],
+                    'privacy-policy-acknowledge' =>['POST']
                 ],
             ],
         ];
@@ -313,6 +316,33 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
         $message = Yii::$app->api->messageManager->getMessage('common.delete_failed',['{var}'=>'Profile']);
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+    }
+
+    public function actionPrivacyPolicyAcknowledge()
+    {
+        $user_model = $this->userinfo;
+
+        if ($user_model && $user_model->partner) {
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+        }
+
+        $document_type = Yii::$app->request->post('document_type');
+        $document = ComplianceDocuments::find()->where(['type' => $document_type, 'status' => 1])->one();
+        
+        $user_acknowledgement = new UserPrivacyPolicyAcknowledgement();
+        $user_acknowledgement->user_id = $user_model->id;
+        $user_acknowledgement->document_id = $document->id;
+        $user_acknowledgement->document_version = $document->version;
+        $user_acknowledgement->uuid = $user_model->id . $document->version . $document->id;
+
+        if ($user_acknowledgement->save(false)) {
+            $message = Yii::$app->api->messageManager->getMessage('common.success');
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
+        }
+
+        $message = Yii::$app->api->messageManager->getMessage('common.set_failed',['{var}'=>'Acknowledged']);
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 }
