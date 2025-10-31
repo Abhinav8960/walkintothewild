@@ -26,7 +26,7 @@ NotifyAsset::register($this);
 </head>
 
 
-<body class="sidebar-layout-icon">
+<body>
     <?php $this->beginBody() ?>
 
     <div class="container-scroller">
