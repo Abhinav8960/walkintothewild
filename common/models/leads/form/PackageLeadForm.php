@@ -73,7 +73,7 @@ class PackageLeadForm extends Model
             $lead->operator_id = $package->safari_operator_id;
             $lead->name = $this->name ?? $login_user->name;
             $lead->email = $this->email ?? $login_user->email;
-            $lead->phone = $this->phone;
+            $lead->phone = $this->phone ?? $login_user->mobile_no;
             $lead->travelers = $this->travelers;
             $lead->user_notes = $this->user_notes;
             $lead->from_date = $this->pack_start_date;
