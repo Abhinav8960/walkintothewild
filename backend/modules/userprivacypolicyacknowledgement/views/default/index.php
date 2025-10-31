@@ -27,8 +27,12 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->user->name;
-
+                            $name = $model->user->name ?? '';
+                            if (!empty($model->currentpolicy)) {
+                                return "<span style='color: green;'>{$name}</span>";
+                            } else {
+                                return "<span style='color: black;'>{$name}</span>";
+                            }
                         },
                     ],
                     [
@@ -56,7 +60,7 @@ $this->params['title'] = $this->title;
                                 return isset(GeneralModel::complianceDocumentsTitleoption()[$model->document->type]) ? GeneralModel::complianceDocumentsTitleoption()[$model->document->type] : '';
                             }
                         }
-                    ],    
+                    ],
                     [
                         'label' => 'Document Version',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -73,25 +77,6 @@ $this->params['title'] = $this->title;
                             return \Yii::$app->formatter->asDatetime($model->created_at);
                         }
                     ],
-
-                    // [
-                    //     'header' => 'Action',
-                    //     'value' => function ($model) {
-                    //         if ($model->is_approved != 1) {
-                    //             return Html::a('<i class="fa fa-toggle-on"></i>', ['approved', 'id' => $model->id], [
-                    //                 'class' => 'btn btn-xs btn-danger',
-                    //                 'data-method' => 'post',
-                    //                 'data-confirm' => 'Are you sure to approved this Business?',
-                    //                 'title' => 'Approved Business',
-                    //                 'data-bs-toggle' => "tooltip"
-                    //             ]);
-                    //         }
-                    //         return '';
-                    //     },
-                    //     'format' => 'raw',
-                    //     'headerOptions' => ['style' => 'width:5%;'],
-                    //     'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
-                    // ],
                 ],
             ]); ?>
         </div>

@@ -41,7 +41,7 @@ class UserPrivacyPolicyAcknowledgement extends \yii\db\ActiveRecord
     {
         return [
             [['uuid', 'user_id', 'document_version', 'document_id'], 'default', 'value' => null],
-            [['user_id', 'document_id', 'created_at', 'created_by','updated_at' ,'updated_by'], 'integer'],
+            [['user_id', 'document_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['uuid', 'document_version'], 'string', 'max' => 255],
         ];
     }
@@ -60,7 +60,8 @@ class UserPrivacyPolicyAcknowledgement extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',        ];
+            'updated_by' => 'Updated By',
+        ];
     }
 
     public function getUser()
@@ -72,5 +73,9 @@ class UserPrivacyPolicyAcknowledgement extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ComplianceDocuments::class, ['id' => 'document_id']);
     }
-
+    
+    public function getCurrentpolicy()
+    {
+        return ComplianceDocuments::find()->where(['id' => $this->document_id, 'version' => $this->document_version])->one();
+    }
 }

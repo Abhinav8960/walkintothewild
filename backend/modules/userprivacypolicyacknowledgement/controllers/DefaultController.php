@@ -2,6 +2,7 @@
 
 namespace backend\modules\userprivacypolicyacknowledgement\controllers;
 
+use common\models\compliancedocuments\ComplianceDocuments;
 use common\models\User;
 use common\models\userprivacypolicyacknowledgement\UserPrivacyPolicyAcknowledgementSearch;
 use Yii;
