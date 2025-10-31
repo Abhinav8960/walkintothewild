@@ -27,6 +27,7 @@ class UserUpdateForm extends Model
     public $role_id;
     public $user_flaged;
     public $pop_up_message;
+    public $is_developer;
 
     // 1 => 'Administrator',
     // 2 => 'Admin',
@@ -82,6 +83,9 @@ class UserUpdateForm extends Model
             if ($this->user_model->is_support_user == 1) {
                 $this->role_id[] = 10;
             }
+             if ($this->user_model->is_developer == 1) {
+                $this->role_id[] = 11;
+            }
             $this->user_flaged = $this->user_model->user_flaged;
             $this->pop_up_message = $this->user_model->pop_up_message;
         }
@@ -114,7 +118,7 @@ class UserUpdateForm extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            [['is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'is_community_manager', 'is_account_manager', 'is_support_user'], 'safe'],
+            [['is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'is_community_manager', 'is_account_manager', 'is_support_user','is_developer'], 'safe'],
             [
                 'email',
                 'unique',
@@ -167,6 +171,7 @@ class UserUpdateForm extends Model
         $this->user_model->is_report_manager = 0;
         $this->user_model->is_community_manager = 0;
         $this->user_model->is_account_manager = 0;
+        $this->user_model->is_developer = 0;
         $this->user_model->save(false);
 
         if ($this->role_id) {
@@ -202,6 +207,9 @@ class UserUpdateForm extends Model
                 }
                 if ($role == 10) {
                     $this->user_model->is_support_user = 1;
+                }
+                if ($role == 11) {
+                    $this->user_model->is_developer = 1;
                 }
             }
         }
