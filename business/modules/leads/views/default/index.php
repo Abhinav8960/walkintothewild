@@ -51,14 +51,14 @@ $this->title = 'Leads';
                             return '';
                         }
                     ],
-                    [
-                        'label' => 'Phone',
-                        'contentOptions' => ['style' => 'width: 1%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->phone;
-                        }
-                    ],
+//                    [
+//                        'label' => 'Phone',
+//                        'contentOptions' => ['style' => 'width: 1%;'],
+//                        'format' => 'raw',
+//                        'value' => function ($model) {
+//                            return $model->phone;
+//                        }
+//                    ],
                     [
                         'label' => 'Source',
                         'contentOptions' => ['style' => 'width: 1%;'],
