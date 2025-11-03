@@ -51,7 +51,7 @@ class SafariOperatorController extends Controller
         // $searchModel->report_days = 'today';
         // $searchModel->status = [SafariOperator::STATUS_ACTIVE, NewStatusInterface::STATUS_BLOCKED];
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere(['IN', 'status', [SafariOperator::STATUS_ACTIVE, NewStatusInterface::STATUS_BLOCKED]]);
+        $dataProvider->query->andWhere(['IN', 'safari_operator.status', [SafariOperator::STATUS_ACTIVE, NewStatusInterface::STATUS_BLOCKED]]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
