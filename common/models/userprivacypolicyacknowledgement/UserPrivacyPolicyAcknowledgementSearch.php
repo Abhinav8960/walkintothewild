@@ -13,7 +13,7 @@ class UserPrivacyPolicyAcknowledgementSearch extends UserPrivacyPolicyAcknowledg
     public function rules()
     {
         return [
-            [['uuid', 'document_version','created_at'],'safe'],
+            [['document_version','created_at'],'safe'],
             [['user_id', 'document_id', 'created_by','updated_at' ,'updated_by'], 'integer'],
         ];
     }
@@ -67,7 +67,6 @@ class UserPrivacyPolicyAcknowledgementSearch extends UserPrivacyPolicyAcknowledg
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'uuid' => $this->uuid,
             'user_id' => $this->user_id,
             'document_version' => $this->document_version,
             'document_id' => $this->document_id,

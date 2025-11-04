@@ -322,14 +322,18 @@ class DefaultController extends RestController
     public function actionPrivacyPolicyAcknowledge()
     {
         $user_model = $this->userinfo;
-
         $document = ComplianceDocuments::find()->where(['type' => ComplianceDocuments::PRIVACY_POLICY, 'status' => 1])->one(); 
-        
+        $data_exists = UserPrivacyPolicyAcknowledgement::find()->where(['user_id' => $user_model->id,'document_id' => $document->id,'document_version' => $document->version])->one();
+
+        if ($data_exists) {
+            $message = Yii::$app->api->messageManager->getMessage('common.already_acknowledged');
+            return Yii::$app->api->sendResponse(['message' => $message]);
+        }
+
         $user_acknowledgement = new UserPrivacyPolicyAcknowledgement();
         $user_acknowledgement->user_id = $user_model->id;
         $user_acknowledgement->document_id = $document->id;
         $user_acknowledgement->document_version = $document->version;
-        $user_acknowledgement->uuid = $user_model->id . $document->version . $document->id;
 
         if ($user_acknowledgement->save(false)) {
             $message = Yii::$app->api->messageManager->getMessage('common.success');

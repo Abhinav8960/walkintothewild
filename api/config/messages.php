@@ -98,6 +98,8 @@ return [
         'message_not_sent'=>'Message not sent!',
         'operator_cannot_review' => 'Operator Cannot Review!',
 
+        'already_acknowledged' => 'Already Acknowledged',
+
     ],
 
     'authorization' => [

@@ -14,8 +14,6 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new UserPrivacyPolicyAcknowledgementSearch();
-        $current_version = ComplianceDocuments:: find()->select('version')->where(['type'=>CompliancedocumentsApi::PRIVACY_POLICY])->andWhere(['status'=>ComplianceDocuments::STATUS_ACTIVE])->one();
-        $searchModel->document_version = $current_version;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [

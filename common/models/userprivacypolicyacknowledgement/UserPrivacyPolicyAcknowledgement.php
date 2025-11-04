@@ -40,7 +40,7 @@ class UserPrivacyPolicyAcknowledgement extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uuid', 'user_id', 'document_version', 'document_id'], 'default', 'value' => null],
+            [['user_id', 'document_version', 'document_id'], 'default', 'value' => null],
             [['user_id', 'document_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['uuid', 'document_version'], 'string', 'max' => 255],
         ];
@@ -53,7 +53,6 @@ class UserPrivacyPolicyAcknowledgement extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'uuid' => 'Uuid',
             'user_id' => 'User ID',
             'document_version' => 'Document Version',
             'document_id' => 'Document ID',

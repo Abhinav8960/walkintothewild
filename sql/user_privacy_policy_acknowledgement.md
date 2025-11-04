@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 31, 2025 at 04:51 PM
+-- Generation Time: Nov 04, 2025 at 10:56 AM
 -- Server version: 8.0.43-0ubuntu0.22.04.1
 -- PHP Version: 8.1.32
 
@@ -30,7 +30,6 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `user_privacy_policy_acknowledgement`;
 CREATE TABLE `user_privacy_policy_acknowledgement` (
   `id` int NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `document_version` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `document_id` int DEFAULT NULL,
@@ -48,7 +47,8 @@ CREATE TABLE `user_privacy_policy_acknowledgement` (
 -- Indexes for table `user_privacy_policy_acknowledgement`
 --
 ALTER TABLE `user_privacy_policy_acknowledgement`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`,`document_version`,`document_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables

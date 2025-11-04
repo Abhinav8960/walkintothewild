@@ -10,7 +10,6 @@ class UserPrivacyPolicyAcknowledgement extends \common\models\userprivacypolicya
     {
         $fields = [
             'id',
-            'uuid',
             'user_id',
             'document_version',
             'document_id',

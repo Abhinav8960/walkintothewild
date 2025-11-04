@@ -44,14 +44,6 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'uuid',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->uuid;
-                        }
-                    ],
-                    [
                         'label' => 'Document',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
