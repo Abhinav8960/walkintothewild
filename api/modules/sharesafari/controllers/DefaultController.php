@@ -387,7 +387,7 @@ class DefaultController extends SafariController
 
     public function actionUnwishlist($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
