@@ -2,6 +2,7 @@
 
 namespace backend\modules\userprivacypolicyacknowledgement\controllers;
 
+use api\models\compliancedocuments\ComplianceDocuments as CompliancedocumentsApi;
 use common\models\compliancedocuments\ComplianceDocuments;
 use common\models\User;
 use common\models\userprivacypolicyacknowledgement\UserPrivacyPolicyAcknowledgementSearch;
@@ -13,6 +14,8 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new UserPrivacyPolicyAcknowledgementSearch();
+        // $current_version = ComplianceDocuments:: find()->select('version')->where(['type'=>CompliancedocumentsApi::PRIVACY_POLICY])->andWhere(['status'=>ComplianceDocuments::STATUS_ACTIVE])->one();
+        // $searchModel->document_version = $current_version;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [

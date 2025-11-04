@@ -3,6 +3,7 @@
 namespace api\models;
 
 use api\models\chat\Chat;
+use api\models\compliancedocuments\ComplianceDocuments;
 use api\models\feeds\Feeds;
 use Yii;
 use yii\db\ActiveRecord;
@@ -391,7 +392,8 @@ class User extends \common\models\User
 
     public function getIs_acknowledged()
     {
-        $user = UserPrivacyPolicyAcknowledgement::find()->where(['user_id' => $this->id])->one();
+        $current_version = ComplianceDocuments:: find()->select('version')->where(['type'=>ComplianceDocuments::PRIVACY_POLICY])->andWhere(['status'=>ComplianceDocuments::STATUS_ACTIVE])->one();
+        $user = UserPrivacyPolicyAcknowledgement::find()->where(['user_id' => $this->id])->andWhere(['document_version'=>$current_version])->one();
         if(!empty($user)){
             return true;
         }
