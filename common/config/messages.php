@@ -133,6 +133,9 @@ return [
         'fill_required_fields' => 'Please fill all required fields.',
         'missing' => '{var} is missing!',
 
+        'already_acknowledged' => 'Already Acknowledged',
+
+
 
     ],
 
