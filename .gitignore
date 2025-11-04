@@ -542,6 +542,16 @@ phpunit.phar
 /cms/web/storage
 /cms/web/robots.txt
 
+
+
+/developer/web/index.php
+/developer/web/index-test.php
+/developer/runtime
+/developer/web/assets
+/developer/web/storage
+/developer/web/robots.txt
+
+
 /csv
 
 

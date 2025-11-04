@@ -542,6 +542,9 @@ class User extends ActiveRecord implements IdentityInterface
         if ($this->is_support_user == 1) {
             $roles[] = "Support User";
         }
+        if($this->is_developer == 1){
+            $roles[] = "Developer";
+        }
         return implode(', ', $roles);
     }
 

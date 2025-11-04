@@ -1,0 +1,96 @@
+<?php
+$params = array_merge(
+    require __DIR__ . '/../../common/config/params.php',
+    require __DIR__ . '/../../common/config/params-local.php',
+    require __DIR__ . '/params.php',
+    require __DIR__ . '/params-local.php'
+);
+
+return [
+    'id' => 'app-developer',
+    'basePath' => dirname(__DIR__),
+    'controllerNamespace' => 'developer\controllers',
+    'bootstrap' => ['log'],
+    'timeZone' => 'Asia/Calcutta',
+    'modules' => [
+        'api' => [
+            'class' => 'developer\modules\api\Module',
+        ],
+        'code' => [
+            'class' => 'developer\modules\code\Module',
+        ],
+        'feature' => [
+            'class' => 'developer\modules\feature\Module',
+        ],
+    ],
+    'components' => [
+        'reCaptcha3' => [
+            'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
+            'site_key'   => isset($_SERVER['GOOGLE_CAPTCHA_SITE_KEY']) ? $_SERVER['GOOGLE_CAPTCHA_SITE_KEY'] : '6LdlvuYpAAAAAK2nW4xcNThJOMxVl2S6cGKqVJ9C',
+            'secret_key' => isset($_SERVER['GOOGLE_CAPTCHA_SECRET_KEY']) ? $_SERVER['GOOGLE_CAPTCHA_SECRET_KEY'] : '6LdlvuYpAAAAABTlzZZ2dSAH3BhHL9WkxG7gfyUi',
+        ],
+        'request' => [
+            'csrfParam' => '_csrf-accounts',
+        ],
+        'user' => [
+            'class' => 'common\components\WebUser', // For Tracking the Sessions
+            'identityClass' => 'common\models\User',
+            'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_identity-accounts', 'httpOnly' => true],
+        ],
+        'session' => [
+            // this is the name of the session cookie used for login on the accounts
+            'class' => 'yii\web\DbSession',
+            'name' => 'advanced-developer',
+            'timeout' => 3600 * 24 * 30,
+            'cookieParams' => [
+                'lifetime' => 3600 * 24 * 30, // Cookie lifetime, e.g., 30 days
+            ],
+        ],
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class' => \yii\log\FileTarget::class,
+                    'levels' => ['error', 'warning'],
+                ],
+            ],
+        ],
+        'errorHandler' => [
+            'errorAction' => 'site/error',
+            'on ' . \yii\web\Response::EVENT_BEFORE_SEND => function ($event) {
+                if ($event->sender->statusCode == null || $event->sender->statusCode == 200) {
+                    $event->sender->setStatusCode(500);
+                }
+            },
+        ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [],
+        ],
+
+        'messageManager' => [
+            'class' => 'common\components\MessageManager',
+        ],
+
+    ],
+    'container' => [
+        'definitions' => [
+            \yii\widgets\LinkPager::class => \yii\bootstrap5\LinkPager::class,
+            'yii\bootstrap5\LinkPager' => [
+                'options' => ['class' => 'pagination mb-0 d-flex gap-4 align-items-center'],
+                'listOptions' => ['class' => ['pagination mb-0 d-flex gap-4 align-items-center']],
+                'linkOptions' => ['class' => ''],
+                'linkContainerOptions' => ['class' => ['page-item page-text']],
+                'disabledPageCssClass' => 'disabled',
+                'activePageCssClass' => 'active',
+                'prevPageLabel' => '<span class="page-link button_nextprve button_prve">Prev</span>',
+                'nextPageLabel' => '<span class="page-link button_nextprve active">Next</span>',
+                'firstPageLabel' => false,
+                'lastPageLabel' => false,
+            ],
+        ],
+    ],
+    'params' => $params,
+];

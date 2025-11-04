@@ -150,17 +150,29 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
                 'aadhar_number',
                 'aadhar_front_upload',
                 'aadhar_back_upload',
-                'form1_reject_reason', 'form2_reject_reason', 'form3_reject_reason', 'form4_reject_reason', 'form5_reject_reason','updated_time_form_1', 'updated_time_form_2', 'updated_time_form_3', 'updated_time_form_4', 'updated_time_form_5', 'final', 'updated_time_final_approved', 'updated_time_final', 
+                'form1_reject_reason',
+                'form2_reject_reason',
+                'form3_reject_reason',
+                'form4_reject_reason',
+                'form5_reject_reason',
+                'updated_time_form_1',
+                'updated_time_form_2',
+                'updated_time_form_3',
+                'updated_time_form_4',
+                'updated_time_form_5',
+                'final',
+                'updated_time_final_approved',
+                'updated_time_final',
             ], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
 
             [['updated_time_form_1', 'updated_time_form_2', 'updated_time_form_3', 'updated_time_form_4', 'updated_time_form_5', 'final', 'updated_time_final_approved', 'updated_time_final'], 'safe'],
-            [['form1_reject_reason', 'form2_reject_reason', 'form3_reject_reason', 'form4_reject_reason','form5_reject_reason'], 'string', 'max' => 512],
+            [['form1_reject_reason', 'form2_reject_reason', 'form3_reject_reason', 'form4_reject_reason', 'form5_reject_reason'], 'string', 'max' => 512],
             [['reason'], 'safe'],
 
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status','is_sendforapproval'], 'default', 'value' => 0],
-            [['gst_id','current_step', 'user_id', 'form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'final', 'final_approved', 'status'], 'integer'],
-            [['resent_after_rejection','created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'is_sendforapproval'], 'default', 'value' => 0],
+            [['gst_id', 'current_step', 'user_id', 'form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'final', 'final_approved', 'status'], 'integer'],
+            [['resent_after_rejection', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
 
             [[
                 'legal_entity_name',
@@ -187,26 +199,26 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
             ], 'string', 'max' => 255],
             [
                 [
-                    'logo', 
-                    'registration_copy_upload', 
-                    'pan_upload', 
+                    'logo',
+                    'registration_copy_upload',
+                    'pan_upload',
                     // 'gst_upload', 
-                    'cancel_check_upload', 
-                    'kyc_pan_upload', 
-                    'aadhar_front_upload', 
+                    'cancel_check_upload',
+                    'kyc_pan_upload',
+                    'aadhar_front_upload',
                     'aadhar_back_upload'
-                ], 
-                'file', 
-                'extensions' => ['jpg', 'jpeg', 'png', 'pdf'], 
-                'maxSize' => 10 * 1024 * 1024, 
+                ],
+                'file',
+                'extensions' => ['jpg', 'jpeg', 'png', 'pdf'],
+                'maxSize' => 10 * 1024 * 1024,
                 'skipOnEmpty' => true
             ],
-            
-            [['legal_entity_type', 'legal_entity_phone', 'legal_entity_whatsapp', 'registration_number','billing_phone', 'account_number', 'kyc_phone', 'kyc_whatsapp', 'aadhar_number'], 'integer'],
+
+            [['legal_entity_type', 'legal_entity_phone', 'legal_entity_whatsapp', 'registration_number', 'billing_phone', 'account_number', 'kyc_phone', 'kyc_whatsapp', 'aadhar_number'], 'integer'],
 
 
             [['current_step'], 'default', 'value' => 1],
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status','is_sendforapproval','is_phone_no_verified'], 'safe'],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'is_sendforapproval', 'is_phone_no_verified'], 'safe'],
         ];
     }
 
@@ -238,7 +250,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
             //Business Details
             'operated_park' => 'Operated Park',
             'about_business' => 'About Business',
-            'gst_id'=> 'GST ID',
+            'gst_id' => 'GST ID',
             // 'gst_upload' => 'GST Upload',
             // 'state' => 'State',
             // 'gst_number' => 'GST Number',
@@ -251,7 +263,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
             'account_number' => 'Account Number',
             'ifsc_number' => 'IFSC',
             'cancel_check_upload' => 'Cancel Cheque Upload',
-            'cancel_check_file_upload'=>'Cancel Cheque Upload',
+            'cancel_check_file_upload' => 'Cancel Cheque Upload',
 
 
             //User KYC 
@@ -271,7 +283,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
             'form3_status' => 'Form3 Status',
             'form4_status' => 'Form4 Status',
             'form5_status' => 'Form5 Status',
-            'is_sendforapproval'=>'Is Send For Approval',
+            'is_sendforapproval' => 'Is Send For Approval',
             'form1_reject_reason' => 'Form 1 Reject Reason',
             'form2_reject_reason' => 'Form 2 Reject Reason',
             'form3_reject_reason' => 'Form 3 Reject Reason',
@@ -290,7 +302,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
 
             'is_phone_no_verified' => 'Is Legal Entity Phone Verified!',
 
-            
+
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
@@ -300,23 +312,31 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
 
     public static function entitytypeoption()
     {
-        return [self::PROP_WRITER => "Prop Writer", self::PVT_LTD => "Pvt. Ltd", self::LLP => "LLP"];
+        return [
+            // self::PROP_WRITER => "Prop Writer",
+            self::PROP_WRITER => "Proprietorship",
+            self::PVT_LTD => "Pvt. Ltd",
+            self::LLP => "LLP"
+        ];
     }
 
-    public function getGstDetail(){
-        return $this->hasOne(PartnerGstDetails :: class , ['partner_registration_id'=>'id'])->orderBy(['id'=>SORT_DESC]);
+    public function getGstDetail()
+    {
+        return $this->hasOne(PartnerGstDetails::class, ['partner_registration_id' => 'id'])->orderBy(['id' => SORT_DESC]);
     }
 
     // public function getGstDetails(){
     //     return $this->hasMany(PartnerGstDetails :: class , ['id'=>'gst_id','user_id'=>'user_id'])->orderBy(['id'=>SORT_DESC]);
     // }
 
-    public function getUser(){
-        return $this->hasOne(User :: class ,['id'=>'user_id'])->where(['status' => User :: STATUS_ACTIVE])->orderBy(['id'=>SORT_DESC]);
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id'])->where(['status' => User::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC]);
     }
 
-    public function getParkList(){
-        return $this->hasMany(PartnerParkList :: class , ['partner_registration_id'=>'id']) ->where(['status' => 1])->orderBy(['id'=>SORT_DESC]);
+    public function getParkList()
+    {
+        return $this->hasMany(PartnerParkList::class, ['partner_registration_id' => 'id'])->where(['status' => 1])->orderBy(['id' => SORT_DESC]);
     }
 
     // public function getPark()
@@ -324,8 +344,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
     //     return $this->hasOne(SafariPark::className(), ['id' => 'operated_park']);
     // }
     public function getWasRejectedBefore()
-{
-    return $this->previous_status == self::FORM_REJECTED && $this->form1_status == self::FORM_FILLED;
-}
-
+    {
+        return $this->previous_status == self::FORM_REJECTED && $this->form1_status == self::FORM_FILLED;
+    }
 }

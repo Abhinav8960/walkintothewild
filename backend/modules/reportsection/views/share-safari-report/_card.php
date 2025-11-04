@@ -32,8 +32,8 @@ $total_unique_host = $query1->asArray()->one();
 
 $query2 = ShareSafariIntrested::find()
     ->select([
-        "COUNT(DISTINCT user_id) as total_unique_joined",
-        "COUNT(user_id) as total_joined"
+        "COUNT(DISTINCT share_safari_intrested.user_id) as total_unique_joined",
+        "COUNT(share_safari_intrested.user_id) as total_joined"
     ])
     ->where(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE])
     ->joinWith(['sharesafari'])

@@ -27,7 +27,7 @@ use yii\web\JsExpression;
     <div class="col-md-4">
 
         <?= $form->field($model, 'user_id')->widget(Select2::class, [
-            'initValueText' => $model->user ? $model->user->name .'('.$model->user->email.')' : '',
+            'initValueText' => $model->user ? $model->user->name . '(' . $model->user->email . ')' : '',
             'options' => ['placeholder' => 'Select User', 'multiple' => false],
             'pluginOptions' => [
                 'allowClear' => true,
@@ -44,7 +44,15 @@ use yii\web\JsExpression;
 
     </div>
     <div class="col-md-2">
-        <?= $form->field($model, 'app_name')->dropDownList(['Frontend' => 'Frontend', 'Backend' => 'Backend'], ['prompt' => 'Select Application'])->label(false) ?>
+        <?= $form->field($model, 'app_name')->dropDownList([
+            'Frontend' => 'Frontend',
+            'Backend' => 'Backend',
+            'business' => 'Business',
+            'developer' => 'Developer',
+            'support' => 'Support',
+            'Api' => 'API',
+            'accounts' => 'Accounts'
+        ], ['prompt' => 'Select Application'])->label(false) ?>
     </div>
     <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
