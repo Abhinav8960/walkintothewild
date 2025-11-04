@@ -16,3 +16,17 @@ use OpenApi\Annotations as OA;
  *   bearerFormat="JWT"
  * )
  */
+
+/**
+ * A minimal path to satisfy validator and verify scanning works.
+ * @OA\PathItem(
+ *   path="/swagger-ping",
+ *   @OA\Get(
+ *     tags={"Swagger"},
+ *     summary="Swagger ping",
+ *     @OA\Response(response=200, description="OK")
+ *   )
+ * )
+ */
+
+

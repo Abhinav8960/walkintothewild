@@ -26,6 +26,7 @@ use api\models\master\suggetioncategory\MasterSuggestionCategorySearch;
 use api\models\master\vehicle\MasterVehicleSearch;
 use api\models\meta\MetaAccommodationSearch;
 use common\models\GeneralModel;
+use OpenApi\Annotations as OA;
 
 /**
  * Site controller
@@ -90,6 +91,36 @@ class DefaultController extends RestController
     //     return $this->dataProviderSender($searchModel, $rootIndexName = "master_bird");
     // }
 
+    /**
+     * @OA\Get(
+     *     tags={"Bonus Experience"},
+     *     summary="Get active bonus experience list",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="master_bonus_experience", type="object",
+     *                 @OA\Property(property="summary", type="object",
+     *                     @OA\Property(property="total", type="integer", example=3),
+     *                     @OA\Property(property="page", type="integer", example=1),
+     *                     @OA\Property(property="pageSize", type="integer", example=5),
+     *                     @OA\Property(property="total_page", type="integer", example=1),
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"))
+     *                 ),
+     *                 @OA\Property(property="data", type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Sharing Safari")
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function actionBonusExperience()
     {
         $searchModel = new MasterBonusExperienceSearch();

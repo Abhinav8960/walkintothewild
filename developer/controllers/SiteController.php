@@ -29,7 +29,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'auth'],
+                        'actions' => ['logout', 'index', 'auth', 'doc', 'api'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -57,11 +57,13 @@ class SiteController extends Controller
 
             'api' => [
                 'class' => 'light\swagger\SwaggerApiAction',
-                'scanDir' => [
-                    Yii::getAlias('@api/modules'),
-                    Yii::getAlias('@api/models'),
-                    Yii::getAlias('@api/swagger'),
-                ],
+                'scanDir' => array_merge(
+                    glob(Yii::getAlias('@api/modules/*/controllers'), GLOB_ONLYDIR) ?: [],
+                    [
+                        Yii::getAlias('@api/models'),
+                        Yii::getAlias('@api/swagger'),
+                    ]
+                ),
                 'api_key' => 'balbalbal',
             ],
             'error' => [
