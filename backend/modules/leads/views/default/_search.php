@@ -2,6 +2,7 @@
 
 use yii\widgets\ActiveForm;
 use common\models\GeneralModel;
+use common\models\park\SafariPark;
 use common\models\User;
 use kartik\typeahead\Typeahead;
 use yii\helpers\ArrayHelper;
@@ -75,6 +76,15 @@ $names = ArrayHelper::getColumn(
             ],
             [
                 'prompt' => 'Select Chat Status',
+            ]
+        ) ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'park_id')->dropDownList(
+            \yii\helpers\ArrayHelper::map(SafariPark::find()->orderby(['safari_park.title' => SORT_ASC])->all(), 'id', 'title'),
+            [
+                'prompt' => 'Select Park',
             ]
         ) ?>
     </div>
