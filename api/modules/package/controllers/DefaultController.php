@@ -246,7 +246,7 @@ class DefaultController extends RestController
 
     public function actionUnwishlist($slug)
     {
-        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
         if (!$package) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
