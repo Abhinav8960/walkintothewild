@@ -9,7 +9,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Safari Operator Reviews';
+$this->title = 'Operator Comment';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 

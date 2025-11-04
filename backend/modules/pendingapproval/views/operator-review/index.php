@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-$this->title = 'Operator Review';
+$this->title = 'Operator Review Approval List';
 $this->params['title'] = $this->title;
 ?>
 <?php Pjax::begin([

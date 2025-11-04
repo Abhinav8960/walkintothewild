@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$this->title = 'Gallery For Approval';
+$this->title = 'Gallery Approval List';
 $this->params['title'] = $this->title;
 
 ?>
