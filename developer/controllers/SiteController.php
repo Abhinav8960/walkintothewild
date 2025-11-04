@@ -50,6 +50,20 @@ class SiteController extends Controller
     public function actions()
     {
         return [
+            'doc' => [
+                'class' => 'light\swagger\SwaggerAction',
+                'restUrl' => \yii\helpers\Url::to(['/site/api'], true),
+            ],
+
+            'api' => [
+                'class' => 'light\swagger\SwaggerApiAction',
+                'scanDir' => [
+                    Yii::getAlias('@api/modules'),
+                    Yii::getAlias('@api/models'),
+                    Yii::getAlias('@api/swagger'),
+                ],
+                'api_key' => 'balbalbal',
+            ],
             'error' => [
                 'class' => \yii\web\ErrorAction::class,
             ],
