@@ -30,6 +30,7 @@ class User extends \common\models\User
         $fields[] = 'operator_slug';
         $fields[] = 'user_followers_count';
         $fields[] = 'user_followings_count';
+        $fields[] = 'is_acknowledged';
         // if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/followers-list'])) {
         //     $fields[] = 'followed_at';
         // }
@@ -387,4 +388,14 @@ class User extends \common\models\User
         }
         return false;
     }
+
+    public function getIs_acknowledged()
+    {
+        $user = UserPrivacyPolicyAcknowledgement::find()->where(['user_id' => $this->id])->one();
+        if(!empty($user)){
+            return true;
+        }
+        return false;
+    }
+
 }
