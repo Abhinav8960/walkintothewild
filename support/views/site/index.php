@@ -10,7 +10,7 @@ $webasset = $this->assetManager->getBundle('\support\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Dashboard';
-// $this->params['title'] = $this->title;
+$this->params['title'] = $this->title;
 ?>
 
 <div class="tab-content" id="pills-tabContent">
