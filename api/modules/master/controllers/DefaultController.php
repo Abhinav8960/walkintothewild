@@ -69,7 +69,22 @@ class DefaultController extends RestController
         ];
     }
 
-
+    /**
+     * Get Airport List
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/airport",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionAirport()
     {
         $searchModel = new MasterAirportSearch();
@@ -77,6 +92,46 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_airport");
     }
 
+    /**
+     * Get Animal List
+     * 
+     * @OA\Get(
+     *     path="/master/animal",
+     *     tags={"Master"},
+     *     summary="Get Animal List",
+     *     description="Fetches the list of animals based on required filters.",
+     *     @OA\Parameter(
+     *         name="is_filter",
+     *         in="query",
+     *         description="Required, must be 1",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             enum={1},
+     *             example=1
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="animal_type",
+     *         in="query",
+     *         description="Required, must be 1",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             enum={1},
+     *             example=1
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found"
+     *     )
+     * )
+     */
     public function actionAnimal()
     {
         $searchModel = new MasterAnimalSearch();
@@ -93,10 +148,9 @@ class DefaultController extends RestController
 
     /**
      * @OA\Get(
-     *     path="/master/default/bonus-experience",
-     *     tags={"Bonus Experience"},
+     *     path="/master/bonus-experience",
+     *     tags={"Master"},
      *     summary="Get active bonus experience list",
-     *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -129,6 +183,23 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_bonus_experience");
     }
 
+
+    /**
+     * Get City List
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/city",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionCity()
     {
         $searchModel = new MasterCitySearch();
@@ -136,6 +207,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_city");
     }
 
+     /**
+     * Get Country List
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/country",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionCountry()
     {
         $searchModel = new MasterCountrySearch();
@@ -143,6 +230,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_country");
     }
 
+    /**
+     * Get Faq List
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/faq",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionFaq()
     {
         $searchModel = new MasterFaqSearch();
@@ -150,6 +253,22 @@ class DefaultController extends RestController
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "master_faq");
     }
 
+    /**
+     * Get Location
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/location",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionLocation()
     {
         $searchModel = new MasterLocationSearch();
@@ -157,6 +276,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_location");
     }
 
+    /**
+     * Get Month
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/month",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionMonth()
     {
         $searchModel = new MasterMonthSearch();
@@ -171,6 +306,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_operator_category");
     }
 
+     /**
+     * Get Package Feature
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/package-feature",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionPackageFeature()
     {
         $searchModel = new MasterPackagefeatureSearch();
@@ -179,6 +330,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_package_feature");
     }
 
+    /**
+     * Get Package Include
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/package-include",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionPackageInclude()
     {
         $searchModel = new MasterPackageIncludeSearch();
@@ -187,6 +354,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_package_include");
     }
 
+    /**
+     * Get Railway Station List
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/railway-station",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionRailwayStation()
     {
         // ini_set("memory_limit", "-1");
@@ -196,6 +379,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_railway_station");
     }
 
+     /**
+     * Get Share Safari Reason
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/share-safari-reason",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionShareSafariReason()
     {
         $searchModel = new MasterShareSafariReasonSearch();
@@ -205,6 +404,22 @@ class DefaultController extends RestController
     }
 
 
+     /**
+     * Get State List
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/state",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionState()
     {
         $searchModel = new MasterStateSearch();
@@ -213,6 +428,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_state");
     }
 
+    /**
+     * Get Suggestion Category
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/suggestion-category",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionSuggestionCategory()
     {
         $searchModel = new MasterSuggestionCategorySearch();
@@ -221,6 +452,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_suggestion_category");
     }
 
+    /**
+     * Get Vehicle
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/vehicle",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionVehicle()
     {
         $searchModel = new MasterVehicleSearch();
@@ -229,6 +476,22 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_vehicle");
     }
 
+     /**
+     * Get Privacy Options
+     * 
+     * @OA\GET(
+     *     tags={"Master"},
+     *     path="/master/privacy-options",
+     *     @OA\Response(
+     *        response=200,
+     *        description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionPrivacyOptions()
     {
         $options = GeneralModel::privacyoptions();

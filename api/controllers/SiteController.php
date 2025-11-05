@@ -149,7 +149,7 @@ class SiteController extends RestController
     /**
      * @OA\Get(
      *     path="/master-meta-info",
-     *     summary="Test API endpoint",
+     *     summary="Master Meta Last Updated Information",
      *     @OA\Response(
      *         response=200,
      *         description="Successful response"

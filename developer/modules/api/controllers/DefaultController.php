@@ -41,10 +41,6 @@ class DefaultController extends Controller
                 'url' => 'https://staging-api.walkintothewild.in/',
                 'description' => 'Staging Server',
             ],
-            [
-                'url' => 'https://api.walkintothewild.in/',
-                'description' => 'Production Server',
-            ],
         ];
 
         $data['info'] = [
