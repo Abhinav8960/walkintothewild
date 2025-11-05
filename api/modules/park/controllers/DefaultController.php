@@ -415,13 +415,13 @@ class DefaultController extends RestController
 
     public function actionTripBudget()
     {
-        $trip_budget = GeneralModel::tripbudget();
-        return $this->dataSenderWithoutSumarry($trip_budget, 'trip_budget');
+        $data['data'] = GeneralModel::tripbudget();
+        return Yii::$app->api->sendResponse($data);
     }
 
     public function actionPlanningType()
     {
-        $planning_type = GeneralModel::planningtype();
-        return $this->dataSenderWithoutSumarry($planning_type, 'planning_type');
+         $data['data'] = GeneralModel::planningtype();
+        return Yii::$app->api->sendResponse($data);
     }
 }
