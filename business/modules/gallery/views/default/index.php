@@ -6,6 +6,8 @@ $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Gallery';
+$this->params['title'] = $this->title;
+
 ?>
 
 

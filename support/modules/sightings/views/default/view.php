@@ -199,7 +199,9 @@ $this->params['title'] = $this->title;
                         } ?>
                     </div>
 
+                    <?php if(false){ ?>
                     <?= $this->render('_comment_form', ['comment_model' => $comment_model, 'model' => $model]) ?>
+                    <?php } ?>
 
                 </div>
             </div>

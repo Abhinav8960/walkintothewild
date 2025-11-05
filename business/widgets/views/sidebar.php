@@ -43,7 +43,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
-         <!-- <li class="navItems mb-2">
+        <!-- <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/fixeddeparturechat/default/index",
                                                             )) ? "active" : "" ?>" href="/fixeddeparturechat/default/index">
@@ -85,15 +85,33 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/sharesafari/default/index",
                                                                 "/sharesafari/default/create",
+                                                                "/sharesafari/default/update",
+                                                                "/sharesafari/default/itinerary",
+                                                                "/sharesafari/default/inclusion",
+                                                                "/sharesafari/default/getting-there",
+                                                                "/sharesafari/default/policy-info",
+                                                                "/sharesafari/default/faq",
+                                                                "/sharesafari/default/chat-view",
+                                                                "/sharesafari/default/booked-user",
+                                                                "/sharesafari/default/booked-user-chat",
                                                             )) ? "active" : "" ?>" href="/sharesafari/default/index" data-toggle="tooltip" data-placement="top" title="My Fixed Departures">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/sharesafari/default/index",
                                                                                                     "/sharesafari/default/create",
+                                                                                                    "/sharesafari/default/itinerary",
+                                                                                                    "/sharesafari/default/inclusion",
+                                                                                                    "/sharesafari/default/getting-there",
+                                                                                                    "/sharesafari/default/policy-info",
+                                                                                                    "/sharesafari/default/faq",
+                                                                                                    "/sharesafari/default/update",
+                                                                                                    "/sharesafari/default/chat-view",
+                                                                                                    "/sharesafari/default/boked-user",
+                                                                                                    "/sharesafari/default/booked-user-chat",
                                                                                                 )) ? 'fd_active.svg' : 'fd.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu">My Fixed Departures</span>
             </a>
         </li>
-         <li class="navItems mb-2">
+        <li class="navItems mb-2">
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/booking/default/index",
                                                             )) ? "active" : "" ?>" href="/booking/default/index" data-toggle="tooltip" data-placement="top" title="Booking">
@@ -204,12 +222,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/faqs/default/index",
                                                                 "/faqs/default/create",
+                                                                "/faqs/default/update",
 
                                                             )) ? "active" : "" ?>" href="/faqs/default/index" data-toggle="tooltip" data-placement="top" title="Faqs">
                 <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/faqs/default/index",
                                                                                                     "/faqs/default/create",
-                                                                                                )) ? 'Frame.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
+                                                                                                    "/faqs/default/update",
+                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> Faqs</span>
             </a>
         </li>

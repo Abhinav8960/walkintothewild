@@ -12,7 +12,7 @@ $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Leads';
-// $this->params['title'] = $this->title;
+$this->params['title'] = $this->title;
 ?>
 
 

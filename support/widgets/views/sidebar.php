@@ -34,11 +34,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                     '/leads/default/index',
                                                                     '/leads/default/create',
                                                                     '/leads/default/view',
-                                                                )) ? 'active' : '' ?>" href="/leads/default/index"  data-toggle="tooltip" data-placement="top" title="Leads">
+                                                                    '/leads/default/partner-lead-chat',
+                                                                )) ? 'active' : '' ?>" href="/leads/default/index" data-toggle="tooltip" data-placement="top" title="Leads">
                     <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                         '/leads/default/index',
                                                                                                         '/leads/default/create',
                                                                                                         '/leads/default/view',
+                                                                                                        '/leads/default/partner-lead-chat',
                                                                                                     )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
                     <span class="hide-slide-menu"> Leads</span>
                 </a>
@@ -71,7 +73,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                     '/sightings/default/index',
                                                                     '/sightings/default/create',
-                                                                )) ? 'active' : '' ?>" href="/sightings/default/index"  data-toggle="tooltip" data-placement="top" title="Sighting">
+                                                                    '/sightings/default/view',
+                                                                )) ? 'active' : '' ?>" href="/sightings/default/index" data-toggle="tooltip" data-placement="top" title="Sighting">
                     <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                         '/sightings/default/index',
                                                                                                         '/sightings/default/create',
@@ -83,7 +86,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                     '/posts/default/index',
                                                                     '/posts/default/create',
-                                                                )) ? 'active' : '' ?>" href="/posts/default/index"  data-toggle="tooltip" data-placement="top" title="Post">
+                                                                    '/posts/default/view',
+                                                                )) ? 'active' : '' ?>" href="/posts/default/index" data-toggle="tooltip" data-placement="top" title="Post">
                     <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                         '/posts/default/index',
                                                                                                         '/posts/default/create',
@@ -96,6 +100,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <li class="navItems mb-2 position-relative <?= in_array($active_url, array(
                                                             "/operator/safari-operator/index",
                                                             "/operator/safari-operator/view",
+                                                            "/operator/safari-operator/legal-entity",
+                                                            "/operator/safari-operator/registration-proof",
+                                                            "/operator/safari-operator/business",
+                                                            "/operator/safari-operator/bank-details",
+                                                            "/operator/safari-operator/user-kyc",
+                                                            "/operator/safari-operator/user-review",
+                                                            "/operator/safari-operator/operator-parks",
                                                             "/operator/safari-operator/index/view",
                                                             "/gallery/default/index",
                                                             "/galleryapproval/default/index",
@@ -105,11 +116,21 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                             "/externaloperator/default/index",
                                                             "/externaloperator/default/create",
                                                             "/externaloperator/default/update"
-                                                        )) ? "is-expanded" : "" ?>"  data-toggle="tooltip" data-placement="top" title="Operator">
+                                                        )) ? "is-expanded" : "" ?>" data-toggle="tooltip" data-placement="top" title="Operator">
 
                 <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                     "/operator/safari-operator/index",
-                                                                    "/operator/safari-operator/view"
+                                                                    "/operator/safari-operator/view",
+                                                                    "/operator/safari-operator/legal-entity",
+                                                                    "/operator/safari-operator/registration-proof",
+                                                                    "/operator/safari-operator/business",
+                                                                    "/operator/safari-operator/bank-details",
+                                                                    "/operator/safari-operator/user-kyc",
+                                                                    "/operator/safari-operator/user-review",
+                                                                    "/operator/safari-operator/operator-parks",
+                                                                    "/externaloperator/default/index",
+                                                                    "/externaloperator/default/create",
+                                                                    "/externaloperator/default/update",
                                                                 )) ? "active" : "" ?>"
                     data-bs-toggle="collapse"
                     href="#operatorMenu"
@@ -117,6 +138,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     aria-expanded="<?= in_array($active_url, array(
                                         "/operator/safari-operator/index",
                                         "/operator/safari-operator/view",
+                                        "/operator/safari-operator/legal-entity",
+                                        "/operator/safari-operator/registration-proof",
+                                        "/operator/safari-operator/business",
+                                        "/operator/safari-operator/bank-details",
+                                        "/operator/safari-operator/user-kyc",
+                                        "/operator/safari-operator/user-review",
+                                        "/operator/safari-operator/operator-parks",
                                         "/operator/safari-operator/index/view",
                                         "/gallery/default/index",
                                         "/galleryapproval/default/index",
@@ -133,6 +161,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                         '/operator/safari-operator/index',
                                                                                                         '/operator/safari-operator/create',
                                                                                                         '/operator/safari-operator/view',
+                                                                                                        "/operator/safari-operator/legal-entity",
+                                                                                                        "/operator/safari-operator/registration-proof",
+                                                                                                        "/operator/safari-operator/business",
+                                                                                                        "/operator/safari-operator/bank-details",
+                                                                                                        "/operator/safari-operator/user-kyc",
+                                                                                                        "/operator/safari-operator/user-review",
+                                                                                                        "/operator/safari-operator/operator-parks",
+                                                                                                        "/externaloperator/default/index",
+                                                                                                        "/externaloperator/default/create",
+                                                                                                        "/externaloperator/default/update",
                                                                                                     )) ? 'operator_active.png' : 'operator.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Operator <a href="" class="drop_imagesCC">
                             <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
                         </a></span>
@@ -143,6 +181,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <ul class="slide-menu collapse pt-2 <?= in_array($active_url, array(
                                                         "/operator/safari-operator/index",
                                                         "/operator/safari-operator/view",
+                                                        "/operator/safari-operator/legal-entity",
+                                                        "/operator/safari-operator/registration-proof",
+                                                        "/operator/safari-operator/business",
+                                                        "/operator/safari-operator/bank-details",
+                                                        "/operator/safari-operator/user-kyc",
+                                                        "/operator/safari-operator/user-review",
+                                                        "/operator/safari-operator/operator-parks",
                                                         "/operator/safari-operator/index/view",
                                                         "/gallery/default/index",
                                                         "/galleryapproval/default/index",
@@ -156,21 +201,35 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <li class="navItems mb-2">
                         <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
                                                                                         "/operator/safari-operator/index",
-                                                                                        "/operator/safari-operator/index/view"
+                                                                                        "/operator/safari-operator/view",
+                                                                                        "/operator/safari-operator/legal-entity",
+                                                                                        "/operator/safari-operator/registration-proof",
+                                                                                        "/operator/safari-operator/business",
+                                                                                        "/operator/safari-operator/bank-details",
+                                                                                        "/operator/safari-operator/user-kyc",
+                                                                                        "/operator/safari-operator/user-review",
+                                                                                        "/operator/safari-operator/operator-parks",
                                                                                     )) ? "active" : "" ?>" href="/operator/safari-operator/index" data-toggle="tooltip" data-placement="top" title="Operator List"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                                    "/operator/safari-operator/index",
-                                                                                                                                                                                                    "/operator/safari-operator/index/view",
-                                                                                                                                                                                                )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator List</span></a>
+                                                                                                                                                                                                                                                                        "/operator/safari-operator/index",
+                                                                                                                                                                                                                                                                        "/operator/safari-operator/view",
+                                                                                                                                                                                                                                                                        "/operator/safari-operator/legal-entity",
+                                                                                                                                                                                                                                                                        "/operator/safari-operator/registration-proof",
+                                                                                                                                                                                                                                                                        "/operator/safari-operator/business",
+                                                                                                                                                                                                                                                                        "/operator/safari-operator/bank-details",
+                                                                                                                                                                                                                                                                        "/operator/safari-operator/user-kyc",
+                                                                                                                                                                                                                                                                        "/operator/safari-operator/user-review",
+                                                                                                                                                                                                                                                                        "/operator/safari-operator/operator-parks",
+                                                                                                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator List</span></a>
                     </li>
                     <?php if (false) { ?>
                         <li class="navItems mb-2">
                             <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
                                                                                             "/galleryapproval/default/index",
                                                                                             "/galleryapproval/default/view"
-                                                                                        )) ? "active" : "" ?>" href="/galleryapproval/default/index" ><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                                    "/galleryapproval/default/index",
-                                                                                                                                                                                                    "/galleryapproval/default/view"
-                                                                                                                                                                                                )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Pending Gallery Approval</span></a>
+                                                                                        )) ? "active" : "" ?>" href="/galleryapproval/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                                                                                                                            "/galleryapproval/default/index",
+                                                                                                                                                                                                            "/galleryapproval/default/view"
+                                                                                                                                                                                                        )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Pending Gallery Approval</span></a>
                         </li>
 
                         <li class="navItems mb-2">
@@ -178,9 +237,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                             "/gallery/default/index",
                                                                                             "/gallery/default/view"
                                                                                         )) ? "active" : "" ?>" href="/gallery/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                            "/gallery/default/index",
-                                                                                                                                                                                            "/gallery/default/view"
-                                                                                                                                                                                        )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Gallery List</span></a>
+                                                                                                                                                                                                    "/gallery/default/index",
+                                                                                                                                                                                                    "/gallery/default/view"
+                                                                                                                                                                                                )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Gallery List</span></a>
                         </li>
                     <?php } ?>
 
@@ -190,10 +249,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                         "/externaloperator/default/create",
                                                                                         "/externaloperator/default/update"
                                                                                     )) ? "active" : "" ?>" href="/externaloperator/default/index" data-toggle="tooltip" data-placement="top" title="External Operator"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                                    "/externaloperator/default/index",
-                                                                                                                                                                                                    "/externaloperator/default/create",
-                                                                                                                                                                                                    "/externaloperator/default/update"
-                                                                                                                                                                                                )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">External Operator List</span></a>
+                                                                                                                                                                                                                                                                            "/externaloperator/default/index",
+                                                                                                                                                                                                                                                                            "/externaloperator/default/create",
+                                                                                                                                                                                                                                                                            "/externaloperator/default/update"
+                                                                                                                                                                                                                                                                        )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">External Operator List</span></a>
                     </li>
 
                 </ul>
@@ -207,6 +266,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                     '/package/default/index',
                                                                     '/package/default/create',
+                                                                    '/package/default/view',
                                                                 )) ? 'active' : '' ?>" href="/package/default/index" data-toggle="tooltip" data-placement="top" title="Package">
                     <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                         '/package/default/index',
@@ -266,9 +326,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                             "/sharesafari/default/fixed-departure",
                                                                                             "/sharesafari/default/fixed-view",
                                                                                         )) ? "active" : "" ?>" href="/sharesafari/default/fixed-departure"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                                        "/sharesafari/default/fixed-departure",
-                                                                                                                                                                                                        "/sharesafari/default/fixed-view",
-                                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Fixed Departure</span></a>
+                                                                                                                                                                                                                "/sharesafari/default/fixed-departure",
+                                                                                                                                                                                                                "/sharesafari/default/fixed-view",
+                                                                                                                                                                                                            )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Fixed Departure</span></a>
                         </li>
 
                         <li class="navItems mb-2">
@@ -276,9 +336,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                             "/sharesafari/default/index",
                                                                                             "/sharesafari/default/view",
                                                                                         )) ? "active" : "" ?>" href="/sharesafari/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                                "/sharesafari/default/index",
-                                                                                                                                                                                                "/sharesafari/default/view",
-                                                                                                                                                                                            )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Share Safari</span></a>
+                                                                                                                                                                                                        "/sharesafari/default/index",
+                                                                                                                                                                                                        "/sharesafari/default/view",
+                                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Share Safari</span></a>
                         </li>
                     </ul>
 
@@ -290,11 +350,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                     '/user/default/index',
                                                                     '/user/default/create',
                                                                     '/user/default/view',
+                                                                    '/user/default/profile',
                                                                 )) ? 'active' : '' ?>" href="/user/default/index" data-toggle="tooltip" data-placement="top" title="User List">
                     <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                         '/user/default/index',
                                                                                                         '/user/default/create',
                                                                                                         '/user/default/view',
+                                                                                                        '/user/default/profile',
                                                                                                     )) ? 'user_active.png' : 'userIcon.png' ?>" alt="" width="17" height="20"></span>
                     <span class="hide-slide-menu"> User List</span>
                 </a>
@@ -331,8 +393,30 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         )) ? "is-expanded" : "" ?>">
 
                 <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
-                                                                    "/flag/default/fixed-departure",
-                                                                    "/flag/default/fixed-view",
+                                                                    "/flag/article/index",
+                                                                    "/flag/article/view",
+                                                                    "/flag/article/flagview",
+                                                                    // "/flag/blog/index",
+                                                                    // "/flag/blog/view",
+                                                                    // "/flag/blog/flagview",
+                                                                    "/flag/operator/index",
+                                                                    "/flag/operator/view",
+                                                                    "/flag/operator/flagview",
+                                                                    "/flag/package/index",
+                                                                    "/flag/package/view",
+                                                                    "/flag/package/flagview",
+                                                                    "/flag/share-safari/index",
+                                                                    "/flag/share-safari/view",
+                                                                    "/flag/share-safari/flagview",
+                                                                    "/flag/sighting/index",
+                                                                    "/flag/sighting/view",
+                                                                    "/flag/sighting/flagview",
+                                                                    "/flag/untraced-flag/index",
+                                                                    "/flag/untraced-flag/view",
+                                                                    "/flag/untraced-flag/flagview",
+                                                                    "/flag/user-post/index",
+                                                                    "/flag/user-post/view",
+                                                                    "/flag/user-post/flagview",
                                                                 )) ? "active" : "" ?>"
                     data-bs-toggle="collapse"
                     href="#flagMenu"
@@ -427,10 +511,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                         "/flag/operator/view",
                                                                                         "/flag/operator/flagview",
                                                                                     )) ? "active" : "" ?>" href="/flag/operator/index" data-toggle="tooltip" data-placement="top" title="Operator Flag"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                        "/flag/operator/index",
-                                                                                                                                                                                        "/flag/operator/view",
-                                                                                                                                                                                        "/flag/operator/flagview",
-                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator Comment</span></a>
+                                                                                                                                                                                                                                                                "/flag/operator/index",
+                                                                                                                                                                                                                                                                "/flag/operator/view",
+                                                                                                                                                                                                                                                                "/flag/operator/flagview",
+                                                                                                                                                                                                                                                            )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator Comment</span></a>
                     </li>
 
                     <li class="navItems mb-2">
@@ -439,10 +523,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                         "/flag/package/view",
                                                                                         "/flag/package/flagview",
                                                                                     )) ? "active" : "" ?>" href="/flag/package/index" data-toggle="tooltip" data-placement="top" title="Package Flag"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                        "/flag/package/index",
-                                                                                                                                                                                        "/flag/package/view",
-                                                                                                                                                                                        "/flag/package/flagview",
-                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Package Comment</span></a>
+                                                                                                                                                                                                                                                            "/flag/package/index",
+                                                                                                                                                                                                                                                            "/flag/package/view",
+                                                                                                                                                                                                                                                            "/flag/package/flagview",
+                                                                                                                                                                                                                                                        )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Package Comment</span></a>
                     </li>
 
                     <li class="navItems mb-2">
@@ -451,10 +535,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                         "/flag/user-post/view",
                                                                                         "/flag/user-post/flagview",
                                                                                     )) ? "active" : "" ?>" href="/flag/user-post/index" data-toggle="tooltip" data-placement="top" title="User Post Flag"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                            "/flag/user-post/index",
-                                                                                                                                                                                            "/flag/user-post/view",
-                                                                                                                                                                                            "/flag/user-post/flagview",
-                                                                                                                                                                                        )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Post Comment</span></a>
+                                                                                                                                                                                                                                                                "/flag/user-post/index",
+                                                                                                                                                                                                                                                                "/flag/user-post/view",
+                                                                                                                                                                                                                                                                "/flag/user-post/flagview",
+                                                                                                                                                                                                                                                            )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Post Comment</span></a>
                     </li>
 
                     <li class="navItems mb-2">
@@ -463,10 +547,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                         "/flag/sighting/view",
                                                                                         "/flag/sighting/flagview",
                                                                                     )) ? "active" : "" ?>" href="/flag/sighting/index" data-toggle="tooltip" data-placement="top" title="Sighting Flag"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                        "/flag/sighting/index",
-                                                                                                                                                                                        "/flag/sighting/view",
-                                                                                                                                                                                        "/flag/sighting/flagview",
-                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Sighting Comment</span></a>
+                                                                                                                                                                                                                                                                "/flag/sighting/index",
+                                                                                                                                                                                                                                                                "/flag/sighting/view",
+                                                                                                                                                                                                                                                                "/flag/sighting/flagview",
+                                                                                                                                                                                                                                                            )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Sighting Comment</span></a>
                     </li>
 
                     <?php if (false) { ?>
@@ -531,9 +615,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                         "/log/call-log/index",
                                                                                         "/log/call-log/view",
                                                                                     )) ? "active" : "" ?>" href="/log/call-log/index" data-toggle="tooltip" data-placement="top" title="Call Log"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                        "/log/default/index",
-                                                                                                                                                                                        "/log/default/view",
-                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Call Log</span></a>
+                                                                                                                                                                                                                                                        "/log/default/index",
+                                                                                                                                                                                                                                                        "/log/default/view",
+                                                                                                                                                                                                                                                        "/log/call-log/index",
+                                                                                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Call Log</span></a>
                     </li>
                 </ul>
 
