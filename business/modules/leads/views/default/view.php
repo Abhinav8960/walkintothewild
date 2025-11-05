@@ -89,6 +89,24 @@ $this->title = 'Leads';
                                     </td>
                                 </tr>
                             <?php } ?>
+                            <?php if ($model->trip_budget) { ?>
+
+                                <tr>
+                                    <td>Trip Budget</td>
+                                    <td>
+                                        <p><?= $model->tripBudget ?></p>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($model->planning_type) { ?>
+
+                                <tr>
+                                    <td>Planning Type</td>
+                                    <td>
+                                        <p><?= $model->planningType ?></p>
+                                    </td>
+                                </tr>
+                            <?php } ?>
 
                             <!-- <tr>
                             <td>Days</td>
