@@ -1981,7 +1981,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $decrypted_data;
     }
 
-    public static function maskContactInfoInString(?string $text=''): string
+    public static function maskContactInfoInString(?string $text = ''): string
     {
 
         // Define a mapping for number words to digits
@@ -2278,21 +2278,48 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function tripbudget()
     {
         return [
-            1 => 'Under ₹20,000',
-            2 => '₹20,000 - ₹40,000',
-            3 => '₹40,000 - ₹70,000',
-            4 => '₹70,000 - ₹1,00,000',
-            5 => 'Above ₹1,00,000',
+            [
+                'id' => 1,
+                'value' => 'Under ₹20,000'
+            ],
+            [
+                'id' => 2,
+                'value' => '₹20,000 - ₹40,000'
+            ],
+            [
+                'id' => 3,
+                'value' => '₹40,000 - ₹70,000'
+            ],
+            [
+                'id' => 4,
+                'value' => '₹70,000 - ₹1,00,000'
+            ],
+            [
+                'id' => 5,
+                'value' => 'Above ₹1,00,000'
+            ],
         ];
     }
 
     public static function planningtype()
     {
         return [
-            1 => 'Immediately / This Week',
-            2 => 'Within this month',
-            3 => 'Just checking options',
-            4 => 'Not Planning right now'
+            [
+                'id' => 1,
+                'value' => 'Immediately / This Week'
+            ],
+            [
+                'id' => 2,
+                'value' => 'Within this month'
+            ],
+            [
+                'id' => 3,
+                'value' => 'Just checking options'
+            ],
+            [
+                'id' => 4,
+                'value' => 'Not Planning right now'
+            ],
         ];
     }
 }
