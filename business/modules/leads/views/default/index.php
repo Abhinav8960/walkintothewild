@@ -51,14 +51,15 @@ $this->title = 'Leads';
                             return '';
                         }
                     ],
-//                    [
-//                        'label' => 'Phone',
-//                        'contentOptions' => ['style' => 'width: 1%;'],
-//                        'format' => 'raw',
-//                        'value' => function ($model) {
-//                            return $model->phone;
-//                        }
-//                    ],
+                    [
+                        'label' => 'Phone',
+                        'contentOptions' => ['style' => 'width: 1%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->phone;
+                        },
+                        'visible' => $safari_operator->show_lead_phone_number ? true : false,
+                    ],
                     [
                         'label' => 'Source',
                         'contentOptions' => ['style' => 'width: 1%;'],
@@ -150,7 +151,7 @@ $this->title = 'Leads';
                     //         return LeadPartners::getLeadcategory($model->id, $safari_operator->id);
                     //     }
                     // ],
-                    
+
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
@@ -160,7 +161,7 @@ $this->title = 'Leads';
 
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/images/View.svg" alt="" width="25" height="25">', ['/leads/default/view', 'id' => $model->id], [
-                                    
+
                                     'title' => 'View',
                                 ]);
                             },
