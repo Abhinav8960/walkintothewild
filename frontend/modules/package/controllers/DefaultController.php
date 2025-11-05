@@ -21,14 +21,12 @@ use common\models\master\month\MasterMonth;
 use common\models\package\form\PackageForm;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageSafariPark;
-use frontend\models\form\PackageEnquiryForm;
 use frontend\models\PackageCommentReportForm;
 use common\Helper\FrontendNotificationHelper;
 use common\models\cms\frontendbanner\FrontendBanner;
 use common\models\GeneralModel;
 use common\models\leads\form\PackageLeadForm;
 use common\models\MailLog;
-use common\models\package\PackageEnquiry;
 use common\models\package\PackageFaq;
 use common\models\package\PackageStates;
 use common\models\quatation\form\LeadForm;
@@ -299,46 +297,7 @@ class DefaultController extends FrontendBaseController
     }
 
 
-    public function actionEnquiry($slug)
-    {
-        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
-        if (!$package) {
-            return $this->redirect(['/package']);
-        }
-        $model = new PackageEnquiryForm();
-        $model->safari_operator_id =  $package->owned_by_id;
-        $model->package_id = $package->id;
-        $model->status = PackageEnquiry::STATUS_ACTIVE;
-        if (Yii::$app->user->identity) {
-            $model->user_id = Yii::$app->user->identity->id;
-            $model->name = Yii::$app->user->identity->name;
-            $model->email_address = Yii::$app->user->identity->email;
-            $model->phone = Yii::$app->user->identity->mobile_no;
-        }
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_enquiry_model->save(false)) {
-                        Yii::$app->session->setFlash('success', 'Request sent successfully!');
-                        return $this->redirect(['view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
-                    }
-                }
-            }
-        } else {
-            $model->package_enquiry_model->loadDefaultValues();
-        }
-
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('_enquiry_form', [
-                'model' => $model
-            ]);
-        } else {
-            return $this->renderAjax('_enquiry_form', [
-                'model' => $model
-            ]);
-        }
-    }
+   
 
 
     public function actionFlag($slug, $package_comment_id)

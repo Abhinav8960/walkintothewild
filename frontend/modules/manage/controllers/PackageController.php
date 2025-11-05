@@ -15,7 +15,6 @@ use common\models\master\faq\MasterFaq;
 use common\models\package\PackageVersionSearch;
 use common\interfaces\NewStatusInterface;
 use common\models\package\PackageComment;
-use common\models\package\PackageEnquiry;
 use common\models\package\PackageFeature;
 use common\models\package\PackageGallery;
 use common\models\package\PackageIncluded;
@@ -581,23 +580,6 @@ class PackageController extends FrontendBaseController
     //     ]);
     // }
 
-    // public function actionBookNow($package_id)
-    // {
-    //     $safari_operator = $this->module->operatormodel();
-    //     $package_version_model = $this->findModel($package_id, $safari_operator->id);
-    //     $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status' => 1]);
-    //     $enquire_provider = new ActiveDataProvider([
-    //         'query' => $enquiries,
-    //         'pagination' => [
-    //             'pageSize' => 20,
-    //         ],
-    //     ]);
-    //     return $this->render('book_now', [
-    //         'package_version_model' => $package_version_model,
-    //         'enquire_provider' => $enquire_provider,
-
-    //     ]);
-    // }
 
 
 

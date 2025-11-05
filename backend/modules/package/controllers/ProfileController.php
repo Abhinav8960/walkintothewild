@@ -12,7 +12,6 @@ use common\models\package\form\PackageGalleryForm;
 use common\models\package\Package;
 use common\models\package\PackageVersion;
 use common\models\package\PackageDay;
-use common\models\package\PackageEnquiry;
 use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
@@ -476,23 +475,6 @@ class ProfileController extends Controller
         }
     }
 
-    public function actionBookNow($package_id)
-    {
-        $package_version_model = $this->findModel($package_id);
-        $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status' => 1]);
-
-        $enquire_provider = new ActiveDataProvider([
-            'query' => $enquiries,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-        return $this->render('book_now', [
-            'package_version_model' => $package_version_model,
-            'enquire_provider' => $enquire_provider,
-
-        ]);
-    }
 
     public function actionActive($id)
     {
