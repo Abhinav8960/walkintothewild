@@ -50,7 +50,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package', 'park-stay-category', 'trip-budget', 'planning-tip'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package', 'park-stay-category', 'trip-budget', 'planning-type'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -80,7 +80,7 @@ class DefaultController extends RestController
                     'park-unfollow' => ['POST'],
                     'park-stay-category' => ['GET'],
                     'trip-budget' => ['GET'],
-                    'planning-tip' => ['GET'],
+                    'planning-type' => ['GET'],
 
                 ],
             ],
