@@ -25,6 +25,7 @@ use api\models\park\SafariParkAccomodation;
 use api\models\park\SafariParkAccomodationSearch;
 use api\models\park\SafariParkFollower;
 use common\events\park\ParkReviewApprovalEvent;
+use common\models\GeneralModel;
 use common\models\leads\form\ParkLeadForm;
 use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\OperatorQuoteForm;
@@ -49,7 +50,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package', 'park-stay-category'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package', 'park-stay-category', 'trip-budget', 'planning-tip'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -78,6 +79,8 @@ class DefaultController extends RestController
                     'park-follow' => ['POST'],
                     'park-unfollow' => ['POST'],
                     'park-stay-category' => ['GET'],
+                    'trip-budget' => ['GET'],
+                    'planning-tip' => ['GET'],
 
                 ],
             ],
@@ -303,7 +306,11 @@ class DefaultController extends RestController
         if ($model->validate()) {
             if ($park_quote = $model->request($this->userinfo)) {
                 // FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
+                $message = Yii::$app->api->messageManager->getMessage('park.quote_request.request_sent');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
+        } else {
+            return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
 
         if (count($sf->operator) < 1) {
@@ -311,8 +318,6 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-        $message = Yii::$app->api->messageManager->getMessage('park.quote_request.request_sent');
-        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
     }
 
     public function actionParkFollow($slug)
@@ -407,4 +412,16 @@ class DefaultController extends RestController
     //     $data['stay_category_options']['data'] = $this->serializeData($dataProvider->getModels());
     //     return Yii::$app->api->sendResponse($data);
     // }
+
+    public function actionTripBudget()
+    {
+        $trip_budget = GeneralModel::tripbudget();
+        return $this->dataSenderWithoutSumarry($trip_budget, 'trip_budget');
+    }
+
+    public function actionPlanningType()
+    {
+        $planning_type = GeneralModel::planningtype();
+        return $this->dataSenderWithoutSumarry($planning_type, 'planning_type');
+    }
 }

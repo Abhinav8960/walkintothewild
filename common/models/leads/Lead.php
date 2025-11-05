@@ -98,7 +98,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
             [['status'], 'default', 'value' => 1],
             [['source', 'from_date', 'user_id', 'booked_operator_id', 'payment_gateway'], 'required'],
             [['source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'safaris', 'travelers', 'stay_category_id', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'is_payment_received', 'booked_operator_id', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['from_date', 'to_date', 'transaction_datetime','payment_receipt'], 'safe'],
+            [['from_date', 'to_date', 'transaction_datetime', 'payment_receipt'], 'safe'],
             [['addional_notes'], 'string'],
             [['package_version'], 'string', 'max' => 10],
             [['name', 'email', 'destination', 'transport', 'meals', 'budget', 'transaction_id'], 'string', 'max' => 255],
@@ -282,7 +282,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
 
     public function getTotalActiveLeadCount()
     {
-        $count = Lead::find()->where(['status'=>Lead::STATUS_ACTIVE])->count();
+        $count = Lead::find()->where(['status' => Lead::STATUS_ACTIVE])->count();
         if ($count) {
             return $count;
         }
@@ -301,4 +301,31 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
         return $lead;
     }
 
+    public function getTripBudget()
+    {
+        if ($this->trip_budget == 1) {
+            return 'Under ₹20,000';
+        } else if ($this->trip_budget == 2) {
+            return '₹20,000 - ₹40,000';
+        } else if ($this->trip_budget == 3) {
+            return '₹40,000 - ₹70,000';
+        } else if ($this->trip_budget == 4) {
+            return '₹70,000 - ₹1,00,000';
+        } else {
+            return 'Above ₹1,00,000';
+        }
+    }
+
+    public function getPlanningType()
+    {
+        if ($this->planning_type == 1) {
+            return 'Immediately / This Week';
+        } else if ($this->planning_type == 2) {
+            return 'Within this month';
+        } else if ($this->planning_type == 3) {
+            return 'Just checking options';
+        } else {
+            return 'Not Planning right now';
+        }
+    }
 }
