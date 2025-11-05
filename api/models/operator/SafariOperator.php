@@ -31,7 +31,9 @@ class SafariOperator extends \common\models\operator\SafariOperator
         };
         $fields[] = 'direct_call_no';
         $fields[] = 'review_url';
-
+        $fields['show_lead_phone_number'] = function () {
+            return (bool)$this->show_lead_phone_number;
+        };
         if (in_array(\Yii::$app->controller->layout, [self::OPERATOR_API_LAYOUT_FULL])) {
             $fields[] = 'park';
             $fields['is_approved'] = function () {

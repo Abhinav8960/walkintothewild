@@ -26,6 +26,8 @@ $active_url = '/' . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= in_array($active_url, array(
 														'/leads',
 														'/leads/default/index',
+														'/leads/default/view',
+														'/leads/default/operator-lead-chat',
 													)) ? 'active' : '' ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
 					</li>
 					<li class="slide">
@@ -46,17 +48,35 @@ $active_url = '/' . Yii::$app->requestedRoute;
 											'/master/animal/index',
 											'/master/animal/create',
 											'/master/animal/update',
-											// "/master/bird/index",
 											'/master/vehicle/index',
+											'/master/vehicle/create',
+											'/master/vehicle/update',
 											'/master/state/index',
+											'/master/state/create',
+											'/master/state/update',
+											'/master/state/statefromfile',
 											'/master/country/index',
 											'/master/city/index',
+											'/master/city/create',
+											'/master/city/update',
+											'/master/city/cityfromfile',
 											'/master/location/index',
+											'/master/location/create',
+											'/master/location/update',
 											'/master/railway-station/index',
+											'/master/railway-station/create',
+											'/master/railway-station/update',
+											'/master/railway-station/railwayfromfile',
 											'/master/airport/index',
+											'/master/airport/create',
+											'/master/airport/airportfromfile',
 											'/master/bonus-experience/index',
+											'/master/bonus-experience/create',
+											'/master/bonus-experience/update',
 											'/master/email/index',
 											'/master/mail-template/index',
+											'/master/mail-template/create',
+											'/master/mail-template/update',
 											'/master/operator-category/index',
 											'/master/suggestion-category/index',
 											'master/bonus-experience',
@@ -79,10 +99,15 @@ $active_url = '/' . Yii::$app->requestedRoute;
 											'/master/user-flag/create',
 											'/master/user-flag/update',
 											'/master/notification-template/index',
+											'/master/notification-template/create',
 											'/master/sms-template/index',
+											'/master/sms-template/create',
 											'/master/operator-category/index',
+											'/master/operator-category/create',
+											'/master/operator-category/update',
 											'/master/suggestion-category/index',
 											'/master/suggestion-category/create',
+											'/master/suggestion-category/update',
 										)) ? 'is-expanded' : '' ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														'/master',
@@ -93,17 +118,35 @@ $active_url = '/' . Yii::$app->requestedRoute;
 														'/master/animal/index',
 														'/master/animal/create',
 														'/master/animal/update',
-														// "/master/bird/index",
 														'/master/vehicle/index',
+														'/master/vehicle/create',
+														'/master/vehicle/update',
 														'/master/country/index',
 														'/master/state/index',
+														'/master/state/create',
+														'/master/state/update',
+														'/master/state/statefromfile',
 														'/master/city/index',
+														'/master/city/create',
+														'/master/city/update',
+														'/master/city/cityfromfile',
 														'/master/location/index',
+														'/master/location/create',
+														'/master/location/update',
 														'/master/railway-station/index',
+														'/master/railway-station/create',
+														'/master/railway-station/update',
+														'/master/railway-station/railwayfromfile',
 														'/master/airport/index',
+														'/master/airport/create',
+														'/master/airport/airportfromfile',
 														'/master/bonus-experience/index',
+														'/master/bonus-experience/create',
+														'/master/bonus-experience/update',
 														'/master/email/index',
 														'/master/mail-template/index',
+														'/master/mail-template/create',
+														'/master/mail-template/update',
 														'/master/operator-category/index',
 														'/master/suggestion-category/index',
 														'/master/packagefeature/index',
@@ -122,10 +165,15 @@ $active_url = '/' . Yii::$app->requestedRoute;
 														'/master/user-flag/create',
 														'/master/user-flag/update',
 														'/master/notification-template/index',
+														'/master/notification-template/create',
 														'/master/sms-template/index',
+														'/master/sms-template/create',
 														'/master/operator-category/index',
+														'/master/operator-category/create',
+														'/master/operator-category/update',
 														'/master/suggestion-category/index',
 														'/master/suggestion-category/create',
+														'/master/suggestion-category/update',
 														'/master/packagetag/index',
 														'/master/packagetag/create',
 														'/master/packagetag/update',
@@ -133,34 +181,41 @@ $active_url = '/' . Yii::$app->requestedRoute;
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
 
-							<li><a class="slide-item <?= in_array($active_url, array('/master/airport/index')) ? 'active' : '' ?>" href="/master/airport/index">Airport</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/airport/index',
+															'/master/airport/create',
+															'/master/airport/airportfromfile',
+														)) ? 'active' : '' ?>" href="/master/airport/index">Airport</a></li>
 
 							<li class="sub-slide <?= in_array($active_url, array(
-														'/cms',
+														'/master',
 														'/master/animal/index',
 														'/master/animal/create',
 														'/master/animal/update',
 														'/master/rare-animal/index',
 														'/master/rare-animal/create',
 														'/master/rare-animal/update',
+														'/master/rare-animal/view',
 													)) ? 'is-expanded' : '' ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Animal</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu <?= in_array($active_url, array(
-																'/cms',
+																'/master',
 																'/master/animal/index',
 																'/master/animal/create',
 																'/master/animal/update',
 																'/master/rare-animal/index',
 																'/master/rare-animal/create',
 																'/master/rare-animal/update',
+																'/master/rare-animal/view',
 															)) ? 'open' : '' ?>" style="<?= in_array($active_url, array(
-																							'/cms',
+																							'/master',
 																							'/master/animal/index',
 																							'/master/animal/create',
 																							'/master/animal/update',
 																							'/master/rare-animal/index',
 																							'/master/rare-animal/create',
 																							'/master/rare-animal/update',
+																							'/master/rare-animal/view',
 																						)) ? 'display: block;' : 'display: none;' ?>">
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			'/master/rare-animal/index',
@@ -177,19 +232,54 @@ $active_url = '/' . Yii::$app->requestedRoute;
 																			?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
 								</ul>
 							</li>
-							<li><a class="slide-item <?= in_array($active_url, array('/master/bonus-experience/index')) ? 'active' : '/master/bonus-experience/index' ?>" href="/master/bonus-experience/index">Bonus Experience</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array('/master/city/index')) ? 'active' : '' ?>" href="/master/city/index">City</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array('/master/location/index')) ? 'active' : '' ?>" href="/master/location/index">Location</a></li>
+
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/bonus-experience/index',
+															'/master/bonus-experience/create',
+															'/master/bonus-experience/update',
+														)) ? 'active' : '/master/bonus-experience/index' ?>" href="/master/bonus-experience/index">Bonus Experience</a></li>
+
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/state/index',
+															'/master/state/create',
+															'/master/state/update',
+															'/master/state/statefromfile',
+														)) ? 'active' : '' ?>" href="/master/state/index">State</a></li>
+
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/city/index',
+															'/master/city/create',
+															'/master/city/update',
+															'/master/city/cityfromfile',
+														)) ? 'active' : '' ?>" href="/master/city/index">City</a></li>
+
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/location/index',
+															'/master/location/create',
+															'/master/location/update',
+														)) ? 'active' : '' ?>" href="/master/location/index">Location</a></li>
 
 
-							<!-- <li><a class="slide-item <?= in_array($active_url, array('/master/bird/index')) ? 'active' : '' ?>" href="/master/bird/index">Bird</a></li> -->
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/mail-template/index',
+															'/master/mail-template/create',
+															'/master/mail-template/update',
+														)) ? 'active' : '' ?>" href="/master/mail-template/index">Mail Template</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/notification-template/index',
+															'/master/notification-template/create',
+														)) ? 'active' : '' ?>" href="/master/notification-template/index">Notification Template</a></li>
 
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/sms-template/index',
+															'/master/sms-template/create',
+														)) ? 'active' : '' ?>" href="/master/sms-template/index">SMS Template</a></li>
 
-
-							<li><a class="slide-item <?= in_array($active_url, array('/master/mail-template/index')) ? 'active' : '' ?>" href="/master/mail-template/index">Mail Template</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array('/master/notification-template/index')) ? 'active' : '' ?>" href="/master/notification-template/index">Notification Template</a></li>
-
-							<li><a class="slide-item <?= in_array($active_url, array('/master/operator-category/index')) ? 'active' : '' ?>" href="/master/operator-category/index">Operator Category</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/operator-category/index',
+															'/master/operator-category/create',
+															'/master/operator-category/update',
+														)) ? 'active' : '' ?>" href="/master/operator-category/index">Operator Category</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/master/packagefeature/index',
 															'/master/packagefeature/create',
@@ -205,17 +295,29 @@ $active_url = '/' . Yii::$app->requestedRoute;
 															'/master/packagetag/create',
 															'/master/packagetag/update',
 														)) ? 'active' : '' ?>" href="/master/packagetag/index">Package Tag</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array('/master/railway-station/index')) ? 'active' : '' ?>" href="/master/railway-station/index">Railway Station</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/railway-station/index',
+															'/master/railway-station/create',
+															'/master/railway-station/update',
+															'/master/railway-station/railwayfromfile',
+														)) ? 'active' : '' ?>" href="/master/railway-station/index">Railway Station</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/master/share-safari-reason/index',
 															'/master/share-safari-reason/create',
 															'/master/share-safari-reason/update',
 														)) ? 'active' : '' ?>" href="/master/share-safari-reason/index">Share Safari Reject Reason</a></li>
 
-							<li><a class="slide-item <?= in_array($active_url, array('/master/sms-template/index')) ? 'active' : '' ?>" href="/master/sms-template/index">SMS Template</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array('/master/state/index')) ? 'active' : '' ?>" href="/master/state/index">State</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array('/master/suggestion-category/index', '/master/suggestion-category/create')) ? 'active' : '' ?>" href="/master/suggestion-category/index">Suggestion Category</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array('/master/vehicle/index')) ? 'active' : '' ?>" href="/master/vehicle/index">Vehicle</a></li>
+
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/suggestion-category/index',
+															'/master/suggestion-category/create',
+															'/master/suggestion-category/update',
+														)) ? 'active' : '' ?>" href="/master/suggestion-category/index">Suggestion Category</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															'/master/vehicle/index',
+															'/master/vehicle/create',
+															'/master/vehicle/update',
+														)) ? 'active' : '' ?>" href="/master/vehicle/index">Vehicle</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/master/user-flag/index',
 															'/master/user-flag/create',
@@ -284,8 +386,8 @@ $active_url = '/' . Yii::$app->requestedRoute;
 
 					<li class="slide <?= in_array($active_url, array(
 											'/park/safari/default/index',
-											// "/park/birding/default/index",
 											'/park/safari/default/create',
+											'/park/safari/default/view',
 											'/park/safari/profile',
 											'/park/safari/profile/gallery',
 											'/park/safari/profile/creategallery',
@@ -307,34 +409,15 @@ $active_url = '/' . Yii::$app->requestedRoute;
 											'/park/safari/profile/updatehowtoreach',
 											'/park/safari/profile/map',
 											'/park/safari/profile/suggestions',
-											// "/park/birding/default/create",
-											// "/park/birding/profile",
-											// "/park/birding/profile/gallery",
-											// "/park/birding/profile/creategallery",
-											// "/park/birding/profile/updategallery",
-											// "/park/birding/profile/animal",
-											// "/park/birding/profile/createanimal",
-											// "/park/birding/profile/updateanimal",
-											// "/park/birding/profile/zone",
-											// "/park/birding/profile/createzone",
-											// "/park/birding/profile/updatezone",
-											// "/park/birding/profile/vehicle",
-											// "/park/birding/profile/createvehicle",
-											// "/park/birding/profile/updatevehicle",
-											// "/park/birding/profile/flora-fauna",
-											// "/park/birding/profile/createflorafauna",
-											// "/park/birding/profile/updateflorafauna",
-											// "/park/birding/profile/how-to-reach",
-											// "/park/birding/profile/createhowtoreach",
-											// "/park/birding/profile/updatehowtoreach",
-											// "/park/birding/profile/map",
 											'/park/operator-quote/index',
 											'/park/operator-quote/view',
-											'/park/safari-suggestion/index'
+											'/park/safari-suggestion/index',
+											'/park/safari/default/parkfromfile',
 										)) ? 'is-expanded' : '' ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														'/park/safari/default/index',
 														'/park/safari/default/create',
+														'/park/safari/default/view',
 														'/park/safari/profile',
 														'/park/safari/profile/gallery',
 														'/park/safari/profile/creategallery',
@@ -356,37 +439,17 @@ $active_url = '/' . Yii::$app->requestedRoute;
 														'/park/safari/profile/updatehowtoreach',
 														'/park/safari/profile/map',
 														'/park/safari/profile/suggestions',
-														// "/park/birding/default/create",
-														// "/park/birding/default/index",
-														// "/park/birding/profile",
-														// "/park/birding/profile/gallery",
-														// "/park/birding/profile/creategallery",
-														// "/park/birding/profile/updategallery",
-														// "/park/birding/profile/animal",
-														// "/park/birding/profile/createanimal",
-														// "/park/birding/profile/updateanimal",
-														// "/park/birding/profile/zone",
-														// "/park/birding/profile/createzone",
-														// "/park/birding/profile/updatezone",
-														// "/park/birding/profile/vehicle",
-														// "/park/birding/profile/createvehicle",
-														// "/park/birding/profile/updatevehicle",
-														// "/park/birding/profile/flora-fauna",
-														// "/park/birding/profile/createflorafauna",
-														// "/park/birding/profile/updateflorafauna",
-														// "/park/birding/profile/how-to-reach",
-														// "/park/birding/profile/createhowtoreach",
-														// "/park/birding/profile/updatehowtoreach",
-														// "/park/birding/profile/map",
 														'/park/operator-quote/index',
 														'/park/operator-quote/view',
-														'/park/safari-suggestion/index'
+														'/park/safari-suggestion/index',
+														'/park/safari/default/parkfromfile'
 													)) ? 'active' : '' ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Parks</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/park/safari/default/index',
 															'/park/safari/default/create',
+															'/park/safari/default/view',
 															'/park/safari/profile',
 															'/park/safari/profile/gallery',
 															'/park/safari/profile/creategallery',
@@ -408,6 +471,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 															'/park/safari/profile/updatehowtoreach',
 															'/park/safari/profile/map',
 															'/park/safari/profile/suggestions',
+															'/park/safari/default/parkfromfile'
 														)) ? 'active' : '' ?>" href="/park/safari/default/index">Safari Park</a></li>
 
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
@@ -461,7 +525,11 @@ $active_url = '/' . Yii::$app->requestedRoute;
 											'/cms/privacypolicy',
 											'/cms/termscondition',
 											'/cms/faqcategory',
+											'/cms/faqcategory/create',
+											'/cms/faqcategory/update',
 											'/cms/faqs',
+											'/cms/faqs/create',
+											'/cms/faqs/update',
 											'/cms/feature-park/index',
 											'/cms/banner/index',
 											'/cms/banner/create',
@@ -475,12 +543,16 @@ $active_url = '/' . Yii::$app->requestedRoute;
 											'/cms/feature-tag/index',
 											'/cms/content-management',
 											'/cms/flag-reason',
+											'/cms/flag-reason/create',
+											'/cms/flag-reason/update',
 											'/cms/master-tag/index',
 											'/cms/master-tag/create',
 											'/cms/master-tag/update',
 											'/cms/master-category/index',
 											'/cms/master-category/create',
 											'/cms/master-category/update',
+											'/cms/content-management',
+											'/cms/content-management/update',
 										)) ? 'is-expanded' : '' ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														'/cms',
@@ -498,7 +570,11 @@ $active_url = '/' . Yii::$app->requestedRoute;
 														'/cms/blog/create',
 														'/cms/blog/comment',
 														'/cms/faqcategory',
+														'/cms/faqcategory/create',
+														'/cms/faqcategory/update',
 														'/cms/faqs',
+														'/cms/faqs/create',
+														'/cms/faqs/update',
 														'/cms/about/index',
 														'/cms/disclaimer/index',
 														'/cms/banner/index',
@@ -513,12 +589,16 @@ $active_url = '/' . Yii::$app->requestedRoute;
 														'/cms/feature-tag/index',
 														'/cms/content-management',
 														'/cms/flag-reason',
+														'/cms/flag-reason/create',
+														'/cms/flag-reason/update',
 														'/cms/master-tag/index',
 														'/cms/master-tag/create',
 														'/cms/master-tag/update',
 														'/cms/master-category/index',
 														'/cms/master-category/create',
 														'/cms/master-category/update',
+														'/cms/content-management',
+														'/cms/content-management/update',
 													)) ? 'active' : '' ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu <?= in_array($active_url, array(
 													'/cms',
@@ -558,13 +638,20 @@ $active_url = '/' . Yii::$app->requestedRoute;
 													'/cms/privacypolicy',
 													'/cms/termscondition',
 													'/cms/faqcategory',
+													'/cms/faqcategory/create',
+													'/cms/faqcategory/update',
 													'/cms/faqs',
+													'/cms/faqs/create',
+													'/cms/faqs/update',
 													'/cms/feature-park/index',
 													'/cms/feature-article/index',
 													'/cms/feature-rare-exotic/index',
 													'/cms/feature-tag/index',
 													'/cms/content-management',
+													'/cms/content-management/update',
 													'/cms/flag-reason',
+													'/cms/flag-reason/create',
+													'/cms/flag-reason/update',
 													'/cms/master-tag/index',
 													'/cms/master-tag/create',
 													'/cms/master-tag/update',
@@ -609,7 +696,11 @@ $active_url = '/' . Yii::$app->requestedRoute;
 																				'/cms/privacypolicy',
 																				'/cms/termscondition',
 																				'/cms/faqcategory',
+																				'/cms/faqcategory/create',
+																				'/cms/faqcategory/update',
 																				'/cms/faqs',
+																				'/cms/faqs/create',
+																				'/cms/faqs/update',
 																				'/cms/feature-park/index',
 																				'/cms/banner/index',
 																				'/cms/banner/create',
@@ -621,7 +712,10 @@ $active_url = '/' . Yii::$app->requestedRoute;
 																				'/cms/feature-rare-exotic/index',
 																				'/cms/feature-tag/index',
 																				'/cms/content-management',
+																				'/cms/content-management/update',
 																				'/cms/flag-reason',
+																				'/cms/flag-reason/create',
+																				'/cms/flag-reason/update',
 																				'/cms/master-tag/index',
 																				'/cms/master-tag/create',
 																				'/cms/master-tag/update',
@@ -782,24 +876,44 @@ $active_url = '/' . Yii::$app->requestedRoute;
 								</ul>
 							</li>
 							<li><a class="slide-item <?= in_array($active_url, array('/cms/banner/index', '/cms/banner/create', '/cms/banner/update')) ? 'active' : '' ?>" href="/cms/banner/index">Banners</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array('/cms/content-management')) ? 'active' : '' ?>" href="/cms/content-management">Content Management</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array('/cms/content-management', '/cms/content-management/update')) ? 'active' : '' ?>" href="/cms/content-management">Content Management</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
 														'/cms',
 														'/cms/faqcategory',
+														'/cms/faqcategory/create',
+														'/cms/faqcategory/update',
 														'/cms/faqs',
+														'/cms/faqs/create',
+														'/cms/faqs/update',
 													)) ? 'is-expanded' : '' ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">FAQs</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu <?= in_array($active_url, array(
 																'/cms',
 																'/cms/faqcategory',
+																'/cms/faqcategory/create',
+																'/cms/faqcategory/update',
 																'/cms/faqs',
+																'/cms/faqs/create',
+																'/cms/faqs/update',
 															)) ? 'open' : '' ?>" style="<?= in_array($active_url, array(
 																							'/cms',
 																							'/cms/faqcategory',
 																							'/cms/faqs',
+																							'/cms/faqs/create',
+																							'/cms/faqs/update',
+																							'/cms/faqcategory/create',
+																							'/cms/faqcategory/update',
 																						)) ? 'display: block;' : 'display: none;' ?>">
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array('/cms/article-category/index')) ? 'active' : '' ?>" href="/cms/faqcategory">FAQ Category</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array('/cms/faqs')) ? 'active' : '' ?>" href="/cms/faqs">FAQs</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			'/cms/faqcategory',
+																			'/cms/faqcategory/create',
+																			'/cms/faqcategory/update',
+																		)) ? 'active' : '' ?>" href="/cms/faqcategory">FAQ Category</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			'/cms/faqs',
+																			'/cms/faqs/create',
+																			'/cms/faqs/update',
+																		)) ? 'active' : '' ?>" href="/cms/faqs">FAQs</a></li>
 								</ul>
 							</li>
 
@@ -841,6 +955,8 @@ $active_url = '/' . Yii::$app->requestedRoute;
 
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/cms/flag-reason',
+															'/cms/flag-reason/create',
+															'/cms/flag-reason/update',
 														)) ? 'active' : '' ?>" href="/cms/flag-reason">Flag Reason</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/cms/master-tag/index',
@@ -899,21 +1015,24 @@ $active_url = '/' . Yii::$app->requestedRoute;
 					<li class="slide <?= in_array($active_url, array(
 											'/operator/safari-operator/index',
 											'/operator/safari-operator/index/view',
-											// "/operator/birding-operator/index",
-											// "/operator/birding-operator/index/view",
 											'/operator/safari-operator/index',
 											'/operator/safari-operator/index/view',
 											'/gallery/default/index',
-											// "/galleryapproval/default/index",
 											'/gallery/default/view',
 											'/operator/safari-operator/index',
 											'/operator/safari-operator/index/view',
-											// "/operator/birding-operator/index",
-											// "/operator/birding-operator/view",
 											'/operator/safari-operator/index',
 											'/operator/safari-operator/view',
+											'/operator/safari-operator/quote',
+											'/operator/safari-operator/review',
+											'/operator/safari-operator/operator-parks',
+											'/operator/safari-operator/bank-and-kyc-details',
+											'/operator/safari-operator/update-details',
+											'/leadoperatorwise/default/index',
+											'/leadoperatorwise/default/view',
 											'/operatorapproval/default/index',
 											'/operatorapproval/default/view',
+											'/operatorapproval/default/update',
 										)) ? 'is-expanded' : '' ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														'/operator/safari-operator/index',
@@ -931,11 +1050,19 @@ $active_url = '/' . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/operatorapproval/default/index',
 															'/operatorapproval/default/view',
+															'/operatorapproval/default/update',
 														)) ? 'active' : '' ?>" href="/operatorapproval/default/index">Operator approval List</a></li>
 							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/operator/safari-operator/index',
-															'/operator/safari-operator/index/view',
+															'/operator/safari-operator/view',
+															'/operator/safari-operator/quote',
+															'/operator/safari-operator/review',
+															'/operator/safari-operator/operator-parks',
+															'/operator/safari-operator/bank-and-kyc-details',
+															'/operator/safari-operator/update-details',
+															'/leadoperatorwise/default/index',
+															'/leadoperatorwise/default/view',
 														)) ? 'active' : '' ?>" href="/operator/safari-operator/index">Safari Tour Operator</a></li>
 
 					</li>
@@ -951,8 +1078,11 @@ $active_url = '/' . Yii::$app->requestedRoute;
 									'/pendingapproval/park-review-approval/index',
 									'/pendingapproval/operator-review/index',
 									'/sharesafari/fixed-departure/index',
+									'/sharesafari/fixed-departure/view',
 									'/galleryapproval/default/index',
+									'/galleryapproval/default/view',
 									'/packageapproval/default/index',
+									'/packageapproval/default/view',
 								)) ? 'is-expanded' : '' ?>">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/pendingapproval/article-comment/index',
@@ -960,8 +1090,11 @@ $active_url = '/' . Yii::$app->requestedRoute;
 												'/pendingapproval/park-review-approval/index',
 												'/pendingapproval/operator-review/index',
 												'/sharesafari/fixed-departure/index',
+												'/sharesafari/fixed-departure/view',
 												'/galleryapproval/default/index',
+												'/galleryapproval/default/view',
 												'/packageapproval/default/index',
+												'/packageapproval/default/view',
 											)) ? 'active' : '' ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Pending Approvals</span><i class="angle fe fe-chevron-right"></i></a>
 				<ul class="slide-menu">
 					<li class="side-menu__label1"><a href="javascript:void(0);">Pending Approvals</a></li>
@@ -976,13 +1109,16 @@ $active_url = '/' . Yii::$app->requestedRoute;
 
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/sharesafari/fixed-departure/index',
+													'/sharesafari/fixed-departure/view',
 												)) ? 'active' : '' ?>" href="/sharesafari/fixed-departure/index">Fixed Departure Approvals</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/galleryapproval/default/index',
+													'/galleryapproval/default/view',
 												)) ? 'active' : '' ?>" href="/galleryapproval/default/index">Gallery Approvals</a></li>
 
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/packageapproval/default/index',
+													'/packageapproval/default/view',
 												)) ? 'active' : '' ?>" href="/packageapproval/default/index">Package Approvals</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/pendingapproval/park-review-approval/index',
@@ -998,49 +1134,70 @@ $active_url = '/' . Yii::$app->requestedRoute;
 			<li class="slide <?= in_array($active_url, array(
 									'/flag/blog/index',
 									'/flag/operator/index',
+									'/flag/operator/view',
 									'/flag/package/index',
+									'/flag/package/view',
 									'/flag/share-safari/index',
+									'/flag/share-safari/view',
 									'/flag/untraced-flag/index',
 									'/flag/user-post/index',
+									'/flag/user-post/view',
 									'/flag/sighting/index',
+									'/flag/sighting/view',
 									'/flag/blog/index',
-									'/flag/article/index'
+									'/flag/blog/view',
+									'/flag/article/index',
+									'/flag/article/view',
 								)) ? 'is-expanded' : '' ?>">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/flag/blog/index',
 												'/flag/operator/index',
+												'/flag/operator/view',
 												'/flag/share-safari/index',
+												'/flag/share-safari/view',
 												'/flag/package/index',
+												'/flag/package/view',
 												'/flag/untraced-flag/index',
 												'/flag/user-post/index',
+												'/flag/user-post/view',
 												'/flag/sighting/index',
+												'/flag/sighting/view',
 												'/flag/blog/index',
-												'/flag/article/index'
+												'/flag/blog/view',
+												'/flag/article/index',
+												'/flag/article/view',
 											)) ? 'active' : '' ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Flag</span><i class="angle fe fe-chevron-right"></i></a>
 				<ul class="slide-menu">
 					<li class="side-menu__label1"><a href="javascript:void(0);">Flag</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/flag/operator/index',
+													'/flag/operator/view',
 												)) ? 'active' : '' ?>" href="/flag/operator/index">Operator Comments</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/flag/package/index',
+													'/flag/package/view',
 												)) ? 'active' : '' ?>" href="/flag/package/index">Package Comments</a></li>
 
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/flag/share-safari/index',
+													'/flag/share-safari/view',
 												)) ? 'active' : '' ?>" href="/flag/share-safari/index">Share Safari Comments</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/flag/user-post/index',
+													'/flag/user-post/view',
 												)) ? 'active' : '' ?>" href="/flag/user-post/index">Post Comments</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/flag/sighting/index',
+													'/flag/sighting/view',
 												)) ? 'active' : '' ?>" href="/flag/sighting/index">Sighting Comments</a></li>
 
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/flag/blog/index',
+													'/flag/blog/view',
 												)) ? 'active' : '' ?>" href="/flag/blog/index">Blog Comments</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/flag/article/index',
+													'/flag/article/view',
 												)) ? 'active' : '' ?>" href="/flag/article/index">Article Comments</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/flag/untraced-flag/index',
@@ -1101,6 +1258,9 @@ $active_url = '/' . Yii::$app->requestedRoute;
 									'/sharesafari/share-safari-comment/index',
 									'/sharesafari/default/fixed-departure',
 									'/sharesafari/default/fixed-view',
+									'/sharesafari/default/reject-list',
+									'/sharesafari/default/chat-view',
+									'/sharesafari/default/booked-user',
 								)) ? 'is-expanded' : '' ?>">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/sharesafari/default/index',
@@ -1110,6 +1270,9 @@ $active_url = '/' . Yii::$app->requestedRoute;
 												'/sharesafari/share-safari-comment/index',
 												'/sharesafari/default/fixed-departure',
 												'/sharesafari/default/fixed-view',
+												'/sharesafari/default/reject-list',
+												'/sharesafari/default/chat-view',
+												'/sharesafari/default/booked-user',
 											)) ? 'active' : '' ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
 				<ul class="slide-menu">
 					<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
@@ -1124,6 +1287,9 @@ $active_url = '/' . Yii::$app->requestedRoute;
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/sharesafari/default/fixed-departure',
 													'/sharesafari/default/fixed-view',
+													'/sharesafari/default/reject-list',
+													'/sharesafari/default/chat-view',
+													'/sharesafari/default/booked-user',
 												)) ? 'active' : '' ?>" href="/sharesafari/default/fixed-departure">Fixed Departure</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/sharesafari/default/index',
@@ -1141,7 +1307,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 			<li class="slide">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/sightings/default/index',
-												'/sightings/default/create',
+												'/sightings/default/view',
 											)) ? 'active' : '' ?>" href="/sightings/default/index"><img src="<?= $this->params['baseurl'] ?>/img/sighting.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sightings</span></a>
 			</li>
 		<?php } ?>
@@ -1150,7 +1316,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 
 			<li class="slide"><a class="side-menu__item <?= in_array($active_url, array(
 															'/posts/default/index',
-															'/posts/default/create',
+															'/posts/default/view',
 														)) ? 'active' : '' ?>" href="/posts/default/index"><img src="<?= $this->params['baseurl'] ?>/img/post.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Posts</span></a>
 			</li>
 		<?php } ?>
@@ -1159,6 +1325,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 			<li class="slide <?= in_array($active_url, array(
 									'/package/default/index',
 									'/package/default/create',
+									'/package/default/reject-list',
 									'/package/profile',
 									'/package/profile/itinerary',
 									'/package/profile/inclusion',
@@ -1174,10 +1341,12 @@ $active_url = '/' . Yii::$app->requestedRoute;
 									'/package/preview/index',
 									'/packageapproval/default/index',
 									'/packageapproval/default/view',
+									'/package/preview/index',
 								)) ? 'is-expanded' : '' ?>">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/package/default/index',
 												'/package/default/create',
+												'/package/default/reject-list',
 												'/package/profile',
 												'/package/profile/itinerary',
 												'/package/profile/inclusion',
@@ -1193,12 +1362,14 @@ $active_url = '/' . Yii::$app->requestedRoute;
 												'/package/preview/index',
 												'/packageapproval/default/index',
 												'/packageapproval/default/view',
+												'/package/preview/index',
 											)) ? 'active' : '' ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span><i class="angle fe fe-chevron-right"></i></a>
 				<ul class="slide-menu">
 					<li class="side-menu__label1"><a href="javascript:void(0);">Package</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/package/default/index',
 													'/package/default/create',
+													'/package/default/reject-list',
 													'/package/profile',
 													'/package/profile/itinerary',
 													'/package/profile/inclusion',
@@ -1209,6 +1380,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 													'/package/profile/faq',
 													'/package/profile/create-faq',
 													'/package/profile/faq-update',
+													'/package/preview/index',
 												)) ? 'active' : '' ?>" href="/package/default/index">Package List</a></li>
 					<!-- <li><a class="slide-item <?= in_array($active_url, array(
 														'/package/quote/index',
@@ -1228,6 +1400,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 			<li class="slide <?= in_array($active_url, array(
 									'/user',
 									'/user/default/index',
+									'/user/default/create',
 									'/user/default/update',
 									'/user/default/profile',
 									'/user/login-user',
@@ -1239,6 +1412,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/user',
 												'/user/default/index',
+												'/user/default/create',
 												'/user/default/update',
 												'/user/default/profile',
 												'/user/login-user',
@@ -1252,6 +1426,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 					<li><a class="slide-item <?= in_array($active_url, array(
 													'/user',
 													'/user/default/index',
+													'/user/default/create',
 													'/user/default/update',
 													'/user/default/profile',
 												)) ? 'active' : '' ?>" href="/user/default/index">User List</a></li>
@@ -1280,12 +1455,16 @@ $active_url = '/' . Yii::$app->requestedRoute;
 		<?php if (Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager): ?>
 			<li class="slide <?= in_array($active_url, array(
 									'/log/default/index',
+									'/log/default/view',
 									'/log/default/front-index',
+									'/log/transaction/view',
 									'/trierror/default/index',
 									'/log/sms-log/index',
 									'/log/call-log/index',
 									'/trierror/frontend-request-log',
+									'/trierror/frontend-request-log/view',
 									'/trierror/site-pages',
+									'/trierror/site-pages/view',
 									'/trierror/site-untraced-request',
 									'/trierror/default/front-index',
 									'/portalsetting/log/index',
@@ -1293,15 +1472,20 @@ $active_url = '/' . Yii::$app->requestedRoute;
 									'/portalsetting/log/console-log',
 									'/log/notification-log/index',
 									'/trierror/api-request-log/index',
+									'/trierror/api-request-log/view',
 									'/log/transaction',
 								)) ? 'is-expanded' : '' ?>">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/log/default/index',
+												'/log/default/view',
 												'/log/transaction',
+												'/log/transaction/view',
 												'/trierror',
 												'/log/default/front-index',
 												'/trierror/frontend-request-log',
+												'/trierror/frontend-request-log/view',
 												'/trierror/site-pages',
+												'/trierror/site-pages/view',
 												'/log/sms-log/index',
 												'/log/call-log/index',
 												'/trierror/site-untraced-request',
@@ -1311,23 +1495,24 @@ $active_url = '/' . Yii::$app->requestedRoute;
 												'/portalsetting/log/console-log',
 												'/log/notification-log/index',
 												'/trierror/api-request-log/index',
+												'/trierror/api-request-log/view',
 												'/log/transaction',
 											)) ? 'active' : '' ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
 				<ul class="slide-menu">
 					<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/trierror/api-request-log/index')) ? 'active' : '' ?>" href="/log/transaction">Transaction Log</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/trierror/api-request-log/index')) ? 'active' : '' ?>" href="/trierror/api-request-log/index">Api Request Log</a></li>
+					<li><a class="slide-item <?= in_array($active_url, array('/log/transaction', '/log/transaction/view')) ? 'active' : '' ?>" href="/log/transaction">Transaction Log</a></li>
+					<li><a class="slide-item <?= in_array($active_url, array('/trierror/api-request-log/index', '/trierror/api-request-log/view')) ? 'active' : '' ?>" href="/trierror/api-request-log/index">Api Request Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/log/index')) ? 'active' : '' ?>" href="/portalsetting/log/index">Backend Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/log/call-log/index')) ? 'active' : '' ?>" href="/log/call-log/index">Call Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/log/console-log')) ? 'active' : '' ?>" href="/portalsetting/log/console-log">Console Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/log/front')) ? 'active' : '' ?>" href="/portalsetting/log/front">Frontend Log</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/trierror/frontend-request-log')) ? 'active' : '' ?>" href="/trierror/frontend-request-log">Frontend Request</a></li>
+					<li><a class="slide-item <?= in_array($active_url, array('/trierror/frontend-request-log', '/trierror/frontend-request-log/view')) ? 'active' : '' ?>" href="/trierror/frontend-request-log">Frontend Request</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/trierror/default/front-index')) ? 'active' : '' ?>" href="/trierror/default/front-index">Frontend Request Error</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/trierror/site-untraced-request')) ? 'active' : '' ?>" href="/trierror/site-untraced-request">Frontend Request Untraced</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/log/default/index')) ? 'active' : '' ?>" href="/log/default/index">Mail Log</a></li>
+					<li><a class="slide-item <?= in_array($active_url, array('/log/default/index', '/log/default/view')) ? 'active' : '' ?>" href="/log/default/index">Mail Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/log/notification-log/index')) ? 'active' : '' ?>" href="/log/notification-log/index">Notification Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/log/sms-log/index')) ? 'active' : '' ?>" href="/log/sms-log/index">SMS Log</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/trierror/site-pages')) ? 'active' : '' ?>" href="/trierror/site-pages">Site Pages</a></li>
+					<li><a class="slide-item <?= in_array($active_url, array('/trierror/site-pages', '/trierror/site-pages/view')) ? 'active' : '' ?>" href="/trierror/site-pages">Site Pages</a></li>
 					<!-- <li><a class="slide-item <?= in_array($active_url, array('/trierror/default/index')) ? 'active' : '' ?>" href="/trierror/default/index">Backend Error Log</a></li> -->
 
 				</ul>
@@ -1356,6 +1541,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 									'/portalsetting/default/params',
 									'/portalsetting/pageview/index',
 									'/trierror/site-robots',
+									'/trierror/site-robots/create',
 									'/portalsetting/default/clear-assets',
 									'/portalsetting/default/clear-cache',
 									'/portalsetting/default/clear-assets?type=frontend'
@@ -1365,6 +1551,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 												'/portalsetting/default/params',
 												'/portalsetting/pageview/index',
 												'/trierror/site-robots',
+												'/trierror/site-robots/create',
 												'/portalsetting/default/clear-assets',
 												'/portalsetting/default/clear-cache',
 												'/portalsetting/default/clear-assets?type=frontend'
@@ -1376,7 +1563,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/default/clear-cache')) ? 'active' : '' ?>" href="/portalsetting/default/clear-cache" data-method="post">Clear Cache</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/default/index')) ? 'active' : '' ?>" href="/portalsetting/default/index">Php Info</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/default/params')) ? 'active' : '' ?>" href="/portalsetting/default/params">Params</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/trierror/site-robots')) ? 'active' : '' ?>" href="/trierror/site-robots">Robots Txt</a></li>
+					<li><a class="slide-item <?= in_array($active_url, array('/trierror/site-robots', '/trierror/site-robots/create')) ? 'active' : '' ?>" href="/trierror/site-robots">Robots Txt</a></li>
 					<!-- <li><a class="slide-item <?= in_array($active_url, array('/portalsetting/pageview/index')) ? 'active' : '' ?>" href="/portalsetting/pageview/index">Page View</a></li> -->
 				</ul>
 			</li>
@@ -1417,6 +1604,8 @@ $active_url = '/' . Yii::$app->requestedRoute;
 			<li class="slide">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/moderation/default/index',
+												'/moderation/default/create',
+												'/moderation/default/view',
 											)) ? 'active' : '' ?>" href="/moderation/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Moderation</span></a>
 			</li>
 		<?php } ?>
@@ -1426,6 +1615,8 @@ $active_url = '/' . Yii::$app->requestedRoute;
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/compliancedocuments',
 												'/compliancedocuments/default/index',
+												'/compliancedocuments/default/view',
+												'/compliancedocuments/default/update',
 											)) ? 'active' : '' ?>" href="/compliancedocuments/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Compliance Documents</span></a>
 			</li>
 		<?php endif; ?>
@@ -1435,6 +1626,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/urlshortner',
 												'/urlshortner/default/index',
+												'/urlshortner/default/create',
 											)) ? 'active' : '' ?>" href="/urlshortner/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Url Shortner</span></a>
 			</li>
 		<?php endif; ?>
