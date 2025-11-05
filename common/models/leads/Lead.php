@@ -304,12 +304,12 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
 
     public function getTripBudget()
     {
-        return  GeneralModel::tripBudget()[$this->trip_budget] ?? '';
+        return  GeneralModel::tripBudget(true)[$this->trip_budget] ?? '';
     }
 
     public function getPlanningType()
     {
-        return  GeneralModel::planningtype()[$this->planning_type] ?? '';
+        return  GeneralModel::planningtype(true)[$this->planning_type] ?? '';
         
     }
 }

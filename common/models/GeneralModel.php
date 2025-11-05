@@ -2275,9 +2275,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map(MasterPackageTag::find()->where(['status' => 1])->all(), 'id', 'tag_name');
     }
 
-    public static function tripbudget()
+    public static function tripbudget($only_options = false)
     {
-        return [
+        $data =  [
             [
                 'id' => 1,
                 'value' => 'Under ₹20,000'
@@ -2299,11 +2299,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                 'value' => 'Above ₹1,00,000'
             ],
         ];
+
+        if ($only_options) {
+            return \yii\helpers\ArrayHelper::map($data, 'id', 'value');
+        }
+        return $data;
     }
 
-    public static function planningtype()
+    public static function planningtype($only_options = false)
     {
-        return [
+        $data = [
             [
                 'id' => 1,
                 'value' => 'Immediately / This Week'
@@ -2321,5 +2326,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                 'value' => 'Not Planning right now'
             ],
         ];
+
+        if ($only_options) {
+            return \yii\helpers\ArrayHelper::map($data, 'id', 'value');
+        }
+        return $data;
     }
 }
