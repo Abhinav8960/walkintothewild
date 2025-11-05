@@ -11,7 +11,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Dashboard';
 // $this->params['breadcrumbs'][] = $this->title;
-// $this->params['title'] = $this->title;
+$this->params['title'] = $this->title;
 ?>
 
 <div class="row">

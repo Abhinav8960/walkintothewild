@@ -11,6 +11,8 @@ $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Faqs';
+$this->params['title'] = $this->title;
+
 $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-created new create float-end mt-3', 'title' => 'Create']);
 // $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => '/faqs/default/setsequence', 'class' => 'btn  popupButton btn-secondary float-end mt-3 me-2', 'title' => 'Set Sequence']);
 ?>

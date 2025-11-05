@@ -14,6 +14,8 @@ $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Fixed Departure';
+$this->params['title'] = $this->title;
+
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button-created new create float-end', 'title' => 'Create']);
 ?>
 
