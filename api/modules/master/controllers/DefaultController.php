@@ -93,6 +93,7 @@ class DefaultController extends RestController
 
     /**
      * @OA\Get(
+     *     path="/master/default/bonus-experience",
      *     tags={"Bonus Experience"},
      *     summary="Get active bonus experience list",
      *     security={{"bearerAuth":{}}},

@@ -2,41 +2,44 @@
 
 namespace api\controllers;
 
-use api\behaviours\Apiauth;
-use api\behaviours\Verbcheck;
-use api\models\cms\contentmanagement\ContentManagement;
-use api\models\operator\SafariOperator;
-use api\models\CanSocialLoginForm;
-use api\models\compliancedocuments\ComplianceDocuments;
+use Yii;
+use yii\web\Response;
+use common\models\Auth;
+use common\models\User;
 use api\models\LoginForm;
-use api\models\MasterMetaTableInfoSearch;
-use api\models\OtpVerificationSocialLoginForm;
 use api\models\SigninForm;
 use api\models\SignupForm;
+use api\behaviours\Apiauth;
+use api\behaviours\Verbcheck;
+use OpenApi\Attributes as OA;
+use common\models\UserSession;
+use yii\filters\AccessControl;
 use api\models\SocialLoginForm;
-use api\models\UserMobileNoVerificationForm;
-use api\models\VerifySocialLoginForm;
-use common\calling\services\CallingService;
-use common\models\operator\SafariOperator as OperatorSafariOperator;
 use common\models\AccessTokens;
-use common\models\Auth;
+use common\models\TemporaryUser;
+use Kreait\Firebase\Auth\SignIn;
+use common\models\WhatsappHelper;
+use api\models\CanSocialLoginForm;
 use common\models\EmailVerification;
+use common\models\UserDeleteRequest;
+use api\models\VerifySocialLoginForm;
 use common\models\MobileVerification;
 use common\models\SourceVerification;
-use common\models\TemporaryUser;
-use common\models\User;
-use common\models\UserDeleteRequest;
-use common\models\UserDeleteRequestForm;
-use common\models\UserSession;
-use common\models\WhatsappHelper;
-use Kreait\Firebase\Auth\SignIn;
-use yii\filters\AccessControl;
 use yii\httpclient\debug\SearchModel;
-use Yii;
+use api\models\operator\SafariOperator;
+use common\models\UserDeleteRequestForm;
+use api\models\MasterMetaTableInfoSearch;
+use common\calling\services\CallingService;
+use api\models\UserMobileNoVerificationForm;
+use api\models\OtpVerificationSocialLoginForm;
+use api\models\cms\contentmanagement\ContentManagement;
+use api\models\compliancedocuments\ComplianceDocuments;
+use common\models\operator\SafariOperator as OperatorSafariOperator;
 
-/**
- * Site controller
- */
+#[OA\Info(
+    version: '1.0.0',
+    title: 'My API'
+)]
 class SiteController extends RestController
 {
 
@@ -141,6 +144,18 @@ class SiteController extends RestController
         }
     }
 
+
+
+    /**
+     * @OA\Get(
+     *     path="/master-meta-info",
+     *     summary="Test API endpoint",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response"
+     *     )
+     * )
+     */
     public function actionMasterMetaInfo()
     {
         $searchModel = new MasterMetaTableInfoSearch();

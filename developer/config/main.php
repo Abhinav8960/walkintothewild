@@ -70,8 +70,6 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/swagger' => 'site/doc',
-                '/swagger/api' => 'site/api',
             ],
         ],
 
