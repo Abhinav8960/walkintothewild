@@ -115,6 +115,23 @@ $this->params['title'] = $this->title;
                             return date('d M, Y h:i A', $model->created_at);
                         }
                     ],
+                      [
+                        'label' => 'Trip Budget',
+                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->tripBudget ?? '';
+                        }
+                    ],
+
+                     [
+                        'label' => 'Planning Type',
+                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->planningType ?? '';
+                        }
+                    ],
                     // [
                     //     'label' => 'Is payment received',
                     //     'headerOptions' => ['style' => 'width: 15%;'],

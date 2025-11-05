@@ -114,6 +114,23 @@ $this->title = 'Leads';
                         }
                     ],
                     [
+                        'label' => 'Trip Budget',
+                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->tripBudget ?? '';
+                        }
+                    ],
+
+                     [
+                        'label' => 'Planning Type',
+                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->planningType ?? '';
+                        }
+                    ],
+                    [
                         'label' => 'Quotation Count',
                         'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
                         'format' => 'raw',

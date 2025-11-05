@@ -2,6 +2,7 @@
 
 namespace common\models\leads;
 
+use common\models\GeneralModel;
 use common\models\meta\MetaStayCategory;
 use common\models\operator\SafariOperator;
 use common\models\package\Package;
@@ -303,29 +304,12 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
 
     public function getTripBudget()
     {
-        if ($this->trip_budget == 1) {
-            return 'Under ₹20,000';
-        } else if ($this->trip_budget == 2) {
-            return '₹20,000 - ₹40,000';
-        } else if ($this->trip_budget == 3) {
-            return '₹40,000 - ₹70,000';
-        } else if ($this->trip_budget == 4) {
-            return '₹70,000 - ₹1,00,000';
-        } else {
-            return 'Above ₹1,00,000';
-        }
+        return  GeneralModel::tripBudget()[$this->trip_budget] ?? '';
     }
 
     public function getPlanningType()
     {
-        if ($this->planning_type == 1) {
-            return 'Immediately / This Week';
-        } else if ($this->planning_type == 2) {
-            return 'Within this month';
-        } else if ($this->planning_type == 3) {
-            return 'Just checking options';
-        } else {
-            return 'Not Planning right now';
-        }
+        return  GeneralModel::planningtype()[$this->planning_type] ?? '';
+        
     }
 }

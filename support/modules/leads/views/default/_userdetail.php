@@ -16,9 +16,11 @@ use yii\helpers\Html;
                             <th style="width: 2%;">Safaris</th>
                             <th style="width: 2%;">Travelers</th>
                             <th style="width: 2%;">Accomodation</th>
-                            <th style="width: 15%;">User Notes</th>
+                            <th style="width: 3%;">User Notes</th>
                             <th style="width: 3%;">Travel Date looking For</th>
                             <th style="width: 3%;">Lead Received Date</th>
+                            <th style="width: 3%;">Trip Budget</th>
+                            <th style="width: 3%;">Planning Type</th>
                             <th style="width: 10%;">Payment Info</th>
                         </tr>
                     </thead>
@@ -51,6 +53,8 @@ use yii\helpers\Html;
                                 ?>
                             </td>
                             <td style="text-align: left;"><?= date('d M, Y h:i A', $model->created_at) ?></td>
+                            <td style="text-align: left;"><?= $model->tripBudget ?></td>
+                            <td style="text-align: left;"><?= $model->planningType ?></td>
                             <td>
                                 <div class="paymentInfoDetail">
                                     <?php

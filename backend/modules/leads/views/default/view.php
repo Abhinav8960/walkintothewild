@@ -37,6 +37,8 @@ AppAsset::register($this);
                 <th>User Notes</th>
                 <th>Travel Date looking For</th>
                 <th>Lead Received Date</th>
+                <th>Trip Budget</th>
+                <th>Planning Type</th>
                 <th>Payment Info</th>
             </thead>
             <tbody>
@@ -56,6 +58,8 @@ AppAsset::register($this);
                         ?>
                     </td>
                     <td><?= date('d M, Y h:i A', $model->created_at) ?></td>
+                    <td><?= $model->tripBudget ?></td>
+                    <td><?= $model->planningType ?></td>
                     <td>
                         <?php
                         $str = '';
