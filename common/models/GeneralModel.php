@@ -2274,4 +2274,25 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return ArrayHelper::map(MasterPackageTag::find()->where(['status' => 1])->all(), 'id', 'tag_name');
     }
+
+    public static function tripbudget()
+    {
+        return [
+            1 => 'Under ₹20,000',
+            2 => '₹20,000 - ₹40,000',
+            3 => '₹40,000 - ₹70,000',
+            4 => '₹70,000 - ₹1,00,000',
+            5 => 'Above ₹1,00,000',
+        ];
+    }
+
+    public static function planningtype()
+    {
+        return [
+            1 => 'Immediately / This Week',
+            2 => 'Within this month',
+            3 => 'Just checking options',
+            4 => 'Not Planning right now'
+        ];
+    }
 }

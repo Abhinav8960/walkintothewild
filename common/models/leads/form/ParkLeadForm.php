@@ -30,6 +30,8 @@ class ParkLeadForm extends Model
     public $action_validate_url;
 
     public $user_notes;
+    public $trip_budget;
+    public $planning_type;
 
 
     /**
@@ -39,7 +41,7 @@ class ParkLeadForm extends Model
     {
         return [
             // [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'full_name', 'email', 'start_date', 'end_date', 'phone_no'], 'required'],
-            [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date'], 'required'],
+            [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date','planning_type', 'trip_budget'], 'required'],
             [['phone_no'], 'match', 'pattern' => '/^[123456789]\d{9}$/', 'message' => 'Invalid Phone number.'],
             [['email'], 'email'],
             [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'status'], 'integer'],
@@ -49,7 +51,7 @@ class ParkLeadForm extends Model
             // ['stay_category_id', 'exist', 'targetClass' => MetaStayCategory::class, 'targetAttribute' => ['stay_category_id' => 'id']],
             // ['safari_park_id', 'exist', 'targetClass' => SafariPark::class, 'targetAttribute' => ['safari_park_id' => 'id']],
             [['user_notes'], 'string', 'max' => 1000],
-
+            [['planning_type', 'trip_budget'], 'integer'],
         ];
     }
 
@@ -98,6 +100,8 @@ class ParkLeadForm extends Model
             $lead->status = 0;
             $lead->user_notes = $this->user_notes;
             $lead->assigned_operator_count = 0;
+            $lead->planning_type = $this->planning_type;
+            $lead->trip_budget = $this->trip_budget;
 
 
             if ($lead->save(false)) {
@@ -113,7 +117,7 @@ class ParkLeadForm extends Model
                     }
                 }
 
-                if(count($safarioperatorlist) > 0){
+                if (count($safarioperatorlist) > 0) {
                     $lead->status = 1;
                     $lead->assigned_operator_count = count($safarioperatorlist);
                     $lead->save(false);
@@ -155,7 +159,7 @@ class ParkLeadForm extends Model
         $operator_user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
 
         $chat = new Chat();
-        $short_msg = $message = "Hi, I am interested in". "\n";
+        $short_msg = $message = "Hi, I am interested in" . "\n";
         $short_msg .= "Park: " . $park->title . "\n";
         $message .= "Park: " . $park->title . "\n";
         $message .= "Safaries: " . $this->safaris . "\n";
@@ -163,6 +167,8 @@ class ParkLeadForm extends Model
         $message .= "Stay Category:" . $lead->staycatgory->title . "\n";
         $message .= "Start Date:" . date('M j, Y', strtotime($this->start_date)) . "\n";
         $message .= "End Date:" . date('M j, Y', strtotime($this->end_date)) . "\n";
+        $message .= "Trip Budget:" . $lead->tripBudget . "\n";
+        $message .= "Planning Tip:" . $lead->planningType . "\n";
         if ($lead->user_notes != null) {
             $message .= "Notes:" . $lead->user_notes . "\n";
         }

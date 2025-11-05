@@ -165,6 +165,8 @@ return [
                 'master/<action>/<slug>' => 'master/default/<action>',
                 'park' => 'park/default/index',
                 'filter-parklist' => 'park/default/filter-parklist',
+                'trip-budget' => 'park/default/trip-budget',
+                'planning-type' => 'park/default/planning-type',
                 'park/<slug>' => 'park/default/view',
                 'park/<slug>/<action>' => 'park/default/<action>',
                 'cms/<action>' => 'cms/default/<action>',
