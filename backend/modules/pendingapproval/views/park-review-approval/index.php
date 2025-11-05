@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-$this->title = 'Park Review';
+$this->title = 'Park Review Approval List';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>

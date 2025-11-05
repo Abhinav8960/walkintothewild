@@ -3,6 +3,7 @@
 namespace api\models;
 
 use api\models\chat\Chat;
+use api\models\compliancedocuments\ComplianceDocuments;
 use api\models\feeds\Feeds;
 use Yii;
 use yii\db\ActiveRecord;
@@ -30,6 +31,7 @@ class User extends \common\models\User
         $fields[] = 'operator_slug';
         $fields[] = 'user_followers_count';
         $fields[] = 'user_followings_count';
+        $fields[] = 'is_privacy_policy_acknowledged';
         // if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/followers-list'])) {
         //     $fields[] = 'followed_at';
         // }
@@ -387,4 +389,15 @@ class User extends \common\models\User
         }
         return false;
     }
+
+    public function getIs_privacy_policy_acknowledged()
+    {
+        $current_version = ComplianceDocuments:: find()->select('version')->where(['type'=>ComplianceDocuments::PRIVACY_POLICY])->andWhere(['status'=>ComplianceDocuments::STATUS_ACTIVE])->one();
+        $user = UserPrivacyPolicyAcknowledgement::find()->where(['user_id' => $this->id])->andWhere(['document_version'=>$current_version])->one();
+        if(!empty($user)){
+            return true;
+        }
+        return false;
+    }
+
 }

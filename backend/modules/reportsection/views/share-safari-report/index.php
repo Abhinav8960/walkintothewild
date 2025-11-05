@@ -8,7 +8,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Share Safari';
+$this->title = 'Share Safari Report';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 

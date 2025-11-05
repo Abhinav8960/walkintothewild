@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 
-$this->title = 'Master Article Author';
+$this->title = 'Article Author';
 $this->params['breadcrumbs_home_url'] = '/cms/master-article-author';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;

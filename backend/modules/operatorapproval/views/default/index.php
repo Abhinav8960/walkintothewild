@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 
-$this->title = 'Operator Approval';
+$this->title = 'Operator Approval List';
 $this->params['breadcrumbs'][] =  ['label' => 'Operator Approval', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;

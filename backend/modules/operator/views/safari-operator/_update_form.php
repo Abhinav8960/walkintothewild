@@ -242,6 +242,13 @@ $this->params['title'] = $this->title;
                                     ]) ?>
                                 </div>
 
+
+                                <h5>System Settings</h5>
+                                <hr>
+                                <div class="col-md-6">
+                                    <?= $form->field($model, 'show_lead_phone_number')->radioList([1 => 'Yes', 0 => 'No']) ?>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <?= Html::a('Cancel', ['view', 'id' => $safari_operator_update_model->id], ['class' => 'btn btn-danger text-white']) ?>

@@ -48,6 +48,7 @@ class SafariOperatorUpdateForm extends model
     public $aadhar_back_upload;
 
     public $created_at;
+    public $show_lead_phone_number;
 
     public function __construct(SafariOperator $safari_operator_update_model)
     {
@@ -63,7 +64,7 @@ class SafariOperatorUpdateForm extends model
             $this->business_name = $this->safari_operator_update_model->business_name;
             $this->register_comapany_name = $this->safari_operator_update_model->register_comapany_name;
             $this->address = $this->safari_operator_update_model->address;
-            
+
             // $this->legal_entity_phone = $this->safari_operator_update_model->operator_phone_no;
             $this->legal_entity_type = $this->safari_operator_update_model->legal_entity_type;
             $this->legal_entity_whatsapp = $this->safari_operator_update_model->legal_entity_whatsapp;
@@ -93,6 +94,7 @@ class SafariOperatorUpdateForm extends model
             $this->aadhar_back_upload = $this->safari_operator_update_model->aadhar_back_upload;
 
             $this->created_at = $this->safari_operator_update_model->created_at;
+            $this->show_lead_phone_number = $this->safari_operator_update_model->show_lead_phone_number;
         }
     }
 
@@ -114,7 +116,7 @@ class SafariOperatorUpdateForm extends model
             ['account_number', 'match', 'pattern' => '/^[0-9]{9,18}$/', 'message' => 'Account number must be 9 to 18 digits'],
             ['aadhar_number', 'match', 'pattern' => '/^[2-9]{1}[0-9]{11}$/', 'message' => 'Aadhaar number must be 12 digits and not start with 0 or 1'],
             ['aadhar_number', 'string', 'length' => 12, 'tooShort' => 'Aadhaar must be 12 digits', 'tooLong' => 'Aadhaar must be 12 digits'],
-            [['legal_entity_type'],'integer'],
+            [['legal_entity_type', 'show_lead_phone_number'], 'integer'],
 
         ];
     }
@@ -154,6 +156,7 @@ class SafariOperatorUpdateForm extends model
             'kyc_pan_upload' => 'KYC PAN Upload',
             'aadhar_front_upload' => 'Aadhaar Front Upload',
             'aadhar_back_upload' => 'Aadhaar Back Upload',
+            'show_lead_phone_number' => 'Show Mobile Number on Lead'
         ];
     }
 
@@ -188,6 +191,7 @@ class SafariOperatorUpdateForm extends model
         $this->safari_operator_update_model->kyc_email = $this->kyc_email;
         $this->safari_operator_update_model->kyc_pan = strtoupper($this->kyc_pan);
         $this->safari_operator_update_model->aadhar_number = $this->aadhar_number;
+        $this->safari_operator_update_model->show_lead_phone_number = $this->show_lead_phone_number;
     }
 
     public function uploadFile()
@@ -327,17 +331,17 @@ class SafariOperatorUpdateForm extends model
             $parter_registration_model->brand_name = $model->business_name;
             $parter_registration_model->address = $model->address;
             $parter_registration_model->logo = $model->logo;
-            
+
             // $parter_registration_model->legal_entity_phone = $model->legal_entity_phone;
             $parter_registration_model->legal_entity_type = $model->legal_entity_type;
             $parter_registration_model->legal_entity_whatsapp = $model->legal_entity_whatsapp;
             $parter_registration_model->legal_entity_email = $model->legal_entity_email;
-            
+
             $parter_registration_model->registration_number = $model->registration_number;
             $parter_registration_model->registration_copy_upload = $model->registration_copy_upload;
             $parter_registration_model->pan_number = $model->pan_number;
             $parter_registration_model->pan_upload = $model->pan_upload;
-            
+
             $parter_registration_model->about_business = $model->about_business;
             $parter_registration_model->billing_phone = $model->billing_phone;
 

@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var common\models\cms\flagreason\FlagReason $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Reason';
+$this->title = 'Flag Reason';
 $this->params['breadcrumbs_home_url'] = '/cms/flag-reason';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
