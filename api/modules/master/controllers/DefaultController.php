@@ -82,7 +82,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -90,7 +89,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *
@@ -164,7 +162,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -172,7 +169,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -279,7 +275,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -287,7 +282,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -344,7 +338,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -352,7 +345,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -408,7 +400,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -416,7 +407,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -516,7 +506,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -524,7 +513,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -633,7 +621,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -641,7 +628,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -698,7 +684,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -706,7 +691,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -763,7 +747,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -771,7 +754,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -844,7 +826,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -852,7 +833,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -910,7 +890,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -918,7 +897,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -975,7 +953,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -983,7 +960,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
@@ -1040,7 +1016,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
@@ -1048,7 +1023,6 @@ class DefaultController extends RestController
      *         in="query",
      *         @OA\Schema(
      *             type="integer",
-     *             example=1
      *         )
      *     ),
      *     @OA\Response(
