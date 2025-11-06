@@ -101,7 +101,20 @@ class DefaultController extends RestController
      *     path="/meta/accommodation",
      *     tags={"Meta"},
      *     summary="Get Accommodation List",
-     *
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation. Returns paginated Accommodation list.",
@@ -146,6 +159,21 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Meta"},
      *     path="/meta/animal-type",
+     *     summary="Get AnimalType List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns paginated Animal Type list.",
@@ -202,6 +230,21 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Meta"},
      *     path="/meta/operator-credibility",
+     *     summary="Get Operator Credibility List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns paginated Operator Credibility list.",
@@ -246,6 +289,21 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Meta"},
      *     path="/meta/other-wildlife-activities",
+     *     summary="Get Wildlife Activities List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns paginated Other Wildlife Activities list.",
@@ -289,6 +347,21 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Meta"},
      *     path="/meta/package-range",
+     *     summary="Get Package Range List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns paginated Package Range list.",
@@ -334,6 +407,21 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Meta"},
      *     path="/meta/park-trip-slot",
+     *     summary="Get Park Trip Slot List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns paginated Park Trip Slot list.",
@@ -378,6 +466,21 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Meta"},
      *     path="/meta/safari-session",
+     *     summary="Get Safari Session List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns paginated Safari Session list.",
@@ -431,6 +534,21 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Meta"},
      *     path="/meta/term-condition-type",
+     *     summary="Get Term Condition Type List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns paginated Term Condition Type list.",
@@ -475,6 +593,21 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Meta"},
      *     path="/meta/zone-type",
+     *     summary="Get Zone Type List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns paginated Zone Type list.",
@@ -521,6 +654,21 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Meta"},
      *     path="/meta/stay-category",
+     *     summary="Get Stay Category List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns paginated Stay Category list.",
