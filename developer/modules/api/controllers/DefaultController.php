@@ -43,6 +43,16 @@ class DefaultController extends Controller
             ],
         ];
 
+        $data['components'] = [
+            'securitySchemes' => [
+                'bearerAuth' => [
+                    'type' => 'http',
+                    'scheme' => 'bearer',
+                    'bearerFormat' => 'JWT'
+                ]
+            ]
+        ];
+
         $data['info'] = [
             // 'title' => 'Walk Into The Wild API',
             // 'version' => '1.0.0',
