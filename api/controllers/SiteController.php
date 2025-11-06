@@ -149,6 +149,7 @@ class SiteController extends RestController
     /**
      * @OA\Get(
      *     path="/master-meta-info",
+     *     tags={"Master"},
      *     summary="Master Meta Last Updated Information",
      *     @OA\Response(
      *         response=200,

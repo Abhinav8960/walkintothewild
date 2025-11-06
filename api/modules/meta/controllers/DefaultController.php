@@ -93,20 +93,44 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data);
     }
   
-    /**
-     * Get Accommodation
-     * 
-     * @OA\GET(
-     *     tags={"Meta"},
+     /**
+     * Get Accommodation 
+     *
+     *
+     * @OA\Get(
      *     path="/meta/accommodation",
+     *     tags={"Meta"},
+     *     summary="Get Accommodation List",
+     *
      *     @OA\Response(
-     *        response=200,
-     *        description="Successful response",
+     *         response=200,
+     *         description="Successful operation. Returns paginated Accommodation list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaAccommodation",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Hotels"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
-     *        response=404,
-     *        description="Not Found"
-     *     )
+     *         response=404,
+     *         description="Not found",
+     *     ),
      * )
      */
 
@@ -124,7 +148,28 @@ class DefaultController extends RestController
      *     path="/meta/animal-type",
      *     @OA\Response(
      *        response=200,
-     *        description="Successful response",
+     *        description="Successful operation. Returns paginated Animal Type list.",
+     *        @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaAnimalType",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Rare/Extinct"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *        response=404,
@@ -159,7 +204,28 @@ class DefaultController extends RestController
      *     path="/meta/operator-credibility",
      *     @OA\Response(
      *        response=200,
-     *        description="Successful response",
+     *        description="Successful operation. Returns paginated Operator Credibility list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaOperatorCredability",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Wildlife Photographer"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *        response=404,
@@ -182,7 +248,28 @@ class DefaultController extends RestController
      *     path="/meta/other-wildlife-activities",
      *     @OA\Response(
      *        response=200,
-     *        description="Successful response",
+     *        description="Successful operation. Returns paginated Other Wildlife Activities list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaOtherWildlifeActivities",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Trekking"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *        response=404,
@@ -204,7 +291,30 @@ class DefaultController extends RestController
      *     path="/meta/package-range",
      *     @OA\Response(
      *        response=200,
-     *        description="Successful response",
+     *        description="Successful operation. Returns paginated Package Range list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaPackageRange",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Economical"),
+     *                         @OA\Property(property="min-range", type="integer", example="1000"),
+     *                         @OA\Property(property="max-range", type="integer", example="5000"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *        response=404,
@@ -226,7 +336,28 @@ class DefaultController extends RestController
      *     path="/meta/park-trip-slot",
      *     @OA\Response(
      *        response=200,
-     *        description="Successful response",
+     *        description="Successful operation. Returns paginated Park Trip Slot list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaParkTripSlot",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Morning"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *        response=404,
@@ -249,7 +380,28 @@ class DefaultController extends RestController
      *     path="/meta/safari-session",
      *     @OA\Response(
      *        response=200,
-     *        description="Successful response",
+     *        description="Successful operation. Returns paginated Safari Session list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaSafariSession",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Morning"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *        response=404,
@@ -281,7 +433,28 @@ class DefaultController extends RestController
      *     path="/meta/term-condition-type",
      *     @OA\Response(
      *        response=200,
-     *        description="Successful response",
+     *        description="Successful operation. Returns paginated Term Condition Type list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaTermConditionType",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Safari Operator Type"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *        response=404,
@@ -304,7 +477,29 @@ class DefaultController extends RestController
      *     path="/meta/zone-type",
      *     @OA\Response(
      *        response=200,
-     *        description="Successful response",
+     *        description="Successful operation. Returns paginated Zone Type list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaZone",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Buffer Zone"),
+     *                         @OA\Property(property="color_code", type="string", example="Red"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *        response=404,
@@ -328,7 +523,37 @@ class DefaultController extends RestController
      *     path="/meta/stay-category",
      *     @OA\Response(
      *        response=200,
-     *        description="Successful response",
+     *        description="Successful operation. Returns paginated Stay Category list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaStayCategory",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="shared_safari",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Economical"),
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     property="package",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="standard"),
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *        response=404,
