@@ -71,18 +71,62 @@ class DefaultController extends RestController
 
     /**
      * Get Airport List
-     * 
-     * @OA\GET(
-     *     tags={"Master"},
+     *
+     *
+     * @OA\Get(
      *     path="/master/airport",
+     *     tags={"Master"},
+     *     summary="Get Airport List",
+     *
      *     @OA\Response(
-     *        response=200,
-     *        description="successful operation",
+     *         response=200,
+     *         description="Successful operation. Returns paginated airport list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="master_airport",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="total", type="integer", example=194),
+     *                     @OA\Property(property="page", type="integer", example=1),
+     *                     @OA\Property(property="pageSize", type="integer", example=5),
+     *                     @OA\Property(property="total_page", type="integer", example=39),
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=5),
+     *                         @OA\Property(property="name", type="string", example="Tirupati International Airport"),
+     *                         @OA\Property(property="slug", type="string", example="tirupati-international-airport"),
+     *                         @OA\Property(property="iata_code", type="string", example="TIR"),
+     *                         @OA\Property(property="icao_code", type="string", example="VOTP"),
+     *                         @OA\Property(property="city", type="string", nullable=true, example=null),
+     *                         @OA\Property(
+     *                             property="state",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=33),
+     *                             @OA\Property(property="state_name", type="string", example="Andhra Pradesh")
+     *                         ),
+     *                         @OA\Property(
+     *                             property="country",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=1),
+     *                             @OA\Property(property="country_name", type="string", example="India")
+     *                         )
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
-     *        response=404,
-     *        description="Not Found"
-     *     )
+     *         response=404,
+     *         description="Not found",
+     *     ),
      * )
      */
     public function actionAirport()
