@@ -91,6 +91,125 @@ class DefaultController extends RestController
      * Renders the index view for the module
      * @return string
      */
+
+    /**
+     * Get Park List
+     *
+     *
+     * @OA\Get(
+     *     path="/park",
+     *     tags={"Park"},
+     *     summary="Get Park List",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation. Returns paginated Park list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="parks",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="total", type="integer", example=10),
+     *                     @OA\Property(property="page", type="integer", example=1),
+     *                     @OA\Property(property="pageSize", type="integer", example=5),
+     *                     @OA\Property(property="total_page", type="integer", example=39),
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=5),
+     *                         @OA\Property(property="title", type="string", example="Bandhavgarh Tiger Reserve"),
+     *                         @OA\Property(property="slug", type="string", example="bandhavgarh-tiger-reserve"),
+     *                         @OA\Property(property="feature_image_path", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/safaripark/6/park_feature_image1718179247.jpg"),
+     *                         @OA\Property(property="animal_text", type="string", example="Tiger, Leopard, Wild dog, Wild cat, Hyena, Wolf, Elephant"),
+     *                         @OA\Property(property="quotation_form_note", type="string", nullable=true, example=null),
+     *                         @OA\Property(property="short_description", type="string", example="Situated in Madhya Pradesh, Bandhavgarh Tiger Reserve is famous for its high tiger density and historical significance."),
+     *                         @OA\Property(property="avg_safari_price_min", type="integer", example=8000),
+     *                         @OA\Property(property="avg_safari_price_max", type="integer", example=10000),
+     *                         @OA\Property(
+     *                             property="city",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=509),
+     *                             @OA\Property(property="city_name", type="string", example="Umaria")
+     *                         ),
+     *                         @OA\Property(
+     *                             property="state",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=16),
+     *                             @OA\Property(property="state_name", type="string", example="Madhya Pradesh")
+     *                         ),
+     *                         @OA\Property(
+     *                             property="location",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=1),
+     *                             @OA\Property(property="title", type="string", example="Central India"),
+     *                             @OA\Property(property="slug", type="string", example="central-india")
+     *                         ),
+     *                        @OA\Property(property="status", type="boolean", example=true),
+     *                        @OA\Property(property="is_followed", type="boolean", example=false),
+     *                        @OA\Property(property="template_code", type="integer", example=1),
+     *                        @OA\Property(
+     *                             property="top_operators",
+     *                             type="object",
+     *                             @OA\Property(property="business_name", type="string", example="Ankit Kankane Safaris"),
+     *                             @OA\Property(property="phone_no", type="integer", example="9999999999"),
+     *                             @OA\Property(property="email", type="string", example="ankitsafari@gmail.com"),
+     *                             @OA\Property(property="operator_phone_no", type="integer", example="9999999999"),
+     *                             @OA\Property(property="operator_email", type="string", example="ankitsafari@gmail.com"),
+     *                             @OA\Property(property="slug", type="string", example="ankit-kankane-safaris"),
+     *                             @OA\Property(property="register_comapany_name", type="string", example="Ankit Kankane Safaris"),
+     *                             @OA\Property(property="address", type="string", example="BANDHAVGARH NATIONAL PARK"),
+     *                             @OA\Property(property="google_rating", type="integer", example="5"),
+     *                             @OA\Property(property="google_review_count", type="integer", example="5"),
+     *                             @OA\Property(property="about_business", type="string", example="We are in safari tour operation business from past 12 Years. We are currently operating in Bandhvagarh, Kanha , Panna And Sanjay Dubri Tiger Reserve."),
+     *                             @OA\Property(property="image_path", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/operator-registration/2025-05/10_logo_1751379931.jpg"),
+     *                             @OA\Property(property="park_count", type="integer", example="8"),
+     *                             @OA\Property(property="package_count", type="integer", example="8"),
+     *                             @OA\Property(property="shared_safari_count", type="integer", example="0"),
+     *                             @OA\Property(property="follower_list_count", type="integer", example="303"),
+     *                             @OA\Property(property="category_title", type="string", example="Safari Tour Operator"),
+     *                             @OA\Property(property="is_followed", type="boolean", example=false),
+     *                             @OA\Property(property="status", type="boolean", example=true),
+     *                             @OA\Property(property="has_direct_call", type="boolean", example=false),
+     *                             @OA\Property(property="direct_call_no", type="string", nullable=true, example=null),
+     *                             @OA\Property(
+     *                                  property="review_url",
+     *                                  type="object",
+     *                                  @OA\Property(property="reviews", type="string", example="http://api.walkintothewild.io/operator/ankit-kankane-safaris/reviewlist?sort_by=highest"),
+     *                             ),
+     *                             @OA\Property(property="show_lead_phone_number", type="boolean", example="false")
+     *                         ),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionIndex()
     {
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_WITH_TOP_OPERATORS;
@@ -119,6 +238,204 @@ class DefaultController extends RestController
     //     return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
     // }
 
+    /**
+     * Get Park List
+     *
+     *
+     * @OA\Get(
+     *     path="/park/{slug}",
+     *     tags={"Park"},
+     *     summary="Get Single Park List",
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query single park list",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation. Returns paginated Single Park list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="parks",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=5),
+     *                         @OA\Property(property="title", type="string", example="Bandhavgarh Tiger Reserve"),
+     *                         @OA\Property(property="slug", type="string", example="bandhavgarh-tiger-reserve"),
+     *                         @OA\Property(property="feature_image_path", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/safaripark/6/park_feature_image1718179247.jpg"),
+     *                         @OA\Property(property="animal_text", type="string", example="Tiger, Leopard, Wild dog, Wild cat, Hyena, Wolf, Elephant"),
+     *                         @OA\Property(property="quotation_form_note", type="string", nullable=true, example=null),
+     *                         @OA\Property(property="short_description", type="string", example="Situated in Madhya Pradesh, Bandhavgarh Tiger Reserve is famous for its high tiger density and historical significance."),
+     *                         @OA\Property(property="avg_safari_price_min", type="integer", example=8000),
+     *                         @OA\Property(property="avg_safari_price_max", type="integer", example=10000),
+     *                         @OA\Property(
+     *                             property="city",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=509),
+     *                             @OA\Property(property="city_name", type="string", example="Umaria")
+     *                         ),
+     *                         @OA\Property(
+     *                             property="state",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=16),
+     *                             @OA\Property(property="state_name", type="string", example="Madhya Pradesh")
+     *                         ),
+     *                         @OA\Property(
+     *                             property="location",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=1),
+     *                             @OA\Property(property="title", type="string", example="Central India"),
+     *                             @OA\Property(property="slug", type="string", example="central-india")
+     *                         ),
+     *                        @OA\Property(property="status", type="boolean", example=true),
+     *                        @OA\Property(property="is_followed", type="boolean", example=false),
+     *                        @OA\Property(property="template_code", type="integer", example=1),
+     *                        @OA\Property(property="latitude", type="string", example=28.465838),
+     *                        @OA\Property(property="longitude", type="string", example=80.619582),
+     *                        @OA\Property(property="official_website", type="string", example="https://upecotourism.in/CheckAvailability.aspx"),
+     *                        @OA\Property(
+     *                             property="country",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=1),
+     *                             @OA\Property(property="country_name", type="string", example="India")
+     *                        ),
+     *                        @OA\Property(property="pincode", type="string", example=0),
+     *                        @OA\Property(property="about_title", type="string", example="Dudhwa Tiger Reserve"),
+     *                        @OA\Property(property="about_description", type="string", example="<p>Dudhwa Tiger Reserve, situated in the Terai region of Uttar Pradesh, India, is a vital protected area known for its rich biodiversity and unique ecosystems. Established in 1978, the reserve covers approximately 1,284 square kilometers and includes the Dudhwa National Park, Kishanpur Wildlife Sanctuary, and Katarniaghat Wildlife Sanctuary. It forms an essential part of the Terai Arc Landscape, which stretches across India and Nepal, providing critical habitats for various wildlife species."),
+     *                        @OA\Property(property="module_title", type="string", example="How to reach"),
+     *                        @OA\Property(property="module_description", type="string", example="<p>Road : You can choose the route mentioned below as per your city connectivity.<br />\r\nDelhi - Moradabad - Bareilly - Pilibhit ( or Shahjahanpur)-Khutar -Mailani - Palia-Dudhwa (430 km).<br />\r\nShahjahanpur-Powayan-Khutar-Mailani-Palia-Dudhwa (107 km approx.)"),
+     *                        @OA\Property(property="florafauna", type="string", example="<h3>Flora</h3>\r\n\r\n<p>The reserve&#39;s vegetation is dominated by the lush Terai ecosystem, characterized by dense sal forests, grasslands, and wetlands. Sal (Shorea robusta) trees form the backbone of the forest canopy, providing a verdant cover. These forests are interspersed with patches of tall elephant grass and swampy marshlands, creating a variety of habitats."),
+     *                        @OA\Property(property="long_description", type="string", example="<p>Dudhwa Tiger Reserve, located in Uttar Pradesh, India, spans approximately 1,284 square kilometers and was established in 1978."),
+     *                        @OA\Property(
+     *                             property="months",
+     *                             type="object",
+     *                             @OA\Property(property="month", type="integer", example=7),
+     *                             @OA\Property(property="month_name", type="string", example="July"),
+     *                             @OA\Property(property="month_short_name", type="string", example="Jul")
+     *                        ),
+     *                        @OA\Property(
+     *                             property="buffer_zones",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=7),
+     *                             @OA\Property(property="master_zone_type_name", type="string", example="Buffer Zone\r\n"),
+     *                             @OA\Property(property="zone_name", type="string", example="Salukapur"),
+     *                             @OA\Property(property="entry_gate_name", type="string", example="Salukapur"),
+     *                             @OA\Property(property="entry_gate_latitude", type="string", example=""),
+     *                             @OA\Property(property="entry_gate_longitude", type="string", example=""),
+     *                             @OA\Property(property="is_open_in_monsoon", type="boolean", example=true),
+     *                             @OA\Property(property="open_after_date", type="string",nullable=true, example=null)
+     *                        ),
+     *                        @OA\Property(
+     *                             property="core_zones",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=7),
+     *                             @OA\Property(property="master_zone_type_name", type="string", example="Core Zone\r\n"),
+     *                             @OA\Property(property="zone_name", type="string", example="Dudhwa"),
+     *                             @OA\Property(property="entry_gate_name", type="string", example="Dudhwa"),
+     *                             @OA\Property(property="entry_gate_latitude", type="string", example=""),
+     *                             @OA\Property(property="entry_gate_longitude", type="string", example=""),
+     *                             @OA\Property(property="is_open_in_monsoon", type="boolean", example=true),
+     *                             @OA\Property(property="open_after_date", type="string",nullable=true, example=null)
+     *                        ),
+     *                        @OA\Property(property="nearest_bus_station", type="string",nullable=true, example=null),
+     *                        @OA\Property(
+     *                             property="airport",
+     *                             type="array",
+     *                             @OA\Items(
+     *                                  type="object",
+     *                                  @OA\Property(property="id", type="integer", example=5),
+     *                                  @OA\Property(property="name", type="string", example="Tirupati International Airport"),
+     *                                  @OA\Property(property="slug", type="string", example="tirupati-international-airport"),
+     *                                  @OA\Property(property="iata_code", type="string", example="TIR"),
+     *                                  @OA\Property(property="icao_code", type="string", example="VOTP"),
+     *                                  @OA\Property(property="city", type="string", nullable=true, example=null),
+     *                                  @OA\Property(
+     *                                      property="state",
+     *                                      type="object",
+     *                                      @OA\Property(property="id", type="integer", example=33),
+     *                                      @OA\Property(property="state_name", type="string", example="Andhra Pradesh")
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="country",
+     *                                      type="object",
+     *                                      @OA\Property(property="id", type="integer", example=1),
+     *                                      @OA\Property(property="country_name", type="string", example="India")
+     *                                  )
+     *                              )
+     *                          ),
+     *                        @OA\Property(property="airport_list", type="string",example="Chaudhary Charan Singh International Airport"),
+     *                        @OA\Property(
+     *                                 property="vehicles",
+     *                                 type="object",
+     *                                 @OA\Property(property="id", type="integer", example=1),
+     *                                 @OA\Property(property="vehicle_name", type="string", example="India"),
+     *                                 @OA\Property(property="icon_path", type="string",  nullable=true, example=null),
+     *                                 @OA\Property(property="original_icon_name", type="string",  nullable=true, example=null),
+     *                                 @OA\Property(property="image_path", type="string", nullable=true, example=null),
+     *                                ),
+     *                        @OA\Property(property="safari_vehicles_list", type="string",example="Gypsy / Jeep, Other (Elephant, Boat)"),
+     *                        @OA\Property(
+     *                                      property="sessions",
+     *                                      type="object",
+     *                                      @OA\Property(property="id", type="integer", example=1),
+     *                                      @OA\Property(property="title", type="string", example="Morning")
+     *                                  ),
+     *                        @OA\Property(property="safari_sessions_list", type="string",example="Morning, Evening"),
+     *                        @OA\Property(property="locked_months_list", type="string",example="July, August, September, October"),
+     *                        @OA\Property(property="railway_station_list", type="string",example="Palia Kalan, Lucknow, Shahjehanpur"),
+     *                        @OA\Property(
+     *                                      property="locked_months",
+     *                                      type="object",
+     *                                      @OA\Property(property="month", type="integer", example=7),
+     *                                      @OA\Property(property="month_name", type="string", example="July"),
+     *                                      @OA\Property(property="month_short_name", type="string", example="Jul")
+     *                                  ),
+     *                        @OA\Property(property="google_rating", type="string",example=""),
+     *                        @OA\Property(property="google_review_count", type="integer",example=0),
+     *                        @OA\Property(
+     *                             property="urls",
+     *                             type="object",
+     *                             @OA\Property(property="operators", type="string", example="http://api.walkintothewild.io/park/dudhwa-tiger-reserve/park-operator"),
+     *                             @OA\Property(property="sharedsafari", type="string", example="http://api.walkintothewild.io/park/dudhwa-tiger-reserve/park-shared-safari"),
+     *                             @OA\Property(property="packages", type="string", example="http://api.walkintothewild.io/park/dudhwa-tiger-reserve/park-package"),
+     *                             @OA\Property(property="reviews", type="string", example="http://api.walkintothewild.io/park/dudhwa-tiger-reserve/reviewlist?sort_by=highest")
+     *                         )
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
+
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FULL;
@@ -136,6 +453,65 @@ class DefaultController extends RestController
     }
 
 
+    /**
+     * Get Filter Park List
+     *
+     *
+     * @OA\Get(
+     *     path="/filter-parklist",
+     *     tags={"Park"},
+     *     summary="Get Filter Park List",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation. Returns paginated filter park list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="parks",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=5),
+     *                         @OA\Property(property="title", type="string", example="Bandhavgarh Tiger Reserve"),
+     *                         @OA\Property(property="slug", type="string", example="bandhavgarh-tiger-reserve"),
+     *                         @OA\Property(property="feature_image_path", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/safaripark/6/park_feature_image1718179247.jpg"),
+     *                         @OA\Property(property="quotation_form_note", type="string", example=""),
+     *                         @OA\Property(property="template_code", type="integer", nullable=true, example=1)
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
+
     public function actionFilterParklist()
     {
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FOR_FILTER_PARK;
@@ -147,6 +523,74 @@ class DefaultController extends RestController
         // return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "parks");
     }
 
+
+    /**
+     * Get Park Review List
+     *
+     *
+     * @OA\Get(
+     *     path="/park/{slug}/reviewlist",
+     *     tags={"Park"},
+     *     summary="Get Park Review List",
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query park review list",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation. Returns paginated park review list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="parks",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="total", type="integer", example=194),
+     *                     @OA\Property(property="page", type="integer", example=1),
+     *                     @OA\Property(property="pageSize", type="integer", example=5),
+     *                     @OA\Property(property="total_page", type="integer", example=39),
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=5),
+     *                         @OA\Property(property="title", type="string", example="Bandhavgarh Tiger Reserve"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionReviewlist($slug, $sort_by = null)
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
@@ -166,6 +610,60 @@ class DefaultController extends RestController
     }
 
 
+    /**
+     * Post Park Suggestion 
+     *
+     *
+     * @OA\Post(
+     *     path="/park/{slug}/suggestion",
+     *     tags={"Park"},
+     *     summary="Post Park Suggestion",
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query park list",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="master_suggestion_id",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="details",
+     *                     type="string"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionSuggestion($slug)
     {
         $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
@@ -198,6 +696,60 @@ class DefaultController extends RestController
     }
 
 
+    /**
+     * Post Park Review 
+     *
+     *
+     * @OA\Post(
+     *     path="/park/{slug}/review",
+     *     tags={"Park"},
+     *     summary="Post Park Review",
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query park list",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="rating",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="review",
+     *                     type="string"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionReview($slug)
     {
         $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
@@ -228,6 +780,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
     }
+
 
     public function actionParkOperator($slug)
     {
@@ -373,6 +926,56 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
+
+        /**
+     * Get Stay Category Option
+     * 
+     * @OA\GET(
+     *     tags={"Park"},
+     *     path="/park/{park.slug}/park-stay-category",
+     *     summary="Get Stay Category Option",
+     *     @OA\Parameter(
+     *         name="park.slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query Stay Category Option",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns stay category option.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 example="zjJkXdyjkOSHWUR8IVUmdo+QP/nrK+NczhCbkhm1NmrbwGCnOSVhFFfJHvHqv7fLeU3x1vHaphfJiQEq+H1xEf/RUKnwK+lCWjM9hj6PsMr0R6kDGMOy5Zq78MPzZy3RcnsgbSrUbxFV7hUUuXBPRFoe6ZXYbJvhwu4f8p0nHkRM0vVilmBd1ar8qWF0VTlzJpEyhmvnMQKLGtDp7gfgMzG+FW88JCh55v6rV6BGNRmu9Ye2riqzzIwGxQIIKjQ2xQnuGicVq8z0mM8S8cdzX1U+fshPtxmfdPvEmr+xdn32HzH076iErJkOLrk8QiBg2kTo/ud99u0ZfhWFeM8BUk+iN0iHtl4zWw+eP0cF+oU=",
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
+
     public function actionParkStayCategory($slug)
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
@@ -413,11 +1016,103 @@ class DefaultController extends RestController
     //     return Yii::$app->api->sendResponse($data);
     // }
 
+
+    /**
+     * Get Trip Budget
+     * 
+     * @OA\GET(
+     *     tags={"Park"},
+     *     path="/trip-budget",
+     *     summary="Get Park Trip Budget List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns park trip budget list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="trip_budget",
+     *                 type="object",
+     *                 @OA\Property(property="1", type="string", example="Under ₹20,000"),
+     *                 @OA\Property(property="2", type="string", example="₹20,000 - ₹40,000"),
+     *                 @OA\Property(property="3", type="string", example="₹40,000 - ₹70,000"),
+     *                 @OA\Property(property="4", type="string", example="₹70,000 - ₹1,00,000"),
+     *                 @OA\Property(property="5", type="string", example="Above ₹1,00,000"),            
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionTripBudget()
     {
         $trip_budget = GeneralModel::tripbudget();
         return $this->dataSenderWithoutSumarry($trip_budget, 'trip_budget');
     }
+
+    /**
+     * Get Planning Type
+     * 
+     * @OA\GET(
+     *     tags={"Park"},
+     *     path="/planning-type",
+     *     summary="Get Park Planning Type List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns planning type list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="planning_type",
+     *                 type="object",
+     *                 @OA\Property(
+     *                 property="planning_type",
+     *                 type="object",
+     *                 @OA\Property(property="1", type="string", example="Immediately / This Week"),
+     *                 @OA\Property(property="2", type="string", example="Within this month"),
+     *                 @OA\Property(property="3", type="string", example="₹40,000 - ₹70,000"),
+     *                 @OA\Property(property="4", type="string", example="Just checking options"),
+     *                 @OA\Property(property="5", type="string", example="Not Planning right now"),
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
 
     public function actionPlanningType()
     {
