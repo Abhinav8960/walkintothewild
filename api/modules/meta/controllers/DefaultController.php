@@ -18,6 +18,8 @@ use api\models\meta\MetaSafariSessionSearch;
 use api\models\meta\MetaStayCategorySearch;
 use api\models\meta\MetaTermConditionTypeSearch;
 use api\models\meta\MetaZoneTypeSearch;
+use OpenApi\Annotations as OA;
+
 
 /**
  * Site controller
@@ -90,6 +92,23 @@ class DefaultController extends RestController
 
         return Yii::$app->api->sendResponse($data);
     }
+  
+    /**
+     * Get Accommodation
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/accommodation",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
 
     public function actionAccommodation()
     {
@@ -97,6 +116,22 @@ class DefaultController extends RestController
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaAccommodation");
     }
 
+    /**
+     * Get Animal Type
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/animal-type",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionAnimalType()
     {
         $searchModel = new MetaAnimalTypeSearch();
@@ -109,11 +144,29 @@ class DefaultController extends RestController
     //     return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaBirdType");
     // }
 
-    public function actionLocation()
-    {
-        $searchModel = new MetaLocationSearch();
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaLocation");
-    }
+    // public function actionLocation()
+    // {
+    //     $searchModel = new MetaLocationSearch();
+    //     return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaLocation");
+    // }
+
+
+     /**
+     * Get Operator Credibilty
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/operator-credibility",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
 
     public function actionOperatorCredibility()
     {
@@ -121,23 +174,89 @@ class DefaultController extends RestController
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaOperatorCredibility");
     }
 
+    /**
+     * Get Other WildLife Activities
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/other-wildlife-activities",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionOtherWildlifeActivities()
     {
         $searchModel = new MetaOtherWildlifeActivitiesSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaOtherWildlifeActivities");
     }
 
+    /**
+     * Get Package Range
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/package-range",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionPackageRange()
     {
         $searchModel = new MetaPackageRangeSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaPackageRange");
     }
 
+    /**
+     * Get Park Trip Slot
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/park-trip-slot",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
+
     public function actionParkTripSlot()
     {
         $searchModel = new MetaParkTripSlotSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaParkTripSlot");
     }
+
+    /**
+     * Get Safari Session
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/safari-session",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
 
     public function actionSafariSession()
     {
@@ -154,11 +273,45 @@ class DefaultController extends RestController
     //     return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaStayCategory");
     // }
 
+    /**
+     * Get Term Condition Type
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/term-condition-type",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
+
     public function actionTermConditionType()
     {
         $searchModel = new MetaTermConditionTypeSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaTermConditionType");
     }
+
+    /**
+     * Get Zone Type
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/zone-type",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
 
     public function actionZoneType()
     {
@@ -166,6 +319,23 @@ class DefaultController extends RestController
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaZoneType");
     }
 
+
+    /**
+     * Get Stay Category
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/stay-category",
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful response",
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionStayCategory()
     {
         $shareSafariModel = new MetaStayCategorySearch();
