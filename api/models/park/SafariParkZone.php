@@ -144,6 +144,7 @@ class SafariParkZone extends \common\models\park\SafariParkZone
             }
             return true;
         }
+        return true;
     }
 
     public function getTotalCore()
@@ -176,5 +177,6 @@ class SafariParkZone extends \common\models\park\SafariParkZone
             }
             return true;
         }
+        return true;
     }
 }
