@@ -618,6 +618,7 @@ class DefaultController extends RestController
      *     path="/park/{slug}/suggestion",
      *     tags={"Park"},
      *     summary="Post Park Suggestion",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -657,6 +658,19 @@ class DefaultController extends RestController
      *                 )
      *             )
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="submitted successfully"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized - Missing or invalid Bearer token"
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -704,6 +718,7 @@ class DefaultController extends RestController
      *     path="/park/{slug}/review",
      *     tags={"Park"},
      *     summary="Post Park Review",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -743,6 +758,19 @@ class DefaultController extends RestController
      *                 )
      *             )
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Review submitted successfully"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized - Missing or invalid Bearer token"
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -826,6 +854,61 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, "packages");
     }
 
+            /**
+     * Post Qoute Request Park  
+     *
+     *
+     * @OA\Post(
+     *     path="/park/{slug}/quotesrequest",
+     *     tags={"Park"},
+     *     summary="Qoute Request Park",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query park list",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="safaris",type="integer",example=1),
+     *                 @OA\Property(property="travelers",type="integer",example=4),
+     *                 @OA\Property(property="stay_category_id",type="integer",example=12),
+     *                 @OA\Property(property="start_date",type="string",example="2025-12-05"),
+     *                 @OA\Property(property="end_date",type="string",example="2025-12-06"),
+     *                 @OA\Property(property="user_notes",type="string",example="Park Quotes Check"),
+     *                 @OA\Property(property="planning_type",type="integer",example=2),
+     *                 @OA\Property(property="trip_budget",type="integer",example=20256)
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Quote Request Sent!"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized - Missing or invalid Bearer token"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
+
     public function actionQuotesrequest($slug)
     {
         if ($this->userinfo->is_mobile_no_verified == 0) {
@@ -873,6 +956,44 @@ class DefaultController extends RestController
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
+    /**
+     * Post Park Follow 
+     *
+     *
+     * @OA\Post(
+     *     path="/park/{slug}/park-follow",
+     *     tags={"Park"},
+     *     summary="Park Follow",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query park list",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Followed successfully"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized - Missing or invalid Bearer token"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
+
     public function actionParkFollow($slug)
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
@@ -901,6 +1022,44 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
+
+        /**
+     * Post Park Unfollow 
+     *
+     *
+     * @OA\Post(
+     *     path="/park/{slug}/park-unfollow",
+     *     tags={"Park"},
+     *     summary="Park Unfollow",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query park list",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Unfollowed successfully"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized - Missing or invalid Bearer token"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionParkUnfollow($slug)
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
