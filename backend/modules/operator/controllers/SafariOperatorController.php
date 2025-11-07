@@ -14,6 +14,7 @@ use common\models\operator\form\SafariOperatorForm;
 use common\models\operator\form\SafariOperatorLogoForm;
 use common\models\operator\form\SafariOperatorParkForm;
 use common\models\operator\form\SafariOperatorRequestForm;
+use common\models\operator\form\SafariOperatorStayCategoryForm;
 use common\models\operator\form\SafariOperatorUpdateForm;
 use common\models\operator\OperatorQuoteSearch;
 use common\models\operator\SafariOperator;
@@ -23,6 +24,7 @@ use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRatingReportSearch;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\SafariOperatorSearch;
+use common\models\operator\SafariOperatorStayCategory;
 use common\models\package\Package;
 use common\models\partnerregistration\PartnerRegistration;
 use common\models\registration\SafariOperatorRequest;
@@ -448,7 +450,7 @@ class SafariOperatorController extends Controller
                     //     $auth->source_id = time() . '_' . $auth->source_id;
                     //     $auth->save(false);
                     // }
-                    $message = Yii::$app->messageManager->getMessage('common.deleted',['{var}' => 'Temporary']);
+                    $message = Yii::$app->messageManager->getMessage('common.deleted', ['{var}' => 'Temporary']);
                     \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index']);
                 }
@@ -541,12 +543,12 @@ class SafariOperatorController extends Controller
         if ($model->is_phone_no_verified == 1) {
             $model->is_phone_no_verified = 0;
             $model->save(false);
-            $message = Yii::$app->messageManager->getMessage('common.phone_set_not_verified',['{var}' => 'Operator']);
+            $message = Yii::$app->messageManager->getMessage('common.phone_set_not_verified', ['{var}' => 'Operator']);
             Yii::$app->getSession()->setFlash('success', $message);
         } else {
             $model->is_phone_no_verified = 1;
             $model->save(false);
-            $message = Yii::$app->messageManager->getMessage('common.phone_set_verified',['{var}' => 'Operator']);
+            $message = Yii::$app->messageManager->getMessage('common.phone_set_verified', ['{var}' => 'Operator']);
             \Yii::$app->getSession()->setFlash('success', $message);
         }
 
@@ -577,7 +579,7 @@ class SafariOperatorController extends Controller
                         $st->status = NewStatusInterface::STATUS_BLOCKED;
                         $st->save();
                     }
-                    $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Blocked']);
+                    $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Blocked']);
                     \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index']);
                 }
@@ -610,7 +612,7 @@ class SafariOperatorController extends Controller
                         $st->status = 1;
                         $st->save();
                     }
-                    $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'UnBlocked']);
+                    $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'UnBlocked']);
                     \Yii::$app->session->setFlash('success', $message);
                     return $this->redirect(['index']);
                 }
@@ -637,7 +639,7 @@ class SafariOperatorController extends Controller
                     if ($model->safari_operator_update_model->save(false)) {
                         $model->uploadFile();
                         // $model->partnerRegistrationTableUpdate($safari_operator_update_model);
-                        $message = Yii::$app->messageManager->getMessage('common.successfully',['{var}' => 'Changed']);
+                        $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Changed']);
                         \Yii::$app->session->setFlash('success', $message);
                         return $this->redirect(['view', 'id' => $safari_operator_update_model->id]);
                     }
@@ -649,6 +651,52 @@ class SafariOperatorController extends Controller
         return $this->render('_update_form', [
             'model' => $model,
             'safari_operator_update_model' => $safari_operator_update_model,
+        ]);
+    }
+
+    public function actionStayCategory($id)
+    {
+        $operator_model = $this->findModel($id);
+        $category_model = SafariOperatorStayCategory::find()->where(['safari_operator_id' => $id, 'status' => SafariOperatorStayCategory::STATUS_ACTIVE])->all();
+
+        $stay_category_model = new SafariOperatorStayCategory();
+        $model = new SafariOperatorStayCategoryForm($stay_category_model);
+
+        $model->meta_stay_category = [];
+
+        foreach ($category_model as $category) {
+            $model->meta_stay_category[] = $category->meta_stay_category_id;
+        }
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $status_delete_models = SafariOperatorStayCategory::find()->where(['safari_operator_id' => $id, 'status' => SafariOperatorStayCategory::STATUS_ACTIVE])->all();
+
+                    foreach ($status_delete_models as $modelstatus) {
+                        $modelstatus->status = SafariOperatorStayCategory::STATUS_DELETE;
+                        $modelstatus->save(false);
+                    }
+
+                    if (!empty($model->meta_stay_category)) {
+                        foreach ($model->meta_stay_category as $category_id) {
+                            $new_model = new SafariOperatorStayCategory();
+                            $new_model->safari_operator_id = $id;
+                            $new_model->meta_stay_category_id = $category_id;
+                            $new_model->status = SafariOperatorStayCategory::STATUS_ACTIVE;
+                            $new_model->save(false);
+                        }
+                    }
+                }
+                $message = Yii::$app->messageManager->getMessage('common.successfully', ['{var}' => 'Changed']);
+                \Yii::$app->session->setFlash('success', $message);
+                return $this->redirect(['stay-category', 'id' => $id]);
+            }
+        }
+
+        return $this->render('_stay_category_form', [
+            'model' => $model,
+            'operator_model' => $operator_model,
+            'stay_category_model' => $stay_category_model
         ]);
     }
 }
