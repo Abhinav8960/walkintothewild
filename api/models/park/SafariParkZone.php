@@ -54,7 +54,7 @@ class SafariParkZone extends \common\models\park\SafariParkZone
         $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['safari_park_id' => $this->safari_park_id, 'status' => SafariParkMonth::STATUS_ACTIVE])->orderBy(['month_id' => SORT_ASC])->all(), 'month_id', 'mastermonth.month_name');
 
         if ($this->master_zone_type_id == 1) {
-            if ($this->totalBuffer == false) {
+            if ($this->totalCore == false) {
                 return false;
             } else {
                 if (!in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months))) {
@@ -84,7 +84,7 @@ class SafariParkZone extends \common\models\park\SafariParkZone
                 }
             }
         } else {
-            if ($this->totalCore == false) {
+            if ($this->totalBuffer == false) {
                 return false;
             } else {
                 if (!in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months))) {
@@ -152,7 +152,7 @@ class SafariParkZone extends \common\models\park\SafariParkZone
         $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['safari_park_id' => $this->safari_park_id, 'status' => SafariParkMonth::STATUS_ACTIVE])->orderBy(['month_id' => SORT_ASC])->all(), 'month_id', 'mastermonth.month_name');
 
         $total_core_closed_zone = 0;
-        if ($this->safariPark->bufferzones) {
+        if ($this->safariPark->corezones) {
             foreach ($this->safariPark->corezones as $corezone) {
                 if (!in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months))) {
                     if ($corezone->zone_name == 'N/A' && $corezone->entry_gate_name == 'N/A') {
