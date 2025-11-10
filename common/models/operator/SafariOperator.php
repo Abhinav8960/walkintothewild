@@ -97,7 +97,7 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
     public function rules()
     {
         return [
-            [['safari_operator_request_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no','direct_call_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['safari_operator_request_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'direct_call_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['business_name', 'phone_no', 'operator_name', 'operator_phone_no', 'operator_email'], 'required'],
             [['google_rating', 'starting_price'], 'number'],
             [['about_business'], 'string'],
@@ -355,11 +355,15 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public static function callstatusoption($is_phone_verified)
     {
-        if($is_phone_verified==1){
+        if ($is_phone_verified == 1) {
             return "Yes";
-        }
-        else{
+        } else {
             return "No";
         }
+    }
+
+    public function getStayCategory()
+    {
+        return $this->hasMany(SafariOperatorStayCategory::class, ['safari_operator_id' => 'id'])->andWhere(['safari_operator_stay_category.status' => 1]);
     }
 }
