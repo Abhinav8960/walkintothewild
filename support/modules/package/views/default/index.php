@@ -10,7 +10,7 @@ $webasset = $this->assetManager->getBundle('\support\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Package';
-// $this->params['title'] = $this->title;
+$this->params['title'] = $this->title;
 ?>
 
 

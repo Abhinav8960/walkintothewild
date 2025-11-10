@@ -2,6 +2,7 @@
 
 namespace backend\widgets;
 
+use common\models\User;
 use Yii;
 use yii\base\Widget;
 
@@ -22,8 +23,12 @@ class Header extends Widget
             $this->display = false;
         }
 
+        $user = User::find()->where(['status'=>User::STATUS_ACTIVE,'id'=>Yii::$app->user->id])->one();
+
         if ($this->display) {
-            return $this->render('header');
+            return $this->render('header',[
+                'user'=>$user
+            ]);
         }
     }
 }

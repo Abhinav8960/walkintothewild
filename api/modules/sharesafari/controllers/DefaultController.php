@@ -319,7 +319,7 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
-        $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+        $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
         if ($this->userinfo->partner) {
             $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.individuals_only_unjoin');
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);

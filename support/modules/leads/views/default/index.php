@@ -10,7 +10,7 @@ $webasset = $this->assetManager->getBundle('\support\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Leads';
-// $this->params['title'] = $this->title;
+$this->params['title'] = $this->title;
 ?>
 
 <?= $this->render('_upper_view', ['leadModel' => $searchModel]) ?>
