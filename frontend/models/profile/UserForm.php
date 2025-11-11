@@ -104,7 +104,7 @@ class UserForm extends Model
             ],
 
             ['gender', 'integer'],
-            ['date_of_birth', 'date', 'format' => 'php:Y-m-d'],
+            ['date_of_birth', 'date', 'format' => 'php:Y-m-d', 'max' => date('Y-m-d')],
 
 
         ];
