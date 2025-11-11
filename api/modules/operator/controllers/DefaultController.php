@@ -101,6 +101,29 @@ class DefaultController extends RestController
     //     // return $this->dataSender($operator, $rootIndexName = "Operator");
     // }
 
+    /**
+     * Get Operator View
+     *
+     *
+     * @OA\Get(
+     *     path="/operator/{slug}",
+     *     tags={"Operator"},
+     *     summary="Get Operator View (Draft)",
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query single operator detail",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::OPERATOR_API_LAYOUT_FULL;
@@ -150,7 +173,36 @@ class DefaultController extends RestController
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
-
+    /**
+     * Follow Operator
+     *
+     * Allows users to follow Operator.
+     *
+     * @OA\Post(
+     *     path="/operator/{slug}/follow",
+     *     tags={"Operator"},
+     *     summary="Follow Operator (Draft)",
+     *     description="Allows users to follow Operator.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Operator",
+     *         @OA\Schema(type="string")
+     *     ),
+     * 
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Followed successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Operator Not Found!"
+     *     )
+     * )
+     */
     public function actionFollow($slug)
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
@@ -190,6 +242,36 @@ class DefaultController extends RestController
         }
     }
 
+    /**
+     * Unfollow Operator
+     *
+     * Allows users to unfollow Operator.
+     *
+     * @OA\Post(
+     *     path="/operator/{slug}/unfollow",
+     *     tags={"Operator"},
+     *     summary="unfollow Operator (Draft)",
+     *     description="Allows users to funollow Operator.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Operator",
+     *         @OA\Schema(type="string")
+     *     ),
+     * 
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="UnFollowed successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Operator Not Found!"
+     *     )
+     * )
+     */
     public function actionUnfollow($slug)
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
@@ -241,7 +323,61 @@ class DefaultController extends RestController
         return $this->dataProviderSender($ratingsearchModel, $rootIndexName = "reviews");
     }
 
-
+    /**
+     * Review to Operator
+     *
+     * Allows users to review operator for specifice park.
+     *
+     * @OA\Post(
+     *     path="/operator/{slug}/review",
+     *     tags={"Operator"},
+     *     summary="Review to Operator (Draft)",
+     *     description="Allows users to review operator for specifice park.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Operator",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"park_id","rating","review"},
+     *                 @OA\Property(
+     *                     property="park_id",
+     *                     type="integer",
+     *                     description="Enter Park Id",
+     *                     example = "",
+     *                 ),
+     *                @OA\Property(
+     *                     property="rating",
+     *                     type="integer",
+     *                     description="Enter Rating",
+     *                     example = "",
+     *                 ),
+     *                @OA\Property(
+     *                     property="review",
+     *                     type="string",
+     *                     description="Enter Review",
+     *                     example = "",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thank you for your review!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Operator not found."
+     *     )
+     * )
+     */
     public function actionReview($slug)
     {
         $login_operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
@@ -317,6 +453,29 @@ class DefaultController extends RestController
     //     return Yii::$app->api->sendResponse(['parks' => $parks]);
     // }
 
+    /**
+     * Get Rating
+     *
+     *
+     * @OA\Get(
+     *     path="/operator/{slug}/user-rating-parklist",
+     *     tags={"Operator"},
+     *     summary="Get Rating (Draft)",
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query single operator detail",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionUserRatingParklist($slug)
     {
         $this->layout = NewStatusInterface::PARK_API_LAYOUT_FOR_FILTER_PARK;
@@ -428,7 +587,62 @@ class DefaultController extends RestController
         }
     }
 
-
+    /**
+     * Flag Review
+     *
+     * Allows users to flag review.
+     *
+     * @OA\Post(
+     *     path="/operator/{slug}/flag",
+     *     tags={"Operator"},
+     *     summary="Flag Review (Draft)",
+     *     description="Allows users to flag review.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Operator",
+     *         @OA\Schema(type="string")
+     *     ),
+     *      @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Review Id",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"report_reason_id","report_detail"},
+     *                 @OA\Property(
+     *                     property="report_reason_id",
+     *                     type="integer",
+     *                     description="Enter Reason Id",
+     *                     example = "",
+     *                 ),
+     *                @OA\Property(
+     *                     property="report_detail",
+     *                     type="string",
+     *                     description="Enter reason",
+     *                     example = "",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Flaged successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Operator not found."
+     *     )
+     * )
+     */
     public function actionFlag($slug, $id)
     {
         $operator = SafariOperator::find()
@@ -472,6 +686,30 @@ class DefaultController extends RestController
         }
     }
 
+
+    /**
+     * Get Operator Park Drop Down
+     *
+     *
+     * @OA\Get(
+     *     path="/operator/{slug}/operator-park-dropdown",
+     *     tags={"Operator"},
+     *     summary="Get Operator Park Drop Down (Draft)",
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query single operator",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionOperatorParkDropdown($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FOR_FILTER_PARK;
@@ -496,6 +734,55 @@ class DefaultController extends RestController
         return $this->querySender($dataProvider, $rootIndexName = "parks");
     }
 
+    /**
+     * Report Operator
+     *
+     * Allows users to report operator.
+     *
+     * @OA\Post(
+     *     path="/operator/{slug}/report-operator",
+     *     tags={"Operator"},
+     *     summary="Report Operator (Draft)",
+     *     description="Allows users to report operator.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Operator",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"reason_id","reason"},
+     *                 @OA\Property(
+     *                     property="reason_id",
+     *                     type="integer",
+     *                     description="Enter Reason Id",
+     *                     example = "",
+     *                 ),
+     *                @OA\Property(
+     *                     property="reason",
+     *                     type="string",
+     *                     description="Enter reason",
+     *                     example = "",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reported successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Operator not found."
+     *     )
+     * )
+     */
     public function actionReportOperator($slug)
     {
         $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();

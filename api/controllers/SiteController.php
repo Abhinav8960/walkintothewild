@@ -980,6 +980,21 @@ class SiteController extends RestController
         }
     }
 
+    /**
+     * 
+     * Get Report Page Reason
+     *
+     *
+     * @OA\Get(
+     *     path="/report-page-reason",
+     *     tags={"Operator"},
+     *     summary="Get Report Page Reason (Draft)",
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionReportPageReason()
     {
         return [
