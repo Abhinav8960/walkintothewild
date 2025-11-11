@@ -105,7 +105,34 @@ class DefaultController extends SafariController
         ];
     }
 
-
+    /**
+     * Get Share Safari List
+     *
+     *
+     * @OA\Get(
+     *     path="/sharesafari",
+     *     tags={"Share Safari"},
+     *     summary="Get Share Safari List (Draft)",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionIndex()
     {
         $searchModel = new ShareSafariSearch();
@@ -127,6 +154,29 @@ class DefaultController extends SafariController
     //     return $this->querySender($dataProvider, $rootIndexName = 0, $singleRecord = true);
     // }
 
+    /**
+     * Get Share Safari View
+     *
+     *
+     * @OA\Get(
+     *     path="/sharesafari/{slug}/view",
+     *     tags={"Share Safari"},
+     *     summary="Get Share Safari View (Draft)",
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query single share safari",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
@@ -153,6 +203,137 @@ class DefaultController extends SafariController
 
         return Yii::$app->api->sendResponse($data = ['data' => $share_safari->toArray()]);
     }
+
+    /**
+     * Create Share Safari
+     *
+     * Allows users to create a shared safari.
+     *
+     * @OA\Post(
+     *     path="/sharesafari/organize-safari",
+     *     tags={"Share Safari"},
+     *     summary="Create Shared Safari",
+     *     description="Allows a user to create a shared safari (Draft).",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={
+     *                     "share_safari_title",
+     *                     "park_id",
+     *                     "share_safari_agenda_id",
+     *                     "no_of_safari",
+     *                     "estimate_price_min",
+     *                     "estimate_price_max",
+     *                     "total_seat",
+     *                     "share_seat",
+     *                     "start_date",
+     *                     "end_date",
+     *                     "safari_plan",
+     *                     "shared_safari_image",
+     *                     "stay_category_id"
+     *                 },
+     *                 @OA\Property(
+     *                     property="share_safari_title",
+     *                     type="string",
+     *                     description="Title of the shared safari",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="park_id",
+     *                     type="integer",
+     *                     description="ID of the selected park",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="share_safari_agenda_id",
+     *                     type="integer",
+     *                     description="ID of the shared safari agenda",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="no_of_safari",
+     *                     type="integer",
+     *                     description="Number of safaris included",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="estimate_price_min",
+     *                     type="number",
+     *                     format="float",
+     *                     description="Minimum estimated price per seat",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="estimate_price_max",
+     *                     type="number",
+     *                     format="float",
+     *                     description="Maximum estimated price per seat",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="total_seat",
+     *                     type="integer",
+     *                     description="Total number of seats available",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="share_seat",
+     *                     type="integer",
+     *                     description="Number of seats available for sharing",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="start_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Start date of the safari (YYYY-MM-DD)",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="end_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="End date of the safari (YYYY-MM-DD)",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="safari_plan",
+     *                     type="string",
+     *                     description="Detailed safari plan or itinerary",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="stay_category_id",
+     *                     type="integer",
+     *                     description="ID of the stay category",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="shared_safari_image",
+     *                     type="string",
+     *                     format="binary",
+     *                     description="Upload shared safari image"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Shared Safari created successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid request data."
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized access."
+     *     )
+     * )
+     */
 
     public function actionOrganizeSafari()
     {
@@ -463,6 +644,48 @@ class DefaultController extends SafariController
     // }
 
 
+    /**
+     * Post Comment on Share Safari or Fixed Departure
+     *
+     * Allows users to comment on Share Safari or Fixed Departure.
+     *
+     * @OA\Post(
+     *     path="/sharesafari/{slug}/comment",
+     *     tags={"Share Safari"},
+     *     summary="Comment on Share Safari or Fixed Departure (Draft)",
+     *     description="Allows users to comment on Share Safari or Fixed Departure.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Share Safari or Fixed Departure",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"comment"},
+     *                 @OA\Property(
+     *                     property="comment",
+     *                     type="string",
+     *                     description="Enter Comment",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Comment submitted successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Shared Safari not found."
+     *     )
+     * )
+     */
     public function actionComment($slug)
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
@@ -1454,7 +1677,129 @@ class DefaultController extends SafariController
 
 
 
-
+    /**
+     * Update Share Safari
+     *
+     * Allows users to update a shared safari.
+     *
+     * @OA\Post(
+     *     path="/sharesafari/{slug}/update",
+     *     tags={"Share Safari"},
+     *     summary="Update Shared Safari",
+     *     description="Allows a user to update a shared safari (Draft).",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query single share safari for update",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="share_safari_title",
+     *                     type="string",
+     *                     description="Title of the shared safari",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="park_id",
+     *                     type="integer",
+     *                     description="ID of the selected park",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="share_safari_agenda_id",
+     *                     type="integer",
+     *                     description="ID of the shared safari agenda",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="no_of_safari",
+     *                     type="integer",
+     *                     description="Number of safaris included",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="estimate_price_min",
+     *                     type="number",
+     *                     format="float",
+     *                     description="Minimum estimated price per seat",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="estimate_price_max",
+     *                     type="number",
+     *                     format="float",
+     *                     description="Maximum estimated price per seat",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="total_seat",
+     *                     type="integer",
+     *                     description="Total number of seats available",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="share_seat",
+     *                     type="integer",
+     *                     description="Number of seats available for sharing",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="start_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Start date of the safari (YYYY-MM-DD)",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="end_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="End date of the safari (YYYY-MM-DD)",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="safari_plan",
+     *                     type="string",
+     *                     description="Detailed safari plan or itinerary",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="stay_category_id",
+     *                     type="integer",
+     *                     description="ID of the stay category",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="shared_safari_image",
+     *                     type="string",
+     *                     format="binary",
+     *                     description="Upload shared safari image"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Shared Safari update successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid request data."
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized access."
+     *     )
+     * )
+     */
     public function actionUpdate($slug)
     {
         $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
@@ -1552,6 +1897,49 @@ class DefaultController extends SafariController
 
         return json_encode($json);
     }
+
+    /**
+     * Update Share Safari Status
+     *
+     * Allows users to update the status of an existing shared safari.
+     *
+     * @OA\Post(
+     *     path="/sharesafari/{slug}/update-status",
+     *     tags={"Share Safari"},
+     *     summary="Update Shared Safari Status (Draft)",
+     *     description="Allows a user to update the status of a shared safari. Status codes: 1 = Active, 0 = Inactive, 2 = Seat Full.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Unique slug identifier for the shared safari whose status needs to be updated",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"status"},
+     *                 @OA\Property(
+     *                     property="status",
+     *                     type="integer",
+     *                     description="Status of the shared safari: 1 = Active, 0 = Inactive, 2 = Seat Full",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Shared Safari status updated successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Shared Safari not found."
+     *     )
+     * )
+     */
 
     public function actionUpdateStatus($slug)
     {

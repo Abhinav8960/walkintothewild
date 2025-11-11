@@ -639,6 +639,20 @@ class SiteController extends RestController
         }
     }
 
+    /**
+     * Get Term of Use
+     *
+     *
+     * @OA\Get(
+     *     path="/termofuse",
+     *     tags={"Authorization"},
+     *     summary="Term of Use (Draft)",
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionTermofuse()
     {
         $term_of_use = ComplianceDocuments::findOne(['type' => ComplianceDocuments::TERM_OF_USE]);
@@ -650,6 +664,20 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 
+    /**
+     * Get Privacy Policy
+     *
+     *
+     * @OA\Get(
+     *     path="/privacypolicy",
+     *     tags={"Authorization"},
+     *     summary="Privay Policy (Draft)",
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionPrivacypolicy()
     {
         $privacy_policy = ComplianceDocuments::findOne(['type' => ComplianceDocuments::PRIVACY_POLICY]);
@@ -661,6 +689,20 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 
+    /**
+     * Get Refund Policy
+     *
+     *
+     * @OA\Get(
+     *     path="/refundpolicy",
+     *     tags={"Authorization"},
+     *     summary="Refund Policy (Draft)",
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionRefundpolicy()
     {
         $refund_policy = ComplianceDocuments::findOne(['type' => ComplianceDocuments::REFUND_POLICY]);
@@ -732,6 +774,38 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
+    /**
+     * Mobile Number Verification
+     *
+     * Allows users to verify their mobile number.  
+     *
+     * @OA\Post(
+     *     path="/mobile-no-verification",
+     *     tags={"Authorization"},
+     *     summary="Mobile Number Verification (Draft)",
+     *     description="Allows a user to verify their mobile number.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"mobile_no"},
+     *                 @OA\Property(
+     *                     property="mobile_no",
+     *                     type="string",
+     *                     description="User's mobile number to be verified",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OTP Sent to your mobile number. Please check your mobile."
+     *     ),
+     * )
+     */
     public function actionMobileNoVerification()
     {
         $user_model = $this->userinfo;
@@ -840,6 +914,44 @@ class SiteController extends RestController
     //     }
     // }
 
+    /**
+     * Verify Mobile Number
+     *
+     * Allows users to verify their mobile number.  
+     *
+     * @OA\Post(
+     *     path="/verify-mobile-no",
+     *     tags={"Authorization"},
+     *     summary="Verify Mobile Number using otp (Draft)",
+     *     description="Allows a user to verify their mobile number by entering OTP.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"mobile_no","otp"},
+     *                 @OA\Property(
+     *                     property="mobile_no",
+     *                     type="integer",
+     *                     description="User's mobile number to be verified",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="otp",
+     *                     type="integer",
+     *                     description="Enter 6 digit Otp Number",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mobile Number Verified successfully!"
+     *     ),
+     * )
+     */
     public function actionVerifyMobileNo()
     {
         \Yii::$app->api->messageManager->clearCache();
@@ -882,6 +994,23 @@ class SiteController extends RestController
         ];
     }
 
+    /**
+     * Deactivate Account
+     *
+     * Allows user to deactivate their account.  
+     *
+     * @OA\Post(
+     *     path="/deactivate-account",
+     *     tags={"Authorization"},
+     *     summary="Deactivate Account (Draft)",
+     *     description="Allows a user to deactivate their account.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Deactivated successfully! We will miss you."
+     *     ),
+     * )
+     */
     public function actionDeactivateAccount()
     {
         $user_model = $this->userinfo;
@@ -903,6 +1032,23 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
+     /**
+     * Delete Account Request
+     *
+     * Allows user for delete account request.  
+     *
+     * @OA\Post(
+     *     path="/request-delete-account",
+     *     tags={"Authorization"},
+     *     summary="Delete Account Request (Draft)",
+     *     description="Allows a user for delete account request.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Your information will be deleted in the upcoming 90 days. We will miss you!"
+     *     ),
+     * )
+     */
     public function actionRequestDeleteAccount()
     {
         $user_model = $this->userinfo;
@@ -1363,6 +1509,20 @@ class SiteController extends RestController
         ];
     }
 
+     /**
+     * Get Refund Policy Antara
+     *
+     *
+     * @OA\Get(
+     *     path="/refundpolicyantara",
+     *     tags={"Authorization"},
+     *     summary="Refund Policy Antara(Draft)",
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionRefundpolicyantara()
     {
         $refund_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_REFUND_POLICY_ANTARA]);
