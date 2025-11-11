@@ -89,7 +89,64 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "sighting");
     }
 
-
+    /**
+     * Post Sighting
+     *
+     * Allows operator to post sighting.
+     *
+     * @OA\Post(
+     *     path="/sighting/create",
+     *     tags={"Sighting"},
+     *     summary="Post Sighting",
+     *     description="Allows operator to post sighting.",
+     *     security={{"bearerAuth": {}}},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"description","file","location","master_animal_id","safari_session_id","post_datetime"},
+     *                 @OA\Property(
+     *                     property="description",
+     *                     type="string",
+     *                     description="Enter Description",
+     *                     example="",
+     *                 ),
+     *                 @OA\Property(
+     *                     property="file",
+     *                     type="string",
+     *                     format="binary",
+     *                     description="Upload Video",
+     *                 ),
+     *                 @OA\Property(
+     *                     property="location",
+     *                     type="integer",
+     *                     description="Enter Park Id",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="safari_session_id",
+     *                     type="integer",
+     *                     description="Select Session",
+     *                     example="",
+     *                 ),
+     *                   @OA\Property(
+     *                     property="post_datetime",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Enter date in format (YYYY-MM_DD)",
+     *                     example="",
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Sighting added successfully!"
+     *     )
+     * )
+     */
     public function actionCreate()
     {
         $model = new SightingForm();
@@ -115,8 +172,8 @@ class DefaultController extends RestController
 
                 if ($model->sighting_model->save()) {
                     $active_followers = $model->sighting_model->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->asArray()->all();
-                    if(!empty($active_followers)){
-                    new \common\events\sighting\SightingCreatedByUser($active_followers,$model->sighting_model->user->name);
+                    if (!empty($active_followers)) {
+                        new \common\events\sighting\SightingCreatedByUser($active_followers, $model->sighting_model->user->name);
                     }
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sighting added successfully"]);
                 }
@@ -127,15 +184,35 @@ class DefaultController extends RestController
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
+
     /**
+     * Get Sighting View
      *
-     * @return string
+     *
+     * @OA\Get(
+     *     path="/sighting/view",
+     *     tags={"Sighting"},
+     *     summary="Get Sighting View (Draft)",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="slug to query single sighting",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Sighting Not found!",
+     *     ),
+     * )
      */
     public function actionView($id)
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $searchModel = new SightingSearch();
@@ -143,12 +220,54 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "Sighting", $additionalSearchQueryParams = [], $singleRecord = true);
     }
 
-
+    /**
+     * Sighting Comment 
+     *
+     * Allows users to comment on sighting.
+     *
+     * @OA\Post(
+     *     path="/sighting/comment",
+     *     tags={"Sighting"},
+     *     summary="Comment on Sighting (Draft)",
+     *     description="Allows users to comment on Sighting.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of Sighting",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"comment"},
+     *                 @OA\Property(
+     *                     property="comment",
+     *                     type="string",
+     *                     description="Enter Comment",
+     *                     example="",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Comment submitted successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Sighting Not Found!"
+     *     )
+     * )
+     */
     public function actionComment($id)
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -162,12 +281,61 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
-
+    /**
+     * Sighting Reply 
+     *
+     * Allows users to reply on comment in Sighting.
+     *
+     * @OA\Post(
+     *     path="/sighting/reply",
+     *     tags={"Sighting"},
+     *     summary="Reply on comment in Sighting (Draft)",
+     *     description="Allows users to reply on comment in Sighting",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of Sighting",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *      @OA\Parameter(
+     *         name="parent_id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of Sighting Comment",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"comment"},
+     *                 @OA\Property(
+     *                     property="comment",
+     *                     type="string",
+     *                     description="Enter Comment",
+     *                     example="",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reply submitted successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Sighting Not Found!"
+     *     )
+     * )
+     */
     public function actionReply($id, $parent_id)
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -186,7 +354,34 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
     }
 
-
+    /**
+     * Like Comment or Removed Liked
+     *
+     * Allows users to liked comment or removed that.
+     *
+     * @OA\Post(
+     *     path="/sighting/comment-like",
+     *     tags={"Sighting"},
+     *     summary="Liked comment or removed that (Draft)",
+     *     description="Allows users to liked comment or removed that",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="sighting_comment_id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of Sighting Comment",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Comment or Reply Liked successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Sighting Not Found!"
+     *     )
+     * )
+     */
     public function actionCommentLike($sighting_comment_id)
     {
 
@@ -198,7 +393,7 @@ class DefaultController extends RestController
             $like->sighting_comment_id = $sighting_comment_id;
             $like->status = SightingCommentLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.like_success',['{var}'=> 'Comment or Reply']);
+                $message = Yii::$app->api->messageManager->getMessage('common.like_success', ['{var}' => 'Comment or Reply']);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => $message]);
             }
         } else {
@@ -208,12 +403,39 @@ class DefaultController extends RestController
         }
     }
 
-
+    /**
+     * Like Sighting or Removed Liked
+     *
+     * Allows Sighting to liked Post or removed that.
+     *
+     * @OA\Post(
+     *     path="/sighting/sighting-like",
+     *     tags={"Sighting"},
+     *     summary="Liked Post or removed that (Draft)",
+     *     description="Allows users to liked Sighting or removed that",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of Sighting",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Sighting Liked successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Sighting Not Found!"
+     *     )
+     * )
+     */
     public function actionSightingLike($id)
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -225,7 +447,7 @@ class DefaultController extends RestController
             $like->sighting_id = $id;
             $like->status = SightingLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.like_success',['{var}'=> 'Sighting']);
+                $message = Yii::$app->api->messageManager->getMessage('common.like_success', ['{var}' => 'Sighting']);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => $message]);
             }
         } else {
@@ -246,11 +468,54 @@ class DefaultController extends RestController
         return 0;
     }
 
+    /**
+     * Sighting Report 
+     *
+     * Allows Sighting to report Post.
+     *
+     * @OA\Post(
+     *     path="/sighting/sighting-report",
+     *     tags={"Sighting"},
+     *     summary="Report Sighting (Draft)",
+     *     description="Allows users to report Sighting",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of Sighting",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"message"},
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Enter Message",
+     *                     example="",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reported successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Sighting Not Found!"
+     *     )
+     * )
+     */
     public function actionSightingReport($id)
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -274,16 +539,44 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
+     /**
+     * Sighting Delete 
+     *
+     * Allows users to Sighting Post.
+     *
+     * @OA\Post(
+     *     path="/sighting/sighting-delete",
+     *     tags={"Sighting"},
+     *     summary="Delete (Draft)",
+     *     description="Allows users to Delete Sighting.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of Sighting",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Sighting Delete successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Sighting Not Found!"
+     *     )
+     * )
+     */
     public function actionSightingDelete($id)
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo) {
             if ($this->userinfoId != $sighting->user_id) {
-                $message = Yii::$app->api->messageManager->getMessage('common.delete_restricted',['{var}'=> 'Sighting']);
+                $message = Yii::$app->api->messageManager->getMessage('common.delete_restricted', ['{var}' => 'Sighting']);
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
@@ -297,18 +590,74 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
+    /**
+     * Comment Flag in Sighting 
+     *
+     * Allows users to flag comment in Sighting.
+     *
+     * @OA\Post(
+     *     path="/sighting/flag",
+     *     tags={"Sighting"},
+     *     summary="Flag comment  Sighting (Draft)",
+     *     description="Allows users to report Sighting",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of Sighting",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *      @OA\Parameter(
+     *         name="sighting_comment_id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of Sighting Comment",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"flag_reason_id","flag_detail"},
+     *                 @OA\Property(
+     *                     property="flag_reason_id",
+     *                     type="string",
+     *                     description="Select Reason",
+     *                     example=""
+     *                 ),
+     *                  @OA\Property(
+     *                     property="flag_detail",
+     *                     type="string",
+     *                     description="Enter Detail",
+     *                     example=""
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Flagged successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Sighting Not Found!"
+     *     )
+     * )
+     */
     public function actionFlag($id, $sighting_comment_id)
     {
         $sighting_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $flag_comment = SightingComment::find()->where(['id' => $sighting_comment_id])->limit(1)->one();
 
         if (!$flag_comment) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Comment']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Comment']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -365,7 +714,7 @@ class DefaultController extends RestController
     {
         $sighting_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Sighting']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
