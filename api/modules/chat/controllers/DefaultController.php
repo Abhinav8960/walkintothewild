@@ -91,6 +91,40 @@ class DefaultController extends RestController
         return $this->querySender($dataProvider, $rootIndexName = "chats");
     }
 
+
+    /**
+     * Get Quotation Chat List or Operator List without chat hash
+     *
+     * @OA\Get(
+     *     path="/chat/quatation-chat",
+     *     tags={"Chat"},
+     *     summary="Get Quotation Chat List or Operator List without chat hash (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="chat_hash",
+     *         in="query",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retrieved successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found"
+     *     )
+     * )
+     */
     public function actionQuatationChat($chat_hash = null)
     {
         if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
@@ -139,6 +173,39 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "contcats", $additionalSearchQueryParams = [$this->userinfo->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "directchatcontcatsearch");
     }
 
+     /**
+     * Get Chat Messages
+     *
+     * @OA\Get(
+     *     path="/chat/messages/{chat_hash}",
+     *     tags={"Chat"},
+     *     summary="Get Chat Messages (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="chat_hash",
+     *         in="path",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retrieved successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat Not Found!"
+     *     )
+     * )
+     */
     public function actionMessages($chat_hash)
     {
         $chat = Chat::find()->where(['chat_hash' => $chat_hash])->andWhere(['or', ['user_id' => $this->userinfo->id], ['recipient_user_id' => $this->userinfo->id]])->one();
