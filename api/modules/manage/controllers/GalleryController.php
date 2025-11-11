@@ -61,6 +61,35 @@ class GalleryController extends RestController
         ];
     }
 
+    /**
+     * Get Gallery List
+     *
+     *
+     * @OA\Get(
+     *     path="/manage/gallery/list",
+     *     tags={"Manage"},
+     *     summary="Get Gallery List (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionIndex()
     {
 

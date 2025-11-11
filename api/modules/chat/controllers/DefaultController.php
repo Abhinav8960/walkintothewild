@@ -393,6 +393,104 @@ class DefaultController extends RestController
     //     return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     // }
 
+
+    /**
+     * Send Quote
+     *
+     * Allows operator to send quote
+     *
+     * @OA\Post(
+     *     path="/chat/send-quote-message/{lead_id}",
+     *     tags={"Manage"},
+     *     summary="Send Quote (Draft)",
+     *     description="Allows Operator to Send Quote.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="lead_id",
+     *         in="path",
+     *         required=true,
+     *         description="Id of lead",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"safaris","travelers","stay_category_id","partner_selling_price","park_id","addional_notes","start_date","end_date","validity_date","permit_booking_date"},
+     *                 @OA\Property(
+     *                     property="safaris",
+     *                     type="integer",
+     *                     description="Enter safaris",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="travelers",
+     *                     type="integer",
+     *                     description="Enter travelers",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="stay_category_id",
+     *                     type="integer",
+     *                     description="Enter stay category id",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="partner_selling_price",
+     *                     type="integer",
+     *                     description="Enter Partner Selling Price",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="park_id",
+     *                     type="integer",
+     *                     description="Enter Park Id",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="addional_notes",
+     *                     type="string",
+     *                     description="Enter Additional Notes",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="start_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Enter start date",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="end_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Enter End Date",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="validity_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Enter Validity Date",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="permit_booking_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Enter Permit Booking Date",
+     *                     example="",
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Comment submitted successfully!"
+     *     )
+     * )
+     */
     public function actionSendQuoteMessage($lead_id)
     {
         $partner = SafariOperator::find()->where(['user_id' => $this->userinfo->id])->one();

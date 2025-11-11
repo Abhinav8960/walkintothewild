@@ -58,9 +58,20 @@ class DefaultController extends RestController
         ];
     }
 
-    /**
-     * Renders the index view for the module
-     * @return string
+     /**
+     * Get Operator Detail
+     *
+     *
+     * @OA\Get(
+     *     path="/manage",
+     *     tags={"Manage"},
+     *     summary="Get Operator Detail (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
      */
     public function actionIndex()
     {
@@ -173,7 +184,35 @@ class DefaultController extends RestController
     //     ]);
     // }
 
-
+    /**
+     * Get Fixed Departure List
+     *
+     *
+     * @OA\Get(
+     *     path="/manage/operator-safarilist",
+     *     tags={"Manage"},
+     *     summary="Get Fixed Departure List (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionOperatorSafarilist()
     {
         $safari_operator = $this->module->operatormodel();
@@ -182,7 +221,35 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "share_safari", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
     }
 
-
+    /**
+     * Get Package List
+     *
+     *
+     * @OA\Get(
+     *     path="/manage/operator-packagelist",
+     *     tags={"Manage"},
+     *     summary="Get Package List (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionOperatorPackagelist()
     {
         $safari_operator = $this->module->operatormodel();

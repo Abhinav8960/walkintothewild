@@ -62,6 +62,7 @@ class DefaultController extends RestController
      *     path="/feeds",
      *     tags={"Feeds"},
      *     summary="Get Feeds List (Draft)",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
