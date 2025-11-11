@@ -83,7 +83,34 @@ class DefaultController extends RestController
         ];
     }
 
-
+    /**
+     * Get Package List
+     *
+     *
+     * @OA\Get(
+     *     path="/package",
+     *     tags={"Package"},
+     *     summary="Get Package List (Draft)",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
@@ -107,6 +134,29 @@ class DefaultController extends RestController
     //     return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
     // }
 
+    /**
+     * Get Package View
+     *
+     *
+     * @OA\Get(
+     *     path="/package/{slug}/view",
+     *     tags={"Package"},
+     *     summary="Get Package View (Draft)",
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="slug to query single package",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
@@ -131,7 +181,48 @@ class DefaultController extends RestController
 
 
 
-
+    /**
+     * Post Comment on Package
+     *
+     * Allows users to comment on package
+     *
+     * @OA\Post(
+     *     path="/package/{slug}/comment",
+     *     tags={"Package"},
+     *     summary="Comment on Package (Draft)",
+     *     description="Allows users to comment on Package.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Package",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"comment"},
+     *                 @OA\Property(
+     *                     property="comment",
+     *                     type="string",
+     *                     description="Enter Comment",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Comment submitted successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Package not found."
+     *     )
+     * )
+     */
     public function actionComment($slug)
     {
 
@@ -169,6 +260,55 @@ class DefaultController extends RestController
     }
 
 
+    /**
+     * Post Reply on Comment in Package
+     *
+     * Allows users to reply to specific comment in Package.
+     *
+     * @OA\Post(
+     *     path="/package/{slug}/reply",
+     *     tags={"Package"},
+     *     summary="Reply to specific comment in Package (Draft)",
+     *     description="Allows users to reply to specific comment in Package.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Package",
+     *         @OA\Schema(type="string")
+     *     ),
+     *      @OA\Parameter(
+     *         name="parent_id",
+     *         in="query",
+     *         required=true,
+     *         description="Parent Id is the comment id on which reply post",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"comment"},
+     *                 @OA\Property(
+     *                     property="comment",
+     *                     type="string",
+     *                     description="Enter Comment",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reply submitted successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Package not found."
+     *     )
+     * )
+     */
     public function actionReply($slug, $parent_id)
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
@@ -211,6 +351,36 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
     }
 
+    /**
+     * Wishlist Package
+     *
+     * Allows users to whishlist Package.
+     *
+     * @OA\Post(
+     *     path="/package/{slug}/wishlist",
+     *     tags={"Package"},
+     *     summary="Wishlist Package (Draft)",
+     *     description="Allows users to whishlist Package",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Package",
+     *         @OA\Schema(type="string")
+     *     ),
+     * 
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="You added the Package to your wishlist!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Package not found."
+     *     )
+     * )
+     */
     public function actionWishlist($slug)
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
@@ -244,6 +414,36 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
     }
 
+    /**
+     * Unwishlist Package
+     *
+     * Allows users to Unwishlist Package.
+     *
+     * @OA\Post(
+     *     path="/package/{slug}/unwishlist",
+     *     tags={"Package"},
+     *     summary="Unwishlist Package(Draft)",
+     *     description="Allows users to Unwishlist Package",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Package",
+     *         @OA\Schema(type="string")
+     *     ),
+     * 
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="You removed the Package from your wishlist!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Package not found."
+     *     )
+     * )
+     */
     public function actionUnwishlist($slug)
     {
         $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
@@ -274,6 +474,60 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
     }
 
+    /**
+     * Quote Request
+     *
+     * Allows users to raise quote request for Package.
+     *
+     * @OA\Post(
+     *     path="/package/{slug}/package-quote",
+     *     tags={"Package"},
+     *     summary="Quote Request for Package (Draft)",
+     *     description="Allows users to raise quote request for Package.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Package",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"travelers","pack_start_date","user_notes"},
+     *                 @OA\Property(
+     *                     property="travelers",
+     *                     type="integer",
+     *                     description="Enter Number of Travelers",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="pack_start_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Start date of the safari (YYYY-MM-DD)",
+     *                     example = ""
+     *                 ),
+     *                  @OA\Property(
+     *                     property="user_notes",
+     *                     type="string",
+     *                     description="Enter User Notes",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reported successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Package not found."
+     *     )
+     * )
+     */
     public function actionPackageQuote($slug)
     {
         if ($this->userinfo->is_mobile_no_verified == 0) {
@@ -304,7 +558,60 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($packagemodel->firstErrors, 400);
     }
 
-
+    /**
+     * Post Flag on Comment or reply in Package
+     *
+     * Allows users to post Flag on Comment or reply in Package.
+     *
+     * @OA\Post(
+     *     path="/package/{slug}/flag",
+     *     tags={"Package"},
+     *     summary="Flag on Comment or reply in Package (Draft)",
+     *     description="Allows users to post Flag on Comment or reply in Package.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Package",
+     *         @OA\Schema(type="string")
+     *     ),
+     *      @OA\Parameter(
+     *         name="package_comment_id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary key of comment or reply",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"report_reason_id","report_detail"},
+     *                 @OA\Property(
+     *                     property="report_reason_id",
+     *                     type="integer",
+     *                     description="Select Report Reason",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="report_detail",
+     *                     type="string",
+     *                     description="Enter Report Detail",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reported successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Package not found."
+     *     )
+     * )
+     */
     public function actionFlag($slug, $package_comment_id)
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
@@ -350,6 +657,21 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
+    /**
+     * Get Stay Category
+     *
+     *
+     * @OA\Get(
+     *     path="/package/staycategory",
+     *     tags={"Share Safari"},
+     *     summary="Get Package Stay Category (Draft)",
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionStaycategory()
     {
         $data = GeneralModel::budgetoption();

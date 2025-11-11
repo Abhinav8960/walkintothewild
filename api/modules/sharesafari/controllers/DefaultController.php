@@ -262,14 +262,14 @@ class DefaultController extends SafariController
      *                 @OA\Property(
      *                     property="estimate_price_min",
      *                     type="number",
-     *                     format="float",
+     *                     format="integer",
      *                     description="Minimum estimated price per seat",
      *                     example=""
      *                 ),
      *                 @OA\Property(
      *                     property="estimate_price_max",
      *                     type="number",
-     *                     format="float",
+     *                     format="integer",
      *                     description="Maximum estimated price per seat",
      *                     example=""
      *                 ),
