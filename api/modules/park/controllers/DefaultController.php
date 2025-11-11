@@ -50,7 +50,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package', 'park-stay-category', 'trip-budget', 'planning-tip'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package', 'park-stay-category', 'trip-budget', 'planning-type'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -80,7 +80,7 @@ class DefaultController extends RestController
                     'park-unfollow' => ['POST'],
                     'park-stay-category' => ['GET'],
                     'trip-budget' => ['GET'],
-                    'planning-tip' => ['GET'],
+                    'planning-type' => ['GET'],
 
                 ],
             ],
@@ -1221,8 +1221,8 @@ class DefaultController extends RestController
      */
     public function actionTripBudget()
     {
-        $trip_budget = GeneralModel::tripbudget();
-        return $this->dataSenderWithoutSumarry($trip_budget, 'trip_budget');
+        $data['data'] = GeneralModel::tripbudget();
+        return Yii::$app->api->sendResponse($data);
     }
 
     /**
@@ -1275,7 +1275,7 @@ class DefaultController extends RestController
 
     public function actionPlanningType()
     {
-        $planning_type = GeneralModel::planningtype();
-        return $this->dataSenderWithoutSumarry($planning_type, 'planning_type');
+         $data['data'] = GeneralModel::planningtype();
+        return Yii::$app->api->sendResponse($data);
     }
 }

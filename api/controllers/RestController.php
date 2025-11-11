@@ -510,9 +510,4 @@ class RestController extends Controller
         return $this->reponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord);
     }
 
-     protected function dataSenderWithoutSumarry($array = [], $rootIndexName)
-    {
-        $data[$rootIndexName] = $array;
-        return Yii::$app->api->sendResponse($data);
-    }
 }
