@@ -35,8 +35,33 @@ class DefaultController extends RestController
 
 
     /**
+     * 
+     * Get Feature Park List
      *
-     * @return string
+     *
+     * @OA\Get(
+     *     path="/featured-park",
+     *     tags={"Plan"},
+     *     summary="Get Feature Park List (Draft)",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
      */
     public function actionFeaturedPark()
     {
@@ -49,6 +74,35 @@ class DefaultController extends RestController
     }
 
 
+     /**
+     * 
+     * Get Rare Animal List
+     *
+     *
+     * @OA\Get(
+     *     path="/rare-animal",
+     *     tags={"Plan"},
+     *     summary="Get Rare Animal List (Draft)",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionRareAnimal()
     {
         $searchModel = new MasterAnimalSearch();
