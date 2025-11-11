@@ -54,6 +54,34 @@ class DefaultController extends RestController
     }
 
 
+    /**
+     * Get Feeds List
+     *
+     *
+     * @OA\Get(
+     *     path="/feeds",
+     *     tags={"Feeds"},
+     *     summary="Get Feeds List (Draft)",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionIndex()
     {
         $fdIds = [274];
