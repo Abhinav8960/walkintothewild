@@ -173,7 +173,7 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "contcats", $additionalSearchQueryParams = [$this->userinfo->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "directchatcontcatsearch");
     }
 
-     /**
+    /**
      * Get Chat Messages
      *
      * @OA\Get(
@@ -238,7 +238,62 @@ class DefaultController extends RestController
     }
 
 
-
+    /**
+     * Send Message
+     *
+     * Allows users to send a message in a chat.
+     *
+     * @OA\Post(
+     *     path="/chat/send-message/{user_handle}",
+     *     tags={"Chat"},
+     *     summary="Send Message (Draft)",
+     *     description="Allows users to send a message in a chat.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="user_handle",
+     *         in="path",
+     *         required=true,
+     *         description="User Handle",
+     *         @OA\Schema(type="string")
+     *     ),
+     *    @OA\Parameter(
+     *         name="chat_hash",
+     *         in="query",
+     *         required=true,
+     *         description="Unique hash identifier of the chat",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"message"},
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Message text to send",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="gallery_slug",
+     *                     type="string",
+     *                     description="Optional gallery slug if sending a media message",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Message sent successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat not found."
+     *     )
+     * )
+     */
     public function actionSendMessage($user_handle, $chat_hash = null)
     {
         $login_user = $this->userinfo;
@@ -650,7 +705,45 @@ class DefaultController extends RestController
     }
 
 
-
+    /**
+     * Make Call Chat
+     *
+     * Allows users to make a call request or operators to initiate a call.
+     *
+     * @OA\Post(
+     *     path="/chat/make-call-on-chat/{user_handle}",
+     *     tags={"Chat"},
+     *     summary="Make Call Request (Draft)",
+     *     description="Allows users to make a call request or operators to initiate a call.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="user_handle",
+     *         in="path",
+     *         required=true,
+     *         description="User Handle",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="chat_hash",
+     *         in="query",
+     *         required=true,
+     *         description="Unique hash identifier of the chat",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Call Requested Successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Call Initiated Successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat not found."
+     *     )
+     * )
+     */
 
     public function actionMakeCallOnChat($user_handle, $chat_hash)
     {
@@ -845,7 +938,48 @@ class DefaultController extends RestController
     // }
 
 
-
+    /**
+     * Edit Message
+     *
+     * Allows users to edit message in a chat.
+     *
+     * @OA\Post(
+     *     path="/chat/edit-message",
+     *     tags={"Chat"},
+     *     summary="Edit Message (Draft)",
+     *     description="Allows users to edit a message in a chat.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"chat_message_id","message"},
+     *                 @OA\Property(
+     *                     property="chat_message_id",
+     *                     type="integer",
+     *                     description="Chat Message Id",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Edit Message",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Message Updated successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat not found."
+     *     )
+     * )
+     */
     public function actionEditMessage()
     {
         $chat_message_id = Yii::$app->request->post('chat_message_id');
@@ -889,6 +1023,42 @@ class DefaultController extends RestController
         }
     }
 
+    /**
+     * Delete Message
+     *
+     * Allows users to delete message in a chat.
+     *
+     * @OA\Post(
+     *     path="/chat/delete-message",
+     *     tags={"Chat"},
+     *     summary="Delete Message (Draft)",
+     *     description="Allows users to delete message in a chat.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"chat_message_id"},
+     *                 @OA\Property(
+     *                     property="chat_message_id",
+     *                     type="integer",
+     *                     description="Chat Message Id",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Message Updated successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat not found."
+     *     )
+     * )
+     */
     public function actionDeleteMessage()
     {
         $chat_message_id = Yii::$app->request->post('chat_message_id');
