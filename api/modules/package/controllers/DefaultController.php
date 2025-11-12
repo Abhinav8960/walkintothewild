@@ -209,6 +209,7 @@ class DefaultController extends RestController
      *                     property="comment",
      *                     type="string",
      *                     description="Enter Comment",
+     *                     example = "",
      *                 )
      *             )
      *         )
@@ -295,6 +296,7 @@ class DefaultController extends RestController
      *                     property="comment",
      *                     type="string",
      *                     description="Enter Comment",
+     *                     example = "",
      *                 )
      *             )
      *         )
@@ -502,6 +504,7 @@ class DefaultController extends RestController
      *                     property="travelers",
      *                     type="integer",
      *                     description="Enter Number of Travelers",
+     *                     example = ""
      *                 ),
      *                  @OA\Property(
      *                     property="pack_start_date",
@@ -514,6 +517,7 @@ class DefaultController extends RestController
      *                     property="user_notes",
      *                     type="string",
      *                     description="Enter User Notes",
+     *                     example = ""
      *                 )
      *             )
      *         )
@@ -593,11 +597,13 @@ class DefaultController extends RestController
      *                     property="report_reason_id",
      *                     type="integer",
      *                     description="Select Report Reason",
+     *                     example = ""
      *                 ),
      *                  @OA\Property(
      *                     property="report_detail",
      *                     type="string",
      *                     description="Enter Report Detail",
+     *                     example = ""
      *                 )
      *             )
      *         )
