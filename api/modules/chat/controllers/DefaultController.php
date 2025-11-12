@@ -167,6 +167,61 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "operators");
     }
 
+
+/**
+ * Get User List
+ *
+ * @OA\Get(
+ *     path="/chat/user-list",
+ *     tags={"Chat"},
+ *     summary="Get chat user list (Draft)",
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(
+ *         name="page",
+ *         in="query",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Parameter(
+ *         name="pageSize",
+ *         in="query",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation. Returns paginated chat user list.",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="contacts",
+ *                 type="object",
+ *                 @OA\Property(
+ *                     property="summary",
+ *                     type="object",
+ *                     @OA\Property(property="total", type="integer", example=194),
+ *                     @OA\Property(property="page", type="integer", example=1),
+ *                     @OA\Property(property="pageSize", type="integer", example=5),
+ *                     @OA\Property(property="total_page", type="integer", example=39),
+ *                     @OA\Property(
+ *                         property="query_params",
+ *                         type="object",
+ *                         example={"pageSize": 5}
+ *                     ),
+ *                 ),
+ *                 @OA\Property(
+ *                     property="data",
+ *                     type="array",
+ *                     @OA\Items(type="object")
+ *                 )
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Chat Not Found!"
+ *     )
+ * )
+ */
+
     public function actionUserList()
     {
         $searchModel = new ChatSearch();
@@ -632,6 +687,41 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "partner_gallery_images");
     }
 
+
+     /**
+     * Get Profile Chat
+     *
+     * @OA\Get(
+     *     path="/chat/profile-chat/{user_handle}",
+     *     tags={"Chat"},
+     *     summary="Get Profile Chat (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="user_handle",
+     *         in="path",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retrieved successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat Not Found!"
+     *     )
+     * )
+     */
+
     public function actionProfileChat($user_handle)
     {
         $individual_user = $this->individualuser($user_handle);
@@ -640,7 +730,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
-        $chat = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
+        $chat = Chat::find()->andWhere(['or', ['useer_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
         if (!$chat) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
             return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => $message], 200);
