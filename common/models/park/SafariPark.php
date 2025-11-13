@@ -12,6 +12,7 @@ use common\models\master\airport\MasterAirport;
 use common\models\master\country\MasterCountry;
 use common\models\master\location\MasterLocation;
 use common\models\master\railwaystation\MasterRailwayStation;
+use common\models\operator\SafariOperator;
 use common\models\suggestions\SafariSuggestions;
 use common\models\UserExperience;
 
@@ -368,5 +369,10 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewS
         if ($this->logo != '') {
             return \Yii::$app->params['s3_endpoint'] . '/safaripark/' . $this->id . '/' . $this->logo;
         }
+    }
+
+     public function getOperator()
+    {
+        return $this->hasMany(SafariOperator::className(), ['id' => 'safari_operator_id'])->via('safarioperatorlist')->andWhere(['safari_operator.status' => 1]);
     }
 }
