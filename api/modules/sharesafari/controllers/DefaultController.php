@@ -860,7 +860,7 @@ class DefaultController extends SafariController
             }
         }
 
-        return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
     /**
@@ -1008,7 +1008,7 @@ class DefaultController extends SafariController
         }
 
 
-        return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+        return Yii::$app->api->sendFailedStringResponse($replymodel->firstErrors, 400);
     }
 
     /**
