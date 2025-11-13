@@ -650,11 +650,13 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="master_suggestion_id",
-     *                     type="integer"
+     *                     type="integer",
+     *                     example = ""
      *                 ),
      *                 @OA\Property(
      *                     property="details",
-     *                     type="string"
+     *                     type="string",
+     *                     example = ""
      *                 )
      *             )
      *         )
@@ -750,11 +752,13 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="rating",
-     *                     type="integer"
+     *                     type="integer",
+     *                     example = ""
      *                 ),
      *                 @OA\Property(
      *                     property="review",
-     *                     type="string"
+     *                     type="string",
+     *                     example = ""
      *                 )
      *             )
      *         )
@@ -878,14 +882,14 @@ class DefaultController extends RestController
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
      *                 type="object",
-     *                 @OA\Property(property="safaris",type="integer",example=1),
-     *                 @OA\Property(property="travelers",type="integer",example=4),
-     *                 @OA\Property(property="stay_category_id",type="integer",example=12),
-     *                 @OA\Property(property="start_date",type="string",example="2025-12-05"),
-     *                 @OA\Property(property="end_date",type="string",example="2025-12-06"),
-     *                 @OA\Property(property="user_notes",type="string",example="Park Quotes Check"),
-     *                 @OA\Property(property="planning_type",type="integer",example=2),
-     *                 @OA\Property(property="trip_budget",type="integer",example=20256)
+     *                 @OA\Property(property="safaris",type="integer",example=""),
+     *                 @OA\Property(property="travelers",type="integer",example=""),
+     *                 @OA\Property(property="stay_category_id",type="integer",example=""),
+     *                 @OA\Property(property="start_date",type="string",format="date",example=""),
+     *                 @OA\Property(property="end_date",type="string",format="date",example=""),
+     *                 @OA\Property(property="user_notes",type="string",example=""),
+     *                 @OA\Property(property="planning_type",type="integer",example=""),
+     *                 @OA\Property(property="trip_budget",type="integer",example="")
      *             )
      *         )
      *     ),

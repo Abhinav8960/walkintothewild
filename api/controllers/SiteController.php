@@ -185,26 +185,26 @@ class SiteController extends RestController
      *                     property="source",
      *                     type="string",
      *                     description="Social login provider (e.g., google)",
-     *                     example="google"
+     *                     example=""
      *                 ),
      *                 @OA\Property(
      *                     property="source_id",
      *                     type="string",
      *                     description="Unique ID provided by the social platform",
-     *                     example="110234567890123456789"
+     *                     example=""
      *                 ),
      *                 @OA\Property(
      *                     property="email",
      *                     type="string",
      *                     format="email",
      *                     description="Email address from the social account",
-     *                     example="user@example.com"
+     *                     example=""
      *                 ),
      *                 @OA\Property(
      *                     property="name",
      *                     type="string",
      *                     description="Full name of the user",
-     *                     example="John Doe"
+     *                     example=""
      *                 ),
      *             )
      *         )

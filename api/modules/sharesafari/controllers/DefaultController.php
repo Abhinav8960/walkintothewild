@@ -790,6 +790,7 @@ class DefaultController extends SafariController
      *                     property="comment",
      *                     type="string",
      *                     description="Enter Comment",
+     *                     example = ""
      *                 )
      *             )
      *         )
@@ -898,6 +899,7 @@ class DefaultController extends SafariController
      *                     property="comment",
      *                     type="string",
      *                     description="Enter Comment",
+     *                     example = ""
      *                 )
      *             )
      *         )
@@ -1046,11 +1048,13 @@ class DefaultController extends SafariController
      *                     property="report_reason_id",
      *                     type="integer",
      *                     description="Select Report Reason",
+     *                     example = ""
      *                 ),
      *                  @OA\Property(
      *                     property="report_detail",
      *                     type="string",
      *                     description="Enter Report Detail",
+     *                     example = ""
      *                 )
      *             )
      *         )
@@ -1711,6 +1715,7 @@ class DefaultController extends SafariController
      *                     property="seat",
      *                     type="integer",
      *                     description="No of seat not greater than available seat",
+     *                     example = ""
      *                 )
      *             )
      *         )
@@ -2236,6 +2241,7 @@ class DefaultController extends SafariController
      *                     property="status",
      *                     type="integer",
      *                     description="Status of the shared safari: 1 = Active, 0 = Inactive, 2 = Seat Full",
+     *                     example = ""
      *                 )
      *             )
      *         )
@@ -2302,6 +2308,7 @@ class DefaultController extends SafariController
      *                     property="message",
      *                     type="string",
      *                     description="Message content to be sent to the Fixed Departure owner.",
+     *                     example = ""
      *                 )
      *             )
      *         )
