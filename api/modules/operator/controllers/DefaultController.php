@@ -357,7 +357,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
         $searchModel = new ShareSafariSearch();
-        $searchModel->host_user_id = $operator->id;
+        $searchModel->safari_operator_id = $operator->id;
         $searchModel->type = ShareSafari::TYPE_FIXED_DEPARTURE;
         $searchModel->status = [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT];
         return $this->dataProviderSender($searchModel, $rootIndexName = "sharedsafari");
