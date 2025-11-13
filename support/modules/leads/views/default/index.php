@@ -51,6 +51,14 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
+                        'label' => 'Phone',
+                        'contentOptions' => ['style' => 'width: 1%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->phone;
+                        },
+                    ],
+                    [
                         'label' => 'Source',
                         'contentOptions' => ['style' => 'width: 1%;'],
                         'format' => 'raw',
@@ -122,7 +130,7 @@ $this->params['title'] = $this->title;
                         }
                     ],
 
-                     [
+                    [
                         'label' => 'Planning Type',
                         'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
                         'format' => 'raw',
