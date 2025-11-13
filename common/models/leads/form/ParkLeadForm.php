@@ -42,7 +42,7 @@ class ParkLeadForm extends Model
     {
         return [
             // [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'full_name', 'email', 'start_date', 'end_date', 'phone_no'], 'required'],
-            [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date','planning_type', 'trip_budget'], 'required'],
+            [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'planning_type', 'trip_budget'], 'required'],
             [['phone_no'], 'match', 'pattern' => '/^[123456789]\d{9}$/', 'message' => 'Invalid Phone number.'],
             [['email'], 'email'],
             [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'status'], 'integer'],
@@ -135,55 +135,56 @@ class ParkLeadForm extends Model
             // }
 
             if ($lead->save(false)) {
+                if (count($park->operator) >= 1) {
+                    $customer_support = SafariOperator::find()->where(['id' => Yii::$app->params['support_safari_operator_id'], 'status' => SafariOperator::STATUS_ACTIVE])->one();
+                    $safarioperatorlist = [];
+                    $assigned_to_operator = false;
+                    $operator_count = 0;
 
-                $customer_support = SafariOperator::find()->where(['id' => Yii::$app->params['support_safari_operator_id'], 'status' => SafariOperator::STATUS_ACTIVE])->one();
-                $safarioperatorlist = [];
-                $assigned_to_operator = false;
-                $operator_count = 0;
-
-                foreach ($park->safarioperatorlist as $op) {
-                    if (!empty($op->operator)) {
-                        $safarioperatorlist[$op->safari_operator_id] = $op;
-                    }
-                }
-
-                if (!empty($safarioperatorlist)) {
-                    foreach ($safarioperatorlist as $op) {
+                    foreach ($park->safarioperatorlist as $op) {
                         if (!empty($op->operator)) {
-                            if ($customer_support && $op->id == $customer_support->id) {
-                                continue;
-                            }
+                            $safarioperatorlist[$op->safari_operator_id] = $op;
+                        }
+                    }
 
-                            if (empty($op->operator->stayCategory)) {
-                                continue;
-                            }
+                    if (!empty($safarioperatorlist)) {
+                        foreach ($safarioperatorlist as $op) {
+                            if (!empty($op->operator)) {
+                                if ($customer_support && $op->id == $customer_support->id) {
+                                    continue;
+                                }
 
-                            $stay_array = array_map(
-                                fn($stay) => $stay->meta_stay_category_id,
-                                $op->operator->stayCategory
-                            );
+                                if (empty($op->operator->stayCategory)) {
+                                    continue;
+                                }
 
-                            if ($lead->trip_budget != 1 && !in_array($lead->planning_type, [3, 4]) && in_array($lead->stay_category_id, $stay_array)) {
-                                $this->assignToPartner($lead, $op->operator, $login_user);
-                                $this->prepareChat($lead, $park, $op->operator, $login_user);
-                                $assigned_to_operator = true;
-                                $operator_count++;
+                                $stay_array = array_map(
+                                    fn($stay) => $stay->meta_stay_category_id,
+                                    $op->operator->stayCategory
+                                );
+
+                                if ($lead->trip_budget != 1 && !in_array($lead->planning_type, [3, 4]) && in_array($lead->stay_category_id, $stay_array)) {
+                                    $this->assignToPartner($lead, $op->operator, $login_user);
+                                    $this->prepareChat($lead, $park, $op->operator, $login_user);
+                                    $assigned_to_operator = true;
+                                    $operator_count++;
+                                }
                             }
                         }
                     }
-                }
 
-                if ($assigned_to_operator == false && $customer_support) {
-                    $this->assignToPartner($lead, $customer_support, $login_user);
-                    $this->prepareChat($lead, $park, $customer_support, $login_user);
-                    $operator_count++;
-                }
+                    if ($assigned_to_operator == false && $customer_support) {
+                        $this->assignToPartner($lead, $customer_support, $login_user);
+                        $this->prepareChat($lead, $park, $customer_support, $login_user);
+                        $operator_count++;
+                    }
 
 
-                if ($operator_count > 0) {
-                    $lead->status = 1;
-                    $lead->assigned_operator_count = $operator_count;
-                    $lead->save(false);
+                    if ($operator_count > 0) {
+                        $lead->status = 1;
+                        $lead->assigned_operator_count = $operator_count;
+                        $lead->save(false);
+                    }
                 }
             }
 
