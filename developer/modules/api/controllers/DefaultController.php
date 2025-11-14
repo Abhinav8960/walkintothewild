@@ -32,15 +32,16 @@ class DefaultController extends Controller
         $data = json_decode($openapi->toJson(), true);
         $host = Yii::$app->params['api_url'];
 
-        $data['servers'] = [
-            [
+        $data['servers'] = [];
+        if ($_SERVER['SERVER_ADDR'] == '127.0.0.1') {
+            $data['servers'][] = [
                 'url' => $host,
                 'description' => 'Auto-detected',
-            ],
-            [
-                'url' => 'https://staging-api.walkintothewild.in/',
-                'description' => 'Staging Server',
-            ],
+            ];
+        }
+        $data['servers'][] = [
+            'url' => 'https://staging-api.walkintothewild.in/',
+            'description' => 'Staging Server',
         ];
 
         $data['components'] = [
