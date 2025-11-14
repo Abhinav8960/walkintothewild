@@ -12,6 +12,7 @@ use yii\helpers\Html;
                         <tr>
                             <th style="width: 1%;">#</th>
                             <th style="width: 5%;">User Name</th>
+                            <th style="width: 5%;">Phone No.</th>
                             <th style="width: 5%;">Travel Interest</th>
                             <th style="width: 2%;">Safaris</th>
                             <th style="width: 2%;">Travelers</th>
@@ -38,6 +39,7 @@ use yii\helpers\Html;
                                     ]) . ' ' . Html::encode($name);
                                 }
                                 ?></td>
+                            <td><?= $model->phone ?></td>
                             <td><?= $model->displayLabel ?></td>
                             <td><?= !empty($model->safaris) ? $model->safaris : ''; ?></td>
                             <td><?= !empty($model->travelers) ? $model->travelers : '' ?></td>

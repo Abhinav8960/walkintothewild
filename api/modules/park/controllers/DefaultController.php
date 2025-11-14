@@ -946,8 +946,13 @@ class DefaultController extends RestController
         if ($model->validate()) {
             if ($park_quote = $model->request($this->userinfo)) {
                 // FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
-                $message = Yii::$app->api->messageManager->getMessage('park.quote_request.request_sent');
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
+                if (count($sf->operator) == 0) {
+                    $message = Yii::$app->api->messageManager->getMessage('park.quote_request.no_verified_operators');
+                    return Yii::$app->api->sendResponse($data = ['status' => 1, 'autoclose' => false], ['message' => $message]);
+                } else {
+                    $message = Yii::$app->api->messageManager->getMessage('park.quote_request.request_sent');
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
+                }
             }
         } else {
             return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -1279,7 +1284,7 @@ class DefaultController extends RestController
 
     public function actionPlanningType()
     {
-         $data['data'] = GeneralModel::planningtype();
+        $data['data'] = GeneralModel::planningtype();
         return Yii::$app->api->sendResponse($data);
     }
 }
