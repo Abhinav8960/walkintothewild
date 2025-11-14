@@ -190,7 +190,7 @@ class SiteController extends RestController
      *                 @OA\Property(
      *                     property="source_id",
      *                     type="string",
-     *                     description="Unique ID provided by the social platform",
+     *                     description="Unique ID provided by the social platform (enclosed in double quotes)",
      *                     example=""
      *                 ),
      *                 @OA\Property(
@@ -220,6 +220,32 @@ class SiteController extends RestController
      *                 type="string",
      *                 description="Access token",
      *                 example="94a19f6a857e6efb22c7e80912541dfe09a537070c81921da1d63d13822d5996e3c6316c0b39c5631ee0bba927b948fb5f44505c0a320bfa0bcb947e5c2534fq"
+     *             ),
+     *         )
+     *     ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Source Not Exist",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Source Not Exist",
+     *                 example="The source does not exist!"
+     *             ),
+     *         )
+     *     ),
+     *       @OA\Response(
+     *         response=423,
+     *         description="Profile is not active",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Source Not Exist",
+     *                 example="Profile is not active, contact administration!"
      *             ),
      *         )
      *     ),
@@ -583,12 +609,6 @@ class SiteController extends RestController
      *             )
      *         )
      *     ),
-     *
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized - Missing or invalid Bearer token"
-     *     ),
-     *
      *     @OA\Response(
      *         response=404,
      *         description="Not found"
@@ -646,7 +666,26 @@ class SiteController extends RestController
      * @OA\Get(
      *     path="/termofuse",
      *     tags={"Authorization"},
-     *     summary="Term of Use (Draft)",
+     *     summary="Term of Use",
+     *       @OA\Response(
+     *         response=200,
+     *         description="Term of Use",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="content",
+     *                 type="string",
+     *                 description="Content",
+     *                 example="Term and Condition New One!"
+     *             ),
+     *              @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Message",
+     *                 example="Success!"
+     *             ),
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
@@ -671,7 +710,26 @@ class SiteController extends RestController
      * @OA\Get(
      *     path="/privacypolicy",
      *     tags={"Authorization"},
-     *     summary="Privay Policy (Draft)",
+     *     summary="Privay Policy",
+     *      @OA\Response(
+     *         response=200,
+     *         description="Privay Policy",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="content",
+     *                 type="string",
+     *                 description="Content",
+     *                 example="Privacy Policy"
+     *             ),
+     *              @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Message",
+     *                 example="Success!"
+     *             ),
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
@@ -696,7 +754,26 @@ class SiteController extends RestController
      * @OA\Get(
      *     path="/refundpolicy",
      *     tags={"Authorization"},
-     *     summary="Refund Policy (Draft)",
+     *     summary="Refund Policy",
+     *      @OA\Response(
+     *         response=200,
+     *         description="Refund Policy",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="content",
+     *                 type="string",
+     *                 description="Content",
+     *                 example="Refund Policy"
+     *             ),
+     *              @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Message",
+     *                 example="Success!"
+     *             ),
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
@@ -1047,7 +1124,7 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
-     /**
+    /**
      * Delete Account Request
      *
      * Allows user for delete account request.  
@@ -1524,7 +1601,7 @@ class SiteController extends RestController
         ];
     }
 
-     /**
+    /**
      * Get Refund Policy Antara
      *
      *
