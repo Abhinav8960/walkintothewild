@@ -192,6 +192,7 @@ class DefaultController extends RestController
             $shared_safari = ShareSafari::find()
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
+                ->andWhere(['share_safari.status' => ShareSafari::STATUS_ACTIVE])
                 ->all();
             return Yii::$app->api->sendResponse($data = ['share_safari' => ArrayHelper::toArray($shared_safari)]);
         } else {
@@ -202,6 +203,7 @@ class DefaultController extends RestController
             $shared_safari = ShareSafari::find()
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
+                ->andWhere(['share_safari.status' => ShareSafari::STATUS_ACTIVE])
                 ->all();
             return Yii::$app->api->sendResponse($data = ['share_safari' => ArrayHelper::toArray($shared_safari)]);
         }
