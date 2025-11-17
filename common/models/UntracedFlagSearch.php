@@ -11,7 +11,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * UntracedFlagSearch represents the model behind the search form of `common\models\RenderedContent`.
+ * UntracedFlagSearch represents the model behind the search form of `common\models\UntracedFlag`.
  */
 class UntracedFlagSearch extends Model
 {
