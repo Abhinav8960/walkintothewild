@@ -11,7 +11,6 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
-use common\models\trierror\SitePages;
 
 FrontAppAsset::register($this);
 AppAsset::register($this);
@@ -22,7 +21,7 @@ $page_reqeust = Yii::$app->request;
 $this->registerCsrfMetaTags();
 $this->params['baseurl'] = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset')->baseUrl;
 
-$is_sitemap_exist = SitePages::find()->where(['url' => $page_reqeust->pathInfo])->orderBy('id DESC')->one();
+// $is_sitemap_exist = SitePages::find()->where(['url' => $page_reqeust->pathInfo])->orderBy('id DESC')->one();
 
 $default_desc = "We offer a seamless experience, connecting you with multiple safari tour operators and providing all the essential details you need to make informed decisions about your wildlife safari, all at no cost. Our shared safari feature connects you with fellow safari enthusiasts, enabling you to form a group and embark on a shared safari adventure together.";
 $default_title = "WalkIntoTheWild";

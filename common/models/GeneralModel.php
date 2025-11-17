@@ -59,7 +59,6 @@ use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
 use Yii;
 use yii\helpers\ArrayHelper;
-use common\models\trierror\SitePages;
 use common\models\MailLog;
 use common\models\MailLogRecipients;
 use common\models\master\notification\MasterNotificationTemplate;
@@ -1179,16 +1178,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $return;
     }
 
-    public static function getsitepagessubcategory($category_name)
-    {
-        $return = [];
-        $sub_category = SitePages::find()->select('sub_category')->distinct('sub_category')->where(['category' => $category_name])->all();
-        foreach ($sub_category as $sub) {
-            $return[$sub->sub_category] = ucwords($sub->sub_category);
-        }
+    // public static function getsitepagessubcategory($category_name)
+    // {
+    //     $return = [];
+    //     $sub_category = SitePages::find()->select('sub_category')->distinct('sub_category')->where(['category' => $category_name])->all();
+    //     foreach ($sub_category as $sub) {
+    //         $return[$sub->sub_category] = ucwords($sub->sub_category);
+    //     }
 
-        return $return;
-    }
+    //     return $return;
+    // }
     public static function tourusers()
     {
 

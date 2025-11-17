@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\models\trierror\SitePages;
 use PDO;
 use Yii;
 use yii\web\Response;
