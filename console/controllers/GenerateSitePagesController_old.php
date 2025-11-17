@@ -13,7 +13,6 @@ use yii\web\NotFoundHttpException;
 use common\models\trierror\SitePages;
 use common\models\cms\article\Article;
 //use common\models\park\Park;
-use common\models\trierror\SiteRobots;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
 use common\models\cms\article\ArticleAuthor;

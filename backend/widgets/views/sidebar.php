@@ -1531,8 +1531,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 			<li class="slide <?= in_array($active_url, array(
 									'/portalsetting/default/index',
 									'/portalsetting/default/params',
-									'/trierror/site-robots',
-									'/trierror/site-robots/create',
 									'/portalsetting/default/clear-assets',
 									'/portalsetting/default/clear-cache',
 									'/portalsetting/default/clear-assets?type=frontend'
@@ -1540,8 +1538,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/portalsetting/default/index',
 												'/portalsetting/default/params',
-												'/trierror/site-robots',
-												'/trierror/site-robots/create',
 												'/portalsetting/default/clear-assets',
 												'/portalsetting/default/clear-cache',
 												'/portalsetting/default/clear-assets?type=frontend'
@@ -1553,7 +1549,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/default/clear-cache')) ? 'active' : '' ?>" href="/portalsetting/default/clear-cache" data-method="post">Clear Cache</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/default/index')) ? 'active' : '' ?>" href="/portalsetting/default/index">Php Info</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/default/params')) ? 'active' : '' ?>" href="/portalsetting/default/params">Params</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/trierror/site-robots', '/trierror/site-robots/create')) ? 'active' : '' ?>" href="/trierror/site-robots">Robots Txt</a></li>
 				</ul>
 			</li>
 		<?php endif; ?>
