@@ -18,10 +18,8 @@ use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
 use common\models\cms\article\ArticleAuthor;
 use common\models\master\animal\MasterAnimal;
-use common\models\trierror\FrontendRequestLog;
 use common\models\cms\article\MasterArticleTag;
 use common\models\cms\article\MasterArticleTopic;
-use common\models\trierror\FrontendRequestLogSearch;
 use common\models\User;
 
 class GenerateSitePagesController extends Controller
@@ -605,35 +603,6 @@ class GenerateSitePagesController extends Controller
         Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'is_get', 'is_post', 'is_ajax', 'slug', 'category', 'sub_category', 'title',  'description', 'image', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status'], $temp_insert_data)->execute();
       }
     }
-  }
-
-  protected function getrequestinfo($url)
-  {
-    $return = [
-      'is_get' => 1,
-      'get_parameter' => '[]',
-      'post_parameter' => '[]',
-      'is_ajax' => 0,
-      'is_get' => 0,
-      'is_post' => 0
-    ];
-
-    $full = Yii::$app->params['frontend_url'] . $url;
-    $s_request = FrontendRequestLog::find()->where(['request_full_url' => $full])->andWhere(['request_code' => 200])->orderBy('id DESC')->asArray()->one();
-    if (!empty($s_request)) {
-      $return['get_parameter'] = $s_request['request_parameter'];
-      $return['post_parameter'] = $s_request['request_data'];
-      if ($s_request['request_type'] == 'GET') {
-        $return['is_get'] = 1;
-      }
-
-      if ($s_request['request_type'] == 'POST') {
-        $return['is_post'] = 1;
-      }
-      $return['is_ajax'] = $s_request['isAjax'];
-    }
-
-    return $return;
   }
 
   protected function get_join_safari_site_pages()

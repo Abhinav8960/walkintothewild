@@ -20,9 +20,7 @@ use common\models\UserSession;
 use Yii;
 use yii\console\Controller;
 
-/**
- * TestController implements the CRUD actions for FrontendRequestLog model.
- */
+
 class TestController extends Controller
 {
 

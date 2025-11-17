@@ -4,14 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
-use common\models\trierror\FrontendRequestLog;
 use common\models\trierror\SitePages;
 use common\models\trierror\SearchSitePages;
-
-
-/** @var yii\web\View $this */
-/** @var common\models\trierror\FrontendRequestLogSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Site Pages';
 $this->params['breadcrumbs_home_url'] = '/';

@@ -19,9 +19,7 @@ use common\models\package\PackageQuote;
 use common\models\operator\SafariOperator;
 use common\models\operator\OperatorQuote;
 
-/**
- * FrontendRequestLogController implements the CRUD actions for FrontendRequestLog model.
- */
+
 class CreateQuoteChatController extends Controller
 {
   public function actionIndex()

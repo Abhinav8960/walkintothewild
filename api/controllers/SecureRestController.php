@@ -8,7 +8,6 @@ use api\models\User;
 use common\models\GeneralModel;
 use common\models\RenderedContent;
 use common\models\trierror\ApiRequestLog;
-use common\models\trierror\FrontendRequestLog;
 
 class SecureRestController extends RestController
 {

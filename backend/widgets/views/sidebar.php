@@ -1461,8 +1461,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 									'/trierror/default/index',
 									'/log/sms-log/index',
 									'/log/call-log/index',
-									'/trierror/frontend-request-log',
-									'/trierror/frontend-request-log/view',
 									'/trierror/site-pages',
 									'/trierror/site-pages/view',
 									'/trierror/site-untraced-request',
@@ -1482,8 +1480,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 												'/log/transaction/view',
 												'/trierror',
 												'/log/default/front-index',
-												'/trierror/frontend-request-log',
-												'/trierror/frontend-request-log/view',
 												'/trierror/site-pages',
 												'/trierror/site-pages/view',
 												'/log/sms-log/index',
@@ -1506,7 +1502,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 					<li><a class="slide-item <?= in_array($active_url, array('/log/call-log/index')) ? 'active' : '' ?>" href="/log/call-log/index">Call Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/log/console-log')) ? 'active' : '' ?>" href="/portalsetting/log/console-log">Console Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/log/front')) ? 'active' : '' ?>" href="/portalsetting/log/front">Frontend Log</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/trierror/frontend-request-log', '/trierror/frontend-request-log/view')) ? 'active' : '' ?>" href="/trierror/frontend-request-log">Frontend Request</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/trierror/default/front-index')) ? 'active' : '' ?>" href="/trierror/default/front-index">Frontend Request Error</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/trierror/site-untraced-request')) ? 'active' : '' ?>" href="/trierror/site-untraced-request">Frontend Request Untraced</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/log/default/index', '/log/default/view')) ? 'active' : '' ?>" href="/log/default/index">Mail Log</a></li>

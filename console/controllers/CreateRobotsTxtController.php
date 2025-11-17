@@ -10,11 +10,8 @@ use yii\helpers\Url;
 use common\models\trierror\SitePages;
 use common\models\trierror\SiteRobots;
 use common\models\GeneralModel;
-use common\models\trierror\FrontendRequestLog;
 
-/**
- * FrontendRequestLogController implements the CRUD actions for FrontendRequestLog model.
- */
+
 class CreateRobotsTxtController extends Controller
 {
   public function actionIndex()

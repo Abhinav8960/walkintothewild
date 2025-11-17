@@ -10,9 +10,7 @@ use Faker\Factory;
 use Yii;
 use yii\console\Controller;
 
-/**
- * TestUserController implements the CRUD actions for FrontendRequestLog model.
- */
+
 class TestUserController extends Controller
 {
 

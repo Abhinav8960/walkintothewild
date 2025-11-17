@@ -13,9 +13,7 @@ use common\models\operator\SafariOperatorPark;
 use Yii;
 use yii\console\Controller;
 
-/**
- * LeadAssignController implements the CRUD actions for FrontendRequestLog model.
- */
+
 class LeadAssignController extends Controller
 {
 

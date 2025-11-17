@@ -31,9 +31,7 @@ use Yii;
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
 
-/**
- * TempController implements the CRUD actions for FrontendRequestLog model.
- */
+
 class TempController extends Controller
 {
 
