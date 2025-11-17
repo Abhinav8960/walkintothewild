@@ -393,7 +393,7 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/country",
-     *     description ="This API returns all country. Currently, the API only supports <b>India</b>, but additional countries may be supported in the future.<br><b>Usage Notes : </b><br><ul><li>This API is not used in the Android application.</li><li>If this API is used in the web application, please mention it in the documentation.</li></ul>",
+     *     description ="This API returns all country. Currently, the API only supports <b>India</b>, but additional countries may be supported in the future.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
