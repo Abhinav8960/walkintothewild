@@ -351,4 +351,12 @@ class CallLog extends \common\models\trierror\ActiveLogRecord implements \common
         }
         return null;
     }
+
+    public function getCallstatuslabel()
+    {
+        if ($this->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
+            return \common\models\CallLog::callStatusList()[$this->call_status] ?? '';
+        }
+        return isset($this->call_status) ? ucwords(str_replace('_', ' ', $this->call_status))  : '';
+    }
 }
