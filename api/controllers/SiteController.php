@@ -859,7 +859,7 @@ class SiteController extends RestController
      * @OA\Post(
      *     path="/mobile-no-verification",
      *     tags={"Authorization"},
-     *     summary="Mobile Number Verification (Draft)",
+     *     summary="Mobile Number Verification",
      *     description="Allows a user to verify their mobile number.",
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
@@ -879,7 +879,48 @@ class SiteController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="OTP Sent to your mobile number. Please check your mobile."
+     *         description="OTP Sent to your mobile number. Please check your mobile. || Mobile number is already verified.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 description="Status of the verification request",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Response message",
+     *                example="OTP Sent to your mobile number. Please check your mobile."
+     *            )
+     *        ),
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Token not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Token not found",
+     *                 example="Token not found"
+     *             ),
+     *         )
+     *     ),
+     *      @OA\Response(
+     *         response=429,
+     *         description="Rate Limit Exceeded",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Rate Limit Exceeded",
+     *                 example="Rate limit exceeded. Please try again later!"
+     *             ),
+     *         )
      *     ),
      * )
      */
@@ -999,7 +1040,7 @@ class SiteController extends RestController
      * @OA\Post(
      *     path="/verify-mobile-no",
      *     tags={"Authorization"},
-     *     summary="Verify Mobile Number using otp (Draft)",
+     *     summary="Verify Mobile Number using otp",
      *     description="Allows a user to verify their mobile number by entering OTP.",
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
@@ -1025,7 +1066,22 @@ class SiteController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Mobile Number Verified successfully!"
+     *         description="Mobile Number Verified successfully! || Your mobile number is not verified! Please verify your mobile number. || Mobile Number Already Verified!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 description="Status",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Response message",
+     *                example="Mobile Number Verified successfully!"
+     *            )
+     *        ),
      *     ),
      * )
      */
@@ -1094,12 +1150,27 @@ class SiteController extends RestController
      * @OA\Post(
      *     path="/deactivate-account",
      *     tags={"Authorization"},
-     *     summary="Deactivate Account (Draft)",
-     *     description="Allows a user to deactivate their account.",
+     *     summary="Deactivate Account",
+     *     description="Allows a user to deactivate their account. || Not Deactivated successfully!",
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
-     *         description="Deactivated successfully! We will miss you."
+     *         description="Deactivated successfully! We will miss you. || Not Deactivated successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 description="Status of the deactivation request",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Response message",
+     *                example="Deactivated successfully! We will miss you."
+     *            )
+     *        ),
      *     ),
      * )
      */
