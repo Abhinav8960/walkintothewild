@@ -173,8 +173,9 @@ class SiteController extends RestController
      *     path="/social-login",
      *     tags={"Authorization"},
      *     summary="Social Login",
-     *     description="Authenticate users using social platforms and return an access token.",
-     *
+     * 
+     *     description=" The Social Login API enables seamless user authentication via supported social platforms.<br>It currently supports <b>Google OAuth</b>, with additional providers like Apple planned for future releases. Integrated into the <b>Login Module</b>, this endpoint validates user identities and issues secure access tokens.",
+     *         
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
@@ -219,7 +220,7 @@ class SiteController extends RestController
      *                 property="access_token",
      *                 type="string",
      *                 description="Access token",
-     *                 example="94a19f6a857e6efb22c7e80912541dfe09a537070c81921da1d63d13822d5996e3c6316c0b39c5631ee0bba927b948fb5f44505c0a320bfa0bcb947e5c2534fq"
+     *                 example="eb39e68e68013e66850e7d2c414fcdc2179ec88e8b130161dee40ce6e4ff86e0782540f32f8634bbeb0377c8fde5d40118fc74b5daa2e8b630622010d0317a73"
      *             ),
      *         )
      *     ),
@@ -232,7 +233,7 @@ class SiteController extends RestController
      *                 property="message",
      *                 type="string",
      *                 description="Source Not Exist",
-     *                 example="The source does not exist!"
+     *                 example="Source id is already available in records and not matching with given"
      *             ),
      *         )
      *     ),
@@ -536,7 +537,7 @@ class SiteController extends RestController
      *     path="/profile",
      *     tags={"Authorization"},
      *     summary="Login User Profile",
-     *     description="Retrieve the currently authenticated user's profile details.",
+     *     description="This endpoint retrieves the authenticated user's <b>profile details</b> on the Walk Into The Wild platform. It returns personal information, verification status, profile images, social links, safari stats, and privacy settings.<br>Use this API to display user-specific data like their name, avatar, followers, safari participation, etc., in a dashboard or profile view.",
      *     security={{"bearerAuth": {}}},
      *
      *     @OA\Response(
@@ -667,6 +668,7 @@ class SiteController extends RestController
      *     path="/termofuse",
      *     tags={"Authorization"},
      *     summary="Term of Use",
+     *     description = "This API retrieves the <b>Terms of Use</b> content for the Walk into the Wild platform.<br><i>Walk into the Wild</i> is a wildlife social media and travel planning platform offering services such as safari bookings, sharing experiences, and accessing adventure information in India. The <b>Terms of Use</b> outline the rules and guidelines that users must agree to and follow when using the platform and its services.<br>This use in the <b>Login Screen</b> and <b>Profile Screen Page</b> <br> <b>Note:</b> In this API we Use the <b>Authentication Token</b> (auth_token).",
      *       @OA\Response(
      *         response=200,
      *         description="Term of Use",
@@ -711,6 +713,7 @@ class SiteController extends RestController
      *     path="/privacypolicy",
      *     tags={"Authorization"},
      *     summary="Privay Policy",
+     *     description = "This API endpoint is used to retrieve the <b>Privacy Policy</b> content of the Walk into the Wild platform.<br>Walk into the Wild is a wildlife-focused social media and travel platform that helps users plan safaris, share safari experiences, and access wildlife tour information and adventures in India. The privacy policy explains how the platform collects, uses, and protects users' personal information.<br>This use in the <b>Login Screen</b> and <b>Profile Screen</b> Page<br><b>Note</b> : In this Api we use <b>Authentication Token</b> (auth_token). ",
      *      @OA\Response(
      *         response=200,
      *         description="Privay Policy",
@@ -755,6 +758,7 @@ class SiteController extends RestController
      *     path="/refundpolicy",
      *     tags={"Authorization"},
      *     summary="Refund Policy",
+     *     description = "The <b>Refund Policy API</b> is used on the <b>Refund Policy Screen</b> in the application.<br>This API returns the latest refund policy Content , which is later converted into styled text using:",
      *      @OA\Response(
      *         response=200,
      *         description="Refund Policy",
@@ -802,6 +806,75 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 
+
+
+    /**
+     * Update Token
+     *
+     * Allows updating the Firebase token.  
+     * Returns an access token upon successful authentication.
+     *
+     * @OA\Post(
+     *     path="/update-token",
+     *     tags={"Authorization"},
+     *     summary="Update Token",
+     *
+     *     description="This API updates the Firebase token in the application. Firebase tokens refresh automatically over time, so the updated token must be sent to the backend to ensure proper notification delivery.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="firebase_token",
+     *         in="query",
+     *         required=true,
+     *         description="New Firebase token (use raw value, not URL-encoded)",
+     *         style="form",
+     *         explode=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             example=""
+     *         )
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="old_firebase_token",
+     *         in="query",
+     *         required=true,
+     *         description="Old Firebase token to be replaced",
+     *         style="form",
+     *         explode=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             example=""
+     *         )
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Updated Successfully!"
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Token not found"
+     *             )
+     *         )
+     *     )
+     * )
+     */
+
     public function actionUpdateToken($firebase_token, $old_firebase_token)
     {
         if ($this->access_token) {
@@ -814,10 +887,10 @@ class SiteController extends RestController
                 return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
             }
             $message = Yii::$app->api->messageManager->getMessage('common.not_found');
-            return Yii::$app->api->sendResponse([], $message);
+            return Yii::$app->api->sendResponse([], ['message' => $message]);
         }
         $message = Yii::$app->api->messageManager->getMessage('common.invalid_request');
-        return Yii::$app->api->sendResponse([], $message);
+        return Yii::$app->api->sendResponse([], ['message' => $message]);
     }
 
     public function actionConvergentSurvey($phone, $case_id)
@@ -859,7 +932,7 @@ class SiteController extends RestController
      * @OA\Post(
      *     path="/mobile-no-verification",
      *     tags={"Authorization"},
-     *     summary="Mobile Number Verification (Draft)",
+     *     summary="Mobile Number Verification",
      *     description="Allows a user to verify their mobile number.",
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
@@ -879,7 +952,48 @@ class SiteController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="OTP Sent to your mobile number. Please check your mobile."
+     *         description="OTP Sent to your mobile number. Please check your mobile. || Mobile number is already verified.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 description="Status of the verification request",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Response message",
+     *                example="OTP Sent to your mobile number. Please check your mobile."
+     *            )
+     *        ),
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Token not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Token not found",
+     *                 example="Token not found"
+     *             ),
+     *         )
+     *     ),
+     *      @OA\Response(
+     *         response=429,
+     *         description="Rate Limit Exceeded",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Rate Limit Exceeded",
+     *                 example="Rate limit exceeded. Please try again later!"
+     *             ),
+     *         )
      *     ),
      * )
      */
@@ -999,7 +1113,7 @@ class SiteController extends RestController
      * @OA\Post(
      *     path="/verify-mobile-no",
      *     tags={"Authorization"},
-     *     summary="Verify Mobile Number using otp (Draft)",
+     *     summary="Verify Mobile Number using otp",
      *     description="Allows a user to verify their mobile number by entering OTP.",
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
@@ -1025,7 +1139,22 @@ class SiteController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Mobile Number Verified successfully!"
+     *         description="Mobile Number Verified successfully! || Your mobile number is not verified! Please verify your mobile number. || Mobile Number Already Verified!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 description="Status",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Response message",
+     *                example="Mobile Number Verified successfully!"
+     *            )
+     *        ),
      *     ),
      * )
      */
@@ -1094,12 +1223,27 @@ class SiteController extends RestController
      * @OA\Post(
      *     path="/deactivate-account",
      *     tags={"Authorization"},
-     *     summary="Deactivate Account (Draft)",
-     *     description="Allows a user to deactivate their account.",
+     *     summary="Deactivate Account",
+     *     description="Allows a user to deactivate their account. || Not Deactivated successfully!",
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
-     *         description="Deactivated successfully! We will miss you."
+     *         description="Deactivated successfully! We will miss you. || Not Deactivated successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 description="Status of the deactivation request",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Response message",
+     *                example="Deactivated successfully! We will miss you."
+     *            )
+     *        ),
      *     ),
      * )
      */
@@ -1609,6 +1753,7 @@ class SiteController extends RestController
      *     path="/refundpolicyantara",
      *     tags={"Authorization"},
      *     summary="Refund Policy Antara(Draft)",
+     *     description="This api is used in Web.", 
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
