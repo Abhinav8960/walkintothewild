@@ -9,7 +9,6 @@ use yii\filters\VerbFilter;
 use common\models\UserWishlist;
 use common\models\package\Package;
 use yii\web\NotFoundHttpException;
-use frontend\models\PackageQuoteForm;
 use frontend\models\PackageReplyForm;
 use common\interfaces\StatusInterface;
 use frontend\models\PackageCommentForm;
@@ -223,19 +222,19 @@ class DefaultController extends FrontendBaseController
      * @param [type] $id
      * @return void
      */
-    public function actionValidate($id = null)
-    {
-        $packagemodel = new PackageQuoteForm();
-        if ($id != null) {
-            $formmodel = $this->findModel($id);
-            $packagemodel = new PackageQuoteForm($formmodel);
-        }
+    // public function actionValidate($id = null)
+    // {
+    //     $packagemodel = new PackageQuoteForm();
+    //     if ($id != null) {
+    //         $formmodel = $this->findModel($id);
+    //         $packagemodel = new PackageQuoteForm($formmodel);
+    //     }
 
-        if (Yii::$app->request->isAjax && $packagemodel->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($packagemodel);
-        }
-    }
+    //     if (Yii::$app->request->isAjax && $packagemodel->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    //         return \yii\widgets\ActiveForm::validate($packagemodel);
+    //     }
+    // }
 
 
     /**

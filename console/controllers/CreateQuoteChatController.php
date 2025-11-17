@@ -15,7 +15,6 @@ use common\models\package\PackageVersion;
 use common\models\park\SafariPark;
 use common\models\MailLog;
 use common\models\GeneralModel;
-use common\models\package\PackageQuote;
 use common\models\operator\SafariOperator;
 use common\models\operator\OperatorQuote;
 
@@ -28,62 +27,62 @@ class CreateQuoteChatController extends Controller
     $this->operator_quote_chat();
   }
 
-  public function package_quote_chat()
-  {
-    $package_quotes = PackageQuote::find()->where(['status' => true])->orderBY('id DESC')->all();
-    if ($package_quotes) {
-      foreach ($package_quotes as $qoute) {
-        $is_chat_exist = Chat::find()->where(['quote_id' => $qoute->id])->andWhere(['user_id' => $qoute->created_by])->andWhere(['package_id' => $qoute->package_id])->andWhere(['recipient_user_id' => $qoute->package->safarioperator->user_id])->one();
+  // public function package_quote_chat()
+  // {
+  //   $package_quotes = PackageQuote::find()->where(['status' => true])->orderBY('id DESC')->all();
+  //   if ($package_quotes) {
+  //     foreach ($package_quotes as $qoute) {
+  //       $is_chat_exist = Chat::find()->where(['quote_id' => $qoute->id])->andWhere(['user_id' => $qoute->created_by])->andWhere(['package_id' => $qoute->package_id])->andWhere(['recipient_user_id' => $qoute->package->safarioperator->user_id])->one();
 
-        if (empty($is_chat_exist)) {
-          $package = $qoute->package;
-          $package_data = Package::find()->where(['id' => $package->id])->asArray()->one();
+  //       if (empty($is_chat_exist)) {
+  //         $package = $qoute->package;
+  //         $package_data = Package::find()->where(['id' => $package->id])->asArray()->one();
 
-          $individual_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
+  //         $individual_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
 
-          $chat = new Chat();
-          $short_msg = $message = "<b>Package: </b>" . $qoute->package->package_name . "<br/>";
-          $message .= "<b>Travelers: </b>" . $qoute->travelers . "<br/>";
-          $message .= "<b>Start Date: </b>" . date('M j, Y', strtotime($qoute->start_date)) . "<br/>";
+  //         $chat = new Chat();
+  //         $short_msg = $message = "<b>Package: </b>" . $qoute->package->package_name . "<br/>";
+  //         $message .= "<b>Travelers: </b>" . $qoute->travelers . "<br/>";
+  //         $message .= "<b>Start Date: </b>" . date('M j, Y', strtotime($qoute->start_date)) . "<br/>";
 
-          $chat->generateChatHash();
-          $chat->user_id = $qoute->created_by;
-          $chat->recipient_user_id = $package->safarioperator->user_id;
-          $chat->last_message = $short_msg;
-          $chat->last_message_at = time();
-          $chat->status = 1;
-          $chat->chat_type = 2;
-          $chat->package_id = $qoute->package_id;
-          $chat->quote_id = $qoute->id;
+  //         $chat->generateChatHash();
+  //         $chat->user_id = $qoute->created_by;
+  //         $chat->recipient_user_id = $package->safarioperator->user_id;
+  //         $chat->last_message = $short_msg;
+  //         $chat->last_message_at = time();
+  //         $chat->status = 1;
+  //         $chat->chat_type = 2;
+  //         $chat->package_id = $qoute->package_id;
+  //         $chat->quote_id = $qoute->id;
 
-          if ($chat->save(false)) {
-            $chat_message = new ChatMessage();
-            $chat_message->chat_id = $chat->id;
-            $chat_message->message = $message;
-            $chat_message->data = json_encode($package_data);
-            $chat_message->status = 1;
-            $chat_message->save();
-          }
-          //end save done quote chat
+  //         if ($chat->save(false)) {
+  //           $chat_message = new ChatMessage();
+  //           $chat_message->chat_id = $chat->id;
+  //           $chat_message->message = $message;
+  //           $chat_message->data = json_encode($package_data);
+  //           $chat_message->status = 1;
+  //           $chat_message->save();
+  //         }
+  //         //end save done quote chat
 
-          if ($package) {
-            $operator = SafariOperator::find()->where(['id' => $package->safari_operator_id])->limit(1)->one();
-            $to_mail = $operator->email;
-            $subject = 'New Quote Request for ' . $package->packagename . '';
-            $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST;
-            $req = ['username' => $operator->business_name, 'parkname' => $package->packagename];
+  //         if ($package) {
+  //           $operator = SafariOperator::find()->where(['id' => $package->safari_operator_id])->limit(1)->one();
+  //           $to_mail = $operator->email;
+  //           $subject = 'New Quote Request for ' . $package->packagename . '';
+  //           $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST;
+  //           $req = ['username' => $operator->business_name, 'parkname' => $package->packagename];
 
-            $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-            if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-              GeneralModel::sendmailfromlog($maillog_data['log_id']);
-            }
-          }
-        }
-      }
-    } else {
-      echo "package quote not found.....";
-    }
-  }
+  //           $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+  //           if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+  //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } else {
+  //     echo "package quote not found.....";
+  //   }
+  // }
 
   public function operator_quote_chat()
   {

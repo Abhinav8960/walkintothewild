@@ -1199,8 +1199,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 									'/package/profile/faq',
 									'/package/profile/create-faq',
 									'/package/profile/faq-update',
-									'/package/quote/index',
-									'/package/quote',
 									'/package/preview/index',
 									'/packageapproval/default/index',
 									'/packageapproval/default/view',
@@ -1220,8 +1218,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 												'/package/profile/faq',
 												'/package/profile/create-faq',
 												'/package/profile/faq-update',
-												'/package/quote/index',
-												'/package/quote',
 												'/package/preview/index',
 												'/packageapproval/default/index',
 												'/packageapproval/default/view',
@@ -1245,10 +1241,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 													'/package/profile/faq-update',
 													'/package/preview/index',
 												)) ? 'active' : '' ?>" href="/package/default/index">Package List</a></li>
-					<!-- <li><a class="slide-item <?= in_array($active_url, array(
-														'/package/quote/index',
-														'/package/quote',
-													)) ? 'active' : '' ?>" href="/package/quote/index">Package Quote</a></li> -->
 					<!-- <li><a class="slide-item <?= in_array($active_url, array(
 														'/packageapproval/default/index',
 														'/packageapproval/default/view',
@@ -1420,7 +1412,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 			<li class="slide <?= in_array($active_url, array(
 									'/reportsection/default/index',
 									'/reportsection/operator-quote-request/index',
-									'/reportsection/package-quote-request/index',
 									'/reportsection/comment-report/index',
 									'/reportsection/comment-report/reply',
 									'/reportsection/share-safari-report/index',
@@ -1428,7 +1419,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/reportsection/default/index',
 												'/reportsection/operator-quote-request/index',
-												'/reportsection/package-quote-request/index',
 												'/reportsection/comment-report/index',
 												'/reportsection/comment-report/reply',
 												'/reportsection/share-safari-report/index'
@@ -1438,7 +1428,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/comment-report/index')) ? 'active' : '' ?>" href="/reportsection/comment-report/index">Comment Report</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/default/index')) ? 'active' : '' ?>" href="/reportsection/default/index">Joined Report</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/operator-quote-request/index')) ? 'active' : '' ?>" href="/reportsection/operator-quote-request/index">Operator Quote Report</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/package-quote-request/index')) ? 'active' : '' ?>" href="/reportsection/package-quote-request/index">Package Quote Report</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/comment-report/reply')) ? 'active' : '' ?>" href="/reportsection/comment-report/reply">Reply Report</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/share-safari-report/index')) ? 'active' : '' ?>" href="/reportsection/share-safari-report/index">Share Safari Report</a></li>
 
