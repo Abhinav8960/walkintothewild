@@ -1463,7 +1463,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 									'/log/call-log/index',
 									'/trierror/site-pages',
 									'/trierror/site-pages/view',
-									'/trierror/site-untraced-request',
 									'/trierror/default/front-index',
 									'/portalsetting/log/index',
 									'/portalsetting/log/front',
@@ -1484,7 +1483,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 												'/trierror/site-pages/view',
 												'/log/sms-log/index',
 												'/log/call-log/index',
-												'/trierror/site-untraced-request',
 												'/trierror/default/front-index',
 												'/portalsetting/log/index',
 												'/portalsetting/log/front',
@@ -1503,7 +1501,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/log/console-log')) ? 'active' : '' ?>" href="/portalsetting/log/console-log">Console Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/portalsetting/log/front')) ? 'active' : '' ?>" href="/portalsetting/log/front">Frontend Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/trierror/default/front-index')) ? 'active' : '' ?>" href="/trierror/default/front-index">Frontend Request Error</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/trierror/site-untraced-request')) ? 'active' : '' ?>" href="/trierror/site-untraced-request">Frontend Request Untraced</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/log/default/index', '/log/default/view')) ? 'active' : '' ?>" href="/log/default/index">Mail Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/log/notification-log/index')) ? 'active' : '' ?>" href="/log/notification-log/index">Notification Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/log/sms-log/index')) ? 'active' : '' ?>" href="/log/sms-log/index">SMS Log</a></li>
