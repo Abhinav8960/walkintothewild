@@ -785,7 +785,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
-        $chat = Chat::find()->andWhere(['or', ['useer_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
+        $chat = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
         if (!$chat) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
             return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => $message], 200);
