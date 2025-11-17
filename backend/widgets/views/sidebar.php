@@ -409,8 +409,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 											'/park/safari/profile/updatehowtoreach',
 											'/park/safari/profile/map',
 											'/park/safari/profile/suggestions',
-											'/park/operator-quote/index',
-											'/park/operator-quote/view',
 											'/park/safari-suggestion/index',
 											'/park/safari/default/parkfromfile',
 										)) ? 'is-expanded' : '' ?>">
@@ -439,8 +437,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 														'/park/safari/profile/updatehowtoreach',
 														'/park/safari/profile/map',
 														'/park/safari/profile/suggestions',
-														'/park/operator-quote/index',
-														'/park/operator-quote/view',
 														'/park/safari-suggestion/index',
 														'/park/safari/default/parkfromfile'
 													)) ? 'active' : '' ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
@@ -474,10 +470,7 @@ $active_url = '/' . Yii::$app->requestedRoute;
 															'/park/safari/default/parkfromfile'
 														)) ? 'active' : '' ?>" href="/park/safari/default/index">Safari Park</a></li>
 
-							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-																'/park/operator-quote/index',
-																'/park/operator-quote/view',
-															)) ? 'active' : '' ?>" href="/park/operator-quote/index">Operator Quotes</a></li> -->
+							
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/park/safari-suggestion/index',
 														)) ? 'active' : '' ?>" href="/park/safari-suggestion/index">Safari Suggestion</a></li>
@@ -897,7 +890,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 											'/operator/safari-operator/index/view',
 											'/operator/safari-operator/index',
 											'/operator/safari-operator/view',
-											'/operator/safari-operator/quote',
 											'/operator/safari-operator/review',
 											'/operator/safari-operator/operator-parks',
 											'/operator/safari-operator/bank-and-kyc-details',
@@ -930,7 +922,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array(
 															'/operator/safari-operator/index',
 															'/operator/safari-operator/view',
-															'/operator/safari-operator/quote',
 															'/operator/safari-operator/review',
 															'/operator/safari-operator/operator-parks',
 															'/operator/safari-operator/bank-and-kyc-details',
@@ -1411,14 +1402,12 @@ $active_url = '/' . Yii::$app->requestedRoute;
 		<?php if (Yii::$app->user->identity->is_admin): ?>
 			<li class="slide <?= in_array($active_url, array(
 									'/reportsection/default/index',
-									'/reportsection/operator-quote-request/index',
 									'/reportsection/comment-report/index',
 									'/reportsection/comment-report/reply',
 									'/reportsection/share-safari-report/index',
 								)) ? 'is-expanded' : '' ?>">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												'/reportsection/default/index',
-												'/reportsection/operator-quote-request/index',
 												'/reportsection/comment-report/index',
 												'/reportsection/comment-report/reply',
 												'/reportsection/share-safari-report/index'
@@ -1427,7 +1416,6 @@ $active_url = '/' . Yii::$app->requestedRoute;
 					<li class="side-menu__label1"><a href="javascript:void(0);">Report Section</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/comment-report/index')) ? 'active' : '' ?>" href="/reportsection/comment-report/index">Comment Report</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/default/index')) ? 'active' : '' ?>" href="/reportsection/default/index">Joined Report</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/operator-quote-request/index')) ? 'active' : '' ?>" href="/reportsection/operator-quote-request/index">Operator Quote Report</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/comment-report/reply')) ? 'active' : '' ?>" href="/reportsection/comment-report/reply">Reply Report</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array('/reportsection/share-safari-report/index')) ? 'active' : '' ?>" href="/reportsection/share-safari-report/index">Share Safari Report</a></li>
 

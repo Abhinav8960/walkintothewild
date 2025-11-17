@@ -12,7 +12,6 @@ use business\components\AuthHandler;
 use common\models\CustomLoginForm;
 use common\models\leads\Lead;
 use common\models\MailLog;
-use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorPark;
 use common\models\package\Package;
@@ -111,7 +110,7 @@ class SiteController extends Controller
         $park_ids = array_column($parks_count, 'park_id');
         $demanding_parks = SafariPark::find()->where(['id' => $park_ids])->andWhere(['status' => SafariPark::STATUS_ACTIVE])->all();
 
-        $operator_quotes = OperatorQuote::find()->select(['id', 'quote_count' => new Expression('COUNT(*)')])->where(['id' => $park_ids, 'status' => OperatorQuote::STATUS_ACTIVE])->groupBy('id')->asArray()->all();
+        // $operator_quotes = OperatorQuote::find()->select(['id', 'quote_count' => new Expression('COUNT(*)')])->where(['id' => $park_ids, 'status' => OperatorQuote::STATUS_ACTIVE])->groupBy('id')->asArray()->all();
 
         return $this->render('index', [
             'leads' => $leads,
@@ -119,7 +118,7 @@ class SiteController extends Controller
             'sightings' => $sightings,
             'packages' => $packages,
             'demanding_parks' => $demanding_parks,
-            'operator_quotes' => $operator_quotes,
+            // 'operator_quotes' => $operator_quotes,
             'safari_operator' => $safarioperator,
         ]);
     }

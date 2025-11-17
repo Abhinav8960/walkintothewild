@@ -61,24 +61,6 @@ use yii\helpers\Url;
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3">
-                <div class="mainCard py-3 px-3">
-                    <div class="cardChild">
-                          <div class="text-card mb-3">
-                            <p>Quotes</p>
-                        </div>
-                        <div class="numbwrCount d-flex gap-5">
-                              <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #AAAAAA;">
-                                <img src="<?= $this->params['baseurl'] ?>/images/qut.png"
-                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
-                            </div>
-                                <h3 class="">
-                                    <?= isset($model->quotescount) ? $model->quotescount : ''; ?>
-                                </h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     

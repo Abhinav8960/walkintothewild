@@ -28,7 +28,6 @@ use common\models\leads\form\PartnerLeadForm;
 use common\models\MailLog;
 use common\models\operator\form\SafariOperatorReportProfileForm;
 use common\models\operator\SafariOperatorReportProfile;
-use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorRatingReportForm;
 use frontend\models\SafariOperatorReviewForm;
 use yii\data\ActiveDataProvider;

@@ -18,7 +18,6 @@ use yii\web\NotFoundHttpException;
 use backend\components\AuthHandler;
 use common\interfaces\StatusInterface;
 use common\models\park\SafariParkRating;
-use common\models\operator\OperatorQuote;
 use common\models\package\PackageComment;
 use common\models\package\PackageVersion;
 use common\models\operator\SafariOperator;

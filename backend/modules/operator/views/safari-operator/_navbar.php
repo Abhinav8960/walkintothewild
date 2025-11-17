@@ -56,21 +56,6 @@ use yii\helpers\Url;
                     </div>
                 </div>
             </div>
-
-            <div class="col-2">
-                <div class="card">
-                    <div class="ps-4 pt-4 pe-3 pb-4">
-                        <div class="">
-                            <h6 class="mb-2 tx-12 ">Quotes</h6>
-                        </div>
-                        <div class="pb-0 mt-0">
-                            <div class="d-flex">
-                                <h4 class="tx-20 font-weight-semibold mb-2"><?= isset($model->quotescount) ? $model->quotescount : ''; ?></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
