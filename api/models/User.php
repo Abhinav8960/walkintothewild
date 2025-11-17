@@ -240,7 +240,7 @@ class User extends \common\models\User
     public function getOrganized_safari_count()
     {
         if ($this->id == \Yii::$app->params['active_user_id']) {
-            $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->count();
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT, ShareSafari::STATUS_SUSPEND]])->count();
             return $organized_by;
         } else {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->count();
@@ -253,7 +253,7 @@ class User extends \common\models\User
             $joined_by = ShareSafariIntrested::find()->where(['share_safari_intrested.user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
             return $joined_by;
         } else {
-            $joined_by = ShareSafariIntrested::find()->where(['share_safari_intrested.user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
+            $joined_by = ShareSafariIntrested::find()->where(['share_safari_intrested.user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
             return $joined_by;
         }
     }

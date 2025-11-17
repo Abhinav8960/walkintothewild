@@ -95,14 +95,14 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
     public function getPackage_count()
     {
-        return Package::find()->where(['safari_operator_id' => $this->id])->andWhere(['not', ['live_version' => null]])->count();
+        return Package::find()->where(['safari_operator_id' => $this->id])->andWhere(['not', ['live_version' => null]])->andWhere(['package.status' => 1])->count();
     }
 
 
     public function getShared_safari_count()
     {
         return ShareSafari::find()->where([
-            'host_user_id' => $this->id,
+            'safari_operator_id' => $this->id,
             'type' => ShareSafari::TYPE_FIXED_DEPARTURE
         ])->andWhere(['IN', 'status', [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
     }

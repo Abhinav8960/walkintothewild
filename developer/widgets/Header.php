@@ -20,12 +20,13 @@ class Header extends Widget
             $this->display = false;
         }
 
-        $user = User::find()->where(['id'=>Yii::$app->user->identity->id,'status'=>User::STATUS_ACTIVE])->andWhere(['is_developer'=>1])->one();
-
-        if ($this->display) {
-            return $this->render('header',[
-                'user'=>$user
-            ]);
+        if (Yii::$app->user->identity) {
+            $user = User::find()->where(['id' => Yii::$app->user->identity->id, 'status' => User::STATUS_ACTIVE])->andWhere(['is_developer' => 1])->one();
+            if ($this->display) {
+                return $this->render('header', [
+                    'user' => $user
+                ]);
+            }
         }
     }
 }

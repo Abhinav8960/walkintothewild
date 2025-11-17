@@ -105,7 +105,7 @@ use yii\helpers\Url;
             <li><a href="<?= Url::toRoute(['/operator/safari-operator/operator-parks', 'id' => $model->id]) ?>" class="nav-link <?= $active_navbar == 'operator-parks' ? 'active' : '' ?>">Operator Parks</a></li>
             <li><a href="<?= Url::toRoute(['/operator/safari-operator/bank-and-kyc-details', 'id' => $model->id]) ?>" class="nav-link <?= $active_navbar == 'bank-and-kyc-details' ? 'active' : '' ?>">Bank and Kyc Details</a></li>
             <li><a href="<?= Url::toRoute(['/operator/safari-operator/update-details', 'id' => $model->id]) ?>" class="nav-link <?= $active_navbar == 'update-details' ? 'active' : '' ?>">Update Details</a></li>
-
+            <li><a href="<?= Url::toRoute(['/operator/safari-operator/stay-category', 'id' => $model->id]) ?>" class="nav-link <?= $active_navbar == 'stay-category' ? 'active' : '' ?>">Safari Operator Stay Category</a></li>
         </ul>
     </div>
 </div>

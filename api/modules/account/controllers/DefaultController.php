@@ -74,6 +74,62 @@ class DefaultController extends RestController
      * Renders the index view for the module
      * @return string
      */
+
+        /**
+     * Post General Information
+     *
+     *
+     * @OA\Post(
+     *     path="/account",
+     *     tags={"Account"},
+     *     summary="Update General Information",
+     *     description="Allows update their own profile.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="name",type="string",example=""),
+     *                 @OA\Property(property="mobile_no",type="integer",example=""),
+     *                 @OA\Property(property="user_handle",type="string",example=""),
+     *                 @OA\Property(property="date_of_birth",type="string",example=""),
+     *                 @OA\Property(property="gender",type="string",example=""),
+     *                 @OA\Property(property="user_bio",type="string",example=""),
+     *                 @OA\Property(property="about",type="string",example=""),
+     *                 @OA\Property(property="facebook_url",type="string",example=""),
+     *                 @OA\Property(property="x_url",type="string",example=""),
+     *                 @OA\Property(property="insta_url",type="string",example=""),
+     *                 @OA\Property(property="youtube_url",type="string",example=""),
+     *                 @OA\Property(property="website_url",type="string",example="")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Information Updated successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found."
+     *     )
+     * )
+     */
     public function actionIndex()
     {
         $user_model = $this->userinfo;
@@ -96,6 +152,39 @@ class DefaultController extends RestController
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
+
+
+
+          /**
+     * Post Profile Photo 
+     *
+     *
+     * @OA\Post(
+     *     path="/account/profile-photo",
+     *     tags={"Account"},
+     *     summary="Update Profile Photo",
+     *     description="Allows update their own profile photo.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="profile_image",type="file",example="")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Profile Photo Updated successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found."
+     *     )
+     * )
+     */
     public function actionProfilePhoto()
     {
         $user_model = $this->userinfo;
@@ -120,6 +209,38 @@ class DefaultController extends RestController
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
+
+
+             /**
+     * Post Cover Photo 
+     *
+     *
+     * @OA\Post(
+     *     path="/account/cover-photo",
+     *     tags={"Account"},
+     *     summary="Update Cover Photo",
+     *     description="Allows update their own cover photo.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="cover_image",type="file",example="")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Cover Photo Updated successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found."
+     *     )
+     * )
+     */
 
     public function actionCoverPhoto()
     {
@@ -229,6 +350,37 @@ class DefaultController extends RestController
     // }
 
 
+                 /**
+     * Post Privacy  
+     *
+     *
+     * @OA\Post(
+     *     path="/account/privacy",
+     *     tags={"Account"},
+     *     summary="Update privacy",
+     *     description="Allows update their privacy.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="gender_privacy",type="string",example=""),
+     *                  @OA\Property(property="email_privacy",type="string",example="")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Privacy Updated successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found."
+     *     )
+     * )
+     */
     public function actionPrivacy()
     {
         $user_model = $this->userinfo;
@@ -270,6 +422,63 @@ class DefaultController extends RestController
     // }
 
 
+    /**
+     * Get Package wishlist
+     *
+     *
+     * @OA\Get(
+     *     path="/account/wishlist-package",
+     *     tags={"Account"},
+     *     summary="Get Package  Wishliist",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation. Returns paginated package Wishlist.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="package",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="total", type="integer", example=194),
+     *                     @OA\Property(property="page", type="integer", example=1),
+     *                     @OA\Property(property="pageSize", type="integer", example=5),
+     *                     @OA\Property(property="total_page", type="integer", example=39),
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionWishlistPackage()
     {
 
@@ -287,6 +496,64 @@ class DefaultController extends RestController
      * Renders the index view for the module
      * @return string
      */
+
+        /**
+     * Get Sharesafari wishlist
+     *
+     *
+     * @OA\Get(
+     *     path="/account/wishlist-shared-safari",
+     *     tags={"Account"},
+     *     summary="Get Shared Safari  Wishliist",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation. Returns paginated shared safari wishlist.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="share_safari",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="total", type="integer", example=194),
+     *                     @OA\Property(property="page", type="integer", example=1),
+     *                     @OA\Property(property="pageSize", type="integer", example=5),
+     *                     @OA\Property(property="total_page", type="integer", example=39),
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionWishlistSharedSafari()
     {
 
@@ -301,6 +568,28 @@ class DefaultController extends RestController
         return $this->querySender($dataProvider, $rootIndexName = "share_safari");
     }
 
+
+    /**
+     * Post Delete User Profile
+     *
+     *
+     * @OA\Post(
+     *     path="/account/profile-delete",
+     *     tags={"Account"},
+     *     summary="Delete the user profile",
+     *     description="update status zero on profile delete",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Profile deleted successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found."
+     *     )
+     * )
+     */
+    
     public function actionProfileDelete()
     {
         $user_model = $this->userinfo;
@@ -319,6 +608,29 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
+
+
+    /**
+     * Post Privacy Policy Acknowledgement
+     *
+     *
+     * @OA\Post(
+     *     path="/account/privacy-policy-acknowledge",
+     *     tags={"Account"},
+     *     summary="Update privacy policy acknowledgement",
+     *     description="update status true if privacy policy acknowledged ",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Privacy acknowledged successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found."
+     *     )
+     * )
+     */
+    
     public function actionPrivacyPolicyAcknowledge()
     {
         $user_model = $this->userinfo;

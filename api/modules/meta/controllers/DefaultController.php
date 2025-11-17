@@ -18,6 +18,8 @@ use api\models\meta\MetaSafariSessionSearch;
 use api\models\meta\MetaStayCategorySearch;
 use api\models\meta\MetaTermConditionTypeSearch;
 use api\models\meta\MetaZoneTypeSearch;
+use OpenApi\Annotations as OA;
+
 
 /**
  * Site controller
@@ -90,6 +92,60 @@ class DefaultController extends RestController
 
         return Yii::$app->api->sendResponse($data);
     }
+  
+     /**
+     * Get Accommodation 
+     *
+     *
+     * @OA\Get(
+     *     path="/meta/accommodation",
+     *     tags={"Meta"},
+     *     summary="Get Accommodation List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation. Returns paginated Accommodation list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaAccommodation",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Hotels"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
 
     public function actionAccommodation()
     {
@@ -97,6 +153,58 @@ class DefaultController extends RestController
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaAccommodation");
     }
 
+    /**
+     * Get Animal Type
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/animal-type",
+     *     summary="Get AnimalType List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns paginated Animal Type list.",
+     *        @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaAnimalType",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Rare/Extinct"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionAnimalType()
     {
         $searchModel = new MetaAnimalTypeSearch();
@@ -109,11 +217,65 @@ class DefaultController extends RestController
     //     return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaBirdType");
     // }
 
-    public function actionLocation()
-    {
-        $searchModel = new MetaLocationSearch();
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaLocation");
-    }
+    // public function actionLocation()
+    // {
+    //     $searchModel = new MetaLocationSearch();
+    //     return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaLocation");
+    // }
+
+
+     /**
+     * Get Operator Credibilty
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/operator-credibility",
+     *     summary="Get Operator Credibility List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns paginated Operator Credibility list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaOperatorCredability",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Wildlife Photographer"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
 
     public function actionOperatorCredibility()
     {
@@ -121,23 +283,235 @@ class DefaultController extends RestController
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaOperatorCredibility");
     }
 
+    /**
+     * Get Other WildLife Activities
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/other-wildlife-activities",
+     *     summary="Get Wildlife Activities List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns paginated Other Wildlife Activities list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaOtherWildlifeActivities",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Trekking"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionOtherWildlifeActivities()
     {
         $searchModel = new MetaOtherWildlifeActivitiesSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaOtherWildlifeActivities");
     }
 
+    /**
+     * Get Package Range
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/package-range",
+     *     summary="Get Package Range List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns paginated Package Range list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaPackageRange",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Economical"),
+     *                         @OA\Property(property="min-range", type="integer", example="1000"),
+     *                         @OA\Property(property="max-range", type="integer", example="5000"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionPackageRange()
     {
         $searchModel = new MetaPackageRangeSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaPackageRange");
     }
 
+    /**
+     * Get Park Trip Slot
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/park-trip-slot",
+     *     summary="Get Park Trip Slot List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns paginated Park Trip Slot list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaParkTripSlot",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Morning"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
+
     public function actionParkTripSlot()
     {
         $searchModel = new MetaParkTripSlotSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaParkTripSlot");
     }
+
+    /**
+     * Get Safari Session
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/safari-session",
+     *     summary="Get Safari Session List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns paginated Safari Session list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaSafariSession",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Morning"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
 
     public function actionSafariSession()
     {
@@ -154,11 +528,118 @@ class DefaultController extends RestController
     //     return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaStayCategory");
     // }
 
+    /**
+     * Get Term Condition Type
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/term-condition-type",
+     *     summary="Get Term Condition Type List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns paginated Term Condition Type list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaTermConditionType",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Safari Operator Type"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
+
     public function actionTermConditionType()
     {
         $searchModel = new MetaTermConditionTypeSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaTermConditionType");
     }
+
+    /**
+     * Get Zone Type
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/zone-type",
+     *     summary="Get Zone Type List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns paginated Zone Type list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaZone",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Buffer Zone"),
+     *                         @OA\Property(property="color_code", type="string", example="Red"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
 
     public function actionZoneType()
     {
@@ -166,6 +647,68 @@ class DefaultController extends RestController
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaZoneType");
     }
 
+
+    /**
+     * Get Stay Category
+     * 
+     * @OA\GET(
+     *     tags={"Meta"},
+     *     path="/meta/stay-category",
+     *     summary="Get Stay Category List",
+     *     @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="pageSize",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *       )
+     *     ), 
+     *     @OA\Response(
+     *        response=200,
+     *        description="Successful operation. Returns paginated Stay Category list.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="MetaStayCategory",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="shared_safari",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Economical"),
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     property="package",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="standard"),
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Not Found"
+     *     )
+     * )
+     */
     public function actionStayCategory()
     {
         $shareSafariModel = new MetaStayCategorySearch();

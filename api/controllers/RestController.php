@@ -509,4 +509,5 @@ class RestController extends Controller
         $dataProvider->pagination = false;
         return $this->reponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord);
     }
+
 }

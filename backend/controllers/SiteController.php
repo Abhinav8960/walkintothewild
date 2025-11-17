@@ -2,39 +2,41 @@
 
 namespace backend\controllers;
 
+use Yii;
+use yii\web\Response;
 use api\components\Api;
+use yii\web\Controller;
+use common\models\SmsLog;
+use common\models\CallLog;
+use common\models\MailLog;
+use yii\filters\VerbFilter;
+use common\models\LoginForm;
+use yii\filters\AccessControl;
+use common\models\cms\blog\Blog;
 use api\components\MessageManager;
+use common\models\package\Package;
+use yii\web\NotFoundHttpException;
 use backend\components\AuthHandler;
 use common\interfaces\StatusInterface;
-use common\models\cms\blog\Blog;
-use common\models\operator\OperatorQuote;
-use common\models\operator\SafariOperator;
-use common\models\package\Package;
 use common\models\package\PackageQuote;
-use common\models\sharesafari\ShareSafari;
-use common\models\LoginForm;
-use common\models\MailLog;
-use common\models\operator\SafariOperatorRating;
+use common\models\park\SafariParkRating;
+use common\models\operator\OperatorQuote;
 use common\models\package\PackageComment;
 use common\models\package\PackageVersion;
-use common\models\package\PackageVersionSearch;
-use common\models\park\SafariParkRating;
-use common\models\partnergallery\PartnerGallery;
-use common\models\postscomment\UserPostComment;
-use common\models\sharesafari\ShareSafariComment;
-use common\models\sharesafari\ShareSafariVersion;
+use common\models\operator\SafariOperator;
+use common\models\sharesafari\ShareSafari;
+use common\models\urlshortner\UrlShortner;
 use common\models\sighting\SightingComment;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\web\Controller;
-use Yii;
+use Google\Auth\CredentialSource\UrlSource;
 // use common\models\trierror\BackendErrorLog;
 // use common\models\trierror\form\BackendErrorLogForm;
 use common\models\trierror\form\ErrorLogForm;
-use common\models\urlshortner\UrlShortner;
-use Google\Auth\CredentialSource\UrlSource;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
+use common\models\package\PackageVersionSearch;
+use common\models\postscomment\UserPostComment;
+use common\models\operator\SafariOperatorRating;
+use common\models\partnergallery\PartnerGallery;
+use common\models\sharesafari\ShareSafariComment;
+use common\models\sharesafari\ShareSafariVersion;
 
 /**
  * Site controller
@@ -105,6 +107,10 @@ class SiteController extends Controller
         $sighting_model = SightingComment::find()->where(['flaged' => 1, 'deleted_by' => 0])->count();
         $share_safari_flag_model = ShareSafariComment::find()->where(['flaged' => 1, 'deleted_by' => 0])->count();
         $package_flag_model = PackageComment::find()->where(['flaged' => 1])->andWhere(['deleted_by' => 0])->count();
+
+        $last_sms_status = SmsLog::find()->orderby(['id' => SORT_DESC])->one();
+        $last_call_status = CallLog::find()->orderby(['id' => SORT_DESC])->one();
+
         return $this->render('index', [
             'package_model' => $package_model,
             'fixed_departure_model' => $fixed_departure_model,
@@ -115,6 +121,8 @@ class SiteController extends Controller
             'sighting_model' => $sighting_model,
             'share_safari_flag_mmodel' => $share_safari_flag_model,
             'package_flag_model' => $package_flag_model,
+            'last_sms_status' => $last_sms_status,
+            'last_call_status' => $last_call_status,
         ]);
     }
 
@@ -252,7 +260,7 @@ class SiteController extends Controller
             }
             return $this->redirect($url->shortner_url, $url->code ?? '302');
         }
-        $message = Yii::$app->messageManager->getMessage('common.not_found',['{var}' => 'Short URL']);
+        $message = Yii::$app->messageManager->getMessage('common.not_found', ['{var}' => 'Short URL']);
         throw new NotFoundHttpException($message);
     }
 

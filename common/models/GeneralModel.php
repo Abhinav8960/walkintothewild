@@ -1981,7 +1981,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $decrypted_data;
     }
 
-    public static function maskContactInfoInString(?string $text=''): string
+    public static function maskContactInfoInString(?string $text = ''): string
     {
 
         // Define a mapping for number words to digits
@@ -2273,5 +2273,63 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function masterpackagetag()
     {
         return ArrayHelper::map(MasterPackageTag::find()->where(['status' => 1])->all(), 'id', 'tag_name');
+    }
+
+    public static function tripbudget($only_options = false)
+    {
+        $data =  [
+            [
+                'id' => 1,
+                'value' => 'Under ₹20,000'
+            ],
+            [
+                'id' => 2,
+                'value' => '₹20,000 - ₹40,000'
+            ],
+            [
+                'id' => 3,
+                'value' => '₹40,000 - ₹70,000'
+            ],
+            [
+                'id' => 4,
+                'value' => '₹70,000 - ₹1,00,000'
+            ],
+            [
+                'id' => 5,
+                'value' => 'Above ₹1,00,000'
+            ],
+        ];
+
+        if ($only_options) {
+            return \yii\helpers\ArrayHelper::map($data, 'id', 'value');
+        }
+        return $data;
+    }
+
+    public static function planningtype($only_options = false)
+    {
+        $data = [
+            [
+                'id' => 1,
+                'value' => 'Immediately / This Week'
+            ],
+            [
+                'id' => 2,
+                'value' => 'Within this month'
+            ],
+            [
+                'id' => 3,
+                'value' => 'Just checking options'
+            ],
+            [
+                'id' => 4,
+                'value' => 'Not Planning right now'
+            ],
+        ];
+
+        if ($only_options) {
+            return \yii\helpers\ArrayHelper::map($data, 'id', 'value');
+        }
+        return $data;
     }
 }

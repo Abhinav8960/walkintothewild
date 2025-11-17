@@ -156,6 +156,45 @@ $this->params['title'] = $this->title;
 
             </div>
         </div>
+
+
+
+        <div class="col-xl-12">
+            <!-- BEGIN row new operator -->
+            <strong>
+                <p>API Services Status</p>
+            </strong>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
+                <!-- BEGIN col-6 -->
+                <div class="col">
+                    <a style="text-decoration:none;" href="<?= Url::toRoute(['/log/sms-log/index']) ?>">
+                        <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
+                            <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+                                <img src="<?= $this->params['baseurl'] ?>/img/icon/order.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 50px">
+                            </div>
+                            <div class="card-body position-relative">
+                                <h5 class=" text-opacity-80 mb-3 fs-16px">SMS</h5>
+                                <div class="  text-opacity-80 text-end colorammount"> Last Status: <?= $last_sms_status->statuslabels ?? '-' ?></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a style="text-decoration:none;" href="<?= Url::toroute(['/log/call-log/index']) ?>">
+                        <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
+                            <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+                                <img src="<?= $this->params['baseurl'] ?>/img/icon/order.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 50px">
+                            </div>
+                            <div class="card-body position-relative">
+                                <h5 class="text-opacity-80 mb-3 fs-16px">Call</h5>
+                                <div class=" text-opacity-80 text-end colorammount"> Last Status: <?= $last_call_status->callstatuslabel ?? '-' ?></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <style>

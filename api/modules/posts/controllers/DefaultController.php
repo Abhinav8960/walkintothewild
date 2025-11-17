@@ -85,6 +85,45 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts");
     }
 
+    /**
+     * Post Image
+     *
+     * Allows users to post image.
+     *
+     * @OA\Post(
+     *     path="/posts/create",
+     *     tags={"User Post"},
+     *     summary="Post Image",
+     *     description="Allows users to post image.",
+     *     security={{"bearerAuth": {}}},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"caption","file"},
+     *                 @OA\Property(
+     *                     property="caption",
+     *                     type="string",
+     *                     description="Enter Caption",
+     *                     example=""
+     *                 ),
+     *                  @OA\Property(
+     *                     property="file",
+     *                     type="string",
+     *                     format="binary",
+     *                     description="Upload Post",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post added successfully!"
+     *     )
+     * )
+     */
     public function actionCreate()
     {
         $model = new UserPostsImageForm();
@@ -113,8 +152,8 @@ class DefaultController extends RestController
 
                 if ($model->user_image_model->save()) {
                     $active_followers = $model->user_image_model->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->asArray()->all();
-                    if(!empty($active_followers)){
-                    new \common\events\post\PostCreatedByUser($active_followers,$model->user_image_model->user->name);
+                    if (!empty($active_followers)) {
+                        new \common\events\post\PostCreatedByUser($active_followers, $model->user_image_model->user->name);
                     }
                     $model->user_image_model->savehistory();
                     $message = Yii::$app->api->messageManager->getMessage('post.create_post.post_added');
@@ -129,14 +168,33 @@ class DefaultController extends RestController
     }
 
     /**
+     * Get Post View
      *
-     * @return string
+     *
+     * @OA\Get(
+     *     path="/posts/view",
+     *     tags={"User Post"},
+     *     summary="Get Post View (Draft)",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="slug to query single post",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post Not found!",
+     *     ),
+     * )
      */
     public function actionView($id)
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $searchModel = new UserPostSearch();
@@ -144,12 +202,55 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts", $additionalSearchQueryParams = [], $singleRecord = true);
     }
 
+    /**
+     * Post Comment 
+     *
+     * Allows users to comment on post.
+     *
+     * @OA\Post(
+     *     path="/posts/comment",
+     *     tags={"User Post"},
+     *     summary="Comment on Post (Draft)",
+     *     description="Allows users to comment on Post.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"comment"},
+     *                 @OA\Property(
+     *                     property="comment",
+     *                     type="string",
+     *                     description="Enter Comment",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Comment submitted successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post Not Found!"
+     *     )
+     * )
+     */
 
     public function actionComment($id)
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -164,16 +265,44 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
+    /**
+     * Post Delete 
+     *
+     * Allows users to Delete Post.
+     *
+     * @OA\Post(
+     *     path="/posts/post-delete",
+     *     tags={"User Post"},
+     *     summary="Delete (Draft)",
+     *     description="Allows users to Delete Post.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post Delete successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post Not Found!"
+     *     )
+     * )
+     */
     public function actionPostDelete($id)
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo) {
             if ($this->userinfoId != $userpost->user_id) {
-                $message = Yii::$app->api->messageManager->getMessage('common.delete_restricted',['{var}'=>'Post']);
+                $message = Yii::$app->api->messageManager->getMessage('common.delete_restricted', ['{var}' => 'Post']);
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
@@ -187,12 +316,61 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
-
+    /**
+     * Post Reply 
+     *
+     * Allows users to reply on comment in Post.
+     *
+     * @OA\Post(
+     *     path="/posts/reply",
+     *     tags={"User Post"},
+     *     summary="Reply on comment in post (Draft)",
+     *     description="Allows users to reply on comment in Post",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *      @OA\Parameter(
+     *         name="parent_id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post Comment",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"comment"},
+     *                 @OA\Property(
+     *                     property="comment",
+     *                     type="string",
+     *                     description="Enter Comment",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reply submitted successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post Not Found!"
+     *     )
+     * )
+     */
     public function actionReply($id, $parent_id)
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -212,7 +390,34 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
     }
 
-
+    /**
+     * Like Comment or Removed Liked
+     *
+     * Allows users to liked comment or removed that.
+     *
+     * @OA\Post(
+     *     path="/posts/comment-like",
+     *     tags={"User Post"},
+     *     summary="Liked comment or removed that (Draft)",
+     *     description="Allows users to liked comment or removed that",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="user_post_comment_id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post Comment",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Comment or Reply Liked successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post Not Found!"
+     *     )
+     * )
+     */
     public function actionCommentLike($user_post_comment_id)
     {
 
@@ -224,7 +429,7 @@ class DefaultController extends RestController
             $like->user_post_comment_id = $user_post_comment_id;
             $like->status = UserPostCommentLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.like_success',['{var}'=> 'Comment or Reply']);
+                $message = Yii::$app->api->messageManager->getMessage('common.like_success', ['{var}' => 'Comment or Reply']);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => $message]);
             }
         } else {
@@ -234,12 +439,39 @@ class DefaultController extends RestController
         }
     }
 
-
+    /**
+     * Like Post or Removed Liked
+     *
+     * Allows users to liked Post or removed that.
+     *
+     * @OA\Post(
+     *     path="/posts/user-post-like",
+     *     tags={"User Post"},
+     *     summary="Liked Post or removed that (Draft)",
+     *     description="Allows users to liked Post or removed that",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post Liked successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post Not Found!"
+     *     )
+     * )
+     */
     public function actionUserPostLike($id)
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -252,7 +484,7 @@ class DefaultController extends RestController
             $like->version = $userpost->version;
             $like->status = UserPostLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.like_success',['{var}'=> 'Post']);
+                $message = Yii::$app->api->messageManager->getMessage('common.like_success', ['{var}' => 'Post']);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => $message]);
             }
         } else {
@@ -262,11 +494,54 @@ class DefaultController extends RestController
         }
     }
 
+    /**
+     * Post Report 
+     *
+     * Allows users to report Post.
+     *
+     * @OA\Post(
+     *     path="/posts/user-post-report",
+     *     tags={"User Post"},
+     *     summary="Report post (Draft)",
+     *     description="Allows users to report Post",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"message"},
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Enter Message",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reported successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post Not Found!"
+     *     )
+     * )
+     */
     public function actionUserPostReport($id)
     {
         $post = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$post) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -290,11 +565,56 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
+    /**
+     * Post Image Update
+     *
+     * Allows users to update post.
+     *
+     * @OA\Post(
+     *     path="/posts/post-edit",
+     *     tags={"User Post"},
+     *     summary="Post Update",
+     *     description="Allows users to update post.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"caption","file"},
+     *                 @OA\Property(
+     *                     property="caption",
+     *                     type="string",
+     *                     description="Enter Caption",
+     *                     example=""
+     *                 ),
+     *                  @OA\Property(
+     *                     property="file",
+     *                     type="string",
+     *                     format="binary",
+     *                     description="Upload Post",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post updated successfully!"
+     *     )
+     * )
+     */
     public function actionPostEdit($id)
     {
         $user_image_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$user_image_model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -335,18 +655,74 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
+    /**
+     * Comment Flag in Post 
+     *
+     * Allows users to flag comment in Post.
+     *
+     * @OA\Post(
+     *     path="/posts/flag",
+     *     tags={"User Post"},
+     *     summary="Flag comment  post (Draft)",
+     *     description="Allows users to report Post",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *      @OA\Parameter(
+     *         name="user_post_comment_id",
+     *         in="query",
+     *         required=true,
+     *         description="Primary Key of User Post Comment",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"flag_reason_id","flag_detail"},
+     *                 @OA\Property(
+     *                     property="flag_reason_id",
+     *                     type="string",
+     *                     description="Select Reason",
+     *                     example=""
+     *                 ),
+     *                  @OA\Property(
+     *                     property="flag_detail",
+     *                     type="string",
+     *                     description="Enter Detail",
+     *                     example=""
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Flagged successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post Not Found!"
+     *     )
+     * )
+     */
     public function actionFlag($id, $user_post_comment_id)
     {
         $user_post_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$user_post_model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $flag_comment = UserPostComment::find()->where(['id' => $user_post_comment_id])->limit(1)->one();
 
         if (!$flag_comment) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Comment']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Comment']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -377,7 +753,7 @@ class DefaultController extends RestController
     {
         $user_post_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$user_post_model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Post']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 

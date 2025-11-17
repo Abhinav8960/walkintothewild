@@ -49,7 +49,21 @@ class StaticPageController extends RestController
         ];
     }
 
-
+     /**
+     * 
+     * Get About Us
+     *
+     *
+     * @OA\Get(
+     *     path="/about-us",
+     *     tags={"Static"},
+     *     summary="Get About Us (Draft)",
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionAboutUs()
     {
         $content = ContentManagement::findOne(['id' => ContentManagement::CM_ABOUT_US]);
@@ -57,6 +71,21 @@ class StaticPageController extends RestController
         return Yii::$app->api->sendResponse($data = ['content' => $content['content']], ['message' => $message]);
     }
 
+      /**
+     * 
+     * Get Faqs
+     *
+     *
+     * @OA\Get(
+     *     path="/faqs",
+     *     tags={"Static"},
+     *     summary="Get Faqs (Draft)",
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionFaqs()
     {
         $faqs = Faqs::find()->where([
@@ -65,6 +94,57 @@ class StaticPageController extends RestController
         return Yii::$app->api->sendResponse($data = $faqs);
     }
 
+     /**
+     * 
+     * Contact Form
+     *
+     * Allows users to contact.
+     *
+     * @OA\Post(
+     *     path="/contact-us",
+     *     tags={"Static"},
+     *     summary="Contact Form",
+     *     description="Allows users to contact",
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"name","email", "message", "phone"},
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     description="Enter Name",
+     *                     example=""
+     *                 ),
+     *                  @OA\Property(
+     *                     property="email",
+     *                     type="string",
+     *                     description="Enter Email",
+     *                     example=""
+     *                 ),
+     *                  @OA\Property(
+     *                     property="phone",
+     *                     type="integer",
+     *                     description="Enter Phone Number",
+     *                     example=""
+     *                 ),
+     *                  @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Enter Message",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Query Submitted successfully!"
+     *     )
+     * )
+     */
     public function actionContactUs()
     {
         $model = new ContactForm();

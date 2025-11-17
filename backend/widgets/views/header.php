@@ -37,11 +37,11 @@ if (isset(Yii::$app->user->identity->can_login) && !\Yii::$app->user->identity->
 				<div class="collapse navbar-collapse" id="navbarSupportedContent-4">
 					<ul class="nav nav-item header-icons navbar-nav-right ms-auto">
 						<li class="dropdown main-profile-menu nav nav-item nav-link ps-lg-2">
-							<a class="new nav-link profile-user d-flex" href="" data-bs-toggle="dropdown"><img alt="" src="<?= $this->params['baseurl'] ?>/img/Admin-Profile-Vector-PNG-Clipart.png" class=""></a>
+							<a class="new nav-link profile-user d-flex" href="" data-bs-toggle="dropdown"><img src="<?= isset($user) && $user->profile_display_image ? $user->profile_display_image : '/theme/img/Admin-Profile-Vector-PNG-Clipart.png' ?>"></a>
 							<div class="dropdown-menu" style="left:-194px !important;">
 								<div class="menu-header-content p-3 border-bottom">
 									<div class="d-flex wd-100p">
-										<div class="main-img-user"><img alt="" src="/theme/img/Admin-Profile-Vector-PNG-Clipart.png" class=""></div>
+										<div class="main-img-user"><img src="<?= isset($user) && $user->profile_display_image ? $user->profile_display_image : '/theme/img/Admin-Profile-Vector-PNG-Clipart.png' ?>" ></div>
 										<div class="ms-3 my-auto">
 											<?php if (Yii::$app->user->identity) {
 												$roles = [];

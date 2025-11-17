@@ -91,6 +91,40 @@ class DefaultController extends RestController
         return $this->querySender($dataProvider, $rootIndexName = "chats");
     }
 
+
+    /**
+     * Get Quotation Chat List or Operator List without chat hash
+     *
+     * @OA\Get(
+     *     path="/chat/quatation-chat",
+     *     tags={"Chat"},
+     *     summary="Get Quotation Chat List or Operator List without chat hash (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="chat_hash",
+     *         in="query",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retrieved successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found"
+     *     )
+     * )
+     */
     public function actionQuatationChat($chat_hash = null)
     {
         if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
@@ -133,12 +167,100 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "operators");
     }
 
+
+/**
+ * Get User List
+ *
+ * @OA\Get(
+ *     path="/chat/user-list",
+ *     tags={"Chat"},
+ *     summary="Get chat user list (Draft)",
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(
+ *         name="page",
+ *         in="query",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Parameter(
+ *         name="pageSize",
+ *         in="query",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation. Returns paginated chat user list.",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="contacts",
+ *                 type="object",
+ *                 @OA\Property(
+ *                     property="summary",
+ *                     type="object",
+ *                     @OA\Property(property="total", type="integer", example=194),
+ *                     @OA\Property(property="page", type="integer", example=1),
+ *                     @OA\Property(property="pageSize", type="integer", example=5),
+ *                     @OA\Property(property="total_page", type="integer", example=39),
+ *                     @OA\Property(
+ *                         property="query_params",
+ *                         type="object",
+ *                         example={"pageSize": 5}
+ *                     ),
+ *                 ),
+ *                 @OA\Property(
+ *                     property="data",
+ *                     type="array",
+ *                     @OA\Items(type="object")
+ *                 )
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Chat Not Found!"
+ *     )
+ * )
+ */
+
     public function actionUserList()
     {
         $searchModel = new ChatSearch();
         return $this->dataProviderSender($searchModel, $rootIndexName = "contcats", $additionalSearchQueryParams = [$this->userinfo->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "directchatcontcatsearch");
     }
 
+    /**
+     * Get Chat Messages
+     *
+     * @OA\Get(
+     *     path="/chat/messages/{chat_hash}",
+     *     tags={"Chat"},
+     *     summary="Get Chat Messages (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="chat_hash",
+     *         in="path",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retrieved successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat Not Found!"
+     *     )
+     * )
+     */
     public function actionMessages($chat_hash)
     {
         $chat = Chat::find()->where(['chat_hash' => $chat_hash])->andWhere(['or', ['user_id' => $this->userinfo->id], ['recipient_user_id' => $this->userinfo->id]])->one();
@@ -171,7 +293,62 @@ class DefaultController extends RestController
     }
 
 
-
+    /**
+     * Send Message
+     *
+     * Allows users to send a message in a chat.
+     *
+     * @OA\Post(
+     *     path="/chat/send-message/{user_handle}",
+     *     tags={"Chat"},
+     *     summary="Send Message (Draft)",
+     *     description="Allows users to send a message in a chat.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="user_handle",
+     *         in="path",
+     *         required=true,
+     *         description="User Handle",
+     *         @OA\Schema(type="string")
+     *     ),
+     *    @OA\Parameter(
+     *         name="chat_hash",
+     *         in="query",
+     *         required=true,
+     *         description="Unique hash identifier of the chat",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"message"},
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Message text to send",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="gallery_slug",
+     *                     type="string",
+     *                     description="Optional gallery slug if sending a media message",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Message sent successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat not found."
+     *     )
+     * )
+     */
     public function actionSendMessage($user_handle, $chat_hash = null)
     {
         $login_user = $this->userinfo;
@@ -393,6 +570,104 @@ class DefaultController extends RestController
     //     return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     // }
 
+
+    /**
+     * Send Quote
+     *
+     * Allows operator to send quote
+     *
+     * @OA\Post(
+     *     path="/chat/send-quote-message/{lead_id}",
+     *     tags={"Manage"},
+     *     summary="Send Quote (Draft)",
+     *     description="Allows Operator to Send Quote.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="lead_id",
+     *         in="path",
+     *         required=true,
+     *         description="Id of lead",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"safaris","travelers","stay_category_id","partner_selling_price","park_id","addional_notes","start_date","end_date","validity_date","permit_booking_date"},
+     *                 @OA\Property(
+     *                     property="safaris",
+     *                     type="integer",
+     *                     description="Enter safaris",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="travelers",
+     *                     type="integer",
+     *                     description="Enter travelers",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="stay_category_id",
+     *                     type="integer",
+     *                     description="Enter stay category id",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="partner_selling_price",
+     *                     type="integer",
+     *                     description="Enter Partner Selling Price",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="park_id",
+     *                     type="integer",
+     *                     description="Enter Park Id",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="addional_notes",
+     *                     type="string",
+     *                     description="Enter Additional Notes",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="start_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Enter start date",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="end_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Enter End Date",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="validity_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Enter Validity Date",
+     *                     example="",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="permit_booking_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Enter Permit Booking Date",
+     *                     example="",
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Comment submitted successfully!"
+     *     )
+     * )
+     */
     public function actionSendQuoteMessage($lead_id)
     {
         $partner = SafariOperator::find()->where(['user_id' => $this->userinfo->id])->one();
@@ -467,6 +742,41 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "partner_gallery_images");
     }
 
+
+     /**
+     * Get Profile Chat
+     *
+     * @OA\Get(
+     *     path="/chat/profile-chat/{user_handle}",
+     *     tags={"Chat"},
+     *     summary="Get Profile Chat (Draft)",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="user_handle",
+     *         in="path",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retrieved successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat Not Found!"
+     *     )
+     * )
+     */
+
     public function actionProfileChat($user_handle)
     {
         $individual_user = $this->individualuser($user_handle);
@@ -475,7 +785,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
-        $chat = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
+        $chat = Chat::find()->andWhere(['or', ['useer_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
         if (!$chat) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
             return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => $message], 200);
@@ -485,7 +795,45 @@ class DefaultController extends RestController
     }
 
 
-
+    /**
+     * Make Call Chat
+     *
+     * Allows users to make a call request or operators to initiate a call.
+     *
+     * @OA\Post(
+     *     path="/chat/make-call-on-chat/{user_handle}",
+     *     tags={"Chat"},
+     *     summary="Make Call Request (Draft)",
+     *     description="Allows users to make a call request or operators to initiate a call.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="user_handle",
+     *         in="path",
+     *         required=true,
+     *         description="User Handle",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="chat_hash",
+     *         in="query",
+     *         required=true,
+     *         description="Unique hash identifier of the chat",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Call Requested Successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Call Initiated Successfully."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat not found."
+     *     )
+     * )
+     */
 
     public function actionMakeCallOnChat($user_handle, $chat_hash)
     {
@@ -680,7 +1028,48 @@ class DefaultController extends RestController
     // }
 
 
-
+    /**
+     * Edit Message
+     *
+     * Allows users to edit message in a chat.
+     *
+     * @OA\Post(
+     *     path="/chat/edit-message",
+     *     tags={"Chat"},
+     *     summary="Edit Message (Draft)",
+     *     description="Allows users to edit a message in a chat.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"chat_message_id","message"},
+     *                 @OA\Property(
+     *                     property="chat_message_id",
+     *                     type="integer",
+     *                     description="Chat Message Id",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Edit Message",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Message Updated successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat not found."
+     *     )
+     * )
+     */
     public function actionEditMessage()
     {
         $chat_message_id = Yii::$app->request->post('chat_message_id');
@@ -724,6 +1113,42 @@ class DefaultController extends RestController
         }
     }
 
+    /**
+     * Delete Message
+     *
+     * Allows users to delete message in a chat.
+     *
+     * @OA\Post(
+     *     path="/chat/delete-message",
+     *     tags={"Chat"},
+     *     summary="Delete Message (Draft)",
+     *     description="Allows users to delete message in a chat.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"chat_message_id"},
+     *                 @OA\Property(
+     *                     property="chat_message_id",
+     *                     type="integer",
+     *                     description="Chat Message Id",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Message Updated successfully!"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat not found."
+     *     )
+     * )
+     */
     public function actionDeleteMessage()
     {
         $chat_message_id = Yii::$app->request->post('chat_message_id');

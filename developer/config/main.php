@@ -1,4 +1,6 @@
 <?php
+Yii::setAlias('@api', dirname(__DIR__, 2) . '/api');
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -67,7 +69,8 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [],
+            'rules' => [
+            ],
         ],
 
         'messageManager' => [

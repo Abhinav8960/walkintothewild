@@ -77,6 +77,30 @@ class DefaultController extends RestController
     //     return Yii::$app->api->sendResponse($data = $user);
     // }
 
+    /**
+     * 
+     * Get User Details
+     *
+     *
+     * @OA\Get(
+     *     path="/user-profile",
+     *     tags={"Profile"},
+     *     summary="Get User Details (Draft)",
+     *      @OA\Parameter(
+     *         name="user_handle",
+     *         in="query",
+     *         required=true,
+     *         description="user_handle to query ",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionIndex($user_handle)
     {
         $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
@@ -89,6 +113,30 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data =  $user->toArray());
     }
 
+    /**
+     * 
+     * Get Organized By Share Safari
+     *
+     *
+     * @OA\Get(
+     *     path="/organizedby",
+     *     tags={"Profile"},
+     *     summary="Get Organized By Share Safari (Draft)",
+     *      @OA\Parameter(
+     *         name="user_handle",
+     *         in="query",
+     *         required=true,
+     *         description="user_handle to query ",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionOrganizedby($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
@@ -105,6 +153,30 @@ class DefaultController extends RestController
         }
     }
 
+    /**
+     * 
+     * Get Joined By Share Safari
+     *
+     *
+     * @OA\Get(
+     *     path="/joinedby",
+     *     tags={"Profile"},
+     *     summary="Get Joined By Share Safari (Draft)",
+     *      @OA\Parameter(
+     *         name="user_handle",
+     *         in="query",
+     *         required=true,
+     *         description="user_handle to query ",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionJoinedby($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
@@ -120,6 +192,7 @@ class DefaultController extends RestController
             $shared_safari = ShareSafari::find()
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
+                ->andWhere(['share_safari.status' => ShareSafari::STATUS_ACTIVE])
                 ->all();
             return Yii::$app->api->sendResponse($data = ['share_safari' => ArrayHelper::toArray($shared_safari)]);
         } else {
@@ -130,6 +203,7 @@ class DefaultController extends RestController
             $shared_safari = ShareSafari::find()
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
+                ->andWhere(['share_safari.status' => ShareSafari::STATUS_ACTIVE])
                 ->all();
             return Yii::$app->api->sendResponse($data = ['share_safari' => ArrayHelper::toArray($shared_safari)]);
         }
@@ -218,6 +292,30 @@ class DefaultController extends RestController
         throw new ForbiddenHttpException($message);
     }
 
+    /**
+     * 
+     * Get User Activity
+     *
+     *
+     * @OA\Get(
+     *     path="/useractivity",
+     *     tags={"Profile"},
+     *     summary="Get User Activity (Draft)",
+     *      @OA\Parameter(
+     *         name="user_handle",
+     *         in="query",
+     *         required=true,
+     *         description="user_handle to query ",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionUseractivity($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);

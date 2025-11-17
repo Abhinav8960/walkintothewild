@@ -12,13 +12,16 @@ use yii\helpers\Html;
                         <tr>
                             <th style="width: 1%;">#</th>
                             <th style="width: 5%;">User Name</th>
+                            <th style="width: 5%;">Phone No.</th>
                             <th style="width: 5%;">Travel Interest</th>
                             <th style="width: 2%;">Safaris</th>
                             <th style="width: 2%;">Travelers</th>
                             <th style="width: 2%;">Accomodation</th>
-                            <th style="width: 15%;">User Notes</th>
+                            <th style="width: 3%;">User Notes</th>
                             <th style="width: 3%;">Travel Date looking For</th>
                             <th style="width: 3%;">Lead Received Date</th>
+                            <th style="width: 3%;">Trip Budget</th>
+                            <th style="width: 3%;">Planning Type</th>
                             <th style="width: 10%;">Payment Info</th>
                         </tr>
                     </thead>
@@ -36,6 +39,7 @@ use yii\helpers\Html;
                                     ]) . ' ' . Html::encode($name);
                                 }
                                 ?></td>
+                            <td><?= $model->phone ?></td>
                             <td><?= $model->displayLabel ?></td>
                             <td><?= !empty($model->safaris) ? $model->safaris : ''; ?></td>
                             <td><?= !empty($model->travelers) ? $model->travelers : '' ?></td>
@@ -51,6 +55,8 @@ use yii\helpers\Html;
                                 ?>
                             </td>
                             <td style="text-align: left;"><?= date('d M, Y h:i A', $model->created_at) ?></td>
+                            <td style="text-align: left;"><?= $model->tripBudget ?></td>
+                            <td style="text-align: left;"><?= $model->planningType ?></td>
                             <td>
                                 <div class="paymentInfoDetail">
                                     <?php

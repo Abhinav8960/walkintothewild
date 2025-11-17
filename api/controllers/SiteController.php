@@ -2,41 +2,44 @@
 
 namespace api\controllers;
 
-use api\behaviours\Apiauth;
-use api\behaviours\Verbcheck;
-use api\models\cms\contentmanagement\ContentManagement;
-use api\models\operator\SafariOperator;
-use api\models\CanSocialLoginForm;
-use api\models\compliancedocuments\ComplianceDocuments;
+use Yii;
+use yii\web\Response;
+use common\models\Auth;
+use common\models\User;
 use api\models\LoginForm;
-use api\models\MasterMetaTableInfoSearch;
-use api\models\OtpVerificationSocialLoginForm;
 use api\models\SigninForm;
 use api\models\SignupForm;
+use api\behaviours\Apiauth;
+use api\behaviours\Verbcheck;
+use OpenApi\Attributes as OA;
+use common\models\UserSession;
+use yii\filters\AccessControl;
 use api\models\SocialLoginForm;
-use api\models\UserMobileNoVerificationForm;
-use api\models\VerifySocialLoginForm;
-use common\calling\services\CallingService;
-use common\models\operator\SafariOperator as OperatorSafariOperator;
 use common\models\AccessTokens;
-use common\models\Auth;
+use common\models\TemporaryUser;
+use Kreait\Firebase\Auth\SignIn;
+use common\models\WhatsappHelper;
+use api\models\CanSocialLoginForm;
 use common\models\EmailVerification;
+use common\models\UserDeleteRequest;
+use api\models\VerifySocialLoginForm;
 use common\models\MobileVerification;
 use common\models\SourceVerification;
-use common\models\TemporaryUser;
-use common\models\User;
-use common\models\UserDeleteRequest;
-use common\models\UserDeleteRequestForm;
-use common\models\UserSession;
-use common\models\WhatsappHelper;
-use Kreait\Firebase\Auth\SignIn;
-use yii\filters\AccessControl;
 use yii\httpclient\debug\SearchModel;
-use Yii;
+use api\models\operator\SafariOperator;
+use common\models\UserDeleteRequestForm;
+use api\models\MasterMetaTableInfoSearch;
+use common\calling\services\CallingService;
+use api\models\UserMobileNoVerificationForm;
+use api\models\OtpVerificationSocialLoginForm;
+use api\models\cms\contentmanagement\ContentManagement;
+use api\models\compliancedocuments\ComplianceDocuments;
+use common\models\operator\SafariOperator as OperatorSafariOperator;
 
-/**
- * Site controller
- */
+#[OA\Info(
+    version: '1.0.0',
+    title: 'My API'
+)]
 class SiteController extends RestController
 {
 
@@ -50,7 +53,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'test-call', 'sign-in-mobile', 'sign-in-email', 'signin-otp-verification', 'regenerate-otp', 'signup', 'signup-otp-verification','refundpolicyantara'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'test-call', 'sign-in-mobile', 'sign-in-email', 'signin-otp-verification', 'regenerate-otp', 'signup', 'signup-otp-verification', 'refundpolicyantara'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -141,12 +144,114 @@ class SiteController extends RestController
         }
     }
 
+
+
+    /**
+     * @OA\Get(
+     *     path="/master-meta-info",
+     *     tags={"Master"},
+     *     summary="Master Meta Last Updated Information",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response"
+     *     )
+     * )
+     */
     public function actionMasterMetaInfo()
     {
         $searchModel = new MasterMetaTableInfoSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = 'master_meta_table_info');
     }
 
+    /**
+     * Social Login
+     *
+     * Allows users to log in via social platforms such as Google.  
+     * Returns an access token upon successful authentication.
+     *
+     * @OA\Post(
+     *     path="/social-login",
+     *     tags={"Authorization"},
+     *     summary="Social Login",
+     *     description="Authenticate users using social platforms and return an access token.",
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"source", "source_id", "email", "name"},
+     *                 @OA\Property(
+     *                     property="source",
+     *                     type="string",
+     *                     description="Social login provider (e.g., google)",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="source_id",
+     *                     type="string",
+     *                     description="Unique ID provided by the social platform (enclosed in double quotes)",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string",
+     *                     format="email",
+     *                     description="Email address from the social account",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     description="Full name of the user",
+     *                     example=""
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="access_token",
+     *                 type="string",
+     *                 description="Access token",
+     *                 example="94a19f6a857e6efb22c7e80912541dfe09a537070c81921da1d63d13822d5996e3c6316c0b39c5631ee0bba927b948fb5f44505c0a320bfa0bcb947e5c2534fq"
+     *             ),
+     *         )
+     *     ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Source Not Exist",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Source Not Exist",
+     *                 example="The source does not exist!"
+     *             ),
+     *         )
+     *     ),
+     *       @OA\Response(
+     *         response=423,
+     *         description="Profile is not active",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Source Not Exist",
+     *                 example="Profile is not active, contact administration!"
+     *             ),
+     *         )
+     *     ),
+     *
+     * )
+     */
     public function actionSocialLogin()
     {
         $model = new SocialLoginForm();
@@ -422,6 +527,94 @@ class SiteController extends RestController
     //     return Yii::$app->api->sendResponse($data);
     // }
 
+    /**
+     * Get Login User Profile
+     *
+     * Fetches the authenticated user's profile information using a valid Bearer token.
+     *
+     * @OA\Get(
+     *     path="/profile",
+     *     tags={"Authorization"},
+     *     summary="Login User Profile",
+     *     description="Retrieve the currently authenticated user's profile details.",
+     *     security={{"bearerAuth": {}}},
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="user",
+     *                 type="object",
+     *                 @OA\Property(property="username", type="string", example="akashprajapatiak05@gmail.com"),
+     *                 @OA\Property(property="name", type="string", example="Akash Kumar"),
+     *                 @OA\Property(property="mobile_no", type="string", example="9315723354"),
+     *                 @OA\Property(property="is_mobile_no_verified", type="boolean", example=true),
+     *                 @OA\Property(property="mobile_no_verified_at", type="integer", example=1756205685),
+     *                 @OA\Property(property="email", type="string", example="akashprajapatiak05@gmail.com"),
+     *                 @OA\Property(property="is_support_user", type="integer", example=1),
+     *                 @OA\Property(property="is_safari_operator", type="boolean", example=false),
+     *                 @OA\Property(property="is_account_manager", type="integer", example=1),
+     *                 @OA\Property(property="is_blue_badge_verified", type="boolean", example=false),
+     *                 @OA\Property(property="is_developer", type="integer", example=1),
+     *                 @OA\Property(property="google_avatar_image", type="string", example="33_google_avatar.jpg"),
+     *                 @OA\Property(property="user_handle", type="string", example="akash_kumar_2"),
+     *                 @OA\Property(property="facebook_url", type="string", example=""),
+     *                 @OA\Property(property="whatsapp_url", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="x_url", type="string", example=""),
+     *                 @OA\Property(property="insta_url", type="string", example=""),
+     *                 @OA\Property(property="website_url", type="string", example=""),
+     *                 @OA\Property(property="youtube_url", type="string", example=""),
+     *                 @OA\Property(property="about", type="string", example=""),
+     *                 @OA\Property(property="user_bio", type="string", example="I am writer"),
+     *                 @OA\Property(property="date_of_birth", type="string", format="date", example="2000-11-07"),
+     *                 @OA\Property(property="gender", type="integer", example=1),
+     *                 @OA\Property(property="account_type", type="integer", example=1),
+     *                 @OA\Property(property="gender_privacy", type="integer", example=1),
+     *                 @OA\Property(property="email_privacy", type="integer", example=1),
+     *                 @OA\Property(property="user_flaged", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="pop_up_message", type="string", example=""),
+     *                 @OA\Property(property="status", type="integer", example=10),
+     *                 @OA\Property(property="profile_display_image", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/user/profile/33_profile_1751555645.jpg"),
+     *                 @OA\Property(property="cover_display_image", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/user/profile/33_cover_1751555705.jpg"),
+     *                 @OA\Property(property="display_name", type="string", example="Akash Kumar"),
+     *                 @OA\Property(property="is_followed", type="boolean", example=false),
+     *                 @OA\Property(property="user_activity_count", type="integer", example=0),
+     *                 @OA\Property(property="operator_slug", type="string", example=""),
+     *                 @OA\Property(property="user_followers_count", type="integer", example=0),
+     *                 @OA\Property(property="user_followings_count", type="integer", example=1),
+     *                 @OA\Property(property="is_privacy_policy_acknowledged", type="boolean", example=false),
+     *                 @OA\Property(property="organized_safari_count", type="integer", example=0),
+     *                 @OA\Property(property="joined_safari_count", type="integer", example=0),
+     *                 @OA\Property(
+     *                     property="park_visited",
+     *                     type="array",
+     *                     @OA\Items(type="string"),
+     *                     example={}
+     *                 ),
+     *                 @OA\Property(
+     *                     property="operator_type",
+     *                     type="object",
+     *                     @OA\Property(property="status", type="integer", example=0)
+     *                 ),
+     *                 @OA\Property(property="operator_status", type="integer", example=0),
+     *                 @OA\Property(
+     *                     property="urls",
+     *                     type="object",
+     *                     @OA\Property(property="followers_list", type="string", example="http://api.walkintothewild.io/profile/akash_kumar_2/followers-list"),
+     *                     @OA\Property(property="followings_list", type="string", example="http://api.walkintothewild.io/profile/akash_kumar_2/followings-list")
+     *                 ),
+     *                 @OA\Property(property="is_mobile_verification_mandatory", type="boolean", example=false)
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found"
+     *     )
+     * )
+     */
     public function actionProfile()
     {
         $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
@@ -466,6 +659,39 @@ class SiteController extends RestController
         }
     }
 
+    /**
+     * Get Term of Use
+     *
+     *
+     * @OA\Get(
+     *     path="/termofuse",
+     *     tags={"Authorization"},
+     *     summary="Term of Use",
+     *       @OA\Response(
+     *         response=200,
+     *         description="Term of Use",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="content",
+     *                 type="string",
+     *                 description="Content",
+     *                 example="Term and Condition New One!"
+     *             ),
+     *              @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Message",
+     *                 example="Success!"
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionTermofuse()
     {
         $term_of_use = ComplianceDocuments::findOne(['type' => ComplianceDocuments::TERM_OF_USE]);
@@ -477,6 +703,39 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 
+    /**
+     * Get Privacy Policy
+     *
+     *
+     * @OA\Get(
+     *     path="/privacypolicy",
+     *     tags={"Authorization"},
+     *     summary="Privay Policy",
+     *      @OA\Response(
+     *         response=200,
+     *         description="Privay Policy",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="content",
+     *                 type="string",
+     *                 description="Content",
+     *                 example="Privacy Policy"
+     *             ),
+     *              @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Message",
+     *                 example="Success!"
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionPrivacypolicy()
     {
         $privacy_policy = ComplianceDocuments::findOne(['type' => ComplianceDocuments::PRIVACY_POLICY]);
@@ -488,6 +747,39 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 
+    /**
+     * Get Refund Policy
+     *
+     *
+     * @OA\Get(
+     *     path="/refundpolicy",
+     *     tags={"Authorization"},
+     *     summary="Refund Policy",
+     *      @OA\Response(
+     *         response=200,
+     *         description="Refund Policy",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="content",
+     *                 type="string",
+     *                 description="Content",
+     *                 example="Refund Policy"
+     *             ),
+     *              @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Message",
+     *                 example="Success!"
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionRefundpolicy()
     {
         $refund_policy = ComplianceDocuments::findOne(['type' => ComplianceDocuments::REFUND_POLICY]);
@@ -559,6 +851,38 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
+    /**
+     * Mobile Number Verification
+     *
+     * Allows users to verify their mobile number.  
+     *
+     * @OA\Post(
+     *     path="/mobile-no-verification",
+     *     tags={"Authorization"},
+     *     summary="Mobile Number Verification (Draft)",
+     *     description="Allows a user to verify their mobile number.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"mobile_no"},
+     *                 @OA\Property(
+     *                     property="mobile_no",
+     *                     type="string",
+     *                     description="User's mobile number to be verified",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OTP Sent to your mobile number. Please check your mobile."
+     *     ),
+     * )
+     */
     public function actionMobileNoVerification()
     {
         $user_model = $this->userinfo;
@@ -667,6 +991,44 @@ class SiteController extends RestController
     //     }
     // }
 
+    /**
+     * Verify Mobile Number
+     *
+     * Allows users to verify their mobile number.  
+     *
+     * @OA\Post(
+     *     path="/verify-mobile-no",
+     *     tags={"Authorization"},
+     *     summary="Verify Mobile Number using otp (Draft)",
+     *     description="Allows a user to verify their mobile number by entering OTP.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"mobile_no","otp"},
+     *                 @OA\Property(
+     *                     property="mobile_no",
+     *                     type="integer",
+     *                     description="User's mobile number to be verified",
+     *                     example=""
+     *                 ),
+     *                 @OA\Property(
+     *                     property="otp",
+     *                     type="integer",
+     *                     description="Enter 6 digit Otp Number",
+     *                     example=""
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mobile Number Verified successfully!"
+     *     ),
+     * )
+     */
     public function actionVerifyMobileNo()
     {
         \Yii::$app->api->messageManager->clearCache();
@@ -695,6 +1057,21 @@ class SiteController extends RestController
         }
     }
 
+    /**
+     * 
+     * Get Report Page Reason
+     *
+     *
+     * @OA\Get(
+     *     path="/report-page-reason",
+     *     tags={"Operator"},
+     *     summary="Get Report Page Reason (Draft)",
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionReportPageReason()
     {
         return [
@@ -709,6 +1086,23 @@ class SiteController extends RestController
         ];
     }
 
+    /**
+     * Deactivate Account
+     *
+     * Allows user to deactivate their account.  
+     *
+     * @OA\Post(
+     *     path="/deactivate-account",
+     *     tags={"Authorization"},
+     *     summary="Deactivate Account (Draft)",
+     *     description="Allows a user to deactivate their account.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Deactivated successfully! We will miss you."
+     *     ),
+     * )
+     */
     public function actionDeactivateAccount()
     {
         $user_model = $this->userinfo;
@@ -730,6 +1124,23 @@ class SiteController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
+    /**
+     * Delete Account Request
+     *
+     * Allows user for delete account request.  
+     *
+     * @OA\Post(
+     *     path="/request-delete-account",
+     *     tags={"Authorization"},
+     *     summary="Delete Account Request (Draft)",
+     *     description="Allows a user for delete account request.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Your information will be deleted in the upcoming 90 days. We will miss you!"
+     *     ),
+     * )
+     */
     public function actionRequestDeleteAccount()
     {
         $user_model = $this->userinfo;
@@ -1190,6 +1601,20 @@ class SiteController extends RestController
         ];
     }
 
+    /**
+     * Get Refund Policy Antara
+     *
+     *
+     * @OA\Get(
+     *     path="/refundpolicyantara",
+     *     tags={"Authorization"},
+     *     summary="Refund Policy Antara(Draft)",
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     * )
+     */
     public function actionRefundpolicyantara()
     {
         $refund_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_REFUND_POLICY_ANTARA]);
