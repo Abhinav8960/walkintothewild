@@ -151,6 +151,7 @@ class SiteController extends RestController
      *     path="/master-meta-info",
      *     tags={"Master"},
      *     summary="Master Meta Last Updated Information",
+     *     description = "This API is used to retrieve all master tables available in both the mobile app and the web application.<br>When the app launches, it calls this API. Each master table entry contains a last_updated_time field. If the timestamp returned by the API does not match the timestamp stored locally, the corresponding table is synchronized to update records.",
      *     @OA\Response(
      *         response=200,
      *         description="Successful response"
