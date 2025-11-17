@@ -679,7 +679,7 @@ class SiteController extends RestController
      *                 property="content",
      *                 type="string",
      *                 description="Content",
-     *                 example="Term and Condition New One!"
+     *                 example="<p>&nbsp;</p><p>Last modified: 14.07.2024</p><p><strong>Introduction</strong></p><p>Walk into the wild is a wildlife social media platform cum one stop solutions for planning Safaris...</p>"
      *             ),
      *              @OA\Property(
      *                 property="message",
@@ -724,7 +724,7 @@ class SiteController extends RestController
      *                 property="content",
      *                 type="string",
      *                 description="Content",
-     *                 example="Privacy Policy"
+     *                 example="<p>&nbsp;</p><p>Last modified: 14.07.2024</p><p><strong>Introduction</strong></p><p>Walk into the wild is a wildlife social media platform cum one stop solutions for planning Safaris...</p>"
      *             ),
      *              @OA\Property(
      *                 property="message",
