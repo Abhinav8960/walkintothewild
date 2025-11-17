@@ -2,7 +2,6 @@
 
 namespace frontend\modules\profile\controllers;
 
-use common\models\cms\blog\Blog;
 use common\models\sharesafari\ShareSafari;
 use common\models\User;
 use common\models\UserPosts;
@@ -21,27 +20,27 @@ class PhotoController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex($user_handle)
-    {
-        $user = $this->findUserbyHandle($user_handle);
-        // $userposts = UserPosts::find()->where(['user_id' => $user->id, 'status' => UserPosts::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
-        $shared_safari = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
-        if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
-            $blogs = Blog::find()->where(['user_type' => Blog::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
-        } else {
-            $blogs = Blog::find()->where(['user_type' => Blog::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Blog::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
-        }
+    // public function actionIndex($user_handle)
+    // {
+    //     $user = $this->findUserbyHandle($user_handle);
+    //     // $userposts = UserPosts::find()->where(['user_id' => $user->id, 'status' => UserPosts::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
+    //     $shared_safari = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
+    //     if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
+    //         $blogs = Blog::find()->where(['user_type' => Blog::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
+    //     } else {
+    //         $blogs = Blog::find()->where(['user_type' => Blog::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Blog::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
+    //     }
 
-        return $this->render(
-            'index',
-            [
-                'user' => $user,
-                'blogs' => $blogs,
-                'shared_safari' => $shared_safari,
+    //     return $this->render(
+    //         'index',
+    //         [
+    //             'user' => $user,
+    //             'blogs' => $blogs,
+    //             'shared_safari' => $shared_safari,
 
-            ]
-        );
-    }
+    //         ]
+    //     );
+    // }
 
 
     // public function actionCreate()

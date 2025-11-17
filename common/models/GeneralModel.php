@@ -2,11 +2,6 @@
 
 namespace common\models;
 
-// use common\models\blog\blogSource\BlogSource;
-// use common\models\blog\blogTag\BlogTag as BlogTagBlogTag;
-// use common\models\blog\category\Category;
-// use common\models\blog\frequency\Frequency;
-
 
 use common\models\cms\article\Article;
 use common\models\cms\article\MasterArticleAuthor;
@@ -168,10 +163,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     }
 
 
-    public static function bloguserstatusoption()
-    {
-        return [1 => 'Publish', 0 => 'Unpublish', -1 => 'Delete'];
-    }
+    // public static function bloguserstatusoption()
+    // {
+    //     return [1 => 'Publish', 0 => 'Unpublish', -1 => 'Delete'];
+    // }
     /**
      * Day Name
      *
@@ -242,8 +237,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             4 => 'Operator View',
             5 => 'Share Safari',
             6 => 'Join Safari',
-            7 => 'Blog Listing',
-            8 => 'Blog Detail',
+            // 7 => 'Blog Listing',
+            // 8 => 'Blog Detail',
             9 => 'Term & Condition',
             10 => 'Accomodation',
             11 => 'Package List',

@@ -8,7 +8,6 @@ use common\models\GeneralModel;
 use common\interfaces\Constants;
 use common\interfaces\StatusInterface;
 use common\models\park\SafariPark;
-use frontend\models\BlogSearch;
 use common\models\cms\banner\Banner;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;

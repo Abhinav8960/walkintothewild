@@ -2,8 +2,6 @@
 
 namespace frontend\models;
 
-use common\models\cms\blog\Blog;
-use common\models\cms\blog\BlogComment;
 use common\models\operator\SafariOperatorRating;
 use common\models\operator\SafariOperatorRatingReport;
 use Yii;

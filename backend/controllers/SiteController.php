@@ -12,7 +12,6 @@ use common\models\MailLog;
 use yii\filters\VerbFilter;
 use common\models\LoginForm;
 use yii\filters\AccessControl;
-use common\models\cms\blog\Blog;
 use api\components\MessageManager;
 use common\models\package\Package;
 use yii\web\NotFoundHttpException;

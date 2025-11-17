@@ -4,8 +4,6 @@ namespace frontend\models;
 
 use api\models\User;
 use common\interfaces\NewStatusInterface;
-use common\models\cms\blog\Blog;
-use common\models\cms\blog\BlogComment;
 use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;

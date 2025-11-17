@@ -10,7 +10,7 @@ use common\models\cms\mastertag\MasterTagSearch;
 use common\models\cms\mastertag\form\MasterTagForm;
 
 /**
- * BlogTag Controller for the `mastertag` module
+ * MasterTagController Controller for the `mastertag` module
  */
 class MasterTagController extends Controller
 {
@@ -30,7 +30,7 @@ class MasterTagController extends Controller
     }
 
     /**
-     * Create Blog Tag
+     * Create Tag
      * 
      * @return mixed
      */

@@ -10,7 +10,7 @@ use common\models\cms\mastercategory\MasterTopicSearch;
 use common\models\cms\mastercategory\form\MasterTopicForm;
 
 /**
- * BlogCategory Controller for the `blog` module
+ * MasterCategoryController Controller for the `cms` module
  */
 class MasterCategoryController extends Controller
 {

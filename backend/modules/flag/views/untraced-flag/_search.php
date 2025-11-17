@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 <div class="row">
     <div class="col-md-2">
         <?= $form->field($model, 'type')->dropDownList(
-            ['1' => 'Blog Flag', '2' => 'Operator Flag', '3' => 'Package Flag', '4' => 'Shared Safari Flag', '5' => 'Article Flag'],
+            ['2' => 'Operator Flag', '3' => 'Package Flag', '4' => 'Shared Safari Flag', '5' => 'Article Flag'],
             [
                 'prompt' => 'Select Option',
             ]
