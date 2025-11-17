@@ -174,22 +174,20 @@ class DefaultController extends RestController
      *     @OA\Parameter(
      *         name="is_filter",
      *         in="query",
-     *         description="Required, must be 1",
-     *         required=true,
+     *         description="Used for filtering the data",
+     *         required=false,
      *         @OA\Schema(
      *             type="integer",
-     *             enum={1},
      *             example=1
      *         )
      *     ),
      *     @OA\Parameter(
      *         name="animal_type",
      *         in="query",
-     *         description="Required, must be 1",
-     *         required=true,
+     *         description="Used for filtering the data",
+     *         required=false,
      *         @OA\Schema(
      *             type="integer",
-     *             enum={1},
      *             example=1
      *         )
      *     ),
@@ -395,6 +393,7 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/country",
+     *     description ="This API returns all country. Currently, the API only supports <b>India</b>, but additional countries may be supported in the future.<br><b>Usage Notes : </b><br><ul><li>This API is not used in the Android application.</li><li>If this API is used in the web application, please mention it in the documentation.</li></ul>",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
