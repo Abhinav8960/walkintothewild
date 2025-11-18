@@ -7,7 +7,6 @@ use common\models\GeneralModel;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\Lead;
 use common\models\meta\MetaStayCategory;
-use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
 use Yii;

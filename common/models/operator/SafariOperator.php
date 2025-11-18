@@ -228,10 +228,10 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         return Package::find()->where(['safari_operator_id' => $this->id])->andWhere(['not', ['live_version' => null]])->count();
     }
 
-    public function getQuotescount()
-    {
-        return OperatorQuote::find()->where(['operator_id' => $this->id, 'status' => OperatorQuote::STATUS_ACTIVE])->count();
-    }
+    // public function getQuotescount()
+    // {
+    //     return OperatorQuote::find()->where(['operator_id' => $this->id, 'status' => OperatorQuote::STATUS_ACTIVE])->count();
+    // }
 
 
 

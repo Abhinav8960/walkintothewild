@@ -16,7 +16,6 @@ use common\models\operator\form\SafariOperatorParkForm;
 use common\models\operator\form\SafariOperatorRequestForm;
 use common\models\operator\form\SafariOperatorStayCategoryForm;
 use common\models\operator\form\SafariOperatorUpdateForm;
-use common\models\operator\OperatorQuoteSearch;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
 use common\models\operator\SafariOperatorFollowSearch;
@@ -85,19 +84,19 @@ class SafariOperatorController extends Controller
     /**
      * View Operator
      */
-    public function actionQuote($id)
-    {
-        $model = $this->findModel($id);
-        $searchModel = new OperatorQuoteSearch();
-        $searchModel->operator_id = $id;
-        $searchModel->status = 1;
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        return $this->render('free_quote', [
-            'model' => $model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+    // public function actionQuote($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     $searchModel = new OperatorQuoteSearch();
+    //     $searchModel->operator_id = $id;
+    //     $searchModel->status = 1;
+    //     $dataProvider = $searchModel->search($this->request->queryParams);
+    //     return $this->render('free_quote', [
+    //         'model' => $model,
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //     ]);
+    // }
 
     /**
      * View Operator

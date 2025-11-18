@@ -21,7 +21,6 @@ use common\models\package\PackageIncluded;
 use common\models\package\form\PackageVersionForm;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageSafariPark;
-use common\models\package\PackageQuoteSearch;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\PackageCommentReport;
 use common\models\package\PackageGallerySearch;

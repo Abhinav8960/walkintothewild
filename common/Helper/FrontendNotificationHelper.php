@@ -8,7 +8,7 @@ use yii\helpers\Url;
 use common\models\User;
 use common\models\chat\Chat;
 use common\models\package\Package;
-use common\models\operator\OperatorQuote;
+// use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
 use common\models\operator\SafariOperatorRating;
@@ -134,26 +134,26 @@ class FrontendNotificationHelper
      * @param [type] $operator
      * @return void
      */
-    public static function operatorNewQuote(SafariOperator $operator, OperatorQuote $operator_quote, User $user, $chat_url)
-    {
-        // if ($operator) {
-        //     $model = new FrontendNotification();
-        //     $model->action_id = FrontendNotification::ACTION_OPERATOR_NEW_QUOTE;
-        //     // $model->notification_url = Url::toRoute(['/manage/quote']);
-        //     $model->notification_url = $chat_url; //Chat URL
-        //     $model->parent_id = $operator->id;
-        //     $model->channel = 'UserNotificationChannel';
-        //     $model->status = 1;
-        //     $model->user_id = $operator->user_id;
-        //     $model->is_seen = false;
-        //     $model->is_read = False;
-        //     $user_name = $user ? $user->name : $operator_quote->full_name;
-        //     $model->notification_text = "New Quote Recivied From $user_name | " . $operator->business_name;
-        //     // if ($model->save(false)) {
-        //     //     self::eventSendtoPusher($model);
-        //     // }
-        // }
-    }
+    // public static function operatorNewQuote(SafariOperator $operator, OperatorQuote $operator_quote, User $user, $chat_url)
+    // {
+    //     // if ($operator) {
+    //     //     $model = new FrontendNotification();
+    //     //     $model->action_id = FrontendNotification::ACTION_OPERATOR_NEW_QUOTE;
+    //     //     // $model->notification_url = Url::toRoute(['/manage/quote']);
+    //     //     $model->notification_url = $chat_url; //Chat URL
+    //     //     $model->parent_id = $operator->id;
+    //     //     $model->channel = 'UserNotificationChannel';
+    //     //     $model->status = 1;
+    //     //     $model->user_id = $operator->user_id;
+    //     //     $model->is_seen = false;
+    //     //     $model->is_read = False;
+    //     //     $user_name = $user ? $user->name : $operator_quote->full_name;
+    //     //     $model->notification_text = "New Quote Recivied From $user_name | " . $operator->business_name;
+    //     //     // if ($model->save(false)) {
+    //     //     //     self::eventSendtoPusher($model);
+    //     //     // }
+    //     // }
+    // }
 
 
     /**

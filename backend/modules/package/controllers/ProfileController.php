@@ -18,7 +18,6 @@ use common\models\package\PackageFeature;
 use common\models\package\PackageGallery;
 use common\models\package\PackageGallerySearch;
 use common\models\package\PackageIncluded;
-use common\models\package\PackageQuoteSearch;
 use common\models\package\PackageSafariPark;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -406,20 +405,20 @@ class ProfileController extends Controller
 
 
 
-    public function actionQuote($package_id)
-    {
-        $package_version_model = $this->findModel($package_id);
-        $searchModel = new PackageQuoteSearch();
-        $searchModel->package_id = $package_id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    // public function actionQuote($package_id)
+    // {
+    //     $package_version_model = $this->findModel($package_id);
+    //     $searchModel = new PackageQuoteSearch();
+    //     $searchModel->package_id = $package_id;
+    //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-        return $this->render('quote', [
-            'package_version_model' => $package_version_model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+    //     return $this->render('quote', [
+    //         'package_version_model' => $package_version_model,
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //     ]);
+    // }
 
 
 
