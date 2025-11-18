@@ -43,10 +43,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari','profile-delete','privacy-policy-acknowledge'],
+                'only' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari', 'profile-delete', 'privacy-policy-acknowledge'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari','profile-delete','privacy-policy-acknowledge'],
+                        'actions' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari', 'profile-delete', 'privacy-policy-acknowledge'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -64,77 +64,68 @@ class DefaultController extends RestController
                     'wishlist-package' => ['GET'],
                     'wishlist-shared-safari' => ['GET'],
                     'profile-delete' => ['POST'],
-                    'privacy-policy-acknowledge' =>['POST']
+                    'privacy-policy-acknowledge' => ['POST']
                 ],
             ],
         ];
     }
 
     /**
-     * Renders the index view for the module
-     * @return string
-     */
-
-        /**
      * Post General Information
-     *
      *
      * @OA\Post(
      *     path="/account",
      *     tags={"Account"},
      *     summary="Update General Information",
-     *     description="Allows update their own profile.",
+     *     description="Allows users to update their own general information.",
      *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(
-     *         name="page",
-     *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="pageSize",
-     *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
-     *         )
-     *     ),
+     *
      *     @OA\RequestBody(
-     *         required=false,
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
      *                 type="object",
-     *                 @OA\Property(property="name",type="string",example=""),
-     *                 @OA\Property(property="mobile_no",type="integer",example=""),
-     *                 @OA\Property(property="user_handle",type="string",example=""),
-     *                 @OA\Property(property="date_of_birth",type="string",example=""),
-     *                 @OA\Property(property="gender",type="string",example=""),
-     *                 @OA\Property(property="user_bio",type="string",example=""),
-     *                 @OA\Property(property="about",type="string",example=""),
-     *                 @OA\Property(property="facebook_url",type="string",example=""),
-     *                 @OA\Property(property="x_url",type="string",example=""),
-     *                 @OA\Property(property="insta_url",type="string",example=""),
-     *                 @OA\Property(property="youtube_url",type="string",example=""),
-     *                 @OA\Property(property="website_url",type="string",example="")
+     *                 @OA\Property(property="name", type="string", nullable=true, example=""),
+     *                 @OA\Property(property="mobile_no", type="integer", nullable=true, example=""),
+     *                 @OA\Property(property="user_handle", type="string", nullable=true, example=""),
+     *                 @OA\Property(property="date_of_birth", type="string", format="date", nullable=true, example=""),
+     *                 @OA\Property(property="gender", type="integer", nullable=true, example=""),
+     *                 @OA\Property(property="user_bio", type="string", nullable=true, example=""),
+     *                 @OA\Property(property="about", type="string", nullable=true, example=""),
+     *                 @OA\Property(property="facebook_url", type="string", nullable=true, example=""),
+     *                 @OA\Property(property="x_url", type="string", nullable=true, example=""),
+     *                 @OA\Property(property="insta_url", type="string", nullable=true, example=""),
+     *                 @OA\Property(property="youtube_url", type="string", nullable=true, example=""),
+     *                 @OA\Property(property="website_url", type="string", nullable=true, example="")
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *
+     *    @OA\Response(
      *         response=200,
-     *         description="Information Updated successfully!"
+     *         description="Information Updated successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Information Updated successfully!")
+     *         )
      *     ),
      *     @OA\Response(
-     *         response=404,
-     *         description="User not found."
-     *     )
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="The format of D.O.B is invalid.")
+     *         )
+     *     ),
      * )
      */
+
     public function actionIndex()
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'Manage']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = new UserForm($user_model);
@@ -143,10 +134,10 @@ class DefaultController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->user_model->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Information']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Information']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Information']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Information']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -155,7 +146,7 @@ class DefaultController extends RestController
 
 
 
-          /**
+    /**
      * Post Profile Photo 
      *
      *
@@ -177,19 +168,28 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Profile Photo Updated successfully!"
+     *         description="Profile Photo Updated successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Profile Photo Updated successfully!")
+     *         )
      *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="User not found."
-     *     )
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Only files with these extensions are allowed: jpeg, jpg, png.")
+     *         )
+     *     ),
      * )
      */
     public function actionProfilePhoto()
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'Manage']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -201,17 +201,17 @@ class DefaultController extends RestController
             $model->initializeForm();
             if ($model->user_model->save(false)) {
                 $model->uploadFile();
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Profile Photo']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Profile Photo']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Profile Photo']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Profile Photo']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
 
-             /**
+    /**
      * Post Cover Photo 
      *
      *
@@ -233,12 +233,21 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Cover Photo Updated successfully!"
+     *         description="Cover Photo Updated successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Cover Photo Updated successfully!")
+     *         )
      *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="User not found."
-     *     )
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Only files with these extensions are allowed: jpeg, jpg, png.")
+     *         )
+     *     ),
      * )
      */
 
@@ -246,7 +255,7 @@ class DefaultController extends RestController
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'Manage']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = new UserForm($user_model);
@@ -256,10 +265,10 @@ class DefaultController extends RestController
             $model->initializeForm();
             if ($model->user_model->save(false)) {
                 $model->uploadFile();
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Cover Photo']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Cover Photo']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Cover Photo']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Cover Photo']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -350,15 +359,15 @@ class DefaultController extends RestController
     // }
 
 
-                 /**
+    /**
      * Post Privacy  
      *
      *
      * @OA\Post(
      *     path="/account/privacy",
      *     tags={"Account"},
-     *     summary="Update privacy",
-     *     description="Allows update their privacy.",
+     *     summary="Update privacy (NIU)",
+     *     description="Allows update their privacy",
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=false,
@@ -385,7 +394,7 @@ class DefaultController extends RestController
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'Manage']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = new PrivacyForm($user_model);
@@ -394,10 +403,10 @@ class DefaultController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->user_model->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Privacy']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Privacy']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Privacy']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Privacy']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -429,7 +438,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/account/wishlist-package",
      *     tags={"Account"},
-     *     summary="Get Package  Wishliist",
+     *     summary="Get Package Wishlist",
+     *     description="Returns paginated package wishlist that user has added to their wishlist.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="page",
@@ -446,36 +456,130 @@ class DefaultController extends RestController
      *         )
      *     ),
      *
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation. Returns paginated package Wishlist.",
-     *         @OA\JsonContent(
+     *@OA\Response(
+     *     response=200,
+     *     description="Package Wishlist list",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="packages",
      *             type="object",
      *             @OA\Property(
-     *                 property="package",
+     *                 property="summary",
      *                 type="object",
+     *                 @OA\Property(property="total", type="integer", example=3),
+     *                 @OA\Property(property="page", type="integer", example=1),
+     *                 @OA\Property(property="pageSize", type="integer", example=5),
+     *                 @OA\Property(property="total_page", type="integer", example=1),
      *                 @OA\Property(
-     *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=194),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=5),
-     *                     @OA\Property(property="total_page", type="integer", example=39),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
-     *                 @OA\Property(
-     *                     property="data",
+     *                     property="query_params",
      *                     type="array",
-     *                     @OA\Items(
+     *                     @OA\Items(type="string")
+     *                 )
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="package_display_name", type="string", example="Creeks & Crocodiles - Bhitarkanika National Park Odisha - Bhitarkanika"),
+     *                     @OA\Property(property="package_name", type="string", example="Creeks & Crocodiles - Bhitarkanika National Park Odisha"),
+     *                     @OA\Property(property="package_slug", type="string", example="creeks-crocodiles-bhitarkanika-national-park-odisha"),
+     *                     @OA\Property(property="primary_park", type="string", example="Bhitarkanika National Park Odisha"),
+     *                     @OA\Property(property="primary_park_slug", type="string", example="antara-park"),
+     *                     @OA\Property(property="no_of_day", type="integer", example=3),
+     *                     @OA\Property(property="no_of_night", type="integer", example=2),
+     *                     @OA\Property(property="no_of_safari", type="integer", example=1),
+     *                     @OA\Property(property="cost_per_person", type="integer", example=30000),
+     *                     @OA\Property(property="cost_per_two_person", type="integer", example=50000),
+     *                     @OA\Property(property="total_price", type="integer", example=30000),
+     *                     @OA\Property(property="package_description", type="string", example="The Creeks & Crocodiles itinerary..."),
+     *                     @OA\Property(property="image_path", type="string", example="https://datqk0bl4e6qc.cloudfront.net/safaripark/277/logo1732599316.jpg"),
+     *                     @OA\Property(property="image_banner_path", type="string", example="https://datqk0bl4e6qc.cloudfront.net/package/22/package_banner_image-1723825652.jpg"),
+     *                     @OA\Property(property="package_day_night_labels", type="string", example="2 Nights, 3Days"),
+     *                     @OA\Property(property="pick_and_drop", type="boolean", example=false),
+     *                     @OA\Property(property="pick_and_drop_display", type="string", example="Not Included"),
+     *                     @OA\Property(property="stay_category_display", type="string", example="Luxury"),
+     *                     @OA\Property(property="meals_listing", type="string", example="Included"),
+     *                     @OA\Property(property="lunch_included", type="boolean", example=true),
+     *                     @OA\Property(property="dinner_included", type="boolean", example=true),
+     *                     @OA\Property(property="meal_not_included", type="boolean", example=false),
+     *                     @OA\Property(property="breakfast_included", type="boolean", example=true),
+     *                     @OA\Property(property="start_location", type="string", example="Odisha"),
+     *                     @OA\Property(property="end_location", type="string", example="Odisha"),
+     *                     @OA\Property(property="start_date", type="string", nullable=true, example=null),
+     *                     @OA\Property(property="end_date", type="string", nullable=true, example=null),
+     *                     @OA\Property(property="status", type="integer", example=1),
+     *                     @OA\Property(property="price_after_discount", type="integer", example=27000),
+     *                     @OA\Property(
+     *                         property="partner",
      *                         type="object",
-     *                     )
+     *                         @OA\Property(property="business_name", type="string", example="Shivsakti"),
+     *                         @OA\Property(property="phone_no", type="string", example="8825317553"),
+     *                         @OA\Property(property="email", type="string", example="annu@gmail.com"),
+     *                         @OA\Property(property="operator_phone_no", type="string", example="9090909090"),
+     *                         @OA\Property(property="operator_email", type="string", example="annu@gmail.com"),
+     *                         @OA\Property(property="slug", type="string", example="shivsakti-94"),
+     *                         @OA\Property(property="register_comapany_name", type="string", example="Shivsakti"),
+     *                         @OA\Property(property="address", type="string", example="Noida sector 62"),
+     *                         @OA\Property(property="google_rating", type="string", example="4.5"),
+     *                         @OA\Property(property="google_review_count", type="integer", example=2),
+     *                         @OA\Property(property="about_business", type="string", example="Just for testing."),
+     *                         @OA\Property(property="image_path", type="string", example="https://datqk0bl4e6qc.cloudfront.net/operator-registration/2025-07/9_logo_1751378227.jpeg"),
+     *                         @OA\Property(property="park_count", type="integer", example=44),
+     *                         @OA\Property(property="package_count", type="integer", example=18),
+     *                         @OA\Property(property="shared_safari_count", type="integer", example=0),
+     *                         @OA\Property(property="follower_list_count", type="integer", example=9),
+     *                         @OA\Property(property="category_title", type="string", example="Safari Tour Operator"),
+     *                         @OA\Property(property="is_followed", type="boolean", example=true),
+     *                         @OA\Property(property="status", type="boolean", example=true),
+     *                         @OA\Property(property="has_direct_call", type="boolean", example=true),
+     *                         @OA\Property(property="direct_call_no", type="integer", example=7557178166),
+     *                         @OA\Property(
+     *                             property="review_url",
+     *                             type="object",
+     *                             @OA\Property(property="reviews", type="string", example="https://staging-api.walkintothewild.in/operator/eagle-safaris/reviewlist?sort_by=highest")
+     *                         ),
+     *                         @OA\Property(property="show_lead_phone_number", type="boolean", example=false)
+     *                     ),
+     *                     @OA\Property(property="is_wishlist", type="boolean", example=true),
+     *                     @OA\Property(property="is_best_deal", type="integer", example=0),
+     *                     @OA\Property(property="comment_count", type="integer", example=0),
+     *                     @OA\Property(property="resource_uri", type="string", example="https://staging.d27737z6qvbtbo.amplifyapp.com/package/eagle-safaris-by-banzaara-3n-4d-stay-with-06-safaris-8f1846-31723645810-safari-package"),
+     *                     @OA\Property(property="can_comment", type="boolean", example=true),
+     *                     @OA\Property(property="can_reply", type="boolean", example=false),
+     *                     @OA\Property(
+     *                         property="urls",
+     *                         type="object",
+     *                         @OA\Property(property="comments", type="string", example="https://staging-api.walkintothewild.in/package/eagle-safaris-by-banzaara-3n-4d-stay-with-06-safaris-8f1846-31723645810-safari-package/comment-view")
+     *                     ),
+     *                     @OA\Property(property="custom_term_and_condition", type="string", example="<div><p>Terms...</p></div>"),
+     *                     @OA\Property(property="template_code", type="integer", example=2),
+     *                     @OA\Property(property="custom_activity_message", type="string", example="1 Shared Safari"),
+     *                     @OA\Property(property="custom_price_message", type="string", example="Include taxes and fees"),
+     *                     @OA\Property(property="cost_per_person_strike_off", type="integer", example=0),
+     *                     @OA\Property(property="package_tag", type="string", nullable=true, example=null),
+     *                     @OA\Property(property="package_tag_color", type="string", nullable=true, example=null),
+     *                     @OA\Property(
+     *                         property="image_thumbnails",
+     *                         type="object",
+     *                           @OA\Property(property="high", type="string", example="https://d380xe4djfiuu3.cloudfront.net/thumbnail/high/package_image-1732194969.png"),
+     *                           @OA\Property(property="standard", type="string", example="https://d380xe4djfiuu3.cloudfront.net/thumbnail/original/package_image-1732194969.png"), 
+     *                           @OA\Property(property="medium", type="string", example="https://d380xe4djfiuu3.cloudfront.net/thumbnail/medium/package_image-1732194969.png"),
+     *                           @OA\Property(property="low", type="string", example="https://d380xe4djfiuu3.cloudfront.net/thumbnail/low/package_image-1732194969.png"),
+     *                     ),
+     *                    @OA\Property(
+     *                         property="banner_thumbnails",
+     *                         type="object",
+     *                           @OA\Property(property="high", type="string", example="https://d380xe4djfiuu3.cloudfront.net/thumbnail/high/package_banner_image-1732194969.png"),
+     *                           @OA\Property(property="standard", type="string", example="https://d380xe4djfiuu3.cloudfront.net/thumbnail/original/package_banner_image-1732194969.png"), 
+     *                           @OA\Property(property="medium", type="string", example="https://d380xe4djfiuu3.cloudfront.net/thumbnail/medium/package_banner_image-1732194969.png"),
+     *                           @OA\Property(property="low", type="string", example="https://d380xe4djfiuu3.cloudfront.net/thumbnail/low/package_banner_image-1732194969.png"),
+     *                     ),
      *                 )
      *             )
      *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
+     *       )
      *     ),
      * )
      */
@@ -497,14 +601,15 @@ class DefaultController extends RestController
      * @return string
      */
 
-        /**
+    /**
      * Get Sharesafari wishlist
      *
      *
      * @OA\Get(
      *     path="/account/wishlist-shared-safari",
      *     tags={"Account"},
-     *     summary="Get Shared Safari  Wishliist",
+     *     summary="Get Shared Safari  Wishlist",
+     *     description="Returns paginated shared safari wishlist that user has added to their wishlist.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="page",
@@ -522,36 +627,116 @@ class DefaultController extends RestController
      *     ),
      *
      *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation. Returns paginated shared safari wishlist.",
-     *         @OA\JsonContent(
+     *     response=200,
+     *     description="Share Safari List",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="share_safari",
      *             type="object",
      *             @OA\Property(
-     *                 property="share_safari",
+     *                 property="summary",
      *                 type="object",
+     *                 @OA\Property(property="total", type="integer", example=5),
+     *                 @OA\Property(property="page", type="integer", example=1),
+     *                 @OA\Property(property="pageSize", type="integer", example=5),
+     *                 @OA\Property(property="total_page", type="integer", example=1),
      *                 @OA\Property(
-     *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=194),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=5),
-     *                     @OA\Property(property="total_page", type="integer", example=39),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
-     *                 @OA\Property(
-     *                     property="data",
+     *                     property="query_params",
      *                     type="array",
-     *                     @OA\Items(
+     *                     @OA\Items(type="string")
+     *                 )
+     *             ),
+     *
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="share_safari_title", type="string", example="New Test Safari"),
+     *                     @OA\Property(property="slug", type="string", example="new-test-safari-1"),
+     *                     @OA\Property(property="no_of_safari", type="integer", example=2),
+     *                     @OA\Property(property="start_date", type="string", format="date", example="2025-11-29"),
+     *                     @OA\Property(property="end_date", type="string", format="date", example="2025-11-30"),
+     *                     @OA\Property(property="cut_off_date", type="string", format="date", example="2025-11-14"),
+     *                     @OA\Property(property="cost_per_person", type="integer", example=2000),
+     *                     @OA\Property(property="estimate_price_min", type="integer", example=0),
+     *                     @OA\Property(property="estimate_price_max", type="integer", example=0),
+     *                     @OA\Property(property="types", type="string", example="Fixed Departure"),
+     *                     @OA\Property(property="organized_by_name", type="string", example="Safari Planners"),
+     *                     @OA\Property(property="organized_by_image", type="string", example="https://datqk0bl4e6qc.cloudfront.net/operator-registration/2511/938_logo_1763122678.jpeg"),
+     *                     @OA\Property(property="organized_slug", type="string", example="safari-planners"),
+     *                     @OA\Property(property="shared_image_path", type="string", example="https://datqk0bl4e6qc.cloudfront.net/fixed_departure/2511/1_fixed_departure_image_1763011409.jpeg"),
+     *                     @OA\Property(property="seat_full_status", type="boolean", example=false),
+     *                     @OA\Property(property="park_title", type="string", example="Bandhavgarh Tiger Reserve"),
+     *                     @OA\Property(property="park_slug", type="string", example="bandhavgarh-tiger-reserve"),
+     *                     @OA\Property(property="have_you_joined", type="boolean", example=false),
+     *                     @OA\Property(property="is_wishlist", type="boolean", example=true),
+     *                     @OA\Property(property="is_followed", type="boolean", example=false),
+     *                     @OA\Property(property="interseted_user_count", type="integer", example=0),
+     *                     @OA\Property(property="resource_uri", type="string", example="https://staging.d27737z6qvbtbo.amplifyapp.com/sharedsafari/new-test-safari-1"),
+     *                     @OA\Property(property="can_comment", type="boolean", example=false),
+     *                     @OA\Property(property="can_reply", type="boolean", example=false),
+     *                     @OA\Property(property="total_seat", type="integer", example=4),
+     *                     @OA\Property(property="share_seat", type="integer", example=1),
+     *                     @OA\Property(
+     *                         property="partner",
      *                         type="object",
-     *                     )
+     *                         @OA\Property(property="business_name", type="string", example="Safari Planners"),
+     *                         @OA\Property(property="phone_no", type="string", example="8960874641"),
+     *                         @OA\Property(property="email", type="string", example="abhinav@gmail.com"),
+     *                         @OA\Property(property="operator_phone_no", type="string", example="8960874641"),
+     *                         @OA\Property(property="operator_email", type="string", example="abhinav@gmail.com"),
+     *                         @OA\Property(property="slug", type="string", example="safari-planners"),
+     *                         @OA\Property(property="register_comapany_name", type="string", example="Safari Planners"),
+     *                         @OA\Property(property="address", type="string", example="Noida Sector 62"),
+     *                         @OA\Property(property="google_rating", type="string", example="0"),
+     *                         @OA\Property(property="google_review_count", type="integer", example=0),
+     *                         @OA\Property(property="about_business", type="string", example="NEW SAFARI PLANNERS"),
+     *                         @OA\Property(property="image_path", type="string", example="https://datqk0bl4e6qc.cloudfront.net/operator-registration/2511/938_logo_1763122678.jpeg"),
+     *                         @OA\Property(property="park_count", type="integer", example=3),
+     *                         @OA\Property(property="package_count", type="integer", example=1),
+     *                         @OA\Property(property="shared_safari_count", type="integer", example=1),
+     *                         @OA\Property(property="follower_list_count", type="integer", example=3),
+     *                         @OA\Property(property="category_title", type="string", example="Safari Tour Operator"),
+     *                         @OA\Property(property="is_followed", type="boolean", example=false),
+     *                         @OA\Property(property="status", type="boolean", example=true),
+     *                         @OA\Property(property="has_direct_call", type="boolean", example=false),
+     *                         @OA\Property(property="direct_call_no", type="string", nullable=true, example=null),
+     *                         @OA\Property(
+     *                             property="review_url",
+     *                             type="object",
+     *                             @OA\Property(property="reviews", type="string", example="https://staging-api.walkintothewild.in/operator/safari-planners/reviewlist?sort_by=highest")
+     *                         ),
+     *                         @OA\Property(property="show_lead_phone_number", type="boolean", example=false)
+     *                     ),
+     *
+     *                     @OA\Property(
+     *                         property="interested_users",
+     *                         type="array",
+     *                         @OA\Items(type="object")
+     *                     ),
+     *
+     *                     @OA\Property(property="safari_plan", type="string", example="Safari Plan Description here"),
+     *
+     *                     @OA\Property(
+     *                         property="urls",
+     *                         type="object",
+     *                         @OA\Property(property="intrested_users", type="string", example="https://staging-api.walkintothewild.in/sharesafari/new-test-safari-1/intrested-user"),
+     *                         @OA\Property(property="comments", type="string", example="https://staging-api.walkintothewild.in/sharesafari/new-test-safari-1/comment-view")
+     *                     ),
+     *
+     *                     @OA\Property(property="comments_count", type="integer", example=0),
+     *                     @OA\Property(property="witw_average_rating", type="integer", example=0),
+     *                     @OA\Property(property="witw_review_count", type="integer", example=0),
+     *                     @OA\Property(property="is_safari_operator", type="boolean", example=true),
+     *                     @OA\Property(property="is_blue_badge_verified", type="boolean", example=false),
+     *                     @OA\Property(property="status", type="integer", example=1)
      *                 )
      *             )
      *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
-     *     ),
+     *     )
+     * )
      * )
      */
     public function actionWishlistSharedSafari()
@@ -572,39 +757,41 @@ class DefaultController extends RestController
     /**
      * Post Delete User Profile
      *
-     *
      * @OA\Post(
      *     path="/account/profile-delete",
      *     tags={"Account"},
      *     summary="Delete the user profile",
-     *     description="update status zero on profile delete",
+     *     description="Allows the user to delete their profile from the Walk Into The Wild platform.",
      *     security={{"bearerAuth": {}}},
+     *
      *     @OA\Response(
      *         response=200,
-     *         description="Profile deleted successfully!"
+     *         description="Profile deleted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Profile deleted successfully!")
+     *         )
      *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="User not found."
-     *     )
      * )
      */
-    
+
+
     public function actionProfileDelete()
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'Manage']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = User::find()->where(['id' => $user_model->id])->limit(1)->one();
         $model->status = User::STATUS_DELETED;
 
         if ($model->save(false)) {
-            $message = Yii::$app->api->messageManager->getMessage('common.deleted',['{var}'=>'Profile']);
+            $message = Yii::$app->api->messageManager->getMessage('common.deleted', ['{var}' => 'Profile']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
-        $message = Yii::$app->api->messageManager->getMessage('common.delete_failed',['{var}'=>'Profile']);
+        $message = Yii::$app->api->messageManager->getMessage('common.delete_failed', ['{var}' => 'Profile']);
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
@@ -630,12 +817,12 @@ class DefaultController extends RestController
      *     )
      * )
      */
-    
+
     public function actionPrivacyPolicyAcknowledge()
     {
         $user_model = $this->userinfo;
-        $document = ComplianceDocuments::find()->where(['type' => ComplianceDocuments::PRIVACY_POLICY, 'status' => 1])->one(); 
-        $data_exists = UserPrivacyPolicyAcknowledgement::find()->where(['user_id' => $user_model->id,'document_id' => $document->id,'document_version' => $document->version])->one();
+        $document = ComplianceDocuments::find()->where(['type' => ComplianceDocuments::PRIVACY_POLICY, 'status' => 1])->one();
+        $data_exists = UserPrivacyPolicyAcknowledgement::find()->where(['user_id' => $user_model->id, 'document_id' => $document->id, 'document_version' => $document->version])->one();
 
         if ($data_exists) {
             $message = Yii::$app->api->messageManager->getMessage('common.already_acknowledged');
@@ -652,7 +839,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
-        $message = Yii::$app->api->messageManager->getMessage('common.set_failed',['{var}'=>'Acknowledged']);
+        $message = Yii::$app->api->messageManager->getMessage('common.set_failed', ['{var}' => 'Acknowledged']);
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 }
