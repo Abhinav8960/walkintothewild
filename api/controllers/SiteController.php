@@ -1195,13 +1195,50 @@ class SiteController extends RestController
      * @OA\Get(
      *     path="/report-page-reason",
      *     tags={"Operator"},
-     *     summary="Get Report Page Reason (Draft)",
+     *     summary="Get Report Page Reason",
+     *     description = "The <b>Report Page Reason API</b> provides a list of predefined reasons that users can select when reporting a page, operator, or content on the platform. This ensures that reports are categorized consistently, allowing the platform to take appropriate action quickly.<br>The API returns the reasons in a structured format, including main categories and subcategories (e.g., spam reported by a user, business, or other).",
+     *     
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful Operation.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             
+     *             @OA\Property(
+     *                 property="1",
+     *                 type="string",
+     *                 example="Scam,Fraud, or False Information"
+     *             ),
+     *             
+     *             @OA\Property(
+     *                 property="spam",
+     *                 type="object",
+     *                 @OA\Property(property="21", type="string", example="Me"),
+     *                 @OA\Property(property="22", type="string", example="A business"),
+     *                 @OA\Property(property="23", type="string", example="Else")
+     *             ),
+     *             
+     *             @OA\Property(
+     *                 property="3",
+     *                 type="string",
+     *                 example="Fake Page"
+     *             ),
+     *
+     *             @OA\Property(
+     *                 property="4",
+     *                 type="string",
+     *                 example="Other Form"
+     *             )
+     *         )
+     *     ),
+     *
      *     @OA\Response(
      *         response=404,
-     *         description="Not found",
-     *     ),
+     *         description="Report page reason Not found"
+     *     )
      * )
      */
+
     public function actionReportPageReason()
     {
         return [
@@ -1277,7 +1314,7 @@ class SiteController extends RestController
      * @OA\Post(
      *     path="/request-delete-account",
      *     tags={"Authorization"},
-     *     summary="Delete Account Request (Draft)",
+     *     summary="Delete Account Request",
      *     description="Allows a user for delete account request.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(
@@ -1753,7 +1790,7 @@ class SiteController extends RestController
      * @OA\Get(
      *     path="/refundpolicyantara",
      *     tags={"Authorization"},
-     *     summary="Refund Policy Antara(Draft)",
+     *     summary="Refund Policy Antara",
      *     description="This api is used in Web.", 
      *     @OA\Response(
      *         response=404,
