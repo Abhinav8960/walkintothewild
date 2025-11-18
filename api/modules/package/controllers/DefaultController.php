@@ -83,31 +83,31 @@ class DefaultController extends RestController
     }
 
     /**
-     * Get Package List
-     *
-     *
      * @OA\Get(
      *     path="/package",
      *     tags={"Package"},
-     *     summary="Get Package List (Draft)",
-     *     @OA\Parameter(
-     *         name="page",
-     *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="pageSize",
-     *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
-     *         )
-     *     ),
+     *     summary="Get Package List",
+     *
+     *     @OA\Parameter(name="page", in="query", @OA\Schema(type="integer")),
+     *     @OA\Parameter(name="pageSize", in="query", @OA\Schema(type="integer")),
+     *
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
-     *     ),
+     *         response=200,
+     *         description="Packages fetched successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="packages",
+     *                 type="object",
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/PackageSchema")
+     *                 )
+     *             )
+     *         )
+     *     )
      * )
      */
     public function actionIndex()
