@@ -98,7 +98,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/chat/quatation-chat",
      *     tags={"Chat"},
-     *     summary="Get Quotation Chat List or Operator List without chat hash (Draft)",
+     *     summary="Get Quotation Chat List or Operator List without chat hash",
+     *     description = "Retrieves <b>the quotation chat list</b> without requiring a <b>chat hash</b>, including pagination, <b>last message</b> details, related <b>lead</b> information, and <b>boperator</b> profile data.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="page",
@@ -117,12 +118,140 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Retrieved successfully."
+     *         description="Quotation chat list retrieved successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="quotations",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="total", type="integer", example=10),
+     *                     @OA\Property(property="page", type="integer", example=1),
+     *                     @OA\Property(property="pageSize", type="integer", example=5),
+     *                     @OA\Property(property="total_page", type="integer", example=2),
+     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"),example={})
+     *                 ),
+     *
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=3104),
+     *                         @OA\Property(property="chat_hash", type="string", example="loYDnu1763451526SOu4-"),
+     *                         @OA\Property(property="last_message", type="string", example="Hi, I am interested in \nPark: Anamalai Tiger Reserve\n"),
+     *                         @OA\Property(property="last_message_datetime", type="integer", example=1763451526),
+     *                         @OA\Property(property="chat_type", type="integer", example=2),
+     *                         @OA\Property(property="is_seen", type="boolean", example=true),
+     *
+     *                         @OA\Property(
+     *                             property="contact",
+     *                             type="object",
+     *                             @OA\Property(property="username", type="string", example="ankit.kankane.safaris@gmail.com"),
+     *                             @OA\Property(property="name", type="string", example="ANKIT KANKANE SAFARIS"),
+     *                             @OA\Property(property="email", type="string", example="ankit.kankane.safaris@gmail.com"),
+     *                             @OA\Property(property="is_support_user", type="integer", example=0),
+     *                             @OA\Property(property="is_safari_operator", type="boolean", example=true),
+     *                             @OA\Property(property="is_account_manager", type="integer", example=0),
+     *                             @OA\Property(property="is_blue_badge_verified", type="boolean", example=false),
+     *                             @OA\Property(property="is_developer", type="integer", example=0),
+     *                             @OA\Property(property="google_avatar_image", type="string", example="10_google_avatar.jpg"),
+     *                             @OA\Property(property="user_handle", type="string", example="ankit_kankane_safaris"),
+     *                             @OA\Property(property="gender", type="string", nullable=true,example=null),
+     *                             @OA\Property(property="account_type", type="integer", example=3),
+     *                             @OA\Property(property="gender_privacy", type="integer", example=1),
+     *                             @OA\Property(property="email_privacy", type="integer", example=1),
+     *                             @OA\Property(property="status", type="integer", example=10),
+     *                             @OA\Property(property="profile_display_image", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/operator-registration/2025-05/10_logo_1751379931.jpg"),
+     *                             @OA\Property(property="cover_display_image", type="string", nullable=true,example=null),
+     *                             @OA\Property(property="display_name", type="string", example="Ankit Kankane Safaris"),
+     *                             @OA\Property(property="is_followed", type="boolean", example=true),
+     *                             @OA\Property(property="user_activity_count", type="integer", example=40),
+     *                             @OA\Property(property="operator_slug", type="string", example="ankit-kankane-safaris"),
+     *                             @OA\Property(property="user_followers_count", type="integer", example=304),
+     *                             @OA\Property(property="user_followings_count", type="integer", example=2),
+     *                             @OA\Property(property="is_privacy_policy_acknowledged", type="boolean", example=false)
+     *                         ),
+     *
+     *                         @OA\Property(
+     *                             property="lead",
+     *                             type="object",
+     *                             @OA\Property(property="id", type="integer", example=1255),
+     *                             @OA\Property(property="source", type="integer", example=3),
+     *                             @OA\Property(property="source_label", type="string", example="Operator"),
+     *                             @OA\Property(property="name", type="string", example="Abhinav Pal"),
+     *                             @OA\Property(property="email", type="string", example="abhinavpal8960@gmail.com"),
+     *                             @OA\Property(property="phone", type="string", example="8960896089"),
+     *                             @OA\Property(property="destination", type="string", nullable=true,example=null),
+     *                             @OA\Property(property="from_date", type="string", example="2025-12-14"),
+     *                             @OA\Property(property="to_date", type="string", example="2025-12-15"),
+     *                             @OA\Property(property="travelers", type="integer", example=3),
+     *
+     *                             @OA\Property(
+     *                                 property="staycatgory",
+     *                                 type="object",
+     *                                 @OA\Property(property="id", type="integer", example=2),
+     *                                 @OA\Property(property="title", type="string", example="Standard"),
+     *                                 @OA\Property(property="min_range", type="integer", example=10000),
+     *                                 @OA\Property(property="max_range", type="integer", example=50000)
+     *                             ),
+     *
+     *                             @OA\Property(property="transport", type="string", nullable=true,example=null),
+     *                             @OA\Property(property="user_notes", type="string", example="Buy me a coffee!!!"),
+     *
+     *                             @OA\Property(
+     *                                 property="operator",
+     *                                 type="object",
+     *                                 @OA\Property(property="business_name", type="string", example="Ankit Kankane Safaris"),
+     *                                 @OA\Property(property="phone_no", type="string", example="8319393633"),
+     *                                 @OA\Property(property="email", type="string", example="ankit.kankane.safaris@gmail.com"),
+     *                                 @OA\Property(property="operator_phone_no", type="string", example="8319393633"),
+     *                                 @OA\Property(property="operator_email", type="string", example="ankit.kankane123@gmail.com"),
+     *                                 @OA\Property(property="slug", type="string", example="ankit-kankane-safaris"),
+     *                                 @OA\Property(property="register_comapany_name", type="string", example="Ankit Kankane Safaris"),
+     *                                 @OA\Property(property="address", type="string", example="BANDHAVGARH NATIONAL PARK"),
+     *                                 @OA\Property(property="google_rating", type="string", example="5"),
+     *                                 @OA\Property(property="google_review_count", type="integer", example=5),
+     *                                 @OA\Property(property="about_business", type="string", example="We are in safari tour operation business..."),
+     *                                 @OA\Property(property="image_path", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/operator-registration/2025-05/10_logo_1751379931.jpg"),
+     *                                 @OA\Property(property="park_count", type="integer", example=8),
+     *                                 @OA\Property(property="package_count", type="integer", example=7),
+     *                                 @OA\Property(property="shared_safari_count", type="integer", example=3),
+     *                                 @OA\Property(property="follower_list_count", type="integer", example=304),
+     *                                 @OA\Property(property="category_title", type="string", example="Safari Tour Operator"),
+     *                                 @OA\Property(property="is_followed", type="boolean", example=true),
+     *                                 @OA\Property(property="status", type="boolean", example=true),
+     *                                 @OA\Property(property="has_direct_call", type="boolean", example=false),
+     *                                 @OA\Property(property="direct_call_no", type="string", nullable=true , example=null),
+     *                                 @OA\Property(
+     *                                     property="review_url",
+     *                                     type="object",
+     *                                     @OA\Property(property="reviews", type="string", example="http://api.walkintothewild.io/operator/ankit-kankane-safaris/reviewlist?sort_by=highest")
+     *                                 ),
+     *                                 @OA\Property(property="show_lead_phone_number", type="boolean", example=false)
+     *                             )
+     *                         ),
+     *
+     *                         @OA\Property(property="is_call_request", type="boolean", example=false),
+     *                         @OA\Property(property="call", type="string", nullable=true,example=null),
+     *                         @OA\Property(property="can_call", type="boolean", example=true),
+     *                         @OA\Property(property="is_closed", type="boolean", example=false),
+     *                         @OA\Property(property="calling_no", type="string", nullable=true,example=null)
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found"
-     *     )
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Access token not found")
+     *         )
+     *     ),
      * )
      */
     public function actionQuatationChat($chat_hash = null)
@@ -168,59 +297,101 @@ class DefaultController extends RestController
     }
 
 
-/**
- * Get User List
- *
- * @OA\Get(
- *     path="/chat/user-list",
- *     tags={"Chat"},
- *     summary="Get chat user list (Draft)",
- *     security={{"bearerAuth": {}}},
- *     @OA\Parameter(
- *         name="page",
- *         in="query",
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Parameter(
- *         name="pageSize",
- *         in="query",
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation. Returns paginated chat user list.",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(
- *                 property="contacts",
- *                 type="object",
- *                 @OA\Property(
- *                     property="summary",
- *                     type="object",
- *                     @OA\Property(property="total", type="integer", example=194),
- *                     @OA\Property(property="page", type="integer", example=1),
- *                     @OA\Property(property="pageSize", type="integer", example=5),
- *                     @OA\Property(property="total_page", type="integer", example=39),
- *                     @OA\Property(
- *                         property="query_params",
- *                         type="object",
- *                         example={"pageSize": 5}
- *                     ),
- *                 ),
- *                 @OA\Property(
- *                     property="data",
- *                     type="array",
- *                     @OA\Items(type="object")
- *                 )
- *             )
- *         )
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="Chat Not Found!"
- *     )
- * )
- */
+    /**
+     * Get User List
+     *
+     * @OA\Get(
+     *     path="/chat/user-list",
+     *     tags={"Chat"},
+     *     summary="Get chat user list",
+     *     description = "This API is used to retrieve the chat user list.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(type="integer")
+     *     ),
+     * @OA\Response(
+     *     response=200,
+     *     description="Successful operation. Returns paginated quotation chat list.",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="contacts",
+     *             type="object",
+     *             @OA\Property(
+     *                 property="summary",
+     *                 type="object",
+     *                 @OA\Property(property="total", type="integer", example=3),
+     *                 @OA\Property(property="page", type="integer", example=1),
+     *                 @OA\Property(property="pageSize", type="integer", example=5),
+     *                 @OA\Property(property="total_page", type="integer", example=1),
+     *                 @OA\Property(property="query_params",type="array",@OA\Items(type="string"),example={})
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=3083),
+     *                     @OA\Property(property="chat_hash", type="string", example="lvo-371759815534PQpV3"),
+     *                     @OA\Property(property="last_message", type="string", example="Hi, I am interested in\nPark: Dudhwa Tiger Reserve"),
+     *                     @OA\Property(property="last_message_datetime", type="integer", example=1759815534),
+     *                     @OA\Property(property="chat_type", type="integer", example=1),
+     *                     @OA\Property(property="is_seen", type="boolean", example=true),
+     *
+     *                     @OA\Property(
+     *                         property="contact",
+     *                         type="object",
+     *                         @OA\Property(property="username", type="string", example="info@bigwholidays.com"),
+     *                         @OA\Property(property="name", type="string", example="Big W Holidays"),
+     *                         @OA\Property(property="email", type="string", example="info@bigwholidays.com"),
+     *                         @OA\Property(property="is_support_user", type="integer", example=0),
+     *                         @OA\Property(property="is_safari_operator", type="boolean", example=true),
+     *                         @OA\Property(property="is_account_manager", type="integer", example=0),
+     *                         @OA\Property(property="is_blue_badge_verified", type="boolean", example=false),
+     *                         @OA\Property(property="is_developer", type="integer", example=0),
+     *                         @OA\Property(property="google_avatar_image", type="string", nullable=true, example=null),
+     *                         @OA\Property(property="user_handle", type="string", example="big-w-holidays"),
+     *                         @OA\Property(property="gender", type="string", nullable=true, example=null),
+     *                         @OA\Property(property="account_type", type="integer", example=3),
+     *                         @OA\Property(property="gender_privacy", type="integer", example=1),
+     *                         @OA\Property(property="email_privacy", type="integer", example=1),
+     *                         @OA\Property(property="status", type="integer", example=10),
+     *                         @OA\Property(property="profile_display_image", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/operator-registration/2506/4280_logo_1749314336.jpeg"),
+     *                         @OA\Property(property="cover_display_image", type="string", nullable=true, example=null),
+     *                         @OA\Property(property="display_name", type="string", example="Big W Holidays"),
+     *                         @OA\Property(property="is_followed", type="boolean", example=false),
+     *                         @OA\Property(property="user_activity_count", type="integer", example=0),
+     *                         @OA\Property(property="operator_slug", type="string", example="big-w-holidays"),
+     *                         @OA\Property(property="user_followers_count", type="integer", example=0),
+     *                         @OA\Property(property="user_followings_count", type="integer", example=0),
+     *                         @OA\Property(property="is_privacy_policy_acknowledged", type="boolean", example=false)
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     )
+     * ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Access token not found")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Chat Not Found!"
+     *     )
+     * )
+     */
 
     public function actionUserList()
     {
@@ -234,7 +405,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/chat/messages/{chat_hash}",
      *     tags={"Chat"},
-     *     summary="Get Chat Messages (Draft)",
+     *     summary="Get Chat Messages",
+     *     description = "Retrieve chat messages by providing the chat hash in the request parameters.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="page",
@@ -253,12 +425,47 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Retrieved successfully."
+     *         description="Retrieved successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="chat_messages",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(property="total", type="integer", example=1),
+     *                     @OA\Property(property="page", type="integer", example=1),
+     *                     @OA\Property(property="pageSize", type="integer", example=5),
+     *                     @OA\Property(property="total_page", type="integer", example=1),
+     *                     @OA\Property(property="query_params",type="array", @OA\Items(type="string"),example={})
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=8064),
+     *                         @OA\Property(property="message", type="string", example="Hi, I am interested in \nPark: Anamalai Tiger Reserve\nSafaries: 5\nTravelers: 3\nAccommodation: Standard\nStart Date: Dec 14, 2025\nEnd Date: Dec 15, 2025\nNotes:Buy me a coffee!!!\n"),
+     *                         @OA\Property(property="is_edited", type="boolean", example=false),
+     *                         @OA\Property(property="is_deleted", type="boolean", example=false),
+     *                         @OA\Property(property="is_system_generated", type="boolean", example=false),
+     *                         @OA\Property(property="message_datetime", type="integer", example=1763451526),
+     *                         @OA\Property(property="is_message_sent_by_you", type="boolean", example=true)
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
+     *
      *     @OA\Response(
-     *         response=404,
-     *         description="Chat Not Found!"
-     *     )
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Chat not found")
+     *         )
+     *     ),
      * )
      */
     public function actionMessages($chat_hash)
@@ -301,8 +508,8 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/chat/send-message/{user_handle}",
      *     tags={"Chat"},
-     *     summary="Send Message (Draft)",
-     *     description="Allows users to send a message in a chat.",
+     *     summary="Send Message",
+     *     description="Allows users to send a <b>message</b> and upload <b>gallery</b> items by providing the <b>gallery slug</b> in the request body within a chat.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="user_handle",
@@ -341,11 +548,21 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Message sent successfully!"
+     *         description="Message sent!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Message Sent!"),
+     *             @OA\Property(property="chat_hash", type="string", example="loYDnu1763451526SOu4-")
+     *         )
      *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Chat not found."
+    *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Chat not found")
+     *         )
      *     )
      * )
      */
@@ -743,24 +960,15 @@ class DefaultController extends RestController
     }
 
 
-     /**
+    /**
      * Get Profile Chat
      *
      * @OA\Get(
      *     path="/chat/profile-chat/{user_handle}",
      *     tags={"Chat"},
-     *     summary="Get Profile Chat (Draft)",
+     *     summary="Get Profile Chat",
+     *     description="Retrieves the <b>chat hash</b> for a direct message conversation with the specified <b>user handle</b>.",
      *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(
-     *         name="page",
-     *         in="query",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="pageSize",
-     *         in="query",
-     *         @OA\Schema(type="integer")
-     *     ),
      *     @OA\Parameter(
      *         name="user_handle",
      *         in="path",
@@ -768,11 +976,30 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Retrieved successfully."
+     *         description="Chat Found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="chat_hash", type="string", example="Ssxn1J1748250756cYaHy"),
+     *             @OA\Property(property="message", type="string", example="Chat Found!")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="User Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="User Not Found!")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Chat Not Found!"
+     *         description="Chat Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=0),
+     *             @OA\Property(property="message", type="string", example="Chat Not Found!")
+     *         )
      *     )
      * )
      */
@@ -785,7 +1012,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
-        $chat = Chat::find()->andWhere(['or', ['useer_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
+        $chat = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
         if (!$chat) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
             return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => $message], 200);
@@ -803,7 +1030,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/chat/make-call-on-chat/{user_handle}",
      *     tags={"Chat"},
-     *     summary="Make Call Request (Draft)",
+     *     summary="Make Call Request",
      *     description="Allows users to make a call request or operators to initiate a call.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -822,15 +1049,35 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Call Requested Successfully."
+     *         description="Call Requested Successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Call Requested Successfully")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Call Initiated Successfully."
+     *         description="Call Initiated Successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Call Initiated Successfully")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="User Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="User Not Found!")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Chat not found."
+     *         description="Chat Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Chat Not Found!")
+     *         )
      *     )
      * )
      */
@@ -1036,8 +1283,8 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/chat/edit-message",
      *     tags={"Chat"},
-     *     summary="Edit Message (Draft)",
-     *     description="Allows users to edit a message in a chat.",
+     *     summary="Edit Message",
+     *     description="Allows users to edit their own message in a chat.",
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
@@ -1062,11 +1309,36 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Message Updated successfully!"
+     *         description="Message Updated successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Message Updated Successfully!")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Missing Parameters",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Chat message ID and message are required!")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="You can only edit messages within 10 minutes!")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Chat not found."
+     *         description="Chat not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Chat message not found or you do not have permission to edit it.")
+     *         )
      *     )
      * )
      */
@@ -1141,11 +1413,36 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Message Updated successfully!"
+     *         description="Message Deleted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Message Deleted Successfully!")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Missing Parameters",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Chat message ID and message are required!")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="You can not delete messages!")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Chat not found."
+     *         description="Chat not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Chat message not found or you do not have permission to delete it.")
+     *         )
      *     )
      * )
      */
