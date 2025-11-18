@@ -108,7 +108,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/operator/{slug}",
      *     tags={"Operator"},
-     *     summary="Get Operator View (Draft)",
+     *     summary="Get Operator View",
+     *     description = "<b>Purpose:</b> Retrieve detailed information about a safari tour operator (business), including contact details, parks they operate in, ratings, URLs and other metadata.<br> <b>Use Cases : </b><br><ul><li>Operator Detail Page on the frontend.</li><li>Prefill forms for quotation/booking.</li><li>Display operator-related parks, packages and reviews.</li></ul>",
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -119,8 +120,91 @@ class DefaultController extends RestController
      *         )
      *     ),
      *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="business_name", type="string", example="Rawat Safari"),
+     *                 @OA\Property(property="phone_no", type="integer", nullable=true, example=null),
+     *                 @OA\Property(property="email", type="string", example="deepti@triline.co.in"),
+     *                 @OA\Property(property="operator_phone_no", type="integer", example=9874563210),
+     *                 @OA\Property(property="operator_email", type="string", example="deepti@triline.co.in"),
+     *                 @OA\Property(property="slug", type="string", example="rawat-safari"),
+     *                 @OA\Property(property="address", type="string", example="Noida"),
+     *                 @OA\Property(property="google_rating", type="string", example="5"),
+     *                 @OA\Property(property="google_review_count", type="integer", example=3),
+     *                 @OA\Property(property="about_business", type="string", example="Business is a vast and exciting domain, covering everything from startups and entrepreneurship to corporate strategy and market trends."),
+     *                 @OA\Property(property="image_path", type="string", example="https://datqk0bl4e6qc.cloudfront.net/operator-registration/2505/2276_logo_1747893831.jpg"),
+     *                 @OA\Property(property="park_count", type="integer", example=50),
+     *                 @OA\Property(property="package_count", type="integer", example=1),
+     *                 @OA\Property(property="shared_safari_count", type="integer", example=0),
+     *                 @OA\Property(property="follower_list_count", type="integer", example=5),
+     *                 @OA\Property(property="category_title", type="string", example="Safari Tour Operator"),
+     *                 @OA\Property(property="is_followed", type="boolean", example=false),
+     *                 @OA\Property(property="status", type="boolean", example=true),
+     *                 @OA\Property(property="has_direct_call", type="boolean", example=false),
+     *                 @OA\Property(property="direct_call_no", type="string", nullable=true ,example=null),
+     *                 @OA\Property(
+     *                     property="review_url",
+     *                     type="object",
+     *                     @OA\Property(property="reviews", type="string", example="https://staging-api.walkintothewild.in/operator/rawat-safari/reviewlist?sort_by=highest")
+
+     *                 ),
+     *                 @OA\Property(
+     *                  property="park",
+     *                  type="array",
+     *                  @OA\Items(
+     *                       type="object",
+     *                       @OA\Property(property="id", type="integer", example=1),
+     *                       @OA\Property(property="title", type="string", example="Dudhwa Tiger Reserve"),
+     *                       @OA\Property(property="slug", type="string", example="dudhwa-tiger-reserve"),
+     *                       @OA\Property(property="feature_image_path", type="string", example="https://datqk0bl4e6qc.cloudfront.net/safaripark/1/park_feature_image1718179650.jpg"),
+     *                       @OA\Property(property="quotation_form_note", type="string", example="Test testbb. Jjjjj  jhjjh"),
+     *                  )
+     *                ),
+     *                 @OA\Property(property="is_approved", type="boolean", example=true),
+     *                 @OA\Property(property="has_cancellation_policy", type="boolean", example=false),
+     *                 @OA\Property(property="budget", type="string", example=""),
+     *                 @OA\Property(property="other_wildlife_activity", type="string", example="[]"),
+     *                 @OA\Property(property="facebook_url", type="string", nullable=true ,example=null),
+     *                 @OA\Property(property="youtube_link", type="string", nullable=true ,example=null),
+     *                 @OA\Property(property="instagram_url", type="string", nullable=true ,example=null),
+     *                 @OA\Property(property="website", type="string", nullable=true ,example=null),
+     *                 @OA\Property(
+     *                     property="urls",
+     *                     type="object",
+     *                     @OA\Property(property="parks", type="string", example="https://staging-api.walkintothewild.in/operator/rawat-safari/operator-park"),
+     *                     @OA\Property(property="sharedsafari", type="string", example="https://staging-api.walkintothewild.in/operator/rawat-safari/operator-shared-safari"),
+     *                     @OA\Property(property="packages", type="string", example="https://staging-api.walkintothewild.in/operator/rawat-safari/operator-packages"),
+     *                     @OA\Property(property="reviews", type="string", example="https://staging-api.walkintothewild.in/operator/rawat-safari/reviewlist?sort_by=highest")
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Forbidden"),
+     *             @OA\Property(property="message", type="string", example="operator Not Found or Operator Account may be Blocked!"),
+     *         )
+     *    ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Bad Request"),
+     *             @OA\Property(property="message", type="string", example="Missing required parameters: operator_slug"),
+     *         )
+     *    ),
+     *     @OA\Response(
      *         response=404,
-     *         description="Not found",
+     *         description="Operator Not Found",
      *     ),
      * )
      */
@@ -140,6 +224,114 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['data' => $operator->toArray()]);
     }
 
+
+    /**
+     * Quotes Request Operator
+     *
+     * Allows users to send a quote request to an operator.
+     *
+     * @OA\Post(
+     *     path="/operator/{slug}/quotesrequest",
+     *     tags={"Operator"},
+     *     summary="Quotes Request Operator",
+     *     description="Allows users to send a quote request to a specific operator using their slug. Includes details like safari count, category, dates, and optional notes.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="path",
+     *         required=true,
+     *         description="Slug of Operator",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"safari_park_id", "safaris", "travelers", "stay_category_id", "start_date", "end_date"},
+     *                 
+     *                 @OA\Property(
+     *                     property="safari_park_id",
+     *                     type="integer",
+     *                     description="Safari Park ID",
+     *                     example=31
+     *                 ),
+     *                 @OA\Property(
+     *                     property="safaris",
+     *                     type="integer",
+     *                     description="Number of safaris",
+     *                     example=5
+     *                 ),
+     *                 @OA\Property(
+     *                     property="travelers",
+     *                     type="integer",
+     *                     description="Total number of travelers",
+     *                     example=3
+     *                 ),
+     *                 @OA\Property(
+     *                     property="stay_category_id",
+     *                     type="integer",
+     *                     description="Stay Category ID",
+     *                     example=2
+     *                 ),
+     *                 @OA\Property(
+     *                     property="start_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="Start Date (YYYY-MM-DD)",
+     *                     example="2025-12-14"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="end_date",
+     *                     type="string",
+     *                     format="date",
+     *                     description="End Date (YYYY-MM-DD)",
+     *                     example="2025-12-15"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="user_notes",
+     *                     type="string",
+     *                     nullable=true,
+     *                     description="User notes or special requests (optional)",
+     *                     example="Buy me a coffee!!!"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Quote request sent successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Quote request sent successfully!")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Forbidden"),
+     *             @OA\Property(property="message", type="string", example="operator Not Found or Operator Account may be Blocked!")
+     *         )
+     *    ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Bad Request"),
+     *             @OA\Property(property="message", type="string", example="Missing required parameters: operator_slug")
+     *         )
+     *    ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Operator not found."
+     *     )
+     * )
+     */
 
     public function actionQuotesrequest($slug)
     {
@@ -181,8 +373,8 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/operator/{slug}/follow",
      *     tags={"Operator"},
-     *     summary="Follow Operator (Draft)",
-     *     description="Allows users to follow Operator.",
+     *     summary="Follow Operator",
+     *     description="This is allows a user to follow a specific operator by using the operator's slug. This action is typically used to receive updates or notifications about the operator's activities, packages, or offerings.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="slug",
@@ -191,12 +383,33 @@ class DefaultController extends RestController
      *         description="Slug of Operator",
      *         @OA\Schema(type="string")
      *     ),
-     * 
-     *
      *     @OA\Response(
      *         response=200,
-     *         description="Followed successfully!"
+     *         description="Followed successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Followed successfully!")
+     *         )
      *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Forbidden"),
+     *             @OA\Property(property="message", type="string", example="operator Not Found or Operator Account may be Blocked!")
+     *         )
+     *    ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Bad Request"),
+     *             @OA\Property(property="message", type="string", example="Missing required parameters: operator_slug")
+     *         )
+     *    ),
      *     @OA\Response(
      *         response=404,
      *         description="Operator Not Found!"
@@ -250,8 +463,8 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/operator/{slug}/unfollow",
      *     tags={"Operator"},
-     *     summary="unfollow Operator (Draft)",
-     *     description="Allows users to funollow Operator.",
+     *     summary="unfollow Operator",
+     *     description="This API is allows a user to unfollow a specific operator by their slug identifier. When successfully unfollowed, the API returns a confirmation message.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="slug",
@@ -264,8 +477,31 @@ class DefaultController extends RestController
      *
      *     @OA\Response(
      *         response=200,
-     *         description="UnFollowed successfully!"
+     *         description="Unfollowed successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Unfollowed successfully!")
+     *         )
      *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Forbidden"),
+     *             @OA\Property(property="message", type="string", example="operator Not Found or Operator Account may be Blocked!"),
+     *         )
+     *    ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Bad Request"),
+     *             @OA\Property(property="message", type="string", example="Missing required parameters: operator_slug"),
+     *         )
+     *    ),
      *     @OA\Response(
      *         response=404,
      *         description="Operator Not Found!"
@@ -331,8 +567,8 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/operator/{slug}/review",
      *     tags={"Operator"},
-     *     summary="Review to Operator (Draft)",
-     *     description="Allows users to review operator for specifice park.",
+     *     summary="Review to Operator",
+     *     description="The <b>Operator Review API</b> allows users to share feedback and rate safari or tour operators listed on the platform. By submitting a review, users can provide a star rating (e.g., 1–5) along with comments about their experience.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="slug",
@@ -369,9 +605,23 @@ class DefaultController extends RestController
      *         )
      *     ),
      *     @OA\Response(
-     *         response=200,
-     *         description="Thank you for your review!"
-     *     ),
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Forbidden"),
+     *             @OA\Property(property="message", type="string", example="operator Not Found or Operator Account may be Blocked!"),
+     *         )
+     *    ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Bad Request"),
+     *             @OA\Property(property="message", type="string", example="Missing required parameters: operator_slug"),
+     *         )
+     *    ),
      *     @OA\Response(
      *         response=404,
      *         description="Operator not found."
@@ -460,7 +710,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/operator/{slug}/user-rating-parklist",
      *     tags={"Operator"},
-     *     summary="Get Rating (Draft)",
+     *     summary="Get Rating",
+     *     description = "This API returns the list of National Parks and Tiger Reserves with their details (ID, title, slug, feature image, and notes).It is primarily used to fetch parks associated with a given operator for rating or display purposes.",
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -471,9 +722,61 @@ class DefaultController extends RestController
      *         )
      *     ),
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
+     *         response=200,
+     *         description="Successful operation.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="parks",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(
+     *                         property="query_params",
+     *                         type="array",
+     *                         @OA\Items(type="string"),
+     *                         example={}
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=321),
+     *                         @OA\Property(property="title", type="string", example="Great Himalayan National Park"),
+     *                         @OA\Property(property="slug", type="string", example="great-himalayan-national-park"),
+     *                         @OA\Property(property="feature_image_path", type="string", example="https://datqk0bl4e6qc.cloudfront.net/safaripark/321/park_feature_image1722583958.jpg"),
+     *                         @OA\Property(property="quotation_form_note", type="string", example=""),
+     *                         @OA\Property(property="template_code", type="integer", example=1)     
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Forbidden"),
+     *             @OA\Property(property="message", type="string", example="operator Not Found or Operator Account may be Blocked!"),
+     *         )
+     *    ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Bad Request"),
+     *             @OA\Property(property="message", type="string", example="Missing required parameters: operator_slug"),
+     *         )
+     *    ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Operator or Park not found",
+     *     )
      * )
      */
     public function actionUserRatingParklist($slug)
@@ -595,8 +898,8 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/operator/{slug}/flag",
      *     tags={"Operator"},
-     *     summary="Flag Review (Draft)",
-     *     description="Allows users to flag review.",
+     *     summary="Flag Review",
+     *     description="The Operator Flag API allows users to flag a specific operator or content for review. This can be used to report inappropriate behavior, violations, or other issues. Flagging helps maintain platform safety and ensures operators follow guidelines.<br>The API requires the operator’s unique slug and the reason ID (id) in the query parameters. Responses are returned in JSON format with a status flag (1 for success, 0 for error) and a message or error details.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="slug",
@@ -635,8 +938,31 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Flaged successfully!"
+     *         description="Flagged successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Flagged successfully!")
+     *         )
      *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Forbidden"),
+     *             @OA\Property(property="message", type="string", example="operator Not Found or Operator Account may be Blocked!"),
+     *         )
+     *    ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Bad Request"),
+     *             @OA\Property(property="message", type="string", example="Missing required parameters: operator_slug or review_id"),
+     *         )
+     *    ),
      *     @OA\Response(
      *         response=404,
      *         description="Operator not found."
@@ -694,7 +1020,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/operator/{slug}/operator-park-dropdown",
      *     tags={"Operator"},
-     *     summary="Get Operator Park Drop Down (Draft)",
+     *     summary="Get Operator Park Drop Down",
+     *     description = "Fetches a list of parks associated with a specific operator, returning basic information about each park such as ID, title, slug, feature image URL, and an optional quotation note.",
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -705,9 +1032,61 @@ class DefaultController extends RestController
      *         )
      *     ),
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
+     *         response=200,
+     *         description="Successful operation.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="parks",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     type="object",
+     *                     @OA\Property(
+     *                         property="query_params",
+     *                         type="array",
+     *                         @OA\Items(type="string"),
+     *                         example={}
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=321),
+     *                         @OA\Property(property="title", type="string", example="Great Himalayan National Park"),
+     *                         @OA\Property(property="slug", type="string", example="great-himalayan-national-park"),
+     *                         @OA\Property(property="feature_image_path", type="string", example="https://datqk0bl4e6qc.cloudfront.net/safaripark/321/park_feature_image1722583958.jpg"),
+     *                         @OA\Property(property="quotation_form_note", type="string", example=""),
+     *                         @OA\Property(property="template_code", type="integer", example=1)
+     *                     )
+     *                 )
+     *             )
+     *         )
      *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Forbidden"),
+     *             @OA\Property(property="message", type="string", example="operator Not Found or Operator Account may be Blocked!"),
+     *         )
+     *    ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Bad Request"),
+     *             @OA\Property(property="message", type="string", example="Missing required parameters: operator_slug"),
+     *         )
+     *    ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Operator or Park Not found",
+     *     )
      * )
      */
     public function actionOperatorParkDropdown($slug)
@@ -742,8 +1121,8 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/operator/{slug}/report-operator",
      *     tags={"Operator"},
-     *     summary="Report Operator (Draft)",
-     *     description="Allows users to report operator.",
+     *     summary="Report Operator",
+     *     description="The <b>Report Operator API</b> allows users to report an operator for inappropriate content, fraudulent behavior, or other issues. Submitting a report helps maintain the quality and trustworthiness of operators on the platform.<br>All requests require the operator’s unique slug in the URL and proper authentication. Responses are returned in JSON format with a status flag (1 for success, 0 for error) along with a message or error details.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="slug",
@@ -775,8 +1154,31 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Reported successfully!"
+     *         description="Reported successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Reported successfully!")
+     *         )
      *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Forbidden"),
+     *             @OA\Property(property="message", type="string", example="operator Not Found or Operator Account may be Blocked!"),
+     *         )
+     *    ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Bad Request"),
+     *             @OA\Property(property="message", type="string", example="Missing required parameters: operator_slug"),
+     *         )
+     *    ),
      *     @OA\Response(
      *         response=404,
      *         description="Operator not found."
