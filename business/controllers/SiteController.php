@@ -98,7 +98,7 @@ class SiteController extends Controller
             ->joinWith('assignOperator')
             ->where([
                 'lead_partners.partner_id' => $safarioperator->id,
-                'lead_partners.status' => 1,
+                // 'lead_partners.status' => 1,
             ])
             ->count();
 
