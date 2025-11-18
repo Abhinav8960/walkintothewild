@@ -76,7 +76,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/master/airport",
      *     tags={"Master"},
-     *     summary="Get Airport List",
+     *     summary="Get Airport List (NIU)",
+     *     description = "This API is used to retrieve all airports within a specified state. Pagination is supported through the page parameter, which can be passed in the request to fetch results in pages.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -157,6 +158,7 @@ class DefaultController extends RestController
      *     path="/master/animal",
      *     tags={"Master"},
      *     summary="Get Animal List",
+     *     description = "This API is used to fetch the list of animals available in the application.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -193,7 +195,7 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation. Returns paginated animal list.",
+     *         description="Successful operation. Returns paginated animal list. <br> The data returned is used in multiple places such as <b>Park List, AutoComplete Animals, Plan Screen, Add Sighting Bottom Sheet </b>, and <b>Sighting Filter Bottom Sheet.</b>",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
@@ -222,19 +224,7 @@ class DefaultController extends RestController
      *                         type="object",
      *                         @OA\Property(property="id", type="integer", example=1),
      *                         @OA\Property(property="name", type="string", example="Red Panda"),
-     *                         @OA\Property(property="slug", type="string", example="red-panda"),
-     *                         @OA\Property(property="short_description", type="string", example="The red panda, native to the eastern Himalayas and southwestern China, is known for its distinctive red fur, bushy tail, and bamboo diet."),
-     *                         @OA\Property(property="banner", type="string", example="45_rareanimal_banner_1749820918.jpg"),
-     *                         @OA\Property(property="feature_image", type="string", example="45_rareanimal_feature_image_1749820918.png"),
-     *                         @OA\Property(property="know_as", type="string", example=""),
      *                         @OA\Property(property="animal_type", type="integer", example=1),
-     *                         @OA\Property(property="is_feature_sequence", type="integer", example=1),
-     *                         @OA\Property(property="is_filter", type="boolean", example=false),
-     *                         @OA\Property(property="is_filter_sequence", type="int", example=0),
-     *                         @OA\Property(property="is_searchable", type="boolean", example=false),
-     *                         @OA\Property(property="total_view", type="integer", example=0),
-     *                         @OA\Property(property="image_path", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/rareanimal/2506/45_rareanimal_feature_image_1749820918.png"),
-     *                         @OA\Property(property="banner_image_path", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/rareanimal/2506/45_rareanimal_feature_image_1749820918.png"),
      *                     )
      *                 )
      *             )
@@ -267,7 +257,7 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/master/bonus-experience",
      *     tags={"Master"},
-     *     summary="Get Bonus Experience List",
+     *     summary="Get Bonus Experience List (NIU)",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -331,6 +321,8 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/city",
+     *     summary ="Get City List (NIU)",
+     *     description = "This API returns all cities for a given country. Currently, the API only supports India, but additional countries may be supported in the future.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -393,6 +385,7 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/country",
+     *     summary = "Ger Country List (NIU)",
      *     description ="This API returns all country. Currently, the API only supports <b>India</b>, but additional countries may be supported in the future.",
      *     @OA\Parameter(
      *         name="page",
@@ -456,7 +449,9 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/faq",
-      *     @OA\Response(
+     *     summary = "Get Faq List (NIU)",
+     *     description = "This API is used to fetch the list of all FAQs. Each FAQ entry contains a <b>question</b> and its corresponding <b>answer</b>.",
+     *     @OA\Response(
      *         response=200,
      *         description="Successful operation. Returns paginated Faq list.",
      *         @OA\JsonContent(
@@ -500,6 +495,7 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/location",
+     *     description = "This API is used to fetch the list of locations available in the application.<br>The data returned is used in multiple places such as <b>Park Screen, AutoComplete Location,</b> and <b>Plan Screen</b>.<br>Currently, we are using only the <i>title</i> field from the response, so other unused fields can be removed from the API response to optimize payload size and performance.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -536,9 +532,8 @@ class DefaultController extends RestController
      *                     type="array",
      *                     @OA\Items(
      *                         type="object",
-     *                         @OA\Property(property="id", type="integer", example=1),
-     *                         @OA\Property(property="country_name", type="string", example="Central India"),
-     *                         @OA\Property(property="slug", type="string", example="central-india"),
+     *                         @OA\Property(property="id", type="integer", example=7),
+     *                         @OA\Property(property="title", type="string", example="Central India"),
      *                     )
      *                 )
      *             )
@@ -563,6 +558,8 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/month",
+     *     summary = "Get Month (NIU)",
+     *     description = "The <b>Month API</b> provides a complete list of all months available in the system.<br>This endpoint is commonly used in modules such as <b>Plan Safari, Package Creation,</b> and <b>Seasonal Filters</b>, where month selection is required for booking or filtering safari experiences based on the time of year.",
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation. Returns paginated Month list.",
@@ -615,6 +612,7 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/package-feature",
+     *     description = "The <b>Package Feature API</b> provides a categorized list of package features available in the application.These features are used in multiple modules such as <b>Add/Update Package, Overview Tab,</b> and <b>Safari Package</b> screens.This endpoint is used to retrieve package feature options (e.g., <b>“Private Room”</b>, <b>“Shared Room”</b>, etc.), which are displayed in the UI as selectable choices.",
      *   @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -678,6 +676,7 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/package-include",
+     *     description = "The <b>Package Include API</b> provides a categorized list of package inclusions available in the application.<br>These inclusions are used across various modules, such as the <b>Package Filter Bottom Sheet</b> screen.<br>This endpoint helps retrieve package inclusion options like <b>“Accommodation,” “Pick & Drop,” “Permit,”</b> etc., which are displayed in the UI as selectable filtering or selection options.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -715,7 +714,7 @@ class DefaultController extends RestController
      *                     @OA\Items(
      *                         type="object",
      *                         @OA\Property(property="id", type="integer", example=1),
-     *                         @OA\Property(property="title", type="string", example="Multiple park"),
+     *                         @OA\Property(property="title", type="string", example="Accommodation"),
      *                     )
      *                 )
      *             )
@@ -741,10 +740,12 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/railway-station",
+     *     summary = "Get Railway Station List (NIU)",
+     *     description = "This API returns all Railway stations in a city. Currently, the API only supports <b>India</b>, but additional countries may be supported in the future.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
-     *         @OA\Schema(
+     *         @OA\Schema(  
      *             type="integer",
      *         )
      *     ),
@@ -820,6 +821,8 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/share-safari-reason",
+     *     summary = "Get Share Safari Reason (NIU)",
+     *     description = "This API returns all Safari reason.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -884,6 +887,8 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/state",
+     *     summary = "Get State List (NIU)",
+     *     description = "This API returns all state in a country. Currently, the API only supports <b>India</b>, but additional countries may be supported in the future.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -947,6 +952,7 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/suggestion-category",
+     *     description = "The <b>Suggestion Category API</b> provides a categorized list of suggestion types used within the application.These categories are primarily utilized in modules such as the <b>Submit Correction Tab</b>, enabling users to select predefined suggestion categories like <b>“General Information,” “Flora/Fauna,”</b> etc.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -1010,6 +1016,7 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/vehicle",
+     *     description ="The <b>Master Vehicle API</b> provides a categorized list of all vehicle types available for safari and package creation modules within the application.These vehicle options are commonly used across screens such as <b>Add/Update Package, Plan Safari,</b> and the <b>Overview Tab</b>, allowing users to select their preferred mode of transport (e.g., <b>Jeep, Bus, Elephant,</b> etc.).",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -1047,7 +1054,7 @@ class DefaultController extends RestController
      *                     @OA\Items(
      *                         type="object",
      *                         @OA\Property(property="id", type="integer", example=1),
-     *                         @OA\Property(property="vehicle_name", type="string", example="General Information"),
+     *                         @OA\Property(property="vehicle_name", type="string", example="Gypsy/Jeep"),
      *                         @OA\Property(property="icon_path", type="string", nullable=true, example=null, description="Icon Path (can be null)"),
      *                         @OA\Property(property="original_icon_name", type="string", nullable=true, example=null, description="Original Icon Name (can be null)"),
      *                         @OA\Property(property="image_path", type="string", nullable=true, example=null, description="Image Path (can be null)"),
@@ -1076,6 +1083,8 @@ class DefaultController extends RestController
      * @OA\GET(
      *     tags={"Master"},
      *     path="/master/privacy-options",
+     *     summary = "Get Privacy Options (NIU)",
+     *     description = "This API returns all privacy options.",
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation.",

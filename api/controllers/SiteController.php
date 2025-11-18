@@ -151,6 +151,7 @@ class SiteController extends RestController
      *     path="/master-meta-info",
      *     tags={"Master"},
      *     summary="Master Meta Last Updated Information",
+     *     description = "This API is used to retrieve all master tables available in both the mobile app and the web application.<br>When the app launches, it calls this API. Each master table entry contains a last_updated_time field. If the timestamp returned by the API does not match the timestamp stored locally, the corresponding table is synchronized to update records.",
      *     @OA\Response(
      *         response=200,
      *         description="Successful response"
@@ -678,7 +679,7 @@ class SiteController extends RestController
      *                 property="content",
      *                 type="string",
      *                 description="Content",
-     *                 example="Term and Condition New One!"
+     *                 example="<p>&nbsp;</p><p>Last modified: 14.07.2024</p><p><strong>Introduction</strong></p><p>Walk into the wild is a wildlife social media platform cum one stop solutions for planning Safaris...</p>"
      *             ),
      *              @OA\Property(
      *                 property="message",
@@ -723,7 +724,7 @@ class SiteController extends RestController
      *                 property="content",
      *                 type="string",
      *                 description="Content",
-     *                 example="Privacy Policy"
+     *                 example="<p>&nbsp;</p><p>Last modified: 14.07.2024</p><p><strong>Introduction</strong></p><p>Walk into the wild is a wildlife social media platform cum one stop solutions for planning Safaris...</p>"
      *             ),
      *              @OA\Property(
      *                 property="message",
