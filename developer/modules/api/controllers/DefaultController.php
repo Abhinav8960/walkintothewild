@@ -27,6 +27,7 @@ class DefaultController extends Controller
         $openapi = \OpenApi\Generator::scan([
             \Yii::getAlias('@api/controllers'),
             \Yii::getAlias('@api/modules'),
+            \Yii::getAlias('@api/swagger/components/schemas'),
         ]);
 
         $data = json_decode($openapi->toJson(), true);
@@ -44,15 +45,25 @@ class DefaultController extends Controller
             'description' => 'Staging Server',
         ];
 
-        $data['components'] = [
-            'securitySchemes' => [
-                'bearerAuth' => [
-                    'type' => 'http',
-                    'scheme' => 'bearer',
-                    'bearerFormat' => 'JWT'
-                ]
-            ]
+        // $data['components'] = [
+        //     'securitySchemes' => [
+        //         'bearerAuth' => [
+        //             'type' => 'http',
+        //             'scheme' => 'bearer',
+        //             'bearerFormat' => 'JWT'
+        //         ]
+        //     ]
+        // ];
+        $components = $data['components'] ?? [];
+
+        $components['securitySchemes']['bearerAuth'] = [
+            'type' => 'http',
+            'scheme' => 'bearer',
+            'bearerFormat' => 'JWT'
         ];
+        $data = [
+            'components' => $components
+        ] + $data;
 
         $data['info'] = [
             // 'title' => 'Walk Into The Wild API',

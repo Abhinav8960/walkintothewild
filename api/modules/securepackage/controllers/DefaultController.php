@@ -28,7 +28,6 @@ use api\models\package\PackageSearch;
 use common\models\leads\form\PackageLeadForm;
 use frontend\models\PackageCommentForm;
 use frontend\models\PackageCommentReportForm;
-use frontend\models\PackageQuoteForm;
 use frontend\models\PackageReplyForm;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;

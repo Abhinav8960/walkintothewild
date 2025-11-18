@@ -195,40 +195,6 @@ $this->params['title'] = $this->title;
                 </div>
               </div>
             </div>
-            <div class="col-xxl-6 col-xl-12 col-12 mb-3">
-              <div class="h-100">
-                <div class="topHead d-flex justify-content-between align-items-center pb-2 mx-4">
-                  <p>Most Demanded Park</p>
-                  <a href="">See All</a>
-                </div>
-                <div class="row">
-                  <?php if (!empty($demanding_parks)) { ?>
-                    <?php foreach ($demanding_parks as $parks) { ?>
-                      <div class="col-xxl-6 col-xl-6 col-lg-6 col-12 h-100">
-                        <div class="mainParent ">
-                          <div class="card h-100 d-flex">
-                            <img src="assets/images/Article-7.jpg" alt="" class="w-100"
-                              style="height: 170px; object-fit: cover;">
-                            <div class="card-body p-2">
-                              <div class="cardBodyTitle">
-                                <div class="subtitle pb-2">
-                                  <p><?= isset($parks->title) ? $parks->title : '' ?></p>
-                                </div>
-                                <div class="coLike d-flex justify-content-between">
-                                  <?php if (!empty($operator_quotes)) { ?>
-                                    <a href=""><?= isset($operator_quotes['quote_count']) ? $operator_quotes['quote_count'] : '' ?></a> <!--not rendering properly-->
-                                  <?php } ?>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <?php } ?>
-                  <?php } ?>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       <?php } ?>

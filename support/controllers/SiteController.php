@@ -10,7 +10,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use support\components\AuthHandler;
 use common\models\leads\Lead;
-use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRating;
