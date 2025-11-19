@@ -12,7 +12,12 @@ use OpenApi\Annotations as OA;
  *     @OA\Property(property="page", type="integer", example=1),
  *     @OA\Property(property="pageSize", type="integer", example=5),
  *     @OA\Property(property="total_page", type="integer", example=7),
- *     @OA\Property(property="query_params", type="array", @OA\Items(type="string"))
+
+ *     @OA\Property(
+ *         property="query_params",
+ *         type="object",
+ *         @OA\Property(property="pageSize", type="integer", example=5),
+ *     )
  * )
  */
 class SummarySchema {}

@@ -136,26 +136,38 @@ class DefaultController extends RestController
     /**
      * Get Package View
      *
-     *
      * @OA\Get(
      *     path="/package/{slug}/view",
      *     tags={"Package"},
      *     summary="Get Package View (Draft)",
+     *
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
      *         required=true,
-     *         description="slug to query single package",
-     *         @OA\Schema(
-     *             type="string",
+     *         description="Slug to query a single package",
+     *         @OA\Schema(type="string")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Single Package fetched successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="data",
+     *                 ref="#/components/schemas/PackageViewSchema"
+     *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
-     *         description="Not found",
-     *     ),
+     *         description="Not found"
+     *     )
      * )
      */
+
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
