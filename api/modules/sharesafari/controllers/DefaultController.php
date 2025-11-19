@@ -112,7 +112,8 @@ class DefaultController extends SafariController
      * @OA\Get(
      *     path="/sharesafari",
      *     tags={"Share Safari"},
-     *     summary="Get Share Safari List (Draft)",
+     *     summary="Get Share Safari List",
+     *     description="Get paginated list of Share Safaris with optional filters.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -128,9 +129,22 @@ class DefaultController extends SafariController
      *         )
      *     ),
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
-     *     ),
+     *         response=200,
+     *         description="Share Safaris fetched successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="share_safari",
+     *                 type="object",
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/ShareSafariSchema")
+     *                 )
+     *             )
+     *         )
+     *     )
      * )
      */
     public function actionIndex()
@@ -161,7 +175,8 @@ class DefaultController extends SafariController
      * @OA\Get(
      *     path="/sharesafari/{slug}/view",
      *     tags={"Share Safari"},
-     *     summary="Get Share Safari View (Draft)",
+     *     summary="Get Share Safari View",
+     *     description="Get detailed view of a single Share Safari by slug.",
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -172,9 +187,29 @@ class DefaultController extends SafariController
      *         )
      *     ),
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
+     *         response=200,
+     *         description="Single Share Safari fetched successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="data",
+     *                 ref="#/components/schemas/ShareSafariViewSchema"
+     *             )
+     *         )
      *     ),
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="Safari Not Found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Safari Not Found!"
+     *             )
+     *         )
+     *     )
      * )
      */
     public function actionView($slug)
@@ -213,7 +248,7 @@ class DefaultController extends SafariController
      *     path="/sharesafari/organize-safari",
      *     tags={"Share Safari"},
      *     summary="Create Shared Safari",
-     *     description="Allows a user to create a shared safari (Draft).",
+     *     description="Allows only users to create a shared safari; operators are not permitted to create one.",
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
@@ -320,18 +355,47 @@ class DefaultController extends SafariController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Shared Safari created successfully."
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid request data."
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized access."
+     * @OA\Response(
+     *     response=200,
+     *     description="Shared Safari created successfully.",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="status",
+     *             type="integer",
+     *             example=1
+     *         ),
+     *         @OA\Property(
+     *             property="message",
+     *             type="string",
+     *             example="Shared Safari created successfully."
+     *         )
      *     )
+     * ),
+     * @OA\Response(
+     *     response=400,
+     *     description="Validation errors occurred.",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="message",
+     *             type="string",
+     *             example="Park ID : Required"
+     *         )
+     *     )
+     * ),
+     *  @OA\Response(
+     *     response=403,
+     *     description="Forbidden",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="message",
+     *             type="string",
+     *             example="You are not allowed to perform this action until you verify your mobile number!"
+     *         )
+     *     )
+     * ),
      * )
      */
 
@@ -434,8 +498,8 @@ class DefaultController extends SafariController
      * @OA\Post(
      *     path="/sharesafari/{slug}/join",
      *     tags={"Share Safari"},
-     *     summary="Join Share Safari(Draft)",
-     *     description="Allows users to join Share Safari.",
+     *     summary="Join Share Safari",
+     *     description="Allows only users to join a shared safari; operators are not permitted to join",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="slug",
@@ -448,11 +512,20 @@ class DefaultController extends SafariController
      *
      *     @OA\Response(
      *         response=200,
-     *         description="You joined this shared safari!"
+     *         description="You joined this shared safari",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status",type="integer",example=1),
+     *             @OA\Property(property="message",type="string",example="You joined this shared Safari!")
+     *        )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Shared Safari not found."
+     *         description="Shared Safari not found.",
+     *          @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message",type="string",example="Shared Safari not found")
+     *        )
      *     )
      * )
      */
@@ -526,7 +599,7 @@ class DefaultController extends SafariController
      * @OA\Post(
      *     path="/sharesafari/{slug}/unjoin",
      *     tags={"Share Safari"},
-     *     summary="Unjoin Share Safari(Draft)",
+     *     summary="Unjoin Share Safari",
      *     description="Allows users to leave Share Safari.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -537,14 +610,22 @@ class DefaultController extends SafariController
      *         @OA\Schema(type="string")
      *     ),
      * 
-     *
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=200,
-     *         description="You unjoined this shared safari!"
+     *         description="You unjoined this shared safari!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status",type="integer",example=1),
+     *             @OA\Property(property="message",type="string",example="You unjoined this shared safari!")
+     *        )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Shared Safari not found."
+     *         description="Shared Safari not found.",
+     *          @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message",type="string",example="Shared Safari not found")
+     *        )
      *     )
      * )
      */
@@ -601,7 +682,7 @@ class DefaultController extends SafariController
      * @OA\Post(
      *     path="/sharesafari/{slug}/wishlist",
      *     tags={"Share Safari"},
-     *     summary="Wishlist Share Safari or Fixed Departure(Draft)",
+     *     summary="Wishlist Share Safari or Fixed Departure",
      *     description="Allows users to whishlist Share Safari or Fixed Departure",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -611,15 +692,22 @@ class DefaultController extends SafariController
      *         description="Slug of Share Safari",
      *         @OA\Schema(type="string")
      *     ),
-     * 
-     *
-     *     @OA\Response(
+     *       @OA\Response(
      *         response=200,
-     *         description="You added the Share Safari to your wishlist!"
+     *         description="You added the Share Safari to your wishlist!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status",type="integer",example=1),
+     *             @OA\Property(property="message",type="string",example="You added the Share Safari to your wishlist!")
+     *        )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Shared Safari not found."
+     *         description="Shared Safari not found.",
+     *          @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message",type="string",example="Shared Safari not found")
+     *        )
      *     )
      * )
      */
@@ -662,7 +750,7 @@ class DefaultController extends SafariController
      * @OA\Post(
      *     path="/sharesafari/{slug}/unwishlist",
      *     tags={"Share Safari"},
-     *     summary="Unwishlist Share Safari or Fixed Departure(Draft)",
+     *     summary="Unwishlist Share Safari or Fixed Departure",
      *     description="Allows users to Unwishlist Share Safari or Fixed Departure",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -672,15 +760,22 @@ class DefaultController extends SafariController
      *         description="Slug of Share Safari",
      *         @OA\Schema(type="string")
      *     ),
-     * 
-     *
-     *     @OA\Response(
+     *       @OA\Response(
      *         response=200,
-     *         description="You removed the Share Safari from your wishlist!"
+     *         description="You removed the Share Safari from your wishlist!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status",type="integer",example=1),
+     *             @OA\Property(property="message",type="string",example="You removed the Share Safari from your wishlist!")
+     *        )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Shared Safari not found."
+     *         description="Shared Safari not found.",
+     *          @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message",type="string",example="Shared Safari not found")
+     *        )
      *     )
      * )
      */
@@ -770,7 +865,7 @@ class DefaultController extends SafariController
      * @OA\Post(
      *     path="/sharesafari/{slug}/comment",
      *     tags={"Share Safari"},
-     *     summary="Comment on Share Safari or Fixed Departure (Draft)",
+     *     summary="Comment on Share Safari or Fixed Departure",
      *     description="Allows users to comment on Share Safari or Fixed Departure.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -795,13 +890,22 @@ class DefaultController extends SafariController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=200,
-     *         description="Comment submitted successfully!"
+     *         description="Comment submitted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status",type="integer",example=1),
+     *             @OA\Property(property="message",type="string",example="Comment submitted successfully!")
+     *        )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Shared Safari not found."
+     *         description="Shared Safari not found.",
+     *          @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message",type="string",example="Shared Safari not found")
+     *        )
      *     )
      * )
      */
@@ -872,7 +976,7 @@ class DefaultController extends SafariController
      * @OA\Post(
      *     path="/sharesafari/{slug}/reply",
      *     tags={"Share Safari"},
-     *     summary="Reply to specific comment in Share Safari or Fixed Departure (Draft)",
+     *     summary="Reply to specific comment in Share Safari or Fixed Departure ",
      *     description="Allows users to reply to specific comment in Share Safari or Fixed Departure.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -904,13 +1008,22 @@ class DefaultController extends SafariController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=200,
-     *         description="Reply submitted successfully!"
+     *         description="Reply submitted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status",type="integer",example=1),
+     *             @OA\Property(property="message",type="string",example="Reply submitted successfully!")
+     *        )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Shared Safari not found."
+     *         description="Shared Safari not found.",
+     *          @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message",type="string",example="Shared Safari not found")
+     *        )
      *     )
      * )
      */
@@ -1021,7 +1134,7 @@ class DefaultController extends SafariController
      * @OA\Post(
      *     path="/sharesafari/{slug}/flag",
      *     tags={"Share Safari"},
-     *     summary="Flag on Comment or reply in Share Safari or Fixed Departure (Draft)",
+     *     summary="Flag on Comment or reply in Share Safari or Fixed Departure",
      *     description="Allows users to post Flag on Comment or reply in Share Safari or Fixed Departure.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -1061,11 +1174,20 @@ class DefaultController extends SafariController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Reported successfully!"
+     *         description="Reported successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status",type="integer",example=1),
+     *             @OA\Property(property="message",type="string",example="Reported successfully!")
+     *        )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Shared Safari not found."
+     *         description="Shared Safari not found.",
+     *          @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message",type="string",example="Shared Safari not found")
+     *        )
      *     )
      * )
      */
@@ -1118,12 +1240,21 @@ class DefaultController extends SafariController
      * @OA\Get(
      *     path="/sharesafari/flagreason",
      *     tags={"Share Safari"},
-     *     summary="Get Share Safari Flag reason (Draft)",
+     *     summary="Get Share Safari Flag reason",
      *
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
-     *     ),
+     *         response=200,
+     *         description="Flag reason fetched successfully.",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="reason", type="string", example="Commerical or Spam"),
+     *                 @OA\Property(property="status", type="integer", example=1)
+     *             )
+     *         )
+     *     )
      * )
      */
     public function actionFlagreason()
@@ -1687,7 +1818,7 @@ class DefaultController extends SafariController
         return $this->querySender($dataProvider, $rootIndexName = "intrested_users");
     }
 
-     /**
+    /**
      * Fixed Departure Booking
      *
      * Allow user to select seat for booking process in fixed departure.
@@ -1695,7 +1826,7 @@ class DefaultController extends SafariController
      * @OA\Post(
      *     path="/sharesafari/{slug}/booking",
      *     tags={"Share Safari"},
-     *     summary="Intial step of booking for fixed departure (Draft)",
+     *     summary="Intial step of booking for fixed departure",
      *     description="Allow user to select seat for booking process in fixed departure.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -1720,9 +1851,79 @@ class DefaultController extends SafariController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *  @OA\Response(
+     *     response=200,
+     *     description="Share Safari info fetched successfully.",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="share_safari_info",
+     *             type="object",
+     *             @OA\Property(property="seat", type="integer", example=2),
+     *             @OA\Property(property="notes", type="string", nullable=true, example=null),
+     *             @OA\Property(property="name", type="string", example="Vivek Bharti"),
+     *             @OA\Property(property="email", type="string", example="vivek@triline.co.in"),
+     *             @OA\Property(property="phone", type="string", example="9211635325"),
+     *             @OA\Property(property="profile_display_image", type="string", example="https://datqk0bl4e6qc.cloudfront.net/user/profile/2390_profile_1763465293.jpeg"),
+     *             @OA\Property(property="start_date", type="string", example="Nov 29, 2025"),
+     *             @OA\Property(property="end_date", type="string", example="Dec 06, 2025"),
+     *             @OA\Property(property="gross_price", type="integer", example=46000),
+     *             @OA\Property(property="discount", type="integer", example=0),
+     *             @OA\Property(property="net_price", type="integer", example=46000),
+     *             @OA\Property(property="cost_per_quantity", type="integer", example=23000),
+     *
+     *             @OA\Property(
+     *                 property="payment_details",
+     *                 type="object",
+     *                 @OA\Property(property="type", type="string", example="Fixed Departure"),
+     *                 @OA\Property(property="amount", type="integer", example=46000),
+     *                 @OA\Property(property="payment_hash", type="string", example="TWF1U3FQTXFYYWEzeE5LU1cwc2I3UT09::MTIzNDU2Nzg5MDEyMzQ1Ng=="),
+     *                 @OA\Property(property="web_url", type="string", example="https://staging.d27737z6qvbtbo.amplifyapp.com/safari-payment/test-fixed-departure-phase-1/TWF1U3FQTXFYYWEzeE5LU1cwc2I3UT09::MTIzNDU2Nzg5MDEyMzQ1Ng==")
+     *             ),
+     *
+     *             @OA\Property(
+     *                 property="share_safari",
+     *                 type="object",
+     *                 @OA\Property(property="share_safari_title", type="string", example="Test Fixed Departure Phase 1"),
+     *                 @OA\Property(property="slug", type="string", example="test-fixed-departure-phase-1"),
+     *
+     *                 @OA\Property(
+     *                     property="partner",
+     *                     type="object",
+     *                     ref="#/components/schemas/PartnerSchema"
+     *                 ),
+     *
+     *                 @OA\Property(property="park_title", type="string", example="Kali Tiger Reserve"),
+     *                 @OA\Property(property="park_slug", type="string", example="kali-tiger-reserve"),
+     *                 @OA\Property(property="no_of_safari", type="integer", example=4),
+     *                 @OA\Property(property="share_safari_agenda", type="string", example="Photography"),
+     *                 @OA\Property(property="stay_category_display", type="string", example="Home Stay"),
+     *                 @OA\Property(property="meals_label", type="string", example="Lunch, Dinner"),
+     *
+     *                 @OA\Property(
+     *                     property="includeds",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="master_id", type="integer", example=1),
+     *                         @OA\Property(property="title", type="string", example="Accommodation"),
+     *                         @OA\Property(property="option", type="string", example="Included")
+     *                     )
+     *                 ),
+     *
+     *                 @OA\Property(property="start_date", type="string", example="Nov 29, 2025"),
+     *                 @OA\Property(property="end_date", type="string", example="Dec 06, 2025")
+     *             )
+     *         )
+     *     )
+     * ),
+     *      @OA\Response(
      *         response=404,
-     *         description="Shared Safari Not Found!!!"
+     *         description="Shared Safari not found.",
+     *          @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message",type="string",example="Shared Safari not found!!!")
+     *        )
      *     )
      * )
      */
@@ -1767,7 +1968,7 @@ class DefaultController extends SafariController
         }
     }
 
-     /**
+    /**
      * Fixed Departure Booking
      *
      * Allow user to process forward in booking process i.e initiate booking.

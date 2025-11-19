@@ -784,16 +784,24 @@ class DefaultController extends RestController
     /**
      * Get Stay Category
      *
-     *
      * @OA\Get(
      *     path="/package/staycategory",
-     *     tags={"Share Safari"},
-     *     summary="Get Package Stay Category (Draft)",
+     *     tags={"Package"},
+     *     summary="Get Package Stay Category",
+     *     description="Fetches a list of stay categories for packages.",
      *
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
-     *     ),
+     *         response=200,
+     *         description="Stay categories fetched successfully.",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="name", type="string", example="Premium")
+     *             )
+     *         )
+     *     )
      * )
      */
     public function actionStaycategory()
