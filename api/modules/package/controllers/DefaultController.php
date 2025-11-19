@@ -139,8 +139,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/package/{slug}/view",
      *     tags={"Package"},
-     *     summary="Get Package View (Draft)",
-     *
+     *     summary="Get Package View",
+     *     description="Fetches a single package by its slug.",
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -163,11 +163,18 @@ class DefaultController extends RestController
      *
      *     @OA\Response(
      *         response=404,
-     *         description="Not found"
+     *         description="Package not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Package Not Found!!!"
+     *             )
+     *         )
      *     )
      * )
      */
-
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
@@ -200,7 +207,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/package/{slug}/comment",
      *     tags={"Package"},
-     *     summary="Comment on Package (Draft)",
+     *     summary="Comment on Package",
      *     description="Allows users to comment on Package.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -227,11 +234,28 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Comment submitted successfully!"
-     *     ),
+     *         description="Comment submitted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Comment submitted successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Package not found."
+     *         description="Package not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Package Not Found!!!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -282,7 +306,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/package/{slug}/reply",
      *     tags={"Package"},
-     *     summary="Reply to specific comment in Package (Draft)",
+     *     summary="Reply to specific comment in Package",
      *     description="Allows users to reply to specific comment in Package.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -316,11 +340,28 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Reply submitted successfully!"
-     *     ),
+     *         description="Reply submitted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Reply submitted successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Package not found."
+     *         description="Package not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Package Not Found!!!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -374,7 +415,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/package/{slug}/wishlist",
      *     tags={"Package"},
-     *     summary="Wishlist Package (Draft)",
+     *     summary="Wishlist Package",
      *     description="Allows users to whishlist Package",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -384,15 +425,30 @@ class DefaultController extends RestController
      *         description="Slug of Package",
      *         @OA\Schema(type="string")
      *     ),
-     * 
-     *
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=200,
-     *         description="You added the Package to your wishlist!"
-     *     ),
+     *         description="You added the Package to your wishlist!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="You added the Package to your wishlist!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Package not found."
+     *         description="Package not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Package Not Found!!!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -437,7 +493,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/package/{slug}/unwishlist",
      *     tags={"Package"},
-     *     summary="Unwishlist Package(Draft)",
+     *     summary="Unwishlist Package",
      *     description="Allows users to Unwishlist Package",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -447,15 +503,30 @@ class DefaultController extends RestController
      *         description="Slug of Package",
      *         @OA\Schema(type="string")
      *     ),
-     * 
-     *
      *     @OA\Response(
      *         response=200,
-     *         description="You removed the Package from your wishlist!"
-     *     ),
+     *         description="You removed the Package from your wishlist!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="You removed the Package from your wishlist!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Package not found."
+     *         description="Package not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Package Not Found!!!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -497,7 +568,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/package/{slug}/package-quote",
      *     tags={"Package"},
-     *     summary="Quote Request for Package (Draft)",
+     *     summary="Quote Request for Package",
      *     description="Allows users to raise quote request for Package.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -537,11 +608,28 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Reported successfully!"
-     *     ),
+     *         description="Quote request sent successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Quote request sent successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Package not found."
+     *         description="Package not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Package Not Found!!!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -583,7 +671,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/package/{slug}/flag",
      *     tags={"Package"},
-     *     summary="Flag on Comment or reply in Package (Draft)",
+     *     summary="Flag on Comment or reply in Package",
      *     description="Allows users to post Flag on Comment or reply in Package.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -623,11 +711,28 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Reported successfully!"
-     *     ),
+     *         description="Reported successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Reported successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Package not found."
+     *         description="Package not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Package Not Found!!!"
+     *             )
+     *         )
      *     )
      * )
      */
