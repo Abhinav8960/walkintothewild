@@ -42,7 +42,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/featured-park",
      *     tags={"Plan"},
-     *     summary="Get Feature Park List (Draft)",
+     *     summary="Get Feature Park List",
+     *     description="Return paginated Feature Park List",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -58,9 +59,22 @@ class DefaultController extends RestController
      *         )
      *     ),
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
-     *     ),
+     *         response=200,
+     *         description="Feature Park fetched successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="feature_park",
+     *                 type="object",
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/ParkListSchema")
+     *                 )
+     *             )
+     *         )
+     *     )
      * )
      */
     public function actionFeaturedPark()
@@ -82,7 +96,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/rare-animal",
      *     tags={"Plan"},
-     *     summary="Get Rare Animal List (Draft)",
+     *     summary="Get Rare Animal List",
+     *     description="Return paginated Rare Animal List",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -98,9 +113,22 @@ class DefaultController extends RestController
      *         )
      *     ),
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
-     *     ),
+     *         response=200,
+     *         description="Rare Animal fetched successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="rare_animal_exotic",
+     *                 type="object",
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/AnimalSchema")
+     *                 )
+     *             )
+     *         )
+     *     )
      * )
      */
     public function actionRareAnimal()
