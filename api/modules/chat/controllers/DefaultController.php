@@ -796,8 +796,8 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/chat/send-quote-message/{lead_id}",
      *     tags={"Manage"},
-     *     summary="Send Quote (Draft)",
-     *     description="Allows Operator to Send Quote.",
+     *     summary="Send Quote",
+     *     description="Allows the Operator to send a quotation for leads received from Park, Operator, or Fixed Departure. The lead ID must be passed as a parameter. ",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="lead_id",
@@ -881,7 +881,30 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Comment submitted successfully!"
+     *         description="Comment submitted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(property="message",type="string",example="Quatation sent for approval successfully!"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="name", type="string", example="Not Found" ),
+     *             @OA\Property(property="message",type="string",example="The requested page does not exist!"),
+     *             @OA\Property( property="code", type="integer", example=0)
+     *         )
+     *     ), 
+     *     @OA\Response(
+     *         response=401,
+     *         description="Invalid Token",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message",type="string",example="Token is invalid or expired")
+     *         )
      *     )
      * )
      */
