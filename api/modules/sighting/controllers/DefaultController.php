@@ -79,8 +79,46 @@ class DefaultController extends RestController
     }
 
     /**
+     * Get Sighting List
      *
-     * @return string
+     *
+     * @OA\Get(
+     *     path="/sighting",
+     *     tags={"Sighting"},
+     *     summary="Get Sighting List",
+     *     description="Get paginated list of Sighting with optional filters.",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="pageSize",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Sighting fetched successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="sighting",
+     *                 type="object",
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/SightingViewSchema")
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function actionIndex()
     {
@@ -141,10 +179,24 @@ class DefaultController extends RestController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=200,
-     *         description="Sighting added successfully!"
-     *     )
+     *         description="Post added successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting added successfully!"
+     *             )
+     *         )
+     *     ),
+     *    
      * )
      */
     public function actionCreate()
@@ -192,7 +244,8 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/sighting/view",
      *     tags={"Sighting"},
-     *     summary="Get Sighting View (Draft)",
+     *     summary="Get Sighting View",
+     *     description="Get single sighting details.",
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -202,10 +255,35 @@ class DefaultController extends RestController
      *             type="integer",
      *         )
      *     ),
+     *      @OA\Response(
+     *         response=200,
+     *         description="Sighting fetched successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="sighting",
+     *                 type="object",
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/SightingViewSchema")
+     *                 )
+     *             )
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=404,
      *         description="Sighting Not found!",
-     *     ),
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting Not found!"
+     *             )
+     *         )
+     *     )
      * )
      */
     public function actionView($id)
@@ -228,7 +306,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/sighting/comment",
      *     tags={"Sighting"},
-     *     summary="Comment on Sighting (Draft)",
+     *     summary="Comment on Sighting",
      *     description="Allows users to comment on Sighting.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -255,11 +333,28 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Comment submitted successfully!"
-     *     ),
+     *         description="Comment submitted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Comment submitted successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Sighting Not Found!"
+     *         description="Sighting Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -289,7 +384,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/sighting/reply",
      *     tags={"Sighting"},
-     *     summary="Reply on comment in Sighting (Draft)",
+     *     summary="Reply on comment in Sighting",
      *     description="Allows users to reply on comment in Sighting",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -321,13 +416,30 @@ class DefaultController extends RestController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *       @OA\Response(
      *         response=200,
-     *         description="Reply submitted successfully!"
-     *     ),
+     *         description="Reply submitted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Reply submitted successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Sighting Not Found!"
+     *         description="Sighting Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -362,7 +474,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/sighting/comment-like",
      *     tags={"Sighting"},
-     *     summary="Liked comment or removed that (Draft)",
+     *     summary="Liked comment or removed that ",
      *     description="Allows users to liked comment or removed that",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -372,14 +484,20 @@ class DefaultController extends RestController
      *         description="Primary Key of Sighting Comment",
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
+     *  @OA\Response(
      *         response=200,
-     *         description="Comment or Reply Liked successfully!"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Sighting Not Found!"
-     *     )
+     *         description="Comment or Reply Liked successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property( property="isLike", type="boolean", example=true ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Comment or Reply Liked successfully!"
+     *             )
+     *         )
+     *     ), 
      * )
      */
     public function actionCommentLike($sighting_comment_id)
@@ -411,7 +529,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/sighting/sighting-like",
      *     tags={"Sighting"},
-     *     summary="Liked Post or removed that (Draft)",
+     *     summary="Liked Post or removed that ",
      *     description="Allows users to liked Sighting or removed that",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -421,13 +539,31 @@ class DefaultController extends RestController
      *         description="Primary Key of Sighting",
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=200,
-     *         description="Sighting Liked successfully!"
-     *     ),
+     *         description="Sighting Liked successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property( property="isLike", type="boolean", example=true ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting Liked successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Sighting Not Found!"
+     *         description="Sighting Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -476,7 +612,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/sighting/sighting-report",
      *     tags={"Sighting"},
-     *     summary="Report Sighting (Draft)",
+     *     summary="Report Sighting ",
      *     description="Allows users to report Sighting",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -501,13 +637,30 @@ class DefaultController extends RestController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=200,
-     *         description="Reported successfully!"
-     *     ),
+     *         description="Reported successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Reported successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Sighting Not Found!"
+     *         description="Sighting Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -547,7 +700,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/sighting/sighting-delete",
      *     tags={"Sighting"},
-     *     summary="Delete (Draft)",
+     *     summary="Delete ",
      *     description="Allows users to Delete Sighting.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -557,13 +710,30 @@ class DefaultController extends RestController
      *         description="Primary Key of Sighting",
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
+     *        @OA\Response(
      *         response=200,
-     *         description="Sighting Delete successfully!"
-     *     ),
+     *         description="Sighting Delete successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting Delete successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Sighting Not Found!"
+     *         description="Sighting Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -598,7 +768,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/sighting/flag",
      *     tags={"Sighting"},
-     *     summary="Flag comment  Sighting (Draft)",
+     *     summary="Flag comment  Sighting ",
      *     description="Allows users to report Sighting",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -638,12 +808,33 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Flagged successfully!"
+     *         description="Flagged successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Flagged successfully!"
+     *             )
+     *         )
      *     ),
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=404,
-     *         description="Sighting Not Found!"
-     *     )
+     *         description="Sighting Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Sighting Not Found!"
+     *             )
+     *         )
+     *     ),
      * )
      */
     public function actionFlag($id, $sighting_comment_id)
