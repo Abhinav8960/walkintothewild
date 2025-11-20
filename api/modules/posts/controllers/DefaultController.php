@@ -120,8 +120,33 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Post added successfully!"
+     *         description="Post added successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post added successfully!"
+     *             )
+     *         )
+     *     ),
+     *    @OA\Response(
+     *     response=400,
+     *     description="Validation errors occurred.",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="message",
+     *             type="string",
+     *             example="Caption cannot be blank., File cannot be blank."
+     *         )
      *     )
+     *   ),
      * )
      */
     public function actionCreate()
@@ -174,20 +199,50 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/posts/view",
      *     tags={"User Post"},
-     *     summary="Get Post View (Draft)",
+     *     summary="Get Post View",
+     *     description="Get Single Post View",
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
      *         required=true,
-     *         description="slug to query single post",
+     *         description="id to query single post",
      *         @OA\Schema(
      *             type="integer",
      *         )
      *     ),
+     *      @OA\Response(
+     *         response=200,
+     *         description="Single Post fetched successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                property="summary",
+     *                type="object",
+     *                @OA\Property(
+     *                property="query_params",
+     *                type="object",
+     *                @OA\Property(property="id", type="string", example="651")
+     *               )
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 ref="#/components/schemas/PostDetailSchema"
+     *             )
+     *         )
+     *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Post Not found!",
-     *     ),
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Not found!"
+     *             )
+     *         )
+     *     )
      * )
      */
     public function actionView($id)
@@ -210,7 +265,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/posts/comment",
      *     tags={"User Post"},
-     *     summary="Comment on Post (Draft)",
+     *     summary="Comment on Post",
      *     description="Allows users to comment on Post.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -235,13 +290,31 @@ class DefaultController extends RestController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *
+     *      @OA\Response(
      *         response=200,
-     *         description="Comment submitted successfully!"
-     *     ),
+     *         description="Comment submitted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Comment submitted successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Post Not Found!"
+     *         description="Post Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -273,7 +346,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/posts/post-delete",
      *     tags={"User Post"},
-     *     summary="Delete (Draft)",
+     *     summary="Delete Post",
      *     description="Allows users to Delete Post.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -283,13 +356,30 @@ class DefaultController extends RestController
      *         description="Primary Key of User Post",
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
+     *       @OA\Response(
      *         response=200,
-     *         description="Post Delete successfully!"
-     *     ),
+     *         description="Post Delete successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Delete successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Post Not Found!"
+     *         description="Post Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -324,7 +414,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/posts/reply",
      *     tags={"User Post"},
-     *     summary="Reply on comment in post (Draft)",
+     *     summary="Reply on comment in post",
      *     description="Allows users to reply on comment in Post",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -356,13 +446,30 @@ class DefaultController extends RestController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *       @OA\Response(
      *         response=200,
-     *         description="Reply submitted successfully!"
-     *     ),
+     *         description="Reply submitted successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Reply submitted successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Post Not Found!"
+     *         description="Post Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -398,7 +505,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/posts/comment-like",
      *     tags={"User Post"},
-     *     summary="Liked comment or removed that (Draft)",
+     *     summary="Liked comment or removed that ",
      *     description="Allows users to liked comment or removed that",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -408,14 +515,20 @@ class DefaultController extends RestController
      *         description="Primary Key of User Post Comment",
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
+     *  @OA\Response(
      *         response=200,
-     *         description="Comment or Reply Liked successfully!"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Post Not Found!"
-     *     )
+     *         description="Comment or Reply Liked successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property( property="isLike", type="boolean", example=true ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Comment or Reply Liked successfully!"
+     *             )
+     *         )
+     *     ), 
      * )
      */
     public function actionCommentLike($user_post_comment_id)
@@ -447,7 +560,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/posts/user-post-like",
      *     tags={"User Post"},
-     *     summary="Liked Post or removed that (Draft)",
+     *     summary="Liked Post or removed that",
      *     description="Allows users to liked Post or removed that",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -459,11 +572,29 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Post Liked successfully!"
-     *     ),
+     *         description="Post Liked successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property( property="isLike", type="boolean", example=true ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Liked successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Post Not Found!"
+     *         description="Post Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -502,7 +633,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/posts/user-post-report",
      *     tags={"User Post"},
-     *     summary="Report post (Draft)",
+     *     summary="Report post",
      *     description="Allows users to report Post",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -527,13 +658,30 @@ class DefaultController extends RestController
      *             )
      *         )
      *     ),
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=200,
-     *         description="Reported successfully!"
-     *     ),
+     *         description="Reported successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property( property="status", type="integer", example=1 ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Reported successfully!"
+     *             )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response=404,
-     *         description="Post Not Found!"
+     *         description="Post Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Not Found!"
+     *             )
+     *         )
      *     )
      * )
      */
@@ -606,8 +754,45 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Post updated successfully!"
+     *         description="Post updated successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post updated successfully!"
+     *             )
+     *         )
+     *     ),
+     *    @OA\Response(
+     *     response=400,
+     *     description="Validation errors occurred.",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="message",
+     *             type="string",
+     *             example="Caption cannot be blank., File cannot be blank."
+     *         )
      *     )
+     *   ),
+     *      @OA\Response(
+     *         response=404,
+     *         description="Post Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Not Found!"
+     *             )
+     *         )
+     *     ),
      * )
      */
     public function actionPostEdit($id)
@@ -663,7 +848,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/posts/flag",
      *     tags={"User Post"},
-     *     summary="Flag comment  post (Draft)",
+     *     summary="Flag comment  post",
      *     description="Allows users to report Post",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
@@ -703,12 +888,33 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Flagged successfully!"
+     *         description="Flagged successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 example=1
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Flagged successfully!"
+     *             )
+     *         )
      *     ),
-     *     @OA\Response(
+     *      @OA\Response(
      *         response=404,
-     *         description="Post Not Found!"
-     *     )
+     *         description="Post Not Found!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Post Not Found!"
+     *             )
+     *         )
+     *     ),
      * )
      */
     public function actionFlag($id, $user_post_comment_id)
