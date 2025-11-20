@@ -101,15 +101,7 @@ class DefaultController extends RestController
      *             @OA\Property(
      *                 property="master_airport",
      *                 type="object",
-     *                 @OA\Property(
-     *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=194),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=5),
-     *                     @OA\Property(property="total_page", type="integer", example=39),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -141,6 +133,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Airport List Not Found")
+     *         )
      *     ),
      * )
      */
@@ -158,7 +154,7 @@ class DefaultController extends RestController
      *     path="/master/animal",
      *     tags={"Master"},
      *     summary="Get Animal List",
-     *     description = "This API is used to fetch the list of animals available in the application.",
+     *     description="This API is used to fetch the list of animals available in the application.",
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -222,9 +218,21 @@ class DefaultController extends RestController
      *                     type="array",
      *                     @OA\Items(
      *                         type="object",
-     *                         @OA\Property(property="id", type="integer", example=1),
-     *                         @OA\Property(property="name", type="string", example="Red Panda"),
+     *                         @OA\Property(property="id", type="integer", example=18),
+     *                         @OA\Property(property="name", type="string", example="Elephant"),
+     *                         @OA\Property(property="slug", type="string", example="elephant"),
+     *                         @OA\Property(property="short_description", type="string", example="Elephant"),
+     *                         @OA\Property(property="banner", type="string", nullable=true, example=null),
+     *                         @OA\Property(property="feature_image", type="string", nullable=true, example=null),
+     *                         @OA\Property(property="know_as", type="string", nullable=true, example=null),
      *                         @OA\Property(property="animal_type", type="integer", example=1),
+     *                         @OA\Property(property="is_feature_sequence", type="integer", nullable=true, example=null),
+     *                         @OA\Property(property="is_filter", type="boolean", example=true),
+     *                         @OA\Property(property="is_filter_sequence", type="integer", example=0),
+     *                         @OA\Property(property="is_searchable", type="boolean", example=false),
+     *                         @OA\Property(property="total_view", type="integer", example=0),
+     *                         @OA\Property(property="image_path", type="string", nullable=true, example=null),
+     *                         @OA\Property(property="banner_image_path", type="string", nullable=true, example=null)
      *                     )
      *                 )
      *             )
@@ -233,7 +241,11 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
-     *     ),
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Animal List Not Found")
+     *         )
+     *     )
      * )
      */
     public function actionAnimal()
@@ -280,15 +292,7 @@ class DefaultController extends RestController
      *             @OA\Property(
      *                 property="master_bonus_experience",
      *                 type="object",
-     *                 @OA\Property(
-     *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                 @OA\Property(property="summary",type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -304,6 +308,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Bonus Experience Not Found")
+     *         )
      *     ),
      * )
      */
@@ -347,13 +355,7 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                     type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -369,6 +371,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="City Not Found")
+     *         )
      *     ),
      * )
      */
@@ -379,7 +385,7 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_city");
     }
 
-     /**
+    /**
      * Get Country List
      * 
      * @OA\GET(
@@ -411,13 +417,7 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                     type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -433,6 +433,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Country Not Found")
+     *         )
      *     ),
      * )
      */
@@ -479,6 +483,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Faq Not Found")
+     *         )
      *     ),
      * )
      */
@@ -520,13 +528,7 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                     type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -542,6 +544,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Location Not Found")
+     *         )
      *     ),
      * )
      */
@@ -589,6 +595,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Month Not Found")
+     *         )
      *     ),
      * )
      */
@@ -606,7 +616,7 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_operator_category");
     }
 
-     /**
+    /**
      * Get Package Feature
      * 
      * @OA\GET(
@@ -637,13 +647,7 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                     type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -659,6 +663,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Package Feature Not Found")
+     *         )
      *     ),
      * )
      */
@@ -701,13 +709,7 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                     type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -723,6 +725,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Package Include Not Found")
+     *         )
      *     ),
      * )
      */
@@ -766,13 +772,7 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                     type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -798,11 +798,14 @@ class DefaultController extends RestController
      *                     )
      *                 )
      *             )
-     *         )
-     *     ),
+     *         ),
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Railway Station Not Found")
+     *         )
      *     ),
      * )
      */
@@ -815,7 +818,7 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_railway_station");
     }
 
-     /**
+    /**
      * Get Share Safari Reason
      * 
      * @OA\GET(
@@ -847,13 +850,7 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                     type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -869,6 +866,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Share Safari Reason Not Found")
+     *         )
      *     ),
      * )
      */
@@ -881,7 +882,7 @@ class DefaultController extends RestController
     }
 
 
-     /**
+    /**
      * Get State List
      * 
      * @OA\GET(
@@ -913,13 +914,7 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                     type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -935,6 +930,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="State Not Found")
+     *         )        
      *     ),
      * )
      */
@@ -975,15 +974,7 @@ class DefaultController extends RestController
      *             @OA\Property(
      *                 property="master_suggestion_category",
      *                 type="object",
-     *                 @OA\Property(
-     *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -999,7 +990,11 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
-     *     ),
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Suggestion Category Not Found")
+     *         )
+     *     )
      * )
      */
     public function actionSuggestionCategory()
@@ -1041,13 +1036,7 @@ class DefaultController extends RestController
      *                 type="object",
      *                 @OA\Property(
      *                     property="summary",
-     *                     type="object",
-     *                     @OA\Property(property="total", type="integer", example=5),
-     *                     @OA\Property(property="page", type="integer", example=1),
-     *                     @OA\Property(property="pageSize", type="integer", example=1),
-     *                     @OA\Property(property="total_page", type="integer", example=5),
-     *                     @OA\Property(property="query_params", type="array", @OA\Items(type="string"), example={})
-     *                 ),
+     *                     type="object",ref="#/components/schemas/SummarySchema"),
      *                 @OA\Property(
      *                     property="data",
      *                     type="array",
@@ -1066,6 +1055,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Vehicle Not Found")
+     *         )
      *     ),
      * )
      */
@@ -1077,7 +1070,7 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_vehicle");
     }
 
-     /**
+    /**
      * Get Privacy Options
      * 
      * @OA\GET(
@@ -1115,6 +1108,10 @@ class DefaultController extends RestController
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Privacy Options Not Found")
+     *         )
      *     ),
      * )
      */

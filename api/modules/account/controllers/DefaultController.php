@@ -382,11 +382,20 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Privacy Updated successfully!"
+     *         description="Privacy Updated successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Privacy Updated successfully!")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="User not found."
+     *         description="User not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="User not found")
+     *         )
      *     )
      * )
      */
@@ -467,15 +476,7 @@ class DefaultController extends RestController
      *             @OA\Property(
      *                 property="summary",
      *                 type="object",
-     *                 @OA\Property(property="total", type="integer", example=3),
-     *                 @OA\Property(property="page", type="integer", example=1),
-     *                 @OA\Property(property="pageSize", type="integer", example=5),
-     *                 @OA\Property(property="total_page", type="integer", example=1),
-     *                 @OA\Property(
-     *                     property="query_params",
-     *                     type="array",
-     *                     @OA\Items(type="string")
-     *                 )
+     *                 ref="#/components/schemas/SummarySchema"
      *             ),
      *             @OA\Property(
      *                 property="data",
@@ -809,11 +810,20 @@ class DefaultController extends RestController
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
-     *         description="Privacy acknowledged successfully!"
+     *         description="Privacy acknowledged successfully!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Success!")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="User not found."
+     *         description="User not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="User Not Found")
+     *         )
      *     )
      * )
      */

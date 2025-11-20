@@ -57,32 +57,108 @@ class DefaultController extends RestController
     /**
      * Get Feeds List
      *
-     *
      * @OA\Get(
      *     path="/feeds",
      *     tags={"Feeds"},
      *     summary="Get Feeds List (Draft)",
      *     security={{"bearerAuth": {}}},
+     *
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
-     *         )
+     *         @OA\Schema(type="integer")
      *     ),
+     *
      *     @OA\Parameter(
      *         name="pageSize",
      *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *
+     *                 @OA\Property(
+     *                     property="summary",
+     *                     ref="#/components/schemas/SummarySchema"
+     *                 ),
+     *
+     *                 @OA\Property(
+     *                     property="feeds",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         oneOf={
+     *                             @OA\Schema(
+     *                                 type="object",
+     *                                 @OA\Property(property="id", type="integer", example=1051),
+     *                                 @OA\Property(property="objective", type="string", example="share_safari"),
+     *                                 @OA\Property(
+     *                                     property="feed",
+     *                                     ref="#/components/schemas/ShareSafariSchema"
+     *                                 )
+     *                             ),
+     *
+     *                             @OA\Schema(
+     *                                 type="object",
+     *                                 @OA\Property(property="id", type="integer", example=1052),
+     *                                 @OA\Property(property="objective", type="string", example="package"),
+     *                                 @OA\Property(
+     *                                     property="feed",
+     *                                     ref="#/components/schemas/PackageViewSchema"
+     *                                 )
+     *                             ),
+     *
+     *                             @OA\Schema(
+     *                                 type="object",
+     *                                 @OA\Property(property="id", type="integer", example=1048),
+     *                                 @OA\Property(property="objective", type="string", example="post"),
+     *                                 @OA\Property(
+     *                                     property="feed",
+     *                                     ref="#/components/schemas/PostDetailSchema"
+     *                                 )
+     *                             ),
+     *
+     *                             @OA\Schema(
+     *                                 type="object",
+     *                                 @OA\Property(property="objective", type="string", example="sighting"),
+     *                                 @OA\Property(
+     *                                     property="sighting_feeds",
+     *                                     type="array",
+     *                                     @OA\Items(
+     *                                         type="object",
+     *                                         @OA\Property(property="id", type="integer", example=318),
+     *                                         @OA\Property(property="objective", type="string", example="sighting"),
+     *                                         @OA\Property(
+     *                                             property="feed",
+     *                                             ref="#/components/schemas/SightingViewSchema"
+     *                                         )
+     *                                     )
+     *                                 )
+     *                             )
+     *                         }
+     *                     )
+     *                 )
+     *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Not found",
-     *     ),
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Not Found")
+     *         )
+     *     )
      * )
      */
+
     public function actionIndex()
     {
         $fdIds = [274];
