@@ -72,44 +72,7 @@ class DefaultController extends RestController
      *         description="Operator Details",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="data", ref="#/components/schemas/PartnerSchema"),
-     *             @OA\Property(
-     *                 property="park",
-     *                 type="array",
-     *                 @OA\Items(
-     *                     type="object",
-     *                     @OA\Property(property="id", type="integer", example=1),
-     *                     @OA\Property(property="title", type="string", example="Dudhwa Tiger Reserve"),
-     *                     @OA\Property(property="slug", type="string", example="dudhwa-tiger-reserve"),
-     *                     @OA\Property(property="feature_image_path", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/safaripark/1/park_feature_image1718179650.jpg"),
-     *                     @OA\Property(property="quotation_form_note", type="string", example=""),
-     *                     @OA\Property(property="template_code", type="integer", example=1)
-     *                 )
-     *             ),
-     *             @OA\Property(property="is_approved", type="boolean", example=true),
-     *             @OA\Property(property="has_cancellation_policy", type="boolean", example=true),
-     *             @OA\Property(property="budget", type="string", example="Premium , Standard , Economical"),
-     *             @OA\Property(
-     *                 property="other_wildlife_activity",
-     *                 type="array",
-     *                 @OA\Items(
-     *                     type="object",
-     *                     @OA\Property(property="id", type="integer", example=3),
-     *                     @OA\Property(property="title", type="string", example="Wildlife Safari")
-     *                 )
-     *             ),
-     *             @OA\Property(property="facebook_url", type="string", example=""),
-     *             @OA\Property(property="youtube_link", type="string", example=""),
-     *             @OA\Property(property="instagram_url", type="string", example="https://www.instagram.com/shivshakti/"),
-     *             @OA\Property(property="website", type="string", example=""),
-     *             @OA\Property(
-     *                 property="urls",
-     *                 type="object",
-     *                 @OA\Property(property="parks", type="string", example="http://api.walkintothewild.io/operator/shivshakti/operator-park"),
-     *                 @OA\Property(property="sharedsafari", type="string", example="http://api.walkintothewild.io/operator/shivshakti/operator-shared-safari"),
-     *                 @OA\Property(property="packages", type="string", example="http://api.walkintothewild.io/operator/shivshakti/operator-packages"),
-     *                 @OA\Property(property="reviews", type="string", example="http://api.walkintothewild.io/operator/shivshakti/reviewlist?sort_by=highest")
-     *             )
+     *             @OA\Property(property="data", ref="#/components/schemas/PartnerDetailSchema")
      *         )
      *     ),
      *     @OA\Response(
@@ -126,7 +89,6 @@ class DefaultController extends RestController
      *     )
      * )
      */
-
 
     public function actionIndex()
     {
@@ -242,30 +204,46 @@ class DefaultController extends RestController
     /**
      * Get Fixed Departure List
      *
-     *
      * @OA\Get(
      *     path="/manage/operator-safarilist",
      *     tags={"Manage"},
-     *     summary="Get Fixed Departure List (Draft)",
+     *     summary="Get Fixed Departure List",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
-     *         )
+     *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
      *         name="pageSize",
      *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Operator Safarilist",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="share_safari",
+     *                 type="object",
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/ShareSafariViewSchema")
+     *                 )
+     *             )
      *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Not found",
-     *     ),
+     *         description="Safari List Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Safari List Not Found")
+     *         )
+     *     )
      * )
      */
     public function actionOperatorSafarilist()
@@ -276,35 +254,54 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "share_safari", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
     }
 
+
     /**
      * Get Package List
-     *
      *
      * @OA\Get(
      *     path="/manage/operator-packagelist",
      *     tags={"Manage"},
-     *     summary="Get Package List (Draft)",
+     *     summary="Get Package List",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
-     *         )
+     *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
      *         name="pageSize",
      *         in="query",
-     *         @OA\Schema(
-     *             type="integer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Operator Packagelist",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="packages",
+     *                 type="object",
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/PackageViewSchema")
+     *                 )
+     *             )
      *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Not found",
-     *     ),
+     *         description="Package List Not Found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Package List Not Found")
+     *         )
+     *     )
      * )
      */
+
+
     public function actionOperatorPackagelist()
     {
         $safari_operator = $this->module->operatormodel();

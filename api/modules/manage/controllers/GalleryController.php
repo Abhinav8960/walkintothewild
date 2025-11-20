@@ -68,7 +68,7 @@ class GalleryController extends RestController
      * @OA\Get(
      *     path="/manage/gallery/list",
      *     tags={"Manage"},
-     *     summary="Get Gallery List (Draft)",
+     *     summary="Get Gallery List",
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="page",
@@ -85,8 +85,29 @@ class GalleryController extends RestController
      *         )
      *     ),
      *     @OA\Response(
+     *         response=200,
+     *         description="Gallery List",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="partner_gallery",
+     *                 type="object",
+     *                 @OA\Property(property="summary", ref="#/components/schemas/SummarySchema"),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/GallerySchema")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
      *         response=404,
      *         description="Not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Gallery Not Found")
+     *         )
      *     ),
      * )
      */
