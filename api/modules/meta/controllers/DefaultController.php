@@ -508,7 +508,11 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *        response=404,
-     *        description="Not Found"
+     *        description="Not Found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Not Found")
+     *         )
      *     )
      * )
      */
@@ -705,7 +709,11 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *        response=404,
-     *        description="Not Found"
+     *        description="Not Found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Not Found")
+     *         )
      *     )
      * )
      */
