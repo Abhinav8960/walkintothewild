@@ -58,21 +58,76 @@ class DefaultController extends RestController
         ];
     }
 
-     /**
+    /**
      * Get Operator Detail
-     *
      *
      * @OA\Get(
      *     path="/manage",
      *     tags={"Manage"},
-     *     summary="Get Operator Detail (Draft)",
+     *     summary="Get Operator Detail",
+     *     description="Allows to get the operator details along with their operated parks.",
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(
-     *         response=404,
-     *         description="Not found",
+     *         response=200,
+     *         description="Operator Details",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="data", ref="#/components/schemas/PartnerSchema"),
+     *             @OA\Property(
+     *                 property="park",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="title", type="string", example="Dudhwa Tiger Reserve"),
+     *                     @OA\Property(property="slug", type="string", example="dudhwa-tiger-reserve"),
+     *                     @OA\Property(property="feature_image_path", type="string", example="https://d2oqzs36p95tb4.cloudfront.net/safaripark/1/park_feature_image1718179650.jpg"),
+     *                     @OA\Property(property="quotation_form_note", type="string", example=""),
+     *                     @OA\Property(property="template_code", type="integer", example=1)
+     *                 )
+     *             ),
+     *             @OA\Property(property="is_approved", type="boolean", example=true),
+     *             @OA\Property(property="has_cancellation_policy", type="boolean", example=true),
+     *             @OA\Property(property="budget", type="string", example="Premium , Standard , Economical"),
+     *             @OA\Property(
+     *                 property="other_wildlife_activity",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=3),
+     *                     @OA\Property(property="title", type="string", example="Wildlife Safari")
+     *                 )
+     *             ),
+     *             @OA\Property(property="facebook_url", type="string", example=""),
+     *             @OA\Property(property="youtube_link", type="string", example=""),
+     *             @OA\Property(property="instagram_url", type="string", example="https://www.instagram.com/shivshakti/"),
+     *             @OA\Property(property="website", type="string", example=""),
+     *             @OA\Property(
+     *                 property="urls",
+     *                 type="object",
+     *                 @OA\Property(property="parks", type="string", example="http://api.walkintothewild.io/operator/shivshakti/operator-park"),
+     *                 @OA\Property(property="sharedsafari", type="string", example="http://api.walkintothewild.io/operator/shivshakti/operator-shared-safari"),
+     *                 @OA\Property(property="packages", type="string", example="http://api.walkintothewild.io/operator/shivshakti/operator-packages"),
+     *                 @OA\Property(property="reviews", type="string", example="http://api.walkintothewild.io/operator/shivshakti/reviewlist?sort_by=highest")
+     *             )
+     *         )
      *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Operator not found.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Operator Not Found!!!"
+     *             )
+     *         )
+     *     )
      * )
      */
+
+
     public function actionIndex()
     {
         $this->layout = \common\interfaces\NewStatusInterface::OPERATOR_API_LAYOUT_FULL;
