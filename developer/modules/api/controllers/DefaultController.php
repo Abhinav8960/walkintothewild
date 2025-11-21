@@ -61,6 +61,31 @@ class DefaultController extends Controller
             'scheme' => 'bearer',
             'bearerFormat' => 'JWT'
         ];
+        $components['securitySchemes']['XDevice'] = [
+            'type' => 'apiKey',
+            'in'   => 'header',
+            'name' => 'x-device',
+        ];
+        $components['securitySchemes']['XPlatform'] = [
+            'type' => 'apiKey',
+            'in'   => 'header',
+            'name' => 'x-platform',
+        ];
+        $components['securitySchemes']['XPlatformVersion'] = [
+            'type' => 'apiKey',
+            'in'   => 'header',
+            'name' => 'x-platform-version',
+        ];
+        $components['securitySchemes']['XApplicationVersion'] = [
+            'type' => 'apiKey',
+            'in'   => 'header',
+            'name' => 'x-application-version',
+        ];
+        $components['securitySchemes']['XEncryption'] = [
+            'type' => 'apiKey',
+            'in'   => 'header',
+            'name' => 'x-encryption',
+        ];
         $data = [
             'components' => $components
         ] + $data;

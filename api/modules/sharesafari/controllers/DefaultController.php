@@ -249,7 +249,7 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Create Shared Safari",
      *     description="Allows only users to create a shared safari; operators are not permitted to create one.",
-     *     security={{"bearerAuth": {}}},
+     *     security={{"bearerAuth": {}},{"XDevice": {}},{"XPlatform": {}},{"XPlatformVersion": {}},{"XApplicationVersion": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
