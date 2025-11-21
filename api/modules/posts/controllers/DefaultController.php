@@ -95,7 +95,14 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Post Image",
      *     description="Allows users to post image.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\RequestBody(
      *         required=true,
@@ -201,6 +208,13 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Get Post View",
      *     description="Get Single Post View",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -267,7 +281,14 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Comment on Post",
      *     description="Allows users to comment on Post.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -348,7 +369,14 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Delete Post",
      *     description="Allows users to Delete Post.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -416,7 +444,14 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Reply on comment in post",
      *     description="Allows users to reply on comment in Post",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -507,7 +542,14 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Liked comment or removed that ",
      *     description="Allows users to liked comment or removed that",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="user_post_comment_id",
      *         in="query",
@@ -562,7 +604,14 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Liked Post or removed that",
      *     description="Allows users to liked Post or removed that",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -635,7 +684,14 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Report post",
      *     description="Allows users to report Post",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -723,7 +779,14 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Post Update",
      *     description="Allows users to update post.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -850,7 +913,14 @@ class DefaultController extends RestController
      *     tags={"User Post"},
      *     summary="Flag comment  post",
      *     description="Allows users to report Post",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",

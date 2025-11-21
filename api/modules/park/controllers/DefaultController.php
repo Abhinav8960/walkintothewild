@@ -98,7 +98,13 @@ class DefaultController extends RestController
      *     path="/park",
      *     tags={"Park"},
      *     summary="Get Park List",
-     *
+     *    security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -182,6 +188,13 @@ class DefaultController extends RestController
      *     tags={"Park"},
      *     summary="Get Single Park",
      *     description="Return Single Park details",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -244,6 +257,13 @@ class DefaultController extends RestController
      *     path="/filter-parklist",
      *     tags={"Park"},
      *     summary="Get Filter Park List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -311,6 +331,13 @@ class DefaultController extends RestController
      *     path="/park/{slug}/reviewlist",
      *     tags={"Park"},
      *     summary="Get Park Review List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Parameter(
      *         name="slug",
@@ -394,7 +421,14 @@ class DefaultController extends RestController
      *     tags={"Park"},
      *     summary="Post Park Suggestion",
      *     description="Allow user to submit a park suggestion",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Parameter(
      *         name="slug",
@@ -493,7 +527,14 @@ class DefaultController extends RestController
      *     tags={"Park"},
      *     summary="Post Park Review",
      *     description="Allow user to submit a park review",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -631,7 +672,14 @@ class DefaultController extends RestController
      *     tags={"Park"},
      *     summary="Qoute Request Park",
      *     description="Allow user to submit a park quote request",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -799,7 +847,13 @@ class DefaultController extends RestController
      *     tags={"Park"},
      *     summary="Get Stay Category Option",
      *     description="Get Stay Category Option by Park Slug",
-     *
+     *    security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -910,6 +964,13 @@ class DefaultController extends RestController
      *     path="/trip-budget",
      *     summary="Get Trip Budget List",
      *     description="Get Trip Budget List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns park trip budget list.",
@@ -941,6 +1002,13 @@ class DefaultController extends RestController
      *     tags={"Park"},
      *     path="/planning-type",
      *     summary="Get Park Planning Type List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *      @OA\Response(
      *        response=200,
      *        description="Successful operation. Returns Planning Type.",

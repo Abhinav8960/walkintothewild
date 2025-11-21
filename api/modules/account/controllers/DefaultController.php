@@ -78,7 +78,14 @@ class DefaultController extends RestController
      *     tags={"Account"},
      *     summary="Update General Information",
      *     description="Allows users to update their own general information.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\RequestBody(
      *         @OA\MediaType(
@@ -155,7 +162,14 @@ class DefaultController extends RestController
      *     tags={"Account"},
      *     summary="Update Profile Photo",
      *     description="Allows update their own profile photo.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\RequestBody(
      *         required=false,
      *         @OA\MediaType(
@@ -220,7 +234,14 @@ class DefaultController extends RestController
      *     tags={"Account"},
      *     summary="Update Cover Photo",
      *     description="Allows update their own cover photo.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\RequestBody(
      *         required=false,
      *         @OA\MediaType(
@@ -368,7 +389,14 @@ class DefaultController extends RestController
      *     tags={"Account"},
      *     summary="Update privacy (NIU)",
      *     description="Allows update their privacy",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\RequestBody(
      *         required=false,
      *         @OA\MediaType(
@@ -449,7 +477,14 @@ class DefaultController extends RestController
      *     tags={"Account"},
      *     summary="Get Package Wishlist",
      *     description="Returns paginated package wishlist that user has added to their wishlist.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -611,7 +646,14 @@ class DefaultController extends RestController
      *     tags={"Account"},
      *     summary="Get Shared Safari  Wishlist",
      *     description="Returns paginated shared safari wishlist that user has added to their wishlist.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -763,7 +805,14 @@ class DefaultController extends RestController
      *     tags={"Account"},
      *     summary="Delete the user profile",
      *     description="Allows the user to delete their profile from the Walk Into The Wild platform.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Response(
      *         response=200,
@@ -807,7 +856,14 @@ class DefaultController extends RestController
      *     tags={"Account"},
      *     summary="Update privacy policy acknowledgement",
      *     description="update status true if privacy policy acknowledged ",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *         response=200,
      *         description="Privacy acknowledged successfully!",

@@ -209,6 +209,13 @@ class SiteController extends RestController
      *     path="/social-login",
      *     tags={"Authorization"},
      *     summary="Social Login",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      * 
      *     description=" The Social Login API enables seamless user authentication via supported social platforms.<br>It currently supports <b>Google OAuth</b>, with additional providers like Apple planned for future releases. Integrated into the <b>Login Module</b>, this endpoint validates user identities and issues secure access tokens.",
      *         
@@ -574,7 +581,14 @@ class SiteController extends RestController
      *     tags={"Authorization"},
      *     summary="Login User Profile",
      *     description="This endpoint retrieves the authenticated user's <b>profile details</b> on the Walk Into The Wild platform. It returns personal information, verification status, profile images, social links, safari stats, and privacy settings.<br>Use this API to display user-specific data like their name, avatar, followers, safari participation, etc., in a dashboard or profile view.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Response(
      *         response=200,
@@ -651,6 +665,13 @@ class SiteController extends RestController
      *     path="/termofuse",
      *     tags={"Authorization"},
      *     summary="Term of Use",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     description = "This API retrieves the <b>Terms of Use</b> content for the Walk into the Wild platform.<br><i>Walk into the Wild</i> is a wildlife social media and travel planning platform offering services such as safari bookings, sharing experiences, and accessing adventure information in India. The <b>Terms of Use</b> outline the rules and guidelines that users must agree to and follow when using the platform and its services.<br>This use in the <b>Login Screen</b> and <b>Profile Screen Page</b> <br> <b>Note:</b> In this API we Use the <b>Authentication Token</b> (auth_token).",
      *       @OA\Response(
      *         response=200,
@@ -700,6 +721,13 @@ class SiteController extends RestController
      *     path="/privacypolicy",
      *     tags={"Authorization"},
      *     summary="Privay Policy",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     description = "This API endpoint is used to retrieve the <b>Privacy Policy</b> content of the Walk into the Wild platform.<br>Walk into the Wild is a wildlife-focused social media and travel platform that helps users plan safaris, share safari experiences, and access wildlife tour information and adventures in India. The privacy policy explains how the platform collects, uses, and protects users' personal information.<br>This use in the <b>Login Screen</b> and <b>Profile Screen</b> Page<br><b>Note</b> : In this Api we use <b>Authentication Token</b> (auth_token). ",
      *      @OA\Response(
      *         response=200,
@@ -749,6 +777,13 @@ class SiteController extends RestController
      *     path="/refundpolicy",
      *     tags={"Authorization"},
      *     summary="Refund Policy",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     description = "The <b>Refund Policy API</b> is used on the <b>Refund Policy Screen</b> in the application.<br>This API returns the latest refund policy Content , which is later converted into styled text using:",
      *      @OA\Response(
      *         response=200,
@@ -815,7 +850,14 @@ class SiteController extends RestController
      *     summary="Update Token",
      *
      *     description="This API updates the Firebase token in the application. Firebase tokens refresh automatically over time, so the updated token must be sent to the backend to ensure proper notification delivery.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="firebase_token",
      *         in="query",
@@ -929,7 +971,14 @@ class SiteController extends RestController
      *     tags={"Authorization"},
      *     summary="Mobile Number Verification",
      *     description="Allows a user to verify their mobile number.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
@@ -1110,7 +1159,14 @@ class SiteController extends RestController
      *     tags={"Authorization"},
      *     summary="Verify Mobile Number using otp",
      *     description="Allows a user to verify their mobile number by entering OTP.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
@@ -1191,7 +1247,13 @@ class SiteController extends RestController
      *     tags={"Operator"},
      *     summary="Get Report Page Reason",
      *     description = "The <b>Report Page Reason API</b> provides a list of predefined reasons that users can select when reporting a page, operator, or content on the platform. This ensures that reports are categorized consistently, allowing the platform to take appropriate action quickly.<br>The API returns the reasons in a structured format, including main categories and subcategories (e.g., spam reported by a user, business, or other).",
-     *     
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *         response=200,
      *         description="Successful Operation.",
@@ -1261,7 +1323,14 @@ class SiteController extends RestController
      *     tags={"Authorization"},
      *     summary="Deactivate Account",
      *     description="Allows a user to deactivate their account. || Not Deactivated successfully!",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *         response=200,
      *         description="Deactivated successfully! We will miss you. || Not Deactivated successfully!",
@@ -1314,7 +1383,14 @@ class SiteController extends RestController
      *     tags={"Authorization"},
      *     summary="Delete Account Request",
      *     description="Allows a user for delete account request.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *         response=200,
      *         description="Your information will be deleted in the upcoming 90 days. We will miss you!",
@@ -1802,7 +1878,14 @@ class SiteController extends RestController
      *     path="/refundpolicyantara",
      *     tags={"Authorization"},
      *     summary="Refund Policy Antara",
-     *     description="This api is used in Web.", 
+     *     description="This api is used in Web.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            }, 
      *     @OA\Response(
      *         response=404,
      *         description="Not found",

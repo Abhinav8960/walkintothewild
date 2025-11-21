@@ -87,6 +87,13 @@ class DefaultController extends RestController
      *     path="/package",
      *     tags={"Package"},
      *     summary="Get Package List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Parameter(name="page", in="query", @OA\Schema(type="integer")),
      *     @OA\Parameter(name="pageSize", in="query", @OA\Schema(type="integer")),
@@ -141,6 +148,13 @@ class DefaultController extends RestController
      *     tags={"Package"},
      *     summary="Get Package View",
      *     description="Fetches a single package by its slug.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -209,7 +223,14 @@ class DefaultController extends RestController
      *     tags={"Package"},
      *     summary="Comment on Package",
      *     description="Allows users to comment on Package.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -308,7 +329,14 @@ class DefaultController extends RestController
      *     tags={"Package"},
      *     summary="Reply to specific comment in Package",
      *     description="Allows users to reply to specific comment in Package.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -417,7 +445,14 @@ class DefaultController extends RestController
      *     tags={"Package"},
      *     summary="Wishlist Package",
      *     description="Allows users to whishlist Package",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -495,7 +530,14 @@ class DefaultController extends RestController
      *     tags={"Package"},
      *     summary="Unwishlist Package",
      *     description="Allows users to Unwishlist Package",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -570,7 +612,14 @@ class DefaultController extends RestController
      *     tags={"Package"},
      *     summary="Quote Request for Package",
      *     description="Allows users to raise quote request for Package.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -673,7 +722,14 @@ class DefaultController extends RestController
      *     tags={"Package"},
      *     summary="Flag on Comment or reply in Package",
      *     description="Allows users to post Flag on Comment or reply in Package.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -789,6 +845,13 @@ class DefaultController extends RestController
      *     tags={"Package"},
      *     summary="Get Package Stay Category",
      *     description="Fetches a list of stay categories for packages.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Response(
      *         response=200,

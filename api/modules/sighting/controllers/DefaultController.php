@@ -87,6 +87,13 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Get Sighting List",
      *     description="Get paginated list of Sighting with optional filters.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -137,7 +144,14 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Post Sighting",
      *     description="Allows operator to post sighting.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\RequestBody(
      *         required=true,
@@ -246,6 +260,13 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Get Sighting View",
      *     description="Get single sighting details.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -308,7 +329,14 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Comment on Sighting",
      *     description="Allows users to comment on Sighting.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -386,7 +414,14 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Reply on comment in Sighting",
      *     description="Allows users to reply on comment in Sighting",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -476,7 +511,14 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Liked comment or removed that ",
      *     description="Allows users to liked comment or removed that",
-     *     security={{"bearerAuth": {}}},
+     *          security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="sighting_comment_id",
      *         in="query",
@@ -531,7 +573,14 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Liked Post or removed that ",
      *     description="Allows users to liked Sighting or removed that",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -614,7 +663,14 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Report Sighting ",
      *     description="Allows users to report Sighting",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -702,7 +758,14 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Delete ",
      *     description="Allows users to Delete Sighting.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
@@ -770,7 +833,14 @@ class DefaultController extends RestController
      *     tags={"Sighting"},
      *     summary="Flag comment  Sighting ",
      *     description="Allows users to report Sighting",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="id",
      *         in="query",

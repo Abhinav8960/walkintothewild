@@ -61,7 +61,14 @@ class DefaultController extends RestController
      *     path="/feeds",
      *     tags={"Feeds"},
      *     summary="Get Feeds List",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Parameter(
      *         name="page",
