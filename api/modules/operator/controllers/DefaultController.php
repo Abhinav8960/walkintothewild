@@ -946,11 +946,11 @@ class DefaultController extends RestController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Flagged successfully.",
+     *         description="Reported successfully.",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="status", type="integer", example=1),
-     *             @OA\Property(property="message", type="string", example="Flagged successfully!")
+     *             @OA\Property(property="message", type="string", example="Reported successfully!")
      *         )
      *     ),
      *     @OA\Response(
