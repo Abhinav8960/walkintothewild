@@ -42,7 +42,10 @@ class UserFollow extends \common\models\UserFollow
                 foreach ($this->follower->toArray() as $key => $value) {
                     $fields[$key] = function () use ($key) {
                         if ($key == 'is_safari_operator') {
-                            return (bool) $this->user->is_safari_operator;
+                            return (bool) $this->follower->is_safari_operator;
+                        }
+                        if ($key == 'is_blue_badge_verified') {
+                            return (bool) $this->follower->is_blue_badge_verified;
                         }
                         return $this->follower->{$key};
                     };
