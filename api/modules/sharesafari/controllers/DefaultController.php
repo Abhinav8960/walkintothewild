@@ -1976,7 +1976,7 @@ class DefaultController extends SafariController
      * @OA\GET(
      *     path="/sharesafari/{slug}/initiate-booking/{payment_hash}/{payment_gateway}",
      *     tags={"Share Safari"},
-     *     summary="Next step of booking for fixed departure (Draft)",
+     *     summary="Next step of booking for fixed departure",
      *     description="Allow user to process forward in booking process i.e initiate booking",
      *
      *     @OA\Parameter(

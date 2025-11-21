@@ -1416,7 +1416,7 @@ class DefaultController extends RestController
      * @OA\Post(
      *     path="/chat/delete-message",
      *     tags={"Chat"},
-     *     summary="Delete Message (Draft)",
+     *     summary="Delete Message",
      *     description="Allows users to delete message in a chat.",
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
