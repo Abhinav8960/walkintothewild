@@ -100,7 +100,14 @@ class DefaultController extends RestController
      *     tags={"Chat"},
      *     summary="Get Quotation Chat List or Operator List without chat hash",
      *     description = "Retrieves <b>the quotation chat list</b> without requiring a <b>chat hash</b>, including pagination, <b>last message</b> details, related <b>lead</b> information, and <b>boperator</b> profile data.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -305,7 +312,14 @@ class DefaultController extends RestController
      *     tags={"Chat"},
      *     summary="Get chat user list",
      *     description = "This API is used to retrieve the chat user list.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -407,7 +421,14 @@ class DefaultController extends RestController
      *     tags={"Chat"},
      *     summary="Get Chat Messages",
      *     description = "Retrieve chat messages by providing the chat hash in the request parameters.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -510,7 +531,14 @@ class DefaultController extends RestController
      *     tags={"Chat"},
      *     summary="Send Message",
      *     description="Allows users to send a <b>message</b> and upload <b>gallery</b> items by providing the <b>gallery slug</b> in the request body within a chat.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="user_handle",
      *         in="path",
@@ -798,7 +826,14 @@ class DefaultController extends RestController
      *     tags={"Manage"},
      *     summary="Send Quote",
      *     description="Allows the Operator to send a quotation for leads received from Park, Operator, or Fixed Departure. The lead ID must be passed as a parameter. ",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="lead_id",
      *         in="path",
@@ -991,7 +1026,14 @@ class DefaultController extends RestController
      *     tags={"Chat"},
      *     summary="Get Profile Chat",
      *     description="Retrieves the <b>chat hash</b> for a direct message conversation with the specified <b>user handle</b>.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="user_handle",
      *         in="path",
@@ -1055,7 +1097,14 @@ class DefaultController extends RestController
      *     tags={"Chat"},
      *     summary="Make Call Request",
      *     description="Allows users to make a call request or operators to initiate a call.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="user_handle",
      *         in="path",
@@ -1308,7 +1357,14 @@ class DefaultController extends RestController
      *     tags={"Chat"},
      *     summary="Edit Message",
      *     description="Allows users to edit their own message in a chat.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
@@ -1418,7 +1474,14 @@ class DefaultController extends RestController
      *     tags={"Chat"},
      *     summary="Delete Message",
      *     description="Allows users to delete message in a chat.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(

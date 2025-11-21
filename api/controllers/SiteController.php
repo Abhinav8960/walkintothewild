@@ -152,6 +152,13 @@ class SiteController extends RestController
      *     tags={"Master"},
      *     summary="Master Meta Last Updated Information",
      *     description="This API is used to retrieve all master tables available in both the mobile app and the web application.<br>When the app launches, it calls this API. Each master table entry contains a last_updated_time field. If the timestamp returned by the API does not match the timestamp stored locally, the corresponding table is synchronized to update records.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *         response=200,
      *         description="Successful response",
@@ -1191,7 +1198,13 @@ class SiteController extends RestController
      *     tags={"Operator"},
      *     summary="Get Report Page Reason",
      *     description = "The <b>Report Page Reason API</b> provides a list of predefined reasons that users can select when reporting a page, operator, or content on the platform. This ensures that reports are categorized consistently, allowing the platform to take appropriate action quickly.<br>The API returns the reasons in a structured format, including main categories and subcategories (e.g., spam reported by a user, business, or other).",
-     *     
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *         response=200,
      *         description="Successful Operation.",

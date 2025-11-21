@@ -59,6 +59,13 @@ class StaticPageController extends RestController
      *     tags={"Static"},
      *     summary="Get About Us",
      *     description="This API is used to retrieve the detailed About Us page.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *       @OA\Response(
      *         response=200,
      *         description="About Us",
@@ -101,7 +108,13 @@ class StaticPageController extends RestController
      *     tags={"Static"},
      *     summary="Get FAQs",
      *     description="This API is used to retrieve the list of FAQs.",
-     *
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *         response=200,
      *         description="FAQs list retrieved successfully.",
@@ -144,7 +157,14 @@ class StaticPageController extends RestController
      *     tags={"Static"},
      *     summary="Contact Form",
      *     description="API for submitting the website contact form, allowing users to send inquiries or messages directly from the site.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(

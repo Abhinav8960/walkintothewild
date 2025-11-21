@@ -101,6 +101,13 @@ class DefaultController extends RestController
      *     path="/meta/accommodation",
      *     tags={"Meta"},
      *     summary="Get Accommodation List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",
@@ -164,6 +171,13 @@ class DefaultController extends RestController
      *     tags={"Meta"},
      *     path="/meta/animal-type",
      *     summary="Get AnimalType List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",
@@ -239,6 +253,13 @@ class DefaultController extends RestController
      *     tags={"Meta"},
      *     path="/meta/operator-credibility",
      *     summary="Get Operator Credibility List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",
@@ -302,6 +323,13 @@ class DefaultController extends RestController
      *     tags={"Meta"},
      *     path="/meta/other-wildlife-activities",
      *     summary="Get Wildlife Activities List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",
@@ -364,6 +392,13 @@ class DefaultController extends RestController
      *     tags={"Meta"},
      *     path="/meta/package-range",
      *     summary="Get Package Range List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",
@@ -428,6 +463,13 @@ class DefaultController extends RestController
      *     tags={"Meta"},
      *     path="/meta/park-trip-slot",
      *     summary="Get Park Trip Slot List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",
@@ -491,6 +533,13 @@ class DefaultController extends RestController
      *     tags={"Meta"},
      *     path="/meta/safari-session",
      *     summary="Get Safari Session List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",
@@ -563,6 +612,13 @@ class DefaultController extends RestController
      *     tags={"Meta"},
      *     path="/meta/term-condition-type",
      *     summary="Get Term Condition Type List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",
@@ -626,6 +682,13 @@ class DefaultController extends RestController
      *     tags={"Meta"},
      *     path="/meta/zone-type",
      *     summary="Get Zone Type List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",
@@ -691,6 +754,13 @@ class DefaultController extends RestController
      *     tags={"Meta"},
      *     path="/meta/stay-category",
      *     summary="Get Stay Category List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *       name="page",
      *       in="query",

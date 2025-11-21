@@ -109,6 +109,14 @@ class DefaultController extends RestController
      *     tags={"Operator"},
      *     summary="Get Operator View",
      *     description = "<b>Purpose:</b> Retrieve detailed information about a safari tour operator (business), including contact details, parks they operate in, ratings, URLs and other metadata.<br> <b>Use Cases : </b><br><ul><li>Operator Detail Page on the frontend.</li><li>Prefill forms for quotation/booking.</li><li>Display operator-related parks, packages and reviews.</li></ul>",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
+
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -234,7 +242,14 @@ class DefaultController extends RestController
      *     tags={"Operator"},
      *     summary="Quotes Request Operator",
      *     description="Allows users to send a quote request to a specific operator using their slug. Includes details like safari count, category, dates, and optional notes.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -374,7 +389,14 @@ class DefaultController extends RestController
      *     tags={"Operator"},
      *     summary="Follow Operator",
      *     description="This is allows a user to follow a specific operator by using the operator's slug. This action is typically used to receive updates or notifications about the operator's activities, packages, or offerings.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -464,7 +486,14 @@ class DefaultController extends RestController
      *     tags={"Operator"},
      *     summary="unfollow Operator",
      *     description="This API is allows a user to unfollow a specific operator by their slug identifier. When successfully unfollowed, the API returns a confirmation message.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -568,7 +597,14 @@ class DefaultController extends RestController
      *     tags={"Operator"},
      *     summary="Review to Operator",
      *     description="The <b>Operator Review API</b> allows users to share feedback and rate safari or tour operators listed on the platform. By submitting a review, users can provide a star rating (e.g., 1–5) along with comments about their experience.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -720,6 +756,13 @@ class DefaultController extends RestController
      *     tags={"Operator"},
      *     summary="Get Rating",
      *     description = "This API returns the list of National Parks and Tiger Reserves with their details (ID, title, slug, feature image, and notes).It is primarily used to fetch parks associated with a given operator for rating or display purposes.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -908,7 +951,14 @@ class DefaultController extends RestController
      *     tags={"Operator"},
      *     summary="Flag Review",
      *     description="The Operator Flag API allows users to flag a specific operator or content for review. This can be used to report inappropriate behavior, violations, or other issues. Flagging helps maintain platform safety and ensures operators follow guidelines.<br>The API requires the operator’s unique slug and the reason ID (id) in the query parameters. Responses are returned in JSON format with a status flag (1 for success, 0 for error) and a message or error details.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -1030,6 +1080,13 @@ class DefaultController extends RestController
      *     tags={"Operator"},
      *     summary="Get Operator Park Drop Down",
      *     description = "Fetches a list of parks associated with a specific operator, returning basic information about each park such as ID, title, slug, feature image URL, and an optional quotation note.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -1131,7 +1188,14 @@ class DefaultController extends RestController
      *     tags={"Operator"},
      *     summary="Report Operator",
      *     description="The <b>Report Operator API</b> allows users to report an operator for inappropriate content, fraudulent behavior, or other issues. Submitting a report helps maintain the quality and trustworthiness of operators on the platform.<br>All requests require the operator’s unique slug in the URL and proper authentication. Responses are returned in JSON format with a status flag (1 for success, 0 for error) along with a message or error details.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",

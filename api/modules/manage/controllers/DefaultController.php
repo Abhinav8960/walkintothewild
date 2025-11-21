@@ -66,7 +66,14 @@ class DefaultController extends RestController
      *     tags={"Manage"},
      *     summary="Get Operator Detail",
      *     description="Allows to get the operator details along with their operated parks.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *         response=200,
      *         description="Operator Details",
@@ -208,7 +215,14 @@ class DefaultController extends RestController
      *     path="/manage/operator-safarilist",
      *     tags={"Manage"},
      *     summary="Get Fixed Departure List",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -262,7 +276,14 @@ class DefaultController extends RestController
      *     path="/manage/operator-packagelist",
      *     tags={"Manage"},
      *     summary="Get Package List",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
