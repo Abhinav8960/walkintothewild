@@ -44,6 +44,13 @@ class DefaultController extends RestController
      *     tags={"Plan"},
      *     summary="Get Feature Park List",
      *     description="Return paginated Feature Park List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -98,6 +105,13 @@ class DefaultController extends RestController
      *     tags={"Plan"},
      *     summary="Get Rare Animal List",
      *     description="Return paginated Rare Animal List",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",

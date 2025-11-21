@@ -114,6 +114,13 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Get Share Safari List",
      *     description="Get paginated list of Share Safaris with optional filters.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -177,6 +184,13 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Get Share Safari View",
      *     description="Get detailed view of a single Share Safari by slug.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -500,7 +514,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Join Share Safari",
      *     description="Allows only users to join a shared safari; operators are not permitted to join",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -601,7 +622,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Unjoin Share Safari",
      *     description="Allows users to leave Share Safari.",
-     *     security={{"bearerAuth": {}}},
+     *    security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -684,7 +712,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Wishlist Share Safari or Fixed Departure",
      *     description="Allows users to whishlist Share Safari or Fixed Departure",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -752,7 +787,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Unwishlist Share Safari or Fixed Departure",
      *     description="Allows users to Unwishlist Share Safari or Fixed Departure",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -867,7 +909,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Comment on Share Safari or Fixed Departure",
      *     description="Allows users to comment on Share Safari or Fixed Departure.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -978,7 +1027,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Reply to specific comment in Share Safari or Fixed Departure ",
      *     description="Allows users to reply to specific comment in Share Safari or Fixed Departure.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -1136,7 +1192,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Flag on Comment or reply in Share Safari or Fixed Departure",
      *     description="Allows users to post Flag on Comment or reply in Share Safari or Fixed Departure.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -1241,7 +1304,13 @@ class DefaultController extends SafariController
      *     path="/sharesafari/flagreason",
      *     tags={"Share Safari"},
      *     summary="Get Share Safari Flag reason",
-     *
+     *    security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Response(
      *         response=200,
      *         description="Flag reason fetched successfully.",
@@ -1828,7 +1897,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Intial step of booking for fixed departure",
      *     description="Allow user to select seat for booking process in fixed departure.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -1978,6 +2054,13 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Next step of booking for fixed departure",
      *     description="Allow user to process forward in booking process i.e initiate booking",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Parameter(
      *         name="slug",
@@ -2216,7 +2299,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Update Shared Safari",
      *     description="Allows a user to update a shared safari.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -2454,7 +2544,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Update Shared Safari Status",
      *     description="Allows a user to update the status of a shared safari. Status codes: 1 = Active, 0 = Inactive, 2 = Seat Full.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -2530,7 +2627,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Initiate chat with the Fixed Departure owner",
      *     description="Allows a user to send a message to the owner of a Fixed Departure.",
-     *     security={{"bearerAuth": {}}},
+     *     security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
@@ -2589,7 +2693,14 @@ class DefaultController extends SafariController
      *     tags={"Share Safari"},
      *     summary="Retrieve chat hash for a Fixed Departure",
      *     description="Fetches the existing chat hash for a Fixed Departure if a chat has already been created between the user and the owner.",
-     *     security={{"bearerAuth": {}}},
+     *       security={
+     *             {"bearerAuth"={} },
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Parameter(
      *         name="slug",

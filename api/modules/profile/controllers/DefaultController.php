@@ -87,6 +87,13 @@ class DefaultController extends RestController
      *     description="The <b>User Profile</b> API provides detailed information about a user in the Walk Into Wild application.<br>
      *         It allows clients to fetch user details using the <b>user_handle</b> parameter.<br>
      *         This API can be used to display user profiles, check account status, and retrieve related user statistics like followers, followings, and safari counts.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *
      *     @OA\Parameter(
      *         name="user_handle",
@@ -211,6 +218,13 @@ class DefaultController extends RestController
      *     description="The <b>Organized By Share Safari</b> API provides a list of share safaris organized by a specific user in the Walk Into Wild application.<br>
      *         It allows clients to fetch share safari details using the <b>user_handle</b> parameter.<br>
      *         This API can be used to display the share safaris organized by a user, including details such as safari title, dates, costs, and interested users.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *     @OA\Parameter(
      *         name="user_handle",
      *         in="query",
@@ -360,6 +374,13 @@ class DefaultController extends RestController
      *     description="The <b>Joined Share Safari</b> API provides a list of share safaris that a specific user has joined in the Walk Into Wild application.<br>
      *        It allows clients to fetch share safari details using the <b>user_handle</b> parameter.<br>
      *        This API can be used to display the share safaris a user has joined, including details such as safari title, dates, costs, and interested users.",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *      @OA\Parameter(
      *         name="user_handle",
      *         in="query",
@@ -606,6 +627,13 @@ class DefaultController extends RestController
      *     path="/useractivity",
      *     tags={"Profile"},
      *     summary="Get User Activity (NIU)",
+     *     security={
+     *             {"XDevice"={} },
+     *             {"XPlatform"={} },
+     *             {"XPlatformVersion"={} },
+     *             {"XApplicationVersion"={} },
+     *             {"XEncryption"={} }
+     *            },
      *      @OA\Parameter(
      *         name="user_handle",
      *         in="query",
