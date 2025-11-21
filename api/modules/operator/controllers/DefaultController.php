@@ -604,6 +604,15 @@ class DefaultController extends RestController
      *         )
      *     ),
      *     @OA\Response(
+     *         response=200,
+     *         description="Thank you for your review!",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="Thank you for your review!"),
+     *         )
+     *    ),
+     *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
      *         @OA\JsonContent(
