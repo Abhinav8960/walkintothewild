@@ -60,7 +60,7 @@ class DefaultController extends RestController
      * @OA\Get(
      *     path="/feeds",
      *     tags={"Feeds"},
-     *     summary="Get Feeds List (Draft)",
+     *     summary="Get Feeds List",
      *     security={{"bearerAuth": {}}},
      *
      *     @OA\Parameter(
