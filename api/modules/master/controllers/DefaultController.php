@@ -585,6 +585,7 @@ class DefaultController extends RestController
      *                         type="object",
      *                         @OA\Property(property="id", type="integer", example=7),
      *                         @OA\Property(property="title", type="string", example="Central India"),
+     *                         @OA\Property(property="slug", type="string", example="central-india")
      *                     )
      *                 )
      *             )
