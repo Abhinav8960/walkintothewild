@@ -314,7 +314,7 @@ class SiteController extends RestController
 
             // Check if the column exists in the User model
             if (!$user_form->hasAttribute($source_id_col)) {
-                $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.source_not_exist');
+                $message = Yii::$app->api->messageManager->getMessage('authorization.social_login.source_not_exist');
                 return Yii::$app->api->sendFailedStringResponse([$message], 400);
             }
 
@@ -322,7 +322,7 @@ class SiteController extends RestController
 
             if ($user) {
                 if ($user->status != User::STATUS_ACTIVE) {
-                    $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.inactive_profile');
+                    $message = Yii::$app->api->messageManager->getMessage('authorization.social_login.inactive_profile');
                     return Yii::$app->api->sendFailedStringResponse([$message], 423);
                 }
 
@@ -334,7 +334,7 @@ class SiteController extends RestController
                     $user = User::find()->where(['email' => $model->email, 'status' => User::STATUS_ACTIVE])->one();
 
                     if (!empty($user->$source_id_col)) {
-                        $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.source_id_mismatch');
+                        $message = Yii::$app->api->messageManager->getMessage('authorization.social_login.source_id_mismatch');
                         return Yii::$app->api->sendFailedStringResponse([$message]);
                     }
 
@@ -942,10 +942,10 @@ class SiteController extends RestController
         $response = WhatsappHelper::SendDataUsingWithTemplateSurvey($phone, $case_id);
 
         if ($response->isOk) {
-            $message = Yii::$app->api->messageManager->getMessage('authrization.convergent_survey.message_send_success');
+            $message = Yii::$app->api->messageManager->getMessage('authorization.convergent_survey.message_send_success');
             return Yii::$app->api->sendResponse(['status' => 1, 'response' => $response->getData()], ['message' => $message]);
         }
-        $message = Yii::$app->api->messageManager->getMessage('authrization.convergent_survey.message_send_failed');
+        $message = Yii::$app->api->messageManager->getMessage('authorization.convergent_survey.message_send_failed');
         return Yii::$app->api->sendResponse(['status' => 0, 'response' => $response->getData()], ['message' => $message]);
     }
 
@@ -960,11 +960,11 @@ class SiteController extends RestController
                     $safari_operator->status = SafariOperator::STATUS_DELETE;
                     $safari_operator->save(false);
                 }
-                $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_success');
+                $message =  Yii::$app->api->messageManager->getMessage('authorization.deactivate_account.deactivation_success');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
-        $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_failed');
+        $message =  Yii::$app->api->messageManager->getMessage('authorization.deactivate_account.deactivation_failed');
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
@@ -1372,11 +1372,11 @@ class SiteController extends RestController
                     $op->save(false);
                 }
                 OperatorSafariOperator::updateAll(['status' => OperatorSafariOperator::STATUS_SUSPEND], ['user_id' => $user_model->id]);
-                $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_success');
+                $message =  Yii::$app->api->messageManager->getMessage('authorization.deactivate_account.deactivation_success');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
-        $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_failed');
+        $message =  Yii::$app->api->messageManager->getMessage('authorization.deactivate_account.deactivation_failed');
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
@@ -1433,7 +1433,7 @@ class SiteController extends RestController
                     $op->save(false);
                 }
                 UserSession::deleteAll(['user_id' => $user_model->id]);
-                $message =  Yii::$app->api->messageManager->getMessage('authrization.request_delete_account.delete_in_90_days');
+                $message =  Yii::$app->api->messageManager->getMessage('authorization.request_delete_account.delete_in_90_days');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
