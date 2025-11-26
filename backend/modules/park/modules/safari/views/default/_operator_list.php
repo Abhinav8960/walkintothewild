@@ -1,7 +1,7 @@
 <?php
 
 use yii\grid\GridView;
-
+use yii\widgets\Pjax;
 
 $this->title = 'Operators';
 $this->params['title'] = $this->title;
@@ -15,6 +15,7 @@ $this->params['title'] = $this->title;
         <div id="w1-button" class="mb-3"></div>
 
         <div class="table-responsive">
+            <?php Pjax::begin(['id' => 'operator_list']) ?>
             <?= GridView::widget([
                 'dataProvider' => $provider,
                 'columns' => [
@@ -53,6 +54,7 @@ $this->params['title'] = $this->title;
 
                 ],
             ]); ?>
+            <?php Pjax::end() ?>
         </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ namespace backend\modules\park\modules\safari\controllers;
 
 
 use common\models\GeneralModel;
+use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorPark;
 use common\models\park\form\SafariParkForm;
 use common\models\park\ParkAnimal;
@@ -448,7 +449,7 @@ class DefaultController extends Controller
 
     public function actionOperatorList($safari_park_id)
     {
-        $query = SafariOperatorPark::find()->where(['park_id' => $safari_park_id, 'status' => SafariOperatorPark::STATUS_ACTIVE]);
+        $query = SafariOperatorPark::find()->where(['park_id' => $safari_park_id, 'safari_operator_park.status' => SafariOperatorPark::STATUS_ACTIVE])->joinWith('operator')->andWhere(['safari_operator.status' => SafariOperator::STATUS_ACTIVE]);
         $provider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
