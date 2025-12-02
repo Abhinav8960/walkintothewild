@@ -2325,4 +2325,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         }
         return $data;
     }
+
+    public static function share_safari_agenda()
+    {
+        $options = [
+            '1' => 'Photography',
+            '3' => 'Safari Experience'
+        ];
+        return array_keys($options);
+    }
 }
