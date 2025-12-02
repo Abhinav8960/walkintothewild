@@ -27,7 +27,7 @@ class SharedSafariVersionForm extends \frontend\models\form\SharedSafariVersionF
             ['start_date', 'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
             ['start_date', 'compare', 'compareValue' => date("Y-m-d", strtotime('+1 year')), 'operator' => '<='],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
-            ['end_date', 'compare', 'compareValue' => date("Y-m-d", strtotime('+2 year')), 'operator' => '<='],
+            // ['end_date', 'compare', 'compareValue' => date("Y-m-d", strtotime('+2 year')), 'operator' => '<='],
 
 
             [['version'], 'integer'],
