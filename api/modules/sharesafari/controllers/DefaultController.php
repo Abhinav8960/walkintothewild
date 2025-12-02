@@ -513,7 +513,7 @@ class DefaultController extends SafariController
      *     path="/sharesafari/{slug}/join",
      *     tags={"Share Safari"},
      *     summary="Join Share Safari",
-     *     description="Allows only users to join a shared safari; operators are not permitted to join",
+     *     description="Allows only verified users to join a shared safari; operators are not permitted to join",
      *    security={
      *             {"bearerAuth"={} },
      *             {"XDevice"={} },
@@ -540,6 +540,18 @@ class DefaultController extends SafariController
      *             @OA\Property(property="message",type="string",example="You joined this shared Safari!")
      *        )
      *     ),
+     *      @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="message",
+     *             type="string",
+     *             example="You are not allowed to perform this action until you verify your mobile number!"
+     *         )
+     *       )
+     *     ),
      *     @OA\Response(
      *         response=404,
      *         description="Shared Safari not found.",
@@ -556,7 +568,7 @@ class DefaultController extends SafariController
             $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
             return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
         }
-        
+
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
