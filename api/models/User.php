@@ -152,7 +152,7 @@ class User extends \common\models\User
     public function getProfile_display_image()
     {
         if ($this->partner && $this->partner->user_id == $this->id) {
-            return $this->partner->image_path ? $this->partner->image_path : \Yii::$app->params['frontend_url'] . '/img/operator-placeholder-80.jpg';
+            return $this->partner->image_path ? $this->partner->image_path : \Yii::$app->params['s3_endpoint'] . '/img/operator-placeholder-80.jpg';
         }
 
         if ($this->profile_image != '') {
