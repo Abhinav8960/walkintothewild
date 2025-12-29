@@ -178,6 +178,7 @@ class DefaultController extends RestController
 
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['!=', 'collection', Feeds::MODEL_SIGHTING]);
+        $dataProvider->query->andWhere(['OR', ['date_time' => null], ['>=', 'date_time', date('Y-m-d H:i:s')]]);
 
         if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
             $dataProvider->pagination = false;
