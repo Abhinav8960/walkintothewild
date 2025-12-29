@@ -828,7 +828,7 @@ class DefaultController extends RestController
         $shareSafariModel->setAttributes(\Yii::$app->request->queryParams);
 
         $dataProvider = $shareSafariModel->search(\Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['!=', 'sequence_for_share_safari', 0]);
+        $dataProvider->query->andWhere(['!=', 'sequence_for_share_safari', 0])->orderBy(['sequence_for_share_safari' => SORT_ASC]);
 
         if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
             $dataProvider->pagination = false;
@@ -845,7 +845,7 @@ class DefaultController extends RestController
         $packageModel->setAttributes(\Yii::$app->request->queryParams);
 
         $dataProvider = $packageModel->search(\Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['!=', 'sequence_for_package', 0]);
+        $dataProvider->query->andWhere(['!=', 'sequence_for_package', 0])->orderBy(['sequence_for_package' => SORT_ASC]);
 
         if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
             $dataProvider->pagination = false;

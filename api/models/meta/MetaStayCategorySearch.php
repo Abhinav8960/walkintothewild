@@ -46,7 +46,6 @@ class MetaStayCategorySearch extends MetaStayCategory
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id'=>SORT_ASC]]
         ]);
 
         $this->load($params);
