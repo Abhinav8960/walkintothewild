@@ -143,14 +143,14 @@ $this->params['title'] = $this->title;
                         }
                     ],
 
-                    [
-                        'label' => 'Lead Received',
-                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date('d M, Y h:i A', $model->created_at);
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Lead Received',
+                    //     'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return date('d M, Y h:i A', $model->created_at);
+                    //     }
+                    // ],
 
                     [
                         'label' => 'Quotation Count',
