@@ -70,7 +70,7 @@ use yii\web\JsExpression;
                             '2' => 'Expired',
                         ],
                         [
-                            // 'prompt' => 'Select Status',
+                            'prompt' => 'All',
                             'class' => 'search-border'
 
                         ],
