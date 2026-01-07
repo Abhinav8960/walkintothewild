@@ -64,7 +64,7 @@ class DefaultController extends  Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new LeadSearch();
-        // $searchModel->custom_status = 1;
+        $searchModel->status = 1;
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, \Yii::$app->user->identity->operator->id);
         if ($safari_operator->id == 3) {
             $dataProvider->query->andWhere(['>=', 'lead.created_at', strtotime('2025-11-05 00:00:00')]);

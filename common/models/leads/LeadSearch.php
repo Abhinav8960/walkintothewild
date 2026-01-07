@@ -200,14 +200,12 @@ class LeadSearch extends Lead
         if ($this->custom_status) {
             switch ($this->custom_status) {
                 case 1:
-                    $query->andWhere(['>=', 'lead.from_date', date('Y-m-d')])->andWhere(['lead.status' => 1]);
+                    $query->andWhere(['>=', 'lead.from_date', date('Y-m-d')]);
                     break;
                 case 2:
-                    $query->andWhere([
-                        'or',
+                    $query->andWhere(
                         ['<', 'lead.from_date', date('Y-m-d')],
-                        ['lead.status' => 0],
-                    ]);
+                    );
                     break;
             };
         }
