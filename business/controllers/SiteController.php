@@ -102,6 +102,17 @@ class SiteController extends Controller
             ])
             ->count();
 
+        if($safarioperator->id == 3) {
+            $leads = Lead::find()
+            ->joinWith('assignOperator')
+            ->where([
+                'lead_partners.partner_id' => $safarioperator->id,
+                'lead_partners.status' => 1,
+            ])
+            ->andWhere(['>=', 'lead.created_at', strtotime('2025-11-05 00:00:00')])
+            ->count();
+        }
+
         $posts = UserPosts::find()->where(['safari_operator_id' => $safarioperator->id, 'status' => UserPosts::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(2)->all();
         $sightings = Sighting::find()->where(['safari_operator_id' => $safarioperator->id, 'status' => Sighting::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(3)->all();
         $packages = Package::find()->where(['safari_operator_id' => $safarioperator->id, 'status' => Package::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(2)->all();
