@@ -83,7 +83,7 @@ class SafariParkZoneForm extends model
                     return strtolower($this->safari_park_zone_model->$attribute) != strtolower($model->$attribute);
                 },
                 'targetClass' => SafariParkZone::className(),
-                'targetAttribute' => ['safari_park_id', 'master_zone_type_id', 'entry_gate_name'],
+                'targetAttribute' => ['safari_park_id', 'master_zone_type_id', 'entry_gate_name', 'zone_name'],
                 'message' => 'This Entry Gate Name has already been taken'
             ],
 
