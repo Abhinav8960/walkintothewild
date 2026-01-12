@@ -2,9 +2,9 @@
 
 namespace common\models\leads;
 
+use common\models\leads\Lead;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\leads\Lead;
 
 /**
  * LeadSearch represents the model behind the search form of `common\models\leads\Lead`.
@@ -15,12 +15,8 @@ class LeadSearch extends Lead
     public $safari_operator_id;
     public $lead_month;
     public $custom_status;
-
-
     public $lead_category;
     public $reminder_datetime;
-
-
 
     /**
      * {@inheritdoc}
@@ -63,7 +59,6 @@ class LeadSearch extends Lead
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
-
         ]);
 
         $this->load($params, $formName);
@@ -104,7 +99,8 @@ class LeadSearch extends Lead
             'is_payment_link_send' => $this->is_payment_link_send,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query
+            ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'package_version', $this->package_version])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'phone', $this->phone])
@@ -144,7 +140,6 @@ class LeadSearch extends Lead
             'pagination' => [
                 'pageSize' => 10,
             ],
-
         ]);
 
         $this->load($params);
@@ -182,7 +177,8 @@ class LeadSearch extends Lead
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query
+            ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'package_version', $this->package_version])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'phone', $this->phone])
@@ -216,7 +212,8 @@ class LeadSearch extends Lead
 
         if (!empty($this->reminder_datetime) && strpos($this->reminder_datetime, ' - ') !== false) {
             list($start_date, $end_date) = explode(' - ', $this->reminder_datetime);
-            $query->joinWith('assignOperator')
+            $query
+                ->joinWith('assignOperator')
                 ->andFilterWhere(['between', 'lead_partners.reminder_datetime', $start_date, $end_date]);
         }
 
@@ -228,7 +225,6 @@ class LeadSearch extends Lead
 
         return $dataProvider;
     }
-
 
     public function supportsearch($params)
     {
@@ -242,7 +238,6 @@ class LeadSearch extends Lead
             'pagination' => [
                 'pageSize' => 10,
             ],
-
         ]);
 
         $this->load($params);
@@ -280,7 +275,8 @@ class LeadSearch extends Lead
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query
+            ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'package_version', $this->package_version])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'phone', $this->phone])
@@ -293,6 +289,12 @@ class LeadSearch extends Lead
 
         if ($this->lead_month) {
             $query->andWhere(['MONTH(FROM_UNIXTIME(lead.created_at))' => $this->lead_month]);
+        }
+
+        if ($this->safari_operator_id) {
+            $query->joinWith(['assignOperator' => function ($q) {
+                $q->andFilterWhere([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, 'partner_id' => $this->safari_operator_id]);
+            }]);
         }
 
         if ($this->custom_status) {
