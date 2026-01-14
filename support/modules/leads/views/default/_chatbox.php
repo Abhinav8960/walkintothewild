@@ -15,7 +15,7 @@ use yii\helpers\Url;
                     if ($chats = $chat->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
                         foreach ($chats as $chat_message) {
                             if ($chat_message->created_by == $safari_operator_model->user_id) {
-                ?>
+                                ?>
                                 <?php if ($chat_message->is_quotation_message == 1) { ?>
                                     <div class="d-flex justify-content-center m-2">
                                         <div class="ItineraryQuotationarea">
@@ -70,7 +70,7 @@ use yii\helpers\Url;
                                                         <?= $chat_message->message ?>
                                                     </h3>
 
-                                                    <?php if (!empty($chat_message->recordingUrl)) {  ?>
+                                                    <?php if (!empty($chat_message->recordingUrl)) { ?>
                                                         <audio controls style="margin-top: 10px; width:225px">
                                                             <source src="<?= $chat_message->recordingUrl ?>" type="audio/mpeg">
                                                             Your browser does not support the audio element.
@@ -98,10 +98,11 @@ use yii\helpers\Url;
                                     </div>
 
                                 <?php
-                                } else { ?>
+                                } else {
+                                    ?>
                                     <div class="d-flex justify-content-end m-2">
                                         <div class="sentChat">
-                                            <p><?= $chat_message->message ?></p>
+                                            <p><?= nl2br(Html::encode($chat_message->message)) ?></p>
                                             <div class="timeingNotified d-flex justify-content-end pe-2">
                                                 <div class="d-flex gap-3">
                                                     <div class="currentTime">
@@ -117,7 +118,8 @@ use yii\helpers\Url;
                                 <?php } ?>
 
                             <?php
-                            } else { ?>
+                            } else {
+                            ?>
                                 <?php if ($chat_message->is_call_request == 1) { ?>
                                     <div class="d-flex justify-content-start m-2">
                                         <div class="sentChat incomingVoiceCall">
@@ -137,20 +139,21 @@ use yii\helpers\Url;
                                     </div>
                                 <?php } else { ?>
                                     <div class="receivedChat supportReceivedChat mt-0 mb-4">
-                                        <p><?= $chat_message->message ?></p>
+                                        <p><?= nl2br(Html::encode($chat_message->message)) ?></p>
                                         <div class="recievedTime">
                                             <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                                         </div>
                                     </div>
 
-                <?php }
+                <?php
+                                }
                             }
                         }
                     }
                 }
                 ?>
             </div>
-            <?php if(false){ ?>
+            <?php if (false) { ?>
             <div class="sendNotificationBtn suportChatNotificationBtn pb-0 mt-2">
                 <?= Html::button('Send Notification', ['value' => Url::toRoute(['send-notification', 'chat_hash' => $chat->chat_hash]), 'class' => 'button-created new create pop-up']) ?>
             </div>
@@ -333,15 +336,15 @@ use yii\helpers\Url;
 
 
 <?php
-$script = <<< JS
-    $('.pop-up').on('click', function () {
-        $('#notificationAction').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
+$script = <<<JS
+        \$('.pop-up').on('click', function () {
+            \$('#notificationAction').modal('show')
+    \t\t.find('#modalContent')
+    \t\t.load(\$(this).attr('value'));
+    \t});
 
 
-JS;
+    JS;
 $this->registerJs($script);
 
 ?>
