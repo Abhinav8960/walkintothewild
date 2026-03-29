@@ -15,21 +15,25 @@ This project follows a **multi-tier architecture** with separate applications fo
 ## 🛠️ Technology Stack
 
 ### Backend Framework
+
 - **PHP 7.4+** - Server-side programming language
 - **Yii2 Framework 2.0.51** - Advanced PHP framework
 - **Yii2 Advanced Project Template** - Multi-tier application structure
 
 ### Database
+
 - **MySQL 5.7** - Primary database
 - **Database Sessions** - Session management
 
 ### Frontend Technologies
+
 - **Bootstrap 5** - CSS framework for responsive design
 - **jQuery** - JavaScript library
 - **Mobile Detection** - Responsive mobile optimization
 - **reCAPTCHA v3** - Security and bot protection
 
 ### API & Integrations
+
 - **RESTful API** - JSON-based API endpoints
 - **JWT Authentication** - Secure API authentication
 - **WhatsApp Cloud API** - Messaging integration
@@ -38,11 +42,13 @@ This project follows a **multi-tier architecture** with separate applications fo
 - **Google API Client** - Google services integration
 
 ### Payment & Financial
+
 - **PayU Payment Gateway** - Payment processing
 - **Transaction Management** - Financial transaction handling
 - **Refund & Cancellation** - Payment lifecycle management
 
 ### Media & File Management
+
 - **AWS S3** - Cloud file storage
 - **Flysystem** - File system abstraction
 - **Image Processing** - Yii2 Imagine extension
@@ -50,17 +56,20 @@ This project follows a **multi-tier architecture** with separate applications fo
 - **PDF Generation** - mPDF library
 
 ### Development & Testing
+
 - **Codeception** - Testing framework
 - **PHPUnit** - Unit testing
 - **Docker** - Containerization
 - **Vagrant** - Development environment
 
 ### Queue & Background Jobs
+
 - **Yii2 Queue** - Background job processing
 - **Pusher** - Real-time notifications
 - **SQS Integration** - Message queuing
 
 ### Security & Monitoring
+
 - **Audit Logging** - User activity tracking
 - **Error Handling** - Custom error management
 - **Request Sanitization** - Input validation
@@ -87,6 +96,7 @@ walkintothewild/
 ## 🚀 Key Features
 
 ### Safari Management
+
 - **Package Management** - Safari package creation and management
 - **Operator Management** - Safari operator profiles and verification
 - **Booking System** - Complete booking and reservation system
@@ -94,6 +104,7 @@ walkintothewild/
 - **Real-time Chat** - Customer support and communication
 
 ### User Experience
+
 - **Mobile Responsive** - Optimized for all devices
 - **Multi-language Support** - Internationalization ready
 - **Social Login** - Google and social media authentication
@@ -101,6 +112,7 @@ walkintothewild/
 - **Wishlist & Favorites** - User preference management
 
 ### Content Management
+
 - **CMS Integration** - Content management system
 - **Media Gallery** - Image and video management
 - **Blog & Articles** - Content publishing
@@ -108,6 +120,7 @@ walkintothewild/
 - **Meta Management** - Dynamic meta tags
 
 ### Analytics & Reporting
+
 - **User Analytics** - User behavior tracking
 - **Booking Reports** - Financial and booking analytics
 - **Performance Monitoring** - System performance tracking
@@ -141,6 +154,7 @@ docker-compose up -d
 Before starting the installation, ensure you have the following software installed:
 
 #### Required Software
+
 - **PHP 7.4 or higher** with extensions:
   - `php-mysql` - MySQL database support
   - `php-curl` - HTTP requests
@@ -159,6 +173,7 @@ Before starting the installation, ensure you have the following software install
 - **Node.js & NPM** (for frontend assets)
 
 #### Optional Software
+
 - **Docker & Docker Compose** (for containerized development)
 - **Vagrant** (for virtualized development environment)
 - **Redis** (for caching and sessions)
@@ -168,6 +183,7 @@ Before starting the installation, ensure you have the following software install
 #### Method 1: Traditional Installation (Recommended for Development)
 
 ##### Step 1: Clone the Repository
+
 ```bash
 # Clone the repository
 git clone https://github.com/your-username/walkintothewild.git
@@ -178,6 +194,7 @@ git checkout main
 ```
 
 ##### Step 2: Install PHP Dependencies
+
 ```bash
 # Install Composer dependencies
 composer install --no-dev --optimize-autoloader
@@ -187,6 +204,7 @@ composer install
 ```
 
 **Expected Output:**
+
 ```
 Loading composer repositories with package information
 Installing dependencies (including require-dev) from lock file
@@ -199,6 +217,7 @@ Generating optimized autoloader
 ```
 
 ##### Step 3: Database Setup
+
 ```bash
 # Create MySQL database
 mysql -u root -p
@@ -214,6 +233,7 @@ EXIT;
 ```
 
 ##### Step 4: Environment Configuration
+
 ```bash
 # Copy environment configuration files
 cp environments/dev/common/config/main-local.php.dist common/config/main-local.php
@@ -225,6 +245,7 @@ cp environments/dev/api/config/main-local.php.dist api/config/main-local.php
 
 **Configure Database Connection:**
 Edit `common/config/main-local.php`:
+
 ```php
 <?php
 return [
@@ -246,6 +267,7 @@ return [
 
 **Configure Application Parameters:**
 Edit `common/config/params-local.php`:
+
 ```php
 <?php
 return [
@@ -253,23 +275,23 @@ return [
     'supportEmail' => 'support@walkintothewild.com',
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
-    
+
     // AWS Configuration
     'aws.accessKey' => 'your_aws_access_key',
     'aws.secretKey' => 'your_aws_secret_key',
     'aws.region' => 'us-east-1',
     'aws.bucket' => 'walkintothewild-assets',
-    
+
     // Payment Gateway Configuration
     'payu.merchantKey' => 'your_payu_merchant_key',
     'payu.merchantSalt' => 'your_payu_merchant_salt',
     'payu.authHeader' => 'your_payu_auth_header',
     'payu.merchantId' => 'your_payu_merchant_id',
-    
+
     // WhatsApp Configuration
     'whatsapp.accessToken' => 'your_whatsapp_access_token',
     'whatsapp.phoneNumberId' => 'your_whatsapp_phone_number_id',
-    
+
     // Firebase Configuration
     'firebase.projectId' => 'your_firebase_project_id',
     'firebase.privateKey' => 'your_firebase_private_key',
@@ -278,6 +300,7 @@ return [
 ```
 
 ##### Step 5: Initialize Application
+
 ```bash
 # Initialize the application
 php init
@@ -290,6 +313,7 @@ php init
 ```
 
 **Expected Output:**
+
 ```
 Initialize application environment
 
@@ -304,6 +328,7 @@ Initializing the application under 'Development' environment...
 ```
 
 ##### Step 6: Run Database Migrations
+
 ```bash
 # Run database migrations
 php yii migrate --interactive=0
@@ -313,6 +338,7 @@ php yii migrate
 ```
 
 **Expected Output:**
+
 ```
 Yii Migration Tool (based on Yii v2.0.51)
 
@@ -333,6 +359,7 @@ Apply the above migrations? (yes|no) [no]:yes
 ```
 
 ##### Step 7: Set File Permissions
+
 ```bash
 # Set proper permissions for runtime directories
 chmod -R 755 frontend/runtime
@@ -347,6 +374,7 @@ chmod -R 755 backend/web/assets
 ```
 
 ##### Step 8: Install Frontend Dependencies (if any)
+
 ```bash
 # If you have package.json for frontend assets
 npm install
@@ -358,6 +386,7 @@ npm run build
 ##### Step 9: Configure Web Server
 
 **For Apache (.htaccess):**
+
 ```apache
 # frontend/web/.htaccess
 RewriteEngine on
@@ -373,6 +402,7 @@ RewriteRule . index.php
 ```
 
 **For Nginx:**
+
 ```nginx
 server {
     listen 80;
@@ -394,6 +424,7 @@ server {
 ```
 
 ##### Step 10: Start Development Server
+
 ```bash
 # Start PHP built-in server for development
 php -S localhost:8080 -t frontend/web
@@ -406,6 +437,7 @@ php -S localhost:8082 -t api/web
 ```
 
 **Access URLs:**
+
 - Frontend: http://localhost:8080
 - Backend: http://localhost:8081
 - API: http://localhost:8082
@@ -413,6 +445,7 @@ php -S localhost:8082 -t api/web
 #### Method 2: Docker Installation (Recommended for Production-like Environment)
 
 ##### Step 1: Clone and Setup
+
 ```bash
 # Clone the repository
 git clone https://github.com/your-username/walkintothewild.git
@@ -424,9 +457,11 @@ cp environments/dev/common/config/params-local.php.dist common/config/params-loc
 ```
 
 ##### Step 2: Configure Docker Environment
+
 Edit `docker-compose.yml` if needed:
+
 ```yaml
-version: '3.2'
+version: "3.2"
 
 services:
   frontend:
@@ -466,6 +501,7 @@ volumes:
 ```
 
 ##### Step 3: Build and Start Containers
+
 ```bash
 # Build Docker images
 docker-compose build
@@ -478,6 +514,7 @@ docker-compose ps
 ```
 
 **Expected Output:**
+
 ```
 Name                     Command               State           Ports
 walkintothewild_frontend_1   docker-php-entrypoint apache2-foreground   Up      0.0.0.0:20080->80/tcp
@@ -486,6 +523,7 @@ walkintothewild_mysql_1      docker-entrypoint.sh mysqld                Up      
 ```
 
 ##### Step 4: Initialize Application in Docker
+
 ```bash
 # Run migrations in Docker
 docker-compose exec frontend php yii migrate --interactive=0
@@ -495,6 +533,7 @@ docker-compose exec frontend php init
 ```
 
 **Access URLs:**
+
 - Frontend: http://localhost:20080
 - Backend: http://localhost:21080
 - MySQL: localhost:3306
@@ -502,12 +541,14 @@ docker-compose exec frontend php init
 ### Post-Installation Setup
 
 #### Step 1: Create Admin User
+
 ```bash
 # Create admin user via console
 php yii user/create-admin --username=admin --email=admin@walkintothewild.com --password=admin123
 ```
 
 #### Step 2: Seed Initial Data
+
 ```bash
 # Seed parks data
 php yii seed/parks
@@ -520,6 +561,7 @@ php yii seed/operators
 ```
 
 #### Step 3: Configure Cron Jobs
+
 ```bash
 # Add to crontab
 crontab -e
@@ -533,6 +575,7 @@ crontab -e
 ```
 
 #### Step 4: Verify Installation
+
 ```bash
 # Check application status
 php yii health/check
@@ -547,6 +590,7 @@ php yii queue/info
 ### Testing
 
 #### Run All Tests
+
 ```bash
 # Run complete test suite
 ./vendor/bin/codecept run
@@ -556,6 +600,7 @@ php yii queue/info
 ```
 
 #### Run Specific Test Suites
+
 ```bash
 # Unit tests only
 ./vendor/bin/codecept run unit
@@ -571,6 +616,7 @@ php yii queue/info
 ```
 
 #### Run Tests in Docker
+
 ```bash
 # Run tests in Docker environment
 docker-compose exec frontend ./vendor/bin/codecept run
@@ -581,12 +627,14 @@ docker-compose exec frontend ./vendor/bin/codecept run
 #### Common Issues and Solutions
 
 **1. Composer Memory Limit Error:**
+
 ```bash
 # Increase PHP memory limit
 php -d memory_limit=2G /usr/local/bin/composer install
 ```
 
 **2. Database Connection Error:**
+
 ```bash
 # Check MySQL service
 sudo systemctl status mysql
@@ -596,6 +644,7 @@ mysql -u walkintothewild -p -h localhost walkintothewild
 ```
 
 **3. Permission Denied Errors:**
+
 ```bash
 # Fix ownership
 sudo chown -R www-data:www-data /path/to/walkintothewild
@@ -603,6 +652,7 @@ sudo chmod -R 755 /path/to/walkintothewild
 ```
 
 **4. Missing PHP Extensions:**
+
 ```bash
 # Install required extensions (Ubuntu/Debian)
 sudo apt-get install php-mysql php-curl php-gd php-mbstring php-xml php-zip php-intl php-bcmath php-soap
@@ -614,6 +664,7 @@ sudo systemctl restart nginx
 ```
 
 **5. Docker Container Issues:**
+
 ```bash
 # Rebuild containers
 docker-compose down
@@ -629,6 +680,7 @@ docker-compose logs mysql
 ### Development Workflow
 
 #### Daily Development Setup
+
 ```bash
 # Start development servers
 php -S localhost:8080 -t frontend/web &
@@ -643,6 +695,7 @@ npm run watch
 ```
 
 #### Code Quality Checks
+
 ```bash
 # Run PHP CodeSniffer
 ./vendor/bin/phpcs --standard=PSR12 frontend/ backend/ api/ common/
@@ -657,6 +710,7 @@ npm run watch
 ## 🌐 Environment Configuration
 
 The project supports multiple environments:
+
 - **Development** - Local development setup
 - **Production** - Live production environment
 - **Testing** - Automated testing environment
@@ -699,6 +753,7 @@ This project is licensed under the BSD-3-Clause License.
 ## 🆘 Support
 
 For support and questions:
+
 - Create an issue in the repository
 - Contact the development team
 - Check the documentation
